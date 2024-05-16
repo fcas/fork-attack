@@ -11,5 +11,10 @@ repositories = [
     ("https://github.com/tensorflow/tensorflow", "master", False),
     ("https://github.com/tiangolo/fastapi", "master", True),
     ("https://github.com/pydantic/pydantic", "main", False),
-    ("https://github.com/tiangolo/typer", "master", True)
+    ("https://github.com/tiangolo/typer", "master", True),
+    ("https://github.com/dmlc/xgboost", "master", True),
+    ("https://github.com/jupyter/notebook", "main", False),
+    ("https://github.com/mwaskom/seaborn", "master", False),
+    ("https://github.com/huggingface/transformers", "main", False),
+    ("https://github.com/matplotlib/matplotlib", "main", False)
 ]
