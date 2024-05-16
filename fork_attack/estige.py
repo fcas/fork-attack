@@ -1,12 +1,13 @@
 import json
 import logging
 import os
+from datetime import date
 from distutils.dir_util import copy_tree
 from pathlib import Path
 
 import git
 import requests
-from github import Github
+from github import Github, UnknownObjectException
 
 from settings import repositories
 
@@ -35,9 +36,15 @@ def code_analysis(repo_name):
 
     code_analysis_response = requests.request("GET", code_analysis_alerts_url, headers=headers, data=payload)
     dependabot_alerts_response = requests.request("GET", dependabot_alerts_url, headers=headers, data=payload)
-    with open(f'{repo_name}_code_analysis.json', 'w', encoding='utf-8') as f:
+    now = date.today()
+
+    code_analysis_filename = f'{now}/{repo_name}_code_analysis.json'
+    dependabot_alerts_filename = f'{now}/{repo_name}_dependabot_alerts.json'
+    os.makedirs(os.path.dirname(code_analysis_filename), exist_ok=True)
+    os.makedirs(os.path.dirname(dependabot_alerts_filename), exist_ok=True)
+    with open(code_analysis_filename, 'w', encoding='utf-8') as f:
         json.dump(code_analysis_response.json(), f, ensure_ascii=False, indent=4)
-    with open(f'{repo_name}_dependabot_alerts.json', 'w', encoding='utf-8') as f:
+    with open(dependabot_alerts_filename, 'w', encoding='utf-8') as f:
         json.dump(dependabot_alerts_response.json(), f, ensure_ascii=False, indent=4)
 
 
@@ -61,16 +68,19 @@ def attack():
     for repo_config in repositories:
         repo_str = repo_config[0]
         branch = repo_config[1]
+        clone = repo_config[2]
         url = repo_str.replace("https://github.com/", "").split("/")
         repo_name_str = url[1]
         path_to_clone = os.path.join(path, repo_name_str)
         repo_to_clone = f"https://github.com/{user.login}/{repo_name_str}.git"
-        if not os.path.isdir(path_to_clone):
-            org = g.get_organization(url[0])
-            repo = org.get_repo(url[1])
+        if not os.path.isdir(path_to_clone) and clone:
+            try:
+                repo = g.get_organization(url[0]).get_repo(url[1])
+            except UnknownObjectException:
+                repo = g.get_user(url[0]).get_repo(url[1])
             user.create_fork(repo)
             try:
-                path_to_clone = os.path.join(path, str(repo.name))
+                path_to_clone = os.path.join(path, repo_name_str)
                 local_repo = git.Repo.clone_from(repo_to_clone, path_to_clone, branch=branch)
                 git.Repo.create_remote(local_repo, "upstream", f"https://github.com/{url[0]}/{url[1]}.git")
             except Exception as e:
