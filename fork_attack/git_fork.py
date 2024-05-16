@@ -75,7 +75,7 @@ def attack():
                 git.Repo.create_remote(local_repo, "upstream", f"https://github.com/{url[0]}/{url[1]}.git")
             except Exception as e:
                 logger.error(e)
-        add_ymls(path_to_clone, branch)
+            add_ymls(path_to_clone, branch)
         code_analysis(repo_name_str)
 
 
