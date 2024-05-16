@@ -1,9 +1,11 @@
+import json
 import logging
 import os
 from distutils.dir_util import copy_tree
 from pathlib import Path
 
 import git
+import requests
 from github import Github
 
 from settings import repositories
@@ -19,19 +21,43 @@ user = g.get_user()
 files = os.path.join(current_path.parent, ".github")
 
 
-def add_dependabot(local_repo_path, branch):
-    os.chdir(local_repo_path)
-    local_repo = git.Repo(f'{local_repo_path}/.git')
-    copy_tree(files, f'{local_repo_path}/.github')
-    local_repo.git.add("--force", local_repo_path)
-    logger.info("Files added")
-    local_repo.git.commit('-m', "fork attack added files")
-    logger.info("Files commited")
-    local_repo.git.push('--force', 'origin', branch)
-    logger.info("Files pushed")
+def code_analysis(repo_name):
+    os.chdir(f"{current_path.parent}/data")
+    code_analysis_alerts_url = f"https://api.github.com/repos/fcas/{repo_name}/code-scanning/alerts"
+    dependabot_alerts_url = f"https://api.github.com/repos/fcas/{repo_name}/dependabot/alerts"
+
+    payload = {}
+    headers = {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': f'Bearer {token}',
+        'X-GitHub-Api-Version': '2022-11-28'
+    }
+
+    code_analysis_response = requests.request("GET", code_analysis_alerts_url, headers=headers, data=payload)
+    dependabot_alerts_response = requests.request("GET", dependabot_alerts_url, headers=headers, data=payload)
+    with open(f'{repo_name}_code_analysis.json', 'w', encoding='utf-8') as f:
+        json.dump(code_analysis_response.json(), f, ensure_ascii=False, indent=4)
+    with open(f'{repo_name}_dependabot_alerts.json', 'w', encoding='utf-8') as f:
+        json.dump(dependabot_alerts_response.json(), f, ensure_ascii=False, indent=4)
 
 
-def fork_all():
+def add_ymls(local_repo_path, branch):
+    try:
+        os.chdir(local_repo_path)
+        local_repo = git.Repo(f'{local_repo_path}/.git')
+        copy_tree(files, f'{local_repo_path}/.github')
+        local_repo.git.add("--force", local_repo_path)
+        logger.info("Files added")
+        local_repo.git.commit('-m', "fork attack added files")
+        logger.info("Files commited")
+        local_repo.git.push('--force', 'origin', branch)
+        logger.info("Files pushed")
+    except git.GitCommandError as e:
+        if "nothing to commit" in str(e):
+            logger.info(e)
+
+
+def attack():
     for repo_config in repositories:
         repo_str = repo_config[0]
         branch = repo_config[1]
@@ -49,7 +75,8 @@ def fork_all():
                 git.Repo.create_remote(local_repo, "upstream", f"https://github.com/{url[0]}/{url[1]}.git")
             except Exception as e:
                 logger.error(e)
-        add_dependabot(path_to_clone, branch)
+        add_ymls(path_to_clone, branch)
+        code_analysis(repo_name_str)
 
 
-fork_all()
+attack()
