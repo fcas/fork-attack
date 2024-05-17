@@ -16,5 +16,7 @@ repositories = [
     ("https://github.com/jupyter/notebook", "main", False),
     ("https://github.com/mwaskom/seaborn", "master", False),
     ("https://github.com/huggingface/transformers", "main", False),
-    ("https://github.com/matplotlib/matplotlib", "main", False)
+    ("https://github.com/matplotlib/matplotlib", "main", False),
+    ("https://github.com/feast-dev/feast", "master", True),
+    ("https://github.com/online-ml/river", "main", False)
 ]
