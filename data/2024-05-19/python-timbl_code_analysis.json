@@ -1,0 +1,51 @@
+[
+    {
+        "number": 1,
+        "created_at": "2024-05-19T03:44:49Z",
+        "updated_at": "2024-05-19T03:44:52Z",
+        "url": "https://api.github.com/repos/fcas/python-timbl/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/python-timbl/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-temporary-file",
+            "severity": "error",
+            "description": "Insecure temporary file",
+            "name": "py/insecure-temporary-file",
+            "tags": [
+                "external/cwe/cwe-377",
+                "security"
+            ],
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3e16f0f43b181ef0f205af0b5a3455e41b886c27",
+            "message": {
+                "text": "Call to deprecated function tempfile.mktemp may be insecure."
+            },
+            "location": {
+                "path": "timbl.py",
+                "start_line": 70,
+                "end_line": 70,
+                "start_column": 30,
+                "end_column": 74
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/python-timbl/code-scanning/alerts/1/instances"
+    }
+]
