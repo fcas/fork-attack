@@ -1,0 +1,95 @@
+[
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-vg3r-rm7w-2xgh",
+            "cve_id": "CVE-2024-35176",
+            "summary": "REXML contains a denial of service vulnerability",
+            "description": "### Impact\n\nThe REXML gem before 3.2.6 has a DoS vulnerability when it parses an XML that has many `<`s in an attribute value.\n\nIf you need to parse untrusted XMLs, you many be impacted to this vulnerability.\n\n### Patches\n\nThe REXML gem 3.2.7 or later include the patch to fix this vulnerability.\n\n### Workarounds\n\nDon't parse untrusted XMLs.\n\n### References\n\n* https://www.ruby-lang.org/en/news/2024/05/16/dos-rexml-cve-2024-35176/",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-vg3r-rm7w-2xgh",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35176",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-vg3r-rm7w-2xgh"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/commit/4325835f92f3f142ebd91a3fdba4e1f1ab7f1cfb"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2024/05/16/dos-rexml-cve-2024-35176"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35176"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vg3r-rm7w-2xgh"
+                }
+            ],
+            "published_at": "2024-05-16T17:44:04Z",
+            "updated_at": "2024-05-16T19:05:52Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "rexml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.2.7",
+                    "first_patched_version": {
+                        "identifier": "3.2.7"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.2.7",
+            "first_patched_version": {
+                "identifier": "3.2.7"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/1",
+        "created_at": "2024-05-16T21:05:54Z",
+        "updated_at": "2024-05-16T21:05:54Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]
