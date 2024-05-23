@@ -1,0 +1,2885 @@
+[
+    {
+        "number": 71,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "test/e2e/setup.py",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-05-20T22:07:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/71",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/71",
+        "created_at": "2024-05-23T00:30:45Z",
+        "updated_at": "2024-05-23T00:30:45Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 70,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "test/e2e/setup.py",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-j8r2-6x86-q33q",
+            "cve_id": "CVE-2023-32681",
+            "summary": "Unintended leak of Proxy-Authorization header in requests",
+            "description": "### Impact\n\nSince Requests v2.3.0, Requests has been vulnerable to potentially leaking `Proxy-Authorization` headers to destination servers, specifically during redirects to an HTTPS origin. This is a product of how `rebuild_proxies` is used to recompute and [reattach the `Proxy-Authorization` header](https://github.com/psf/requests/blob/f2629e9e3c7ce3c3c8c025bcd8db551101cbc773/requests/sessions.py#L319-L328) to requests when redirected. Note this behavior has _only_ been observed to affect proxied requests when credentials are supplied in the URL user information component (e.g. `https://username:password@proxy:8080`).\n\n**Current vulnerable behavior(s):**\n\n1. HTTP → HTTPS: **leak**\n2. HTTPS → HTTP: **no leak**\n3. HTTPS → HTTPS: **leak**\n4. HTTP → HTTP: **no leak**\n\nFor HTTP connections sent through the proxy, the proxy will identify the header in the request itself and remove it prior to forwarding to the destination server. However when sent over HTTPS, the `Proxy-Authorization` header must be sent in the CONNECT request as the proxy has no visibility into further tunneled requests. This results in Requests forwarding the header to the destination server unintentionally, allowing a malicious actor to potentially exfiltrate those credentials.\n\nThe reason this currently works for HTTPS connections in Requests is the `Proxy-Authorization` header is also handled by urllib3 with our usage of the ProxyManager in adapters.py with [`proxy_manager_for`](https://github.com/psf/requests/blob/f2629e9e3c7ce3c3c8c025bcd8db551101cbc773/requests/adapters.py#L199-L235). This will compute the required proxy headers in `proxy_headers` and pass them to the Proxy Manager, avoiding attaching them directly to the Request object. This will be our preferred option going forward for default usage.\n\n### Patches\nStarting in Requests v2.31.0, Requests will no longer attach this header to redirects with an HTTPS destination. This should have no negative impacts on the default behavior of the library as the proxy credentials are already properly being handled by urllib3's ProxyManager.\n\nFor users with custom adapters, this _may_ be potentially breaking if you were already working around this behavior. The previous functionality of `rebuild_proxies` doesn't make sense in any case, so we would encourage any users impacted to migrate any handling of Proxy-Authorization directly into their custom adapter.\n\n### Workarounds\nFor users who are not able to update Requests immediately, there is one potential workaround.\n\nYou may disable redirects by setting `allow_redirects` to `False` on all calls through Requests top-level APIs. Note that if you're currently relying on redirect behaviors, you will need to capture the 3xx response codes and ensure a new request is made to the redirect destination.\n```\nimport requests\nr = requests.get('http://github.com/', allow_redirects=False)\n```\n\n### Credits\n\nThis vulnerability was discovered and disclosed by the following individuals.\n\nDennis Brinkrolf, Haxolot (https://haxolot.com/)\nTobias Funke, (tobiasfunke93@gmail.com)",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-j8r2-6x86-q33q",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-32681",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-j8r2-6x86-q33q"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/74ea7cf7a6a27a4eeb2ae24e162bcc942a6706d5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-32681"
+                },
+                {
+                    "url": "https://github.com/psf/requests/releases/tag/v2.31.0"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/requests/PYSEC-2023-74.yaml"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/06/msg00018.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202309-08"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/AW7HNFGYP44RT3DUDQXG2QT3OEV2PJ7Y"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KOYASTZDGQG2BWLSNBPL3TQRL2G7QYNZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-j8r2-6x86-q33q"
+                }
+            ],
+            "published_at": "2023-05-22T20:36:32Z",
+            "updated_at": "2024-03-27T20:09:55Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.3.0, < 2.31.0",
+                    "first_patched_version": {
+                        "identifier": "2.31.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:N/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 2.3.0, < 2.31.0",
+            "first_patched_version": {
+                "identifier": "2.31.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/70",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/70",
+        "created_at": "2024-05-23T00:30:45Z",
+        "updated_at": "2024-05-23T00:30:45Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 69,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "manifest_path": "test/apis/task/iris-classifier-trainer/app/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jjw5-xxj6-pcv5",
+            "cve_id": "CVE-2020-13092",
+            "summary": "scikit-learn Deserialization of Untrusted Data",
+            "description": "scikit-learn (aka sklearn) through 0.23.0 can unserialize and execute commands from an untrusted file that is passed to the `joblib.load()` function, if `__reduce__` makes an `os.system call`.\nNOTE: third parties dispute this issue because the joblib.load() function is documented as unsafe and it is the user's responsibility to use the function in a secure manner.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-jjw5-xxj6-pcv5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-13092",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-13092"
+                },
+                {
+                    "url": "https://github.com/0FuzzingQ/vuln/blob/master/sklearn%20unserialize.md"
+                },
+                {
+                    "url": "https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jjw5-xxj6-pcv5"
+                }
+            ],
+            "published_at": "2022-05-24T17:17:59Z",
+            "updated_at": "2024-04-22T22:55:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "scikit-learn"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 0.23.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 0.23.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/69",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/69",
+        "created_at": "2024-05-23T00:30:45Z",
+        "updated_at": "2024-05-23T00:30:45Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 68,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "manifest_path": "test/apis/task/iris-classifier-trainer/app/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fpfv-jqm9-f5jm",
+            "cve_id": "CVE-2021-34141",
+            "summary": "Incorrect Comparison in NumPy",
+            "description": "Incomplete string comparison in the numpy.core component in NumPy1.9.x, which allows attackers to fail the APIs via constructing specific string objects.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fpfv-jqm9-f5jm",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-34141",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-34141"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/18993"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/18993#issuecomment-1010735102"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fpfv-jqm9-f5jm"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/numpy/PYSEC-2021-855.yaml"
+                }
+            ],
+            "published_at": "2021-12-18T00:00:41Z",
+            "updated_at": "2023-01-27T05:07:10Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "numpy"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.22",
+                    "first_patched_version": {
+                        "identifier": "1.22"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-697",
+                    "name": "Incorrect Comparison"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.22",
+            "first_patched_version": {
+                "identifier": "1.22"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/68",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/68",
+        "created_at": "2024-05-23T00:30:45Z",
+        "updated_at": "2024-05-23T00:30:45Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 67,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "manifest_path": "test/apis/task/iris-classifier-trainer/app/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6p56-wp2h-9hxr",
+            "cve_id": "CVE-2021-33430",
+            "summary": "NumPy Buffer Overflow (Disputed)",
+            "description": "A Buffer Overflow vulnerability exists in NumPy 1.9.x in the PyArray_NewFromDescr_int function of ctors.c when specifying arrays of large dimensions (over 32) from Python code, which could let a malicious user cause a Denial of Service.\n\nNOTE: The vendor does not agree this is a vulnerability; In (very limited) circumstances a user may be able provoke the buffer overflow, the user is most likely already privileged to at least provoke denial of service by exhausting memory. Triggering this further requires the use of uncommon API (complicated structured dtypes), which is very unlikely to be available to an unprivileged user.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-6p56-wp2h-9hxr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-33430",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-33430"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/18939"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/commit/ae317fd9ff3e79c0eac357d723bfc29cbd625f2e"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6p56-wp2h-9hxr"
+                }
+            ],
+            "published_at": "2022-01-07T00:09:39Z",
+            "updated_at": "2024-01-11T21:28:19Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "numpy"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.9.0, < 1.21",
+                    "first_patched_version": {
+                        "identifier": "1.21"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-120",
+                    "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 1.9.0, < 1.21",
+            "first_patched_version": {
+                "identifier": "1.21"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/67",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/67",
+        "created_at": "2024-05-23T00:30:45Z",
+        "updated_at": "2024-05-23T00:30:45Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 66,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37q5-v5qm-c9v8",
+            "cve_id": "CVE-2024-3568",
+            "summary": "Transformers Deserialization of Untrusted Data vulnerability",
+            "description": "The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-37q5-v5qm-c9v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3568",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3568"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/693667b8ac8138b83f8adb6522ddaf42fa07c125"
+                },
+                {
+                    "url": "https://huntr.com/bounties/b3c36992-5264-4d7f-9906-a996efafba8f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37q5-v5qm-c9v8"
+                }
+            ],
+            "published_at": "2024-04-10T18:30:48Z",
+            "updated_at": "2024-04-10T22:20:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.38.0",
+                    "first_patched_version": {
+                        "identifier": "4.38.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                "score": 3.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.38.0",
+            "first_patched_version": {
+                "identifier": "4.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/66",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/66",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 65,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3863-2447-669p",
+            "cve_id": "CVE-2023-6730",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-3863-2447-669p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6730"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/423611ee-7a2a-442a-babb-3ed2f8385c16"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3863-2447-669p"
+                }
+            ],
+            "published_at": "2023-12-19T15:30:30Z",
+            "updated_at": "2023-12-28T05:05:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "score": 9.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/65",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/65",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 64,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v68g-wm8c-6x7j",
+            "cve_id": "CVE-2023-7018",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v68g-wm8c-6x7j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-7018",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-7018"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/e1a3e548-e53a-48df-b708-9ee62140963c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v68g-wm8c-6x7j"
+                }
+            ],
+            "published_at": "2023-12-20T18:30:32Z",
+            "updated_at": "2024-01-02T15:27:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/64",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/64",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 63,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-282v-666c-3fvg",
+            "cve_id": "CVE-2023-2800",
+            "summary": "transformers has Insecure Temporary File",
+            "description": "Insecure Temporary File in GitHub repository huggingface/transformers 4.29.2 and prior. A fix is available at commit 80ca92470938bbcc348e2d9cf4734c7c25cb1c43 and has been released as part of version 4.30.0.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-282v-666c-3fvg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-2800",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-2800"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/80ca92470938bbcc348e2d9cf4734c7c25cb1c43"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/a3867b4e-6701-4418-8c20-3c6e7084a44a"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/23372"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-282v-666c-3fvg"
+                }
+            ],
+            "published_at": "2023-05-18T18:30:35Z",
+            "updated_at": "2023-11-09T05:05:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.30.0",
+                    "first_patched_version": {
+                        "identifier": "4.30.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 4.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-377",
+                    "name": "Insecure Temporary File"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.30.0",
+            "first_patched_version": {
+                "identifier": "4.30.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/63",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/63",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 62,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-47fc-vmwq-366v",
+            "cve_id": "CVE-2022-45907",
+            "summary": "PyTorch vulnerable to arbitrary code execution",
+            "description": "In PyTorch before trunk/89695, torch.jit.annotations.parse_type_line can cause arbitrary code execution because eval is used unsafely. The fix for this issue is available in version 1.13.1. There is a release checker in [issue #89855](https://github.com/pytorch/pytorch/issues/89855).",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-47fc-vmwq-366v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-45907",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-45907"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/88868"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/767f6aa49fe20a2766b9843d01e3b7f7793df6a3"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/89855"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/pull/89189"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/releases/tag/v1.13.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-47fc-vmwq-366v"
+                }
+            ],
+            "published_at": "2022-11-26T03:30:27Z",
+            "updated_at": "2023-01-30T05:01:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 1.13.0",
+                    "first_patched_version": {
+                        "identifier": "1.13.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 1.13.0",
+            "first_patched_version": {
+                "identifier": "1.13.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/62",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/62",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 61,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37q5-v5qm-c9v8",
+            "cve_id": "CVE-2024-3568",
+            "summary": "Transformers Deserialization of Untrusted Data vulnerability",
+            "description": "The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-37q5-v5qm-c9v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3568",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3568"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/693667b8ac8138b83f8adb6522ddaf42fa07c125"
+                },
+                {
+                    "url": "https://huntr.com/bounties/b3c36992-5264-4d7f-9906-a996efafba8f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37q5-v5qm-c9v8"
+                }
+            ],
+            "published_at": "2024-04-10T18:30:48Z",
+            "updated_at": "2024-04-10T22:20:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.38.0",
+                    "first_patched_version": {
+                        "identifier": "4.38.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                "score": 3.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.38.0",
+            "first_patched_version": {
+                "identifier": "4.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/61",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/61",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 60,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3863-2447-669p",
+            "cve_id": "CVE-2023-6730",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-3863-2447-669p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6730"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/423611ee-7a2a-442a-babb-3ed2f8385c16"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3863-2447-669p"
+                }
+            ],
+            "published_at": "2023-12-19T15:30:30Z",
+            "updated_at": "2023-12-28T05:05:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "score": 9.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/60",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/60",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 59,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v68g-wm8c-6x7j",
+            "cve_id": "CVE-2023-7018",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v68g-wm8c-6x7j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-7018",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-7018"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/e1a3e548-e53a-48df-b708-9ee62140963c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v68g-wm8c-6x7j"
+                }
+            ],
+            "published_at": "2023-12-20T18:30:32Z",
+            "updated_at": "2024-01-02T15:27:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/59",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/59",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 58,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-282v-666c-3fvg",
+            "cve_id": "CVE-2023-2800",
+            "summary": "transformers has Insecure Temporary File",
+            "description": "Insecure Temporary File in GitHub repository huggingface/transformers 4.29.2 and prior. A fix is available at commit 80ca92470938bbcc348e2d9cf4734c7c25cb1c43 and has been released as part of version 4.30.0.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-282v-666c-3fvg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-2800",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-2800"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/80ca92470938bbcc348e2d9cf4734c7c25cb1c43"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/a3867b4e-6701-4418-8c20-3c6e7084a44a"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/23372"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-282v-666c-3fvg"
+                }
+            ],
+            "published_at": "2023-05-18T18:30:35Z",
+            "updated_at": "2023-11-09T05:05:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.30.0",
+                    "first_patched_version": {
+                        "identifier": "4.30.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 4.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-377",
+                    "name": "Insecure Temporary File"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.30.0",
+            "first_patched_version": {
+                "identifier": "4.30.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/58",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/58",
+        "created_at": "2024-05-23T00:30:44Z",
+        "updated_at": "2024-05-23T00:30:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 57,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "test/apis/realtime/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-47fc-vmwq-366v",
+            "cve_id": "CVE-2022-45907",
+            "summary": "PyTorch vulnerable to arbitrary code execution",
+            "description": "In PyTorch before trunk/89695, torch.jit.annotations.parse_type_line can cause arbitrary code execution because eval is used unsafely. The fix for this issue is available in version 1.13.1. There is a release checker in [issue #89855](https://github.com/pytorch/pytorch/issues/89855).",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-47fc-vmwq-366v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-45907",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-45907"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/88868"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/767f6aa49fe20a2766b9843d01e3b7f7793df6a3"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/89855"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/pull/89189"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/releases/tag/v1.13.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-47fc-vmwq-366v"
+                }
+            ],
+            "published_at": "2022-11-26T03:30:27Z",
+            "updated_at": "2023-01-30T05:01:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 1.13.0",
+                    "first_patched_version": {
+                        "identifier": "1.13.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 1.13.0",
+            "first_patched_version": {
+                "identifier": "1.13.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/57",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/57",
+        "created_at": "2024-05-23T00:30:43Z",
+        "updated_at": "2024-05-23T00:30:43Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 56,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "test/apis/batch/image-classifier-alexnet/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-47fc-vmwq-366v",
+            "cve_id": "CVE-2022-45907",
+            "summary": "PyTorch vulnerable to arbitrary code execution",
+            "description": "In PyTorch before trunk/89695, torch.jit.annotations.parse_type_line can cause arbitrary code execution because eval is used unsafely. The fix for this issue is available in version 1.13.1. There is a release checker in [issue #89855](https://github.com/pytorch/pytorch/issues/89855).",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-47fc-vmwq-366v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-45907",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-45907"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/88868"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/767f6aa49fe20a2766b9843d01e3b7f7793df6a3"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/89855"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/pull/89189"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/releases/tag/v1.13.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-47fc-vmwq-366v"
+                }
+            ],
+            "published_at": "2022-11-26T03:30:27Z",
+            "updated_at": "2023-01-30T05:01:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 1.13.0",
+                    "first_patched_version": {
+                        "identifier": "1.13.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 1.13.0",
+            "first_patched_version": {
+                "identifier": "1.13.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/56",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/56",
+        "created_at": "2024-05-23T00:30:43Z",
+        "updated_at": "2024-05-23T00:30:43Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 55,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "test/apis/batch/image-classifier-alexnet/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-47fc-vmwq-366v",
+            "cve_id": "CVE-2022-45907",
+            "summary": "PyTorch vulnerable to arbitrary code execution",
+            "description": "In PyTorch before trunk/89695, torch.jit.annotations.parse_type_line can cause arbitrary code execution because eval is used unsafely. The fix for this issue is available in version 1.13.1. There is a release checker in [issue #89855](https://github.com/pytorch/pytorch/issues/89855).",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-47fc-vmwq-366v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-45907",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-45907"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/88868"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/767f6aa49fe20a2766b9843d01e3b7f7793df6a3"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/89855"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/pull/89189"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/releases/tag/v1.13.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-47fc-vmwq-366v"
+                }
+            ],
+            "published_at": "2022-11-26T03:30:27Z",
+            "updated_at": "2023-01-30T05:01:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 1.13.0",
+                    "first_patched_version": {
+                        "identifier": "1.13.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 1.13.0",
+            "first_patched_version": {
+                "identifier": "1.13.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/55",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/55",
+        "created_at": "2024-05-23T00:30:43Z",
+        "updated_at": "2024-05-23T00:30:43Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 54,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37q5-v5qm-c9v8",
+            "cve_id": "CVE-2024-3568",
+            "summary": "Transformers Deserialization of Untrusted Data vulnerability",
+            "description": "The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-37q5-v5qm-c9v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3568",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3568"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/693667b8ac8138b83f8adb6522ddaf42fa07c125"
+                },
+                {
+                    "url": "https://huntr.com/bounties/b3c36992-5264-4d7f-9906-a996efafba8f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37q5-v5qm-c9v8"
+                }
+            ],
+            "published_at": "2024-04-10T18:30:48Z",
+            "updated_at": "2024-04-10T22:20:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.38.0",
+                    "first_patched_version": {
+                        "identifier": "4.38.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                "score": 3.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.38.0",
+            "first_patched_version": {
+                "identifier": "4.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/54",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/54",
+        "created_at": "2024-05-23T00:30:43Z",
+        "updated_at": "2024-05-23T00:30:43Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 53,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3863-2447-669p",
+            "cve_id": "CVE-2023-6730",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-3863-2447-669p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6730"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/423611ee-7a2a-442a-babb-3ed2f8385c16"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3863-2447-669p"
+                }
+            ],
+            "published_at": "2023-12-19T15:30:30Z",
+            "updated_at": "2023-12-28T05:05:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "score": 9.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/53",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/53",
+        "created_at": "2024-05-23T00:30:43Z",
+        "updated_at": "2024-05-23T00:30:43Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 52,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v68g-wm8c-6x7j",
+            "cve_id": "CVE-2023-7018",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v68g-wm8c-6x7j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-7018",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-7018"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/e1a3e548-e53a-48df-b708-9ee62140963c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v68g-wm8c-6x7j"
+                }
+            ],
+            "published_at": "2023-12-20T18:30:32Z",
+            "updated_at": "2024-01-02T15:27:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/52",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/52",
+        "created_at": "2024-05-23T00:30:42Z",
+        "updated_at": "2024-05-23T00:30:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 51,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-282v-666c-3fvg",
+            "cve_id": "CVE-2023-2800",
+            "summary": "transformers has Insecure Temporary File",
+            "description": "Insecure Temporary File in GitHub repository huggingface/transformers 4.29.2 and prior. A fix is available at commit 80ca92470938bbcc348e2d9cf4734c7c25cb1c43 and has been released as part of version 4.30.0.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-282v-666c-3fvg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-2800",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-2800"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/80ca92470938bbcc348e2d9cf4734c7c25cb1c43"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/a3867b4e-6701-4418-8c20-3c6e7084a44a"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/23372"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-282v-666c-3fvg"
+                }
+            ],
+            "published_at": "2023-05-18T18:30:35Z",
+            "updated_at": "2023-11-09T05:05:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.30.0",
+                    "first_patched_version": {
+                        "identifier": "4.30.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 4.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-377",
+                    "name": "Insecure Temporary File"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.30.0",
+            "first_patched_version": {
+                "identifier": "4.30.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/51",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/51",
+        "created_at": "2024-05-23T00:30:42Z",
+        "updated_at": "2024-05-23T00:30:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 50,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-gpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-47fc-vmwq-366v",
+            "cve_id": "CVE-2022-45907",
+            "summary": "PyTorch vulnerable to arbitrary code execution",
+            "description": "In PyTorch before trunk/89695, torch.jit.annotations.parse_type_line can cause arbitrary code execution because eval is used unsafely. The fix for this issue is available in version 1.13.1. There is a release checker in [issue #89855](https://github.com/pytorch/pytorch/issues/89855).",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-47fc-vmwq-366v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-45907",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-45907"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/88868"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/767f6aa49fe20a2766b9843d01e3b7f7793df6a3"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/89855"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/pull/89189"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/releases/tag/v1.13.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-47fc-vmwq-366v"
+                }
+            ],
+            "published_at": "2022-11-26T03:30:27Z",
+            "updated_at": "2023-01-30T05:01:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 1.13.0",
+                    "first_patched_version": {
+                        "identifier": "1.13.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 1.13.0",
+            "first_patched_version": {
+                "identifier": "1.13.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/50",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/50",
+        "created_at": "2024-05-23T00:30:42Z",
+        "updated_at": "2024-05-23T00:30:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 49,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37q5-v5qm-c9v8",
+            "cve_id": "CVE-2024-3568",
+            "summary": "Transformers Deserialization of Untrusted Data vulnerability",
+            "description": "The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-37q5-v5qm-c9v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3568",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3568"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/693667b8ac8138b83f8adb6522ddaf42fa07c125"
+                },
+                {
+                    "url": "https://huntr.com/bounties/b3c36992-5264-4d7f-9906-a996efafba8f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37q5-v5qm-c9v8"
+                }
+            ],
+            "published_at": "2024-04-10T18:30:48Z",
+            "updated_at": "2024-04-10T22:20:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.38.0",
+                    "first_patched_version": {
+                        "identifier": "4.38.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                "score": 3.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.38.0",
+            "first_patched_version": {
+                "identifier": "4.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/49",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/49",
+        "created_at": "2024-05-23T00:30:42Z",
+        "updated_at": "2024-05-23T00:30:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 48,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3863-2447-669p",
+            "cve_id": "CVE-2023-6730",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-3863-2447-669p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6730"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/423611ee-7a2a-442a-babb-3ed2f8385c16"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3863-2447-669p"
+                }
+            ],
+            "published_at": "2023-12-19T15:30:30Z",
+            "updated_at": "2023-12-28T05:05:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "score": 9.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/48",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/48",
+        "created_at": "2024-05-23T00:30:41Z",
+        "updated_at": "2024-05-23T00:30:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 47,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v68g-wm8c-6x7j",
+            "cve_id": "CVE-2023-7018",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v68g-wm8c-6x7j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-7018",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-7018"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/e1a3e548-e53a-48df-b708-9ee62140963c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v68g-wm8c-6x7j"
+                }
+            ],
+            "published_at": "2023-12-20T18:30:32Z",
+            "updated_at": "2024-01-02T15:27:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/47",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/47",
+        "created_at": "2024-05-23T00:30:41Z",
+        "updated_at": "2024-05-23T00:30:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 46,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-282v-666c-3fvg",
+            "cve_id": "CVE-2023-2800",
+            "summary": "transformers has Insecure Temporary File",
+            "description": "Insecure Temporary File in GitHub repository huggingface/transformers 4.29.2 and prior. A fix is available at commit 80ca92470938bbcc348e2d9cf4734c7c25cb1c43 and has been released as part of version 4.30.0.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-282v-666c-3fvg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-2800",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-2800"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/80ca92470938bbcc348e2d9cf4734c7c25cb1c43"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/a3867b4e-6701-4418-8c20-3c6e7084a44a"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/23372"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-282v-666c-3fvg"
+                }
+            ],
+            "published_at": "2023-05-18T18:30:35Z",
+            "updated_at": "2023-11-09T05:05:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.30.0",
+                    "first_patched_version": {
+                        "identifier": "4.30.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 4.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-377",
+                    "name": "Insecure Temporary File"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.30.0",
+            "first_patched_version": {
+                "identifier": "4.30.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/46",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/46",
+        "created_at": "2024-05-23T00:30:41Z",
+        "updated_at": "2024-05-23T00:30:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 45,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "test/apis/async/text-generator/app/requirements-cpu.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-47fc-vmwq-366v",
+            "cve_id": "CVE-2022-45907",
+            "summary": "PyTorch vulnerable to arbitrary code execution",
+            "description": "In PyTorch before trunk/89695, torch.jit.annotations.parse_type_line can cause arbitrary code execution because eval is used unsafely. The fix for this issue is available in version 1.13.1. There is a release checker in [issue #89855](https://github.com/pytorch/pytorch/issues/89855).",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-47fc-vmwq-366v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-45907",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-45907"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/88868"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/767f6aa49fe20a2766b9843d01e3b7f7793df6a3"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/89855"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/pull/89189"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/releases/tag/v1.13.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-47fc-vmwq-366v"
+                }
+            ],
+            "published_at": "2022-11-26T03:30:27Z",
+            "updated_at": "2023-01-30T05:01:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 1.13.0",
+                    "first_patched_version": {
+                        "identifier": "1.13.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 1.13.0",
+            "first_patched_version": {
+                "identifier": "1.13.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/45",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/45",
+        "created_at": "2024-05-23T00:30:41Z",
+        "updated_at": "2024-05-23T00:30:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 44,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-xrjj-mj9h-534m",
+            "cve_id": "CVE-2022-41717",
+            "summary": "golang.org/x/net/http2 vulnerable to possible excessive memory growth",
+            "description": "An attacker can cause excessive memory growth in a Go server accepting HTTP/2 requests. HTTP/2 server connections contain a cache of HTTP header keys sent by the client. While the total number of entries in this cache is capped, an attacker sending very large keys can cause the server to allocate approximately 64 MiB per open connection.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-xrjj-mj9h-534m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-41717",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-41717"
+                },
+                {
+                    "url": "https://go.dev/cl/455635"
+                },
+                {
+                    "url": "https://go.dev/cl/455717"
+                },
+                {
+                    "url": "https://go.dev/issue/56350"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/L_3rmdT0BMU/m/yZDrXjIiBQAJ"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2022-1144"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202311-09"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZSVEMQV5ROY5YW5QE3I57HT3ITWG5GCV"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WPEIZ7AMEJCZXU3FEJZMVRNHQZXX5P3I"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/T7N5GV4CHH6WAGX3GFMDD3COEOVCZ4RI"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/REMHVVIBDNKSRKNOTV7EQSB7CYQWOUOU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QBKBAZBIOXZV5QCFHZNSVXULR32XJCYD"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/Q52IQI754YAE4XPR4QBRWPIVZWYGZ4FS"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PW3XC47AUW5J5M2ULJX7WCCL3B2ETLMT"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PUM4DIVOLJCBK5ZDP4LJOL24GXT3YSIR"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/NQGNAXK3YBPMUP3J4TECIRDHFGW37522"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KEOTKBUPZXHE3F352JBYNTSNRXYLWD6P"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CSVIS6MTMFVBA7JPMRAUNKUOYEVSJYSB"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CHHITS4PUOZAKFIUBQAQZC7JWXMOYE4B"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ANIOPUXWIHVRA6CEWXCGOMX3YYS6KFHG"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5RSKA2II6QTD4YUKUNDVJQSRYSFC4VFR"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/56B2FFESRYYP6IY2AZ3UWXLWKZ5IYZN4"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4SBIUECMLNC572P23DDOKJNKPJVX26SP"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4BUK2ZIAGCULOOYDNH25JPU6JBES5NF2"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-xrjj-mj9h-534m"
+                }
+            ],
+            "published_at": "2022-12-08T21:30:19Z",
+            "updated_at": "2024-05-20T21:41:42Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net/http2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.4.0",
+                    "first_patched_version": {
+                        "identifier": "0.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.4.0",
+                    "first_patched_version": {
+                        "identifier": "0.4.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.4.0",
+            "first_patched_version": {
+                "identifier": "0.4.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/44",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/44",
+        "created_at": "2024-05-23T00:30:40Z",
+        "updated_at": "2024-05-23T00:30:40Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 43,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "github.com/containerd/containerd"
+            },
+            "manifest_path": "go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-c9cp-9c75-9v8c",
+            "cve_id": null,
+            "summary": "containerd started with non-empty inheritable Linux process capabilities",
+            "description": "### Impact\n\nA bug was found in containerd where containers were incorrectly started with non-empty inheritable Linux process capabilities, creating an atypical Linux environment and enabling programs with inheritable file capabilities to elevate those capabilities to the permitted set during `execve(2)`.  Normally, when executable programs have specified permitted file capabilities, otherwise unprivileged users and processes can execute those programs and gain the specified file capabilities up to the bounding set.  Due to this bug, containers which included executable programs with inheritable file capabilities allowed otherwise unprivileged users and processes to additionally gain these inheritable file capabilities up to the container's bounding set.  Containers which use Linux users and groups to perform privilege separation inside the container are most directly impacted.\n\nThis bug did not affect the container security sandbox as the inheritable set never contained more capabilities than were included in the container's bounding set.\n\n\n### Patches\n\nThis bug has been fixed in containerd 1.5.11 and 1.6.2.  Users should update to these versions as soon as possible.  Running containers should be stopped, deleted, and recreated for the inheritable capabilities to be reset.\n\nThis fix changes containerd behavior such that containers are started with a more typical Linux environment.  Refer to `capabilities(7)` for a description of how capabilities work.  Note that permitted file capabilities continue to allow for privileges to be raised up to the container's bounding set and that processes may add capabilities to their own inheritable set up to the container's bounding set per the rules described in the manual page.  In all cases the container's bounding set provides an upper bound on the capabilities that can be assumed and provides for the container security sandbox.\n\n### Workarounds\n\nThe entrypoint of a container can be modified to use a utility like `capsh(1)` to drop inheritable capabilities prior to the primary process starting.\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n\n* [Open an issue](https://github.com/containerd/containerd/issues/new)\n* Email us at [security@containerd.io](mailto:security@containerd.io) if you think you’ve found a security bug",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-c9cp-9c75-9v8c",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/containerd/containerd/security/advisories/GHSA-c9cp-9c75-9v8c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-c9cp-9c75-9v8c"
+                }
+            ],
+            "published_at": "2024-05-14T22:04:56Z",
+            "updated_at": "2024-05-14T22:04:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "github.com/containerd/containerd"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 1.5.11",
+                    "first_patched_version": {
+                        "identifier": "1.5.11"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "github.com/containerd/containerd"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 1.6.0, < 1.6.2",
+                    "first_patched_version": {
+                        "identifier": "1.6.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "github.com/containerd/containerd"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 1.5.11",
+            "first_patched_version": {
+                "identifier": "1.5.11"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/43",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/43",
+        "created_at": "2024-05-23T00:30:40Z",
+        "updated_at": "2024-05-23T00:30:40Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 42,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "github.com/docker/docker"
+            },
+            "manifest_path": "go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3fwx-pjgw-3558",
+            "cve_id": "CVE-2021-41091",
+            "summary": "Moby (Docker Engine) Insufficiently restricted permissions on data directory",
+            "description": "## Impact\n\nA bug was found in Moby (Docker Engine) where the data directory (typically `/var/lib/docker`) contained subdirectories with insufficiently restricted permissions, allowing otherwise unprivileged Linux users to traverse directory contents and execute programs.  When containers included executable programs with extended permission bits (such as `setuid`), unprivileged Linux users could discover and execute those programs.  When the UID of an unprivileged Linux user on the host collided with the file owner or group inside a container, the unprivileged Linux user on the host could discover, read, and modify those files.\n\n## Patches\n\nThis bug has been fixed in Moby (Docker Engine) 20.10.9.  Users should update to this version as soon as possible.  Running containers should be stopped and restarted for the permissions to be fixed.\n\n## Workarounds\n\nLimit access to the host to trusted users.  Limit access to host volumes to trusted containers.\n\n## Credits\n\nThe Moby project would like to thank Joan Bruguera for responsibly disclosing this issue in accordance with the [Moby security policy](https://github.com/moby/moby/blob/master/SECURITY.md).\n\n## For more information\n\nIf you have any questions or comments about this advisory:\n\n* [Open an issue](https://github.com/moby/moby/issues/new)\n* Email us at security@docker.com if you think you’ve found a security bug",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-3fwx-pjgw-3558",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-41091",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/moby/moby/security/advisories/GHSA-3fwx-pjgw-3558"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-41091"
+                },
+                {
+                    "url": "https://github.com/moby/moby/commit/f0ab919f518c47240ea0e72d0999576bb8008e64"
+                },
+                {
+                    "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/B5Q6G6I4W5COQE25QMC7FJY3I3PAYFBB"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZNFADTCHHYWVM6W4NJ6CB4FNFM2VMBIB"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3fwx-pjgw-3558"
+                }
+            ],
+            "published_at": "2024-01-31T23:28:58Z",
+            "updated_at": "2024-05-14T22:00:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "github.com/moby/moby"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 20.10.9",
+                    "first_patched_version": {
+                        "identifier": "20.10.9"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "github.com/docker/docker"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 20.10.9",
+                    "first_patched_version": {
+                        "identifier": "20.10.9"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-281",
+                    "name": "Improper Preservation of Permissions"
+                },
+                {
+                    "cwe_id": "CWE-732",
+                    "name": "Incorrect Permission Assignment for Critical Resource"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "github.com/docker/docker"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 20.10.9",
+            "first_patched_version": {
+                "identifier": "20.10.9"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/cortex/dependabot/alerts/42",
+        "html_url": "https://github.com/fcas/cortex/security/dependabot/42",
+        "created_at": "2024-05-23T00:30:40Z",
+        "updated_at": "2024-05-23T00:30:40Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]
