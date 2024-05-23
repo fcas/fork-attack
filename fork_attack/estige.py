@@ -6,6 +6,7 @@ from distutils.dir_util import copy_tree
 from pathlib import Path
 
 import git
+import pandas as pd
 import requests
 from git import GitCommandError
 from github import Github, UnknownObjectException
@@ -29,16 +30,31 @@ headers = {
     'X-GitHub-Api-Version': '2022-11-28'
 }
 
+code_analysis_result = pd.DataFrame()
+dependabot_result = pd.DataFrame()
+check_archive = False
 
-def code_analysis(repo_name):
+
+def vulnerability_analysis(repo_name):
     os.chdir(f"{current_path.parent}/data")
     code_analysis_alerts_url = f"https://api.github.com/repos/fcas/{repo_name}/code-scanning/alerts"
     dependabot_alerts_url = f"https://api.github.com/repos/fcas/{repo_name}/dependabot/alerts"
 
     payload = {}
 
-    code_analysis_response = requests.request("GET", code_analysis_alerts_url, headers=headers, data=payload)
-    dependabot_alerts_response = requests.request("GET", dependabot_alerts_url, headers=headers, data=payload)
+    code_analysis_response = requests.request("GET", code_analysis_alerts_url, headers=headers, data=payload).json()
+    dependabot_alerts_response = requests.request("GET", dependabot_alerts_url, headers=headers, data=payload).json()
+    if isinstance(code_analysis_response, list) and code_analysis_response:
+        d = pd.json_normalize(code_analysis_response)
+        d["repo_name"] = repo_name
+        global code_analysis_result
+        code_analysis_result = pd.concat([code_analysis_result, d])
+    if isinstance(dependabot_alerts_response, list) and dependabot_alerts_response:
+        d = pd.json_normalize(dependabot_alerts_response)
+        d["repo_name"] = repo_name
+        global dependabot_result
+        dependabot_result = pd.concat([dependabot_result, d])
+
     now = date.today()
 
     code_analysis_filename = f'{now}/{repo_name}_code_analysis.json'
@@ -46,9 +62,9 @@ def code_analysis(repo_name):
     os.makedirs(os.path.dirname(code_analysis_filename), exist_ok=True)
     os.makedirs(os.path.dirname(dependabot_alerts_filename), exist_ok=True)
     with open(code_analysis_filename, 'w', encoding='utf-8') as f:
-        json.dump(code_analysis_response.json(), f, ensure_ascii=False, indent=4)
+        json.dump(code_analysis_response, f, ensure_ascii=False, indent=4)
     with open(dependabot_alerts_filename, 'w', encoding='utf-8') as f:
-        json.dump(dependabot_alerts_response.json(), f, ensure_ascii=False, indent=4)
+        json.dump(dependabot_alerts_response, f, ensure_ascii=False, indent=4)
 
 
 def add_ymls(local_repo_path, branch):
@@ -79,31 +95,45 @@ def attack():
             repo_str = repo_config[0]
             branch = repo_config[1]
             clone = repo_config[2]
+
             url = repo_str.replace("https://github.com/", "").split("/")
-            repo_name_str = url[1]
-            path_to_clone = os.path.join(path, repo_name_str)
-            repo_to_clone = f"https://github.com/{user.login}/{repo_name_str}.git"
-            remote = f"{repo_str}.git"
+            repo_name = url[1]
+            repo_owner = url[0]
 
-            try:
-                repo = g.get_organization(url[0]).get_repo(url[1])
-            except UnknownObjectException:
-                repo = g.get_user(url[0]).get_repo(url[1])
-            user.create_fork(repo)
+            if check_archive:
+                response = requests.request("GET", f"https://api.github.com/repos/{repo_owner}/{repo_name}",
+                                            headers=headers, data={}).json()
+                if response.get("disabled", True):
+                    logger.warning(f"Repository {repo_str} is disabled")
 
-            if not os.path.isdir(path_to_clone) and clone:
-                try:
-                    local_repo = git.Repo.clone_from(repo_to_clone, path_to_clone, branch=branch)
-                    git.Repo.create_remote(local_repo, "upstream", remote)
-                    add_ymls(path_to_clone, branch)
-                except GitCommandError:
-                    branch = "main"
-                    local_repo = git.Repo.clone_from(repo_to_clone, path_to_clone, branch=branch)
-                    git.Repo.create_remote(local_repo, "upstream", remote)
-                    add_ymls(path_to_clone, branch)
-            code_analysis(repo_name_str)
+            fork(branch, clone, repo_name, repo_owner)
+            vulnerability_analysis(repo_name)
+
     except Exception as e:
         logger.info(f"Error processing {repo_config}. {e}")
 
 
+def fork(branch, clone, repo_name_str, repo_owner):
+    path_to_clone = os.path.join(path, repo_name_str)
+    if not os.path.isdir(path_to_clone) and clone:
+        repo_to_clone = f"https://github.com/{user.login}/{repo_name_str}.git"
+        remote = f"https://github.com/{repo_owner}/{repo_name_str}.git"
+        try:
+            repo = g.get_organization(repo_owner).get_repo(repo_name_str)
+        except UnknownObjectException:
+            repo = g.get_user(repo_owner).get_repo(repo_name_str)
+        user.create_fork(repo)
+        try:
+            local_repo = git.Repo.clone_from(repo_to_clone, path_to_clone, branch=branch)
+            git.Repo.create_remote(local_repo, "upstream", remote)
+            add_ymls(path_to_clone, branch)
+        except GitCommandError:
+            branch = "main"
+            local_repo = git.Repo.clone_from(repo_to_clone, path_to_clone, branch=branch)
+            git.Repo.create_remote(local_repo, "upstream", remote)
+            add_ymls(path_to_clone, branch)
+
+
 attack()
+code_analysis_result.to_csv("code_analysis_result.csv")
+dependabot_result.to_csv("dependabot_result.csv")

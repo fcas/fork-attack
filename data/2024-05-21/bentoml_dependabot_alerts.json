@@ -1,0 +1,4228 @@
+[
+    {
+        "number": 24,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-xrjj-mj9h-534m",
+            "cve_id": "CVE-2022-41717",
+            "summary": "golang.org/x/net/http2 vulnerable to possible excessive memory growth",
+            "description": "An attacker can cause excessive memory growth in a Go server accepting HTTP/2 requests. HTTP/2 server connections contain a cache of HTTP header keys sent by the client. While the total number of entries in this cache is capped, an attacker sending very large keys can cause the server to allocate approximately 64 MiB per open connection.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-xrjj-mj9h-534m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-41717",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-41717"
+                },
+                {
+                    "url": "https://go.dev/cl/455635"
+                },
+                {
+                    "url": "https://go.dev/cl/455717"
+                },
+                {
+                    "url": "https://go.dev/issue/56350"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/L_3rmdT0BMU/m/yZDrXjIiBQAJ"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2022-1144"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202311-09"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZSVEMQV5ROY5YW5QE3I57HT3ITWG5GCV"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WPEIZ7AMEJCZXU3FEJZMVRNHQZXX5P3I"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/T7N5GV4CHH6WAGX3GFMDD3COEOVCZ4RI"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/REMHVVIBDNKSRKNOTV7EQSB7CYQWOUOU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QBKBAZBIOXZV5QCFHZNSVXULR32XJCYD"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/Q52IQI754YAE4XPR4QBRWPIVZWYGZ4FS"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PW3XC47AUW5J5M2ULJX7WCCL3B2ETLMT"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PUM4DIVOLJCBK5ZDP4LJOL24GXT3YSIR"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/NQGNAXK3YBPMUP3J4TECIRDHFGW37522"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KEOTKBUPZXHE3F352JBYNTSNRXYLWD6P"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CSVIS6MTMFVBA7JPMRAUNKUOYEVSJYSB"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CHHITS4PUOZAKFIUBQAQZC7JWXMOYE4B"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ANIOPUXWIHVRA6CEWXCGOMX3YYS6KFHG"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5RSKA2II6QTD4YUKUNDVJQSRYSFC4VFR"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/56B2FFESRYYP6IY2AZ3UWXLWKZ5IYZN4"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4SBIUECMLNC572P23DDOKJNKPJVX26SP"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4BUK2ZIAGCULOOYDNH25JPU6JBES5NF2"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-xrjj-mj9h-534m"
+                }
+            ],
+            "published_at": "2022-12-08T21:30:19Z",
+            "updated_at": "2024-05-20T21:41:42Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net/http2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.4.0",
+                    "first_patched_version": {
+                        "identifier": "0.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.4.0",
+                    "first_patched_version": {
+                        "identifier": "0.4.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.4.0",
+            "first_patched_version": {
+                "identifier": "0.4.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/24",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/24",
+        "created_at": "2024-05-20T21:59:48Z",
+        "updated_at": "2024-05-20T21:59:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 23,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "h2"
+            },
+            "manifest_path": "grpc-client/rust/Cargo.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q6cp-qfwq-4gcv",
+            "cve_id": null,
+            "summary": "h2 servers vulnerable to degradation of service with CONTINUATION Flood",
+            "description": "An attacker can send a flood of CONTINUATION frames, causing `h2` to process them indefinitely. This results in an increase in CPU usage.\n\nTokio task budget helps prevent this from a complete denial-of-service, as the server can still respond to legitimate requests, albeit with increased latency.\n\nMore details at https://seanmonstar.com/blog/hyper-http2-continuation-flood/.\n\nPatches available for 0.4.x and 0.3.x versions.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-q6cp-qfwq-4gcv",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2024-0332.html"
+                },
+                {
+                    "url": "https://seanmonstar.com/blog/hyper-http2-continuation-flood"
+                },
+                {
+                    "url": "https://www.kb.cert.org/vuls/id/421644"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q6cp-qfwq-4gcv"
+                }
+            ],
+            "published_at": "2024-04-05T15:05:32Z",
+            "updated_at": "2024-04-05T15:05:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "h2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.3.26",
+                    "first_patched_version": {
+                        "identifier": "0.3.26"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "h2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.4.0, < 0.4.4",
+                    "first_patched_version": {
+                        "identifier": "0.4.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "h2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.3.26",
+            "first_patched_version": {
+                "identifier": "0.3.26"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/23",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/23",
+        "created_at": "2024-05-20T13:20:19Z",
+        "updated_at": "2024-05-20T13:20:19Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 22,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "mio"
+            },
+            "manifest_path": "grpc-client/rust/Cargo.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-r8w9-5wcg-vfj7",
+            "cve_id": "CVE-2024-27308",
+            "summary": "Mio's tokens for named pipes may be delivered after deregistration",
+            "description": "### Impact\n\nWhen using named pipes on Windows, mio will under some circumstances return invalid tokens that correspond to named pipes that have already been deregistered from the mio registry. The impact of this vulnerability depends on how mio is used. For some applications, invalid tokens may be ignored or cause a warning or a crash. On the other hand, for applications that store pointers in the tokens, this vulnerability may result in a use-after-free.\n\nFor users of Tokio, this vulnerability is serious and can result in a use-after-free in Tokio.\n\nThe vulnerability is Windows-specific, and can only happen if you are using named pipes. Other IO resources are not affected.\n\n### Affected versions\nThis vulnerability has been fixed in mio v0.8.11.\n\nAll versions of mio between v0.7.2 and v0.8.10 are vulnerable.\n\nTokio is vulnerable when you are using a vulnerable version of mio AND you are using at least Tokio v1.30.0. Versions of Tokio prior to v1.30.0 will ignore invalid tokens, so they are not vulnerable.\n\n### Workarounds\nVulnerable libraries that use mio can work around this issue by detecting and ignoring invalid tokens.\n\n### Technical details\n\nWhen an IO resource registered with mio has a readiness event, mio delivers that readiness event to the user using a user-specified token. Mio guarantees that when an IO resource is [deregistered](https://docs.rs/mio/latest/mio/struct.Registry.html#method.deregister), then it will never return the token for that IO resource again. However, for named pipes on windows, mio may sometimes deliver the token for a named pipe even though the named pipe has been previously deregistered.\n\nThis vulnerability was originally reported in the Tokio issue tracker: [tokio-rs/tokio#6369](https://github.com/tokio-rs/tokio/issues/6369)\nThis vulnerability was fixed in: [tokio-rs/mio#1760](https://github.com/tokio-rs/mio/pull/1760)\nThis vulnerability is also known as [RUSTSEC-2024-0019](https://rustsec.org/advisories/RUSTSEC-2024-0019.html).\n\nThank you to @rofoun and @radekvit for discovering and reporting this issue.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-r8w9-5wcg-vfj7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-27308",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/tokio-rs/mio/security/advisories/GHSA-r8w9-5wcg-vfj7"
+                },
+                {
+                    "url": "https://github.com/tokio-rs/tokio/issues/6369"
+                },
+                {
+                    "url": "https://github.com/tokio-rs/mio/pull/1760"
+                },
+                {
+                    "url": "https://github.com/tokio-rs/mio/commit/90d4fe00df870acd3d38f3dc4face9aacab8fbb9"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-27308"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-r8w9-5wcg-vfj7"
+                }
+            ],
+            "published_at": "2024-03-04T20:44:35Z",
+            "updated_at": "2024-03-06T21:37:37Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "mio"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0.7.2, <= 0.8.10",
+                    "first_patched_version": {
+                        "identifier": "0.8.11"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-416",
+                    "name": "Use After Free"
+                },
+                {
+                    "cwe_id": "CWE-672",
+                    "name": "Operation on a Resource after Expiration or Release"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "mio"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 0.7.2, <= 0.8.10",
+            "first_patched_version": {
+                "identifier": "0.8.11"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/22",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/22",
+        "created_at": "2024-05-20T13:20:19Z",
+        "updated_at": "2024-05-20T13:20:19Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 21,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "remove_dir_all"
+            },
+            "manifest_path": "grpc-client/rust/Cargo.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mc8h-8q98-g5hr",
+            "cve_id": null,
+            "summary": "Race Condition Enabling Link Following and Time-of-check Time-of-use (TOCTOU) Race Condition in remove_dir_all",
+            "description": "The `remove_dir_all` crate is a Rust library that offers additional features over the Rust standard library `fs::remove_dir_all` function. It suffers the same class of failure as the code it was layering over: TOCTOU race conditions, with the ability to cause arbitrary paths to be deleted by substituting a symlink for a path after the type of the path was checked.\n\nThanks to the Rust security team for identifying the problem and alerting us to it.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-mc8h-8q98-g5hr",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/XAMPPRocky/remove_dir_all/security/advisories/GHSA-mc8h-8q98-g5hr"
+                },
+                {
+                    "url": "https://github.com/XAMPPRocky/remove_dir_all/commit/7247a8b6ee59fc99bbb69ca6b3ca4bfd8c809ead"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2023-0018.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mc8h-8q98-g5hr"
+                }
+            ],
+            "published_at": "2023-02-24T16:23:59Z",
+            "updated_at": "2023-03-06T19:51:56Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "remove_dir_all"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 0.8.0",
+                    "first_patched_version": {
+                        "identifier": "0.8.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-366",
+                    "name": "Race Condition within a Thread"
+                },
+                {
+                    "cwe_id": "CWE-367",
+                    "name": "Time-of-check Time-of-use (TOCTOU) Race Condition"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "remove_dir_all"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 0.8.0",
+            "first_patched_version": {
+                "identifier": "0.8.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/21",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/21",
+        "created_at": "2024-05-20T13:20:19Z",
+        "updated_at": "2024-05-20T13:20:19Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 20,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "protobufjs"
+            },
+            "manifest_path": "grpc-client/node/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h755-8qp9-cq85",
+            "cve_id": "CVE-2023-36665",
+            "summary": "protobufjs Prototype Pollution vulnerability",
+            "description": "protobuf.js (aka protobufjs) 6.10.0 until 6.11.4 and 7.0.0 until 7.2.4 allows Prototype Pollution, a different vulnerability than CVE-2022-25878. A user-controlled protobuf message can be used by an attacker to pollute the prototype of Object.prototype by adding and overwriting its data and functions. Exploitation can involve: (1) using the function parse to parse protobuf messages on the fly, (2) loading .proto files by using load/loadSync functions, or (3) providing untrusted input to the functions ReflectionObject.setParsedOption and util.setProperty. NOTE: this CVE Record is about `Object.constructor.prototype.<new-property> = ...;` whereas CVE-2022-25878 was about `Object.__proto__.<new-property> = ...;` instead.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-h755-8qp9-cq85",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-36665",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-36665"
+                },
+                {
+                    "url": "https://github.com/protobufjs/protobuf.js/pull/1899"
+                },
+                {
+                    "url": "https://github.com/protobufjs/protobuf.js/commit/e66379f451b0393c27d87b37fa7d271619e16b0d"
+                },
+                {
+                    "url": "https://github.com/protobufjs/protobuf.js/compare/protobufjs-v7.2.3...protobufjs-v7.2.4"
+                },
+                {
+                    "url": "https://github.com/protobufjs/protobuf.js/releases/tag/protobufjs-v7.2.4"
+                },
+                {
+                    "url": "https://www.code-intelligence.com/blog/cve-protobufjs-prototype-pollution-cve-2023-36665"
+                },
+                {
+                    "url": "https://github.com/protobufjs/protobuf.js/commits/release-6.11.4"
+                },
+                {
+                    "url": "https://github.com/protobufjs/protobuf.js/issues/1918#issuecomment-1723500294"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h755-8qp9-cq85"
+                }
+            ],
+            "published_at": "2023-07-05T15:30:24Z",
+            "updated_at": "2024-04-10T19:54:41Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "protobufjs"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": ">= 6.10.0, < 6.11.4",
+                    "first_patched_version": {
+                        "identifier": "6.11.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "protobufjs"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.2.5",
+                    "first_patched_version": {
+                        "identifier": "7.2.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1321",
+                    "name": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "protobufjs"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": ">= 7.0.0, < 7.2.5",
+            "first_patched_version": {
+                "identifier": "7.2.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/20",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/20",
+        "created_at": "2024-05-20T13:20:19Z",
+        "updated_at": "2024-05-20T13:20:19Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 19,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "tar"
+            },
+            "manifest_path": "grpc-client/node/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f5x3-32g6-xq36",
+            "cve_id": "CVE-2024-28863",
+            "summary": "Denial of service while parsing a tar file due to lack of folders count validation",
+            "description": "## Description: \nDuring some analysis today on npm's `node-tar` package I came across the folder creation process, Basicly if you provide node-tar with a path like this `./a/b/c/foo.txt` it would create every folder and sub-folder here a, b and c until it reaches the last folder to create `foo.txt`, In-this case I noticed that there's no validation at all on the amount of folders being created, that said we're actually able to CPU and memory consume the system running node-tar and even crash the nodejs client within few seconds of running it using a path with too many sub-folders inside\n\n## Steps To Reproduce:\nYou can reproduce this issue by downloading the tar file I provided in the resources and using node-tar to extract it, you should get the same behavior as the video\n\n## Proof Of Concept:\nHere's a [video](https://hackerone-us-west-2-production-attachments.s3.us-west-2.amazonaws.com/3i7uojw8s52psar6pg8zkdo4h9io?response-content-disposition=attachment%3B%20filename%3D%22tar-dos-poc.webm%22%3B%20filename%2A%3DUTF-8%27%27tar-dos-poc.webm&response-content-type=video%2Fwebm&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQGK6FURQSWWGDXHA%2F20240312%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240312T080103Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDcaCXVzLXdlc3QtMiJHMEUCID3xYDc6emXVPOg8iVR5dVk0u3gguTPIDJ0OIE%2BKxj17AiEAi%2BGiay1gGMWhH%2F031fvMYnSsa8U7CnpZpxvFAYqNRwgqsQUIQBADGgwwMTM2MTkyNzQ4NDkiDAaj6OgUL3gg4hhLLCqOBUUrOgWSqaK%2FmxN6nKRvB4Who3LIyzswFKm9LV94GiSVFP3zXYA480voCmAHTg7eBL7%2BrYgV2RtXbhF4aCFMCN3qu7GeXkIdH7xwVMi9zXHkekviSKZ%2FsZtVVjn7RFqOCKhJl%2FCoiLQJuDuju%2FtfdTGZbEbGsPgKHoILYbRp81K51zeRL21okjsOehmypkZzq%2BoGrXIX0ynPOKujxw27uqdF4T%2BF9ynodq01vGgwgVBEjHojc4OKOfr1oW5b%2FtGVV59%2BOBVI1hqIKHRG0Ed4SWmp%2BLd1hazGuZPvp52szmegnOj5qr3ubppnKL242bX%2FuAnQKzKK0HpwolqXjsuEeFeM85lxhqHV%2B1BJqaqSHHDa0HUMLZistMRshRlntuchcFQCR6HBa2c8PSnhpVC31zMzvYMfKsI12h4HB6l%2FudrmNrvmH4LmNpi4dZFcio21DzKj%2FRjWmxjH7l8egDyG%2FIgPMY6Ls4IiN7aR1jijYTrBCgPUUHets3BFvqLzHtPFnG3B7%2FYRPnhCLu%2FgzvKN3F8l38KqeTNMHJaxkuhCvEjpFB2SJbi2QZqZZbLj3xASqXoogzbsyPp0Tzp0tH7EKDhPA7H6wwiZukXfFhhlYzP8on9fO2Ajz%2F%2BTDkDjbfWw4KNJ0cFeDsGrUspqQZb5TAKlUge7iOZEc2TZ5uagatSy9Mg08E4nImBSE5QUHDc7Daya1gyqrETMDZBBUHH2RFkGA9qMpEtNrtJ9G%2BPedz%2FpPY1hh9OCp9Pg1BrX97l3SfVzlAMRfNibhywq6qnE35rVnZi%2BEQ1UgBjs9jD%2FQrW49%2FaD0oUDojVeuFFryzRnQxDbKtYgonRcItTvLT5Y0xaK9P0u6H1197%2FMk3XxmjD9%2Fb%2BvBjqxAQWWkKiIxpC1oHEWK9Jt8UdJ39xszDBGpBqjB6Tvt5ePAXSyX8np%2FrBi%2BAPx06O0%2Ba7pU4NmH800EVXxxhgfj9nMw3CeoUIdxorVKtU2Mxw%2FLaAiPgxPS4rqkt65NF7eQYfegcSYDTm2Z%2BHPbz9HfCaVZ28Zqeko6sR%2F29ML4bguqVvHAM4mWPLNDXH33mjG%2BuzLi8e1BF7tNveg2X9G%2FRdcMkojwKYbu6xN3M6aX2alQg%3D%3D&X-Amz-SignedHeaders=host&X-Amz-Signature=1e8235d885f1d61529b7d6b23ea3a0780c300c91d86e925dd8310d5b661ddbe2) show-casing the exploit: \n\n## Impact\n\nDenial of service by crashing the nodejs client when attempting to parse a tar archive, make it run out of heap memory and consuming server CPU and memory resources\n\n## Report resources\n[payload.txt](https://hackerone-us-west-2-production-attachments.s3.us-west-2.amazonaws.com/1e83ayb5dd3350fvj3gst0mqixwk?response-content-disposition=attachment%3B%20filename%3D%22payload.txt%22%3B%20filename%2A%3DUTF-8%27%27payload.txt&response-content-type=text%2Fplain&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQGK6FURQSWWGDXHA%2F20240312%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240312T080103Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDcaCXVzLXdlc3QtMiJHMEUCID3xYDc6emXVPOg8iVR5dVk0u3gguTPIDJ0OIE%2BKxj17AiEAi%2BGiay1gGMWhH%2F031fvMYnSsa8U7CnpZpxvFAYqNRwgqsQUIQBADGgwwMTM2MTkyNzQ4NDkiDAaj6OgUL3gg4hhLLCqOBUUrOgWSqaK%2FmxN6nKRvB4Who3LIyzswFKm9LV94GiSVFP3zXYA480voCmAHTg7eBL7%2BrYgV2RtXbhF4aCFMCN3qu7GeXkIdH7xwVMi9zXHkekviSKZ%2FsZtVVjn7RFqOCKhJl%2FCoiLQJuDuju%2FtfdTGZbEbGsPgKHoILYbRp81K51zeRL21okjsOehmypkZzq%2BoGrXIX0ynPOKujxw27uqdF4T%2BF9ynodq01vGgwgVBEjHojc4OKOfr1oW5b%2FtGVV59%2BOBVI1hqIKHRG0Ed4SWmp%2BLd1hazGuZPvp52szmegnOj5qr3ubppnKL242bX%2FuAnQKzKK0HpwolqXjsuEeFeM85lxhqHV%2B1BJqaqSHHDa0HUMLZistMRshRlntuchcFQCR6HBa2c8PSnhpVC31zMzvYMfKsI12h4HB6l%2FudrmNrvmH4LmNpi4dZFcio21DzKj%2FRjWmxjH7l8egDyG%2FIgPMY6Ls4IiN7aR1jijYTrBCgPUUHets3BFvqLzHtPFnG3B7%2FYRPnhCLu%2FgzvKN3F8l38KqeTNMHJaxkuhCvEjpFB2SJbi2QZqZZbLj3xASqXoogzbsyPp0Tzp0tH7EKDhPA7H6wwiZukXfFhhlYzP8on9fO2Ajz%2F%2BTDkDjbfWw4KNJ0cFeDsGrUspqQZb5TAKlUge7iOZEc2TZ5uagatSy9Mg08E4nImBSE5QUHDc7Daya1gyqrETMDZBBUHH2RFkGA9qMpEtNrtJ9G%2BPedz%2FpPY1hh9OCp9Pg1BrX97l3SfVzlAMRfNibhywq6qnE35rVnZi%2BEQ1UgBjs9jD%2FQrW49%2FaD0oUDojVeuFFryzRnQxDbKtYgonRcItTvLT5Y0xaK9P0u6H1197%2FMk3XxmjD9%2Fb%2BvBjqxAQWWkKiIxpC1oHEWK9Jt8UdJ39xszDBGpBqjB6Tvt5ePAXSyX8np%2FrBi%2BAPx06O0%2Ba7pU4NmH800EVXxxhgfj9nMw3CeoUIdxorVKtU2Mxw%2FLaAiPgxPS4rqkt65NF7eQYfegcSYDTm2Z%2BHPbz9HfCaVZ28Zqeko6sR%2F29ML4bguqVvHAM4mWPLNDXH33mjG%2BuzLi8e1BF7tNveg2X9G%2FRdcMkojwKYbu6xN3M6aX2alQg%3D%3D&X-Amz-SignedHeaders=host&X-Amz-Signature=bad9fe731f05a63a950f99828125653a8c1254750fe0ca7be882e89ecdd449ae)\n[archeive.tar.gz](https://hackerone-us-west-2-production-attachments.s3.us-west-2.amazonaws.com/ymkuh4xnfdcf1soeyi7jc2x4yt2i?response-content-disposition=attachment%3B%20filename%3D%22archive.tar.gz%22%3B%20filename%2A%3DUTF-8%27%27archive.tar.gz&response-content-type=application%2Fx-tar&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQGK6FURQSWWGDXHA%2F20240312%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240312T080103Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDcaCXVzLXdlc3QtMiJHMEUCID3xYDc6emXVPOg8iVR5dVk0u3gguTPIDJ0OIE%2BKxj17AiEAi%2BGiay1gGMWhH%2F031fvMYnSsa8U7CnpZpxvFAYqNRwgqsQUIQBADGgwwMTM2MTkyNzQ4NDkiDAaj6OgUL3gg4hhLLCqOBUUrOgWSqaK%2FmxN6nKRvB4Who3LIyzswFKm9LV94GiSVFP3zXYA480voCmAHTg7eBL7%2BrYgV2RtXbhF4aCFMCN3qu7GeXkIdH7xwVMi9zXHkekviSKZ%2FsZtVVjn7RFqOCKhJl%2FCoiLQJuDuju%2FtfdTGZbEbGsPgKHoILYbRp81K51zeRL21okjsOehmypkZzq%2BoGrXIX0ynPOKujxw27uqdF4T%2BF9ynodq01vGgwgVBEjHojc4OKOfr1oW5b%2FtGVV59%2BOBVI1hqIKHRG0Ed4SWmp%2BLd1hazGuZPvp52szmegnOj5qr3ubppnKL242bX%2FuAnQKzKK0HpwolqXjsuEeFeM85lxhqHV%2B1BJqaqSHHDa0HUMLZistMRshRlntuchcFQCR6HBa2c8PSnhpVC31zMzvYMfKsI12h4HB6l%2FudrmNrvmH4LmNpi4dZFcio21DzKj%2FRjWmxjH7l8egDyG%2FIgPMY6Ls4IiN7aR1jijYTrBCgPUUHets3BFvqLzHtPFnG3B7%2FYRPnhCLu%2FgzvKN3F8l38KqeTNMHJaxkuhCvEjpFB2SJbi2QZqZZbLj3xASqXoogzbsyPp0Tzp0tH7EKDhPA7H6wwiZukXfFhhlYzP8on9fO2Ajz%2F%2BTDkDjbfWw4KNJ0cFeDsGrUspqQZb5TAKlUge7iOZEc2TZ5uagatSy9Mg08E4nImBSE5QUHDc7Daya1gyqrETMDZBBUHH2RFkGA9qMpEtNrtJ9G%2BPedz%2FpPY1hh9OCp9Pg1BrX97l3SfVzlAMRfNibhywq6qnE35rVnZi%2BEQ1UgBjs9jD%2FQrW49%2FaD0oUDojVeuFFryzRnQxDbKtYgonRcItTvLT5Y0xaK9P0u6H1197%2FMk3XxmjD9%2Fb%2BvBjqxAQWWkKiIxpC1oHEWK9Jt8UdJ39xszDBGpBqjB6Tvt5ePAXSyX8np%2FrBi%2BAPx06O0%2Ba7pU4NmH800EVXxxhgfj9nMw3CeoUIdxorVKtU2Mxw%2FLaAiPgxPS4rqkt65NF7eQYfegcSYDTm2Z%2BHPbz9HfCaVZ28Zqeko6sR%2F29ML4bguqVvHAM4mWPLNDXH33mjG%2BuzLi8e1BF7tNveg2X9G%2FRdcMkojwKYbu6xN3M6aX2alQg%3D%3D&X-Amz-SignedHeaders=host&X-Amz-Signature=5e2c0d4b4de40373ac0fe91908c2659141a6dd4ab850271cc26042a3885c82ea)\n\n## Note\nThis report was originally reported to GitHub bug bounty program, they asked me to report it to you a month ago",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-f5x3-32g6-xq36",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28863",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/isaacs/node-tar/security/advisories/GHSA-f5x3-32g6-xq36"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28863"
+                },
+                {
+                    "url": "https://github.com/isaacs/node-tar/commit/fe8cd57da5686f8695415414bda49206a545f7f7"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f5x3-32g6-xq36"
+                }
+            ],
+            "published_at": "2024-03-22T16:57:05Z",
+            "updated_at": "2024-04-09T19:02:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "node-tar"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 6.2.1",
+                    "first_patched_version": {
+                        "identifier": "6.2.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "tar"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 6.2.1",
+                    "first_patched_version": {
+                        "identifier": "6.2.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "tar"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 6.2.1",
+            "first_patched_version": {
+                "identifier": "6.2.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/19",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/19",
+        "created_at": "2024-05-20T13:20:19Z",
+        "updated_at": "2024-05-20T13:20:19Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 18,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4v7x-pqxf-cx7m",
+            "cve_id": "CVE-2023-45288",
+            "summary": "net/http, x/net/http2: close connections when receiving too many headers",
+            "description": "An attacker may cause an HTTP/2 endpoint to read arbitrary amounts of header data by sending an excessive number of CONTINUATION frames. Maintaining HPACK state requires parsing and processing all HEADERS and CONTINUATION frames on a connection. When a request's headers exceed MaxHeaderBytes, no memory is allocated to store the excess headers, but they are still parsed. This permits an attacker to cause an HTTP/2 endpoint to read arbitrary amounts of header data, all associated with a request which is going to be rejected. These headers can include Huffman-encoded data which is significantly more expensive for the receiver to decode than for an attacker to send. The fix sets a limit on the amount of excess header frames we will process before closing a connection.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-4v7x-pqxf-cx7m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-45288",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-45288"
+                },
+                {
+                    "url": "https://go.dev/cl/576155"
+                },
+                {
+                    "url": "https://go.dev/issue/65051"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/YgW0sx8mN3M"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2024-2687"
+                },
+                {
+                    "url": "https://nowotarski.info/http2-continuation-flood-technical-details"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240419-0009"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QRYFHIQ6XRKRYBI2F5UESH67BJBQXUPT"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/04/03/16"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/04/05/4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4v7x-pqxf-cx7m"
+                }
+            ],
+            "published_at": "2024-04-04T21:30:32Z",
+            "updated_at": "2024-05-02T18:59:06Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "net/http"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.21.9",
+                    "first_patched_version": {
+                        "identifier": "1.21.9"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net/http2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.23.0",
+                    "first_patched_version": {
+                        "identifier": "0.23.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "net/http"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.22.0-0, < 1.22.2",
+                    "first_patched_version": {
+                        "identifier": "1.22.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.23.0",
+                    "first_patched_version": {
+                        "identifier": "0.23.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.23.0",
+            "first_patched_version": {
+                "identifier": "0.23.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/18",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/18",
+        "created_at": "2024-05-20T13:20:19Z",
+        "updated_at": "2024-05-20T13:20:19Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 17,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "google.golang.org/protobuf"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8r3f-844c-mc37",
+            "cve_id": "CVE-2024-24786",
+            "summary": "Golang protojson.Unmarshal function infinite loop when unmarshaling certain forms of invalid JSON",
+            "description": "The protojson.Unmarshal function can enter an infinite loop when unmarshaling certain forms of invalid JSON. This condition can occur when unmarshaling into a message which contains a google.protobuf.Any value, or when the UnmarshalOptions.DiscardUnknown option is set.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-8r3f-844c-mc37",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-24786",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-24786"
+                },
+                {
+                    "url": "https://go.dev/cl/569356"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2024-2611"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf-go/commit/f01a588e5810b90996452eec4a28f22a0afae023"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf-go/releases/tag/v1.33.0"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/JDMBHAVSDU2FBDZ45U3A2VLSM35OJ2HU"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/03/08/4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8r3f-844c-mc37"
+                }
+            ],
+            "published_at": "2024-03-06T00:31:27Z",
+            "updated_at": "2024-05-02T18:47:46Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/protobuf"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.33.0",
+                    "first_patched_version": {
+                        "identifier": "1.33.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/protobuf/encoding/protojson"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.33.0",
+                    "first_patched_version": {
+                        "identifier": "1.33.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/protobuf/internal/encoding/json"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.33.0",
+                    "first_patched_version": {
+                        "identifier": "1.33.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-835",
+                    "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "google.golang.org/protobuf"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.33.0",
+            "first_patched_version": {
+                "identifier": "1.33.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/17",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/17",
+        "created_at": "2024-05-20T13:20:19Z",
+        "updated_at": "2024-05-20T13:20:19Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 16,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "google.golang.org/grpc"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qppj-fm5r-hxr3",
+            "cve_id": "CVE-2023-44487",
+            "summary": "HTTP/2 Stream Cancellation Attack",
+            "description": "## HTTP/2 Rapid reset attack\nThe HTTP/2 protocol allows clients to indicate to the server that a previous stream should be canceled by sending a RST_STREAM frame. The protocol does not require the client and server to coordinate the cancellation in any way, the client may do it unilaterally. The client may also assume that the cancellation will take effect immediately when the server receives the RST_STREAM frame, before any other data from that TCP connection is processed.\n\nAbuse of this feature is called a Rapid Reset attack because it relies on the ability for an endpoint to send a RST_STREAM frame immediately after sending a request frame, which makes the other endpoint start working and then rapidly resets the request. The request is canceled, but leaves the HTTP/2 connection open. \n\nThe HTTP/2 Rapid Reset attack built on this capability is simple: The client opens a large number of streams at once as in the standard HTTP/2 attack, but rather than waiting for a response to each request stream from the server or proxy, the client cancels each request immediately.\n\nThe ability to reset streams immediately allows each connection to have an indefinite number of requests in flight. By explicitly canceling the requests, the attacker never exceeds the limit on the number of concurrent open streams. The number of in-flight requests is no longer dependent on the round-trip time (RTT), but only on the available network bandwidth.\n\nIn a typical HTTP/2 server implementation, the server will still have to do significant amounts of work for canceled requests, such as allocating new stream data structures, parsing the query and doing header decompression, and mapping the URL to a resource. For reverse proxy implementations, the request may be proxied to the backend server before the RST_STREAM frame is processed. The client on the other hand paid almost no costs for sending the requests. This creates an exploitable cost asymmetry between the server and the client.\n\nMultiple software artifacts implementing HTTP/2 are affected. This advisory was originally ingested from the `swift-nio-http2` repo advisory and their original conent follows.\n\n## swift-nio-http2 specific advisory\nswift-nio-http2 is vulnerable to a denial-of-service vulnerability in which a malicious client can create and then reset a large number of HTTP/2 streams in a short period of time. This causes swift-nio-http2 to commit to a large amount of expensive work which it then throws away, including creating entirely new `Channel`s to serve the traffic. This can easily overwhelm an `EventLoop` and prevent it from making forward progress.\n\nswift-nio-http2 1.28 contains a remediation for this issue that applies reset counter using a sliding window. This constrains the number of stream resets that may occur in a given window of time. Clients violating this limit will have their connections torn down. This allows clients to continue to cancel streams for legitimate reasons, while constraining malicious actors.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-qppj-fm5r-hxr3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-44487",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/apple/swift-nio-http2/security/advisories/GHSA-qppj-fm5r-hxr3"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-44487"
+                },
+                {
+                    "url": "https://github.com/alibaba/tengine/issues/1872"
+                },
+                {
+                    "url": "https://github.com/caddyserver/caddy/issues/5877"
+                },
+                {
+                    "url": "https://github.com/eclipse/jetty.project/issues/10679"
+                },
+                {
+                    "url": "https://github.com/haproxy/haproxy/issues/2312"
+                },
+                {
+                    "url": "https://github.com/hyperium/hyper/issues/3337"
+                },
+                {
+                    "url": "https://github.com/envoyproxy/envoy/pull/30055"
+                },
+                {
+                    "url": "https://github.com/grpc/grpc-go/pull/6703"
+                },
+                {
+                    "url": "https://github.com/nghttp2/nghttp2/pull/1961"
+                },
+                {
+                    "url": "https://github.com/netty/netty/commit/58f75f665aa81a8cbcf6ffa74820042a285c5e61"
+                },
+                {
+                    "url": "https://bugzilla.proxmox.com/show_bug.cgi?id=4988"
+                },
+                {
+                    "url": "https://cgit.freebsd.org/ports/commit/?id=c64c329c2c1752f46b73e3e6ce9f4329be6629f9"
+                },
+                {
+                    "url": "https://chaos.social/@icing/111210915918780532"
+                },
+                {
+                    "url": "https://cloud.google.com/blog/products/identity-security/how-it-works-the-novel-http2-rapid-reset-ddos-attack"
+                },
+                {
+                    "url": "https://forums.swift.org/t/swift-nio-http2-security-update-cve-2023-44487-http-2-dos/67764"
+                },
+                {
+                    "url": "https://github.com/apache/tomcat/tree/main/java/org/apache/coyote/http2"
+                },
+                {
+                    "url": "https://github.com/bcdannyboy/CVE-2023-44487"
+                },
+                {
+                    "url": "https://github.com/icing/mod_h2/blob/0a864782af0a942aa2ad4ed960a6b32cd35bcf0a/mod_http2/README.md?plain=1#L239-L244"
+                },
+                {
+                    "url": "https://github.com/nghttp2/nghttp2/releases/tag/v1.57.0"
+                },
+                {
+                    "url": "https://mailman.nginx.org/pipermail/nginx-devel/2023-October/S36Q5HBXR7CAIMPLLPRSSSYR4PCMWILK.html"
+                },
+                {
+                    "url": "https://my.f5.com/manage/s/article/K000137106"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37830987"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37830998"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37831062"
+                },
+                {
+                    "url": "https://www.phoronix.com/news/HTTP2-Rapid-Reset-Attack"
+                },
+                {
+                    "url": "https://github.com/h2o/h2o/security/advisories/GHSA-2m7v-gc89-fjqf"
+                },
+                {
+                    "url": "https://github.com/dotnet/announcements/issues/277"
+                },
+                {
+                    "url": "https://github.com/golang/go/issues/63417"
+                },
+                {
+                    "url": "https://github.com/apache/trafficserver/pull/10564"
+                },
+                {
+                    "url": "https://github.com/facebook/proxygen/pull/466"
+                },
+                {
+                    "url": "https://github.com/h2o/h2o/pull/3291"
+                },
+                {
+                    "url": "https://github.com/microsoft/CBL-Mariner/pull/6381"
+                },
+                {
+                    "url": "https://github.com/nodejs/node/pull/50121"
+                },
+                {
+                    "url": "https://edg.io/lp/blog/resets-leaks-ddos-and-the-tale-of-a-hidden-cve"
+                },
+                {
+                    "url": "https://gist.github.com/adulau/7c2bfb8e9cdbe4b35a5e131c66a0c088"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vx74-f528-fxqg"
+                },
+                {
+                    "url": "https://github.com/micrictor/http2-rst-stream"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/iNNxDTCjZvo"
+                },
+                {
+                    "url": "https://lists.apache.org/thread/5py8h42mxfsn8l1wy6o41xwhsjlsd87q"
+                },
+                {
+                    "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2023-44487"
+                },
+                {
+                    "url": "https://seanmonstar.com/post/730794151136935936/hyper-http2-rapid-reset-unaffected"
+                },
+                {
+                    "url": "https://tomcat.apache.org/security-10.html#Fixed_in_Apache_Tomcat_10.1.14"
+                },
+                {
+                    "url": "https://www.openwall.com/lists/oss-security/2023/10/10/6"
+                },
+                {
+                    "url": "https://github.com/opensearch-project/data-prepper/issues/3474"
+                },
+                {
+                    "url": "https://github.com/kubernetes/kubernetes/pull/121120"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-xpw8-rcwv-8f8p"
+                },
+                {
+                    "url": "https://github.com/dotnet/core/blob/e4613450ea0da7fd2fc6b61dfb2c1c1dec1ce9ec/release-notes/6.0/6.0.23/6.0.23.md?plain=1#L73"
+                },
+                {
+                    "url": "https://github.com/oqtane/oqtane.framework/discussions/3367"
+                },
+                {
+                    "url": "https://netty.io/news/2023/10/10/4-1-100-Final.html"
+                },
+                {
+                    "url": "https://www.haproxy.com/blog/haproxy-is-not-affected-by-the-http-2-rapid-reset-attack-cve-2023-44487"
+                },
+                {
+                    "url": "https://github.com/Azure/AKS/issues/3947"
+                },
+                {
+                    "url": "https://github.com/akka/akka-http/issues/4323"
+                },
+                {
+                    "url": "https://github.com/apache/apisix/issues/10320"
+                },
+                {
+                    "url": "https://github.com/etcd-io/etcd/issues/16740"
+                },
+                {
+                    "url": "https://github.com/junkurihara/rust-rpxy/issues/97"
+                },
+                {
+                    "url": "https://github.com/kazu-yamamoto/http2/issues/93"
+                },
+                {
+                    "url": "https://github.com/ninenines/cowboy/issues/1615"
+                },
+                {
+                    "url": "https://github.com/openresty/openresty/issues/930"
+                },
+                {
+                    "url": "https://github.com/tempesta-tech/tempesta/issues/1986"
+                },
+                {
+                    "url": "https://github.com/varnishcache/varnish-cache/issues/3996"
+                },
+                {
+                    "url": "https://github.com/apache/httpd-site/pull/10"
+                },
+                {
+                    "url": "https://github.com/line/armeria/pull/5232"
+                },
+                {
+                    "url": "https://github.com/linkerd/website/pull/1695/commits/4b9c6836471bc8270ab48aae6fd2181bc73fd632"
+                },
+                {
+                    "url": "https://github.com/projectcontour/contour/pull/5826"
+                },
+                {
+                    "url": "https://github.com/kazu-yamamoto/http2/commit/f61d41a502bd0f60eb24e1ce14edc7b6df6722a1"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/cve-2023-44487"
+                },
+                {
+                    "url": "https://blog.qualys.com/vulnerabilities-threat-research/2023/10/10/cve-2023-44487-http-2-rapid-reset-attack"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2242803"
+                },
+                {
+                    "url": "https://bugzilla.suse.com/show_bug.cgi?id=1216123"
+                },
+                {
+                    "url": "https://community.traefik.io/t/is-traefik-vulnerable-to-cve-2023-44487/20125"
+                },
+                {
+                    "url": "https://github.com/Kong/kong/discussions/11741"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qppj-fm5r-hxr3"
+                },
+                {
+                    "url": "https://github.com/apache/httpd/blob/afcdbeebbff4b0c50ea26cdd16e178c0d1f24152/modules/http2/h2_mplx.c#L1101-L1113"
+                },
+                {
+                    "url": "https://github.com/arkrwn/PoC/tree/main/CVE-2023-44487"
+                },
+                {
+                    "url": "https://github.com/caddyserver/caddy/releases/tag/v2.7.5"
+                },
+                {
+                    "url": "https://go.dev/cl/534215"
+                },
+                {
+                    "url": "https://go.dev/cl/534235"
+                },
+                {
+                    "url": "https://go.dev/issue/63417"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/iNNxDTCjZvo/m/UDd7VKQuAAAJ"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00020.html"
+                },
+                {
+                    "url": "https://martinthomson.github.io/h2-stream-limits/draft-thomson-httpbis-h2-stream-limits.html"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37837043"
+                },
+                {
+                    "url": "https://security.paloaltonetworks.com/CVE-2023-44487"
+                },
+                {
+                    "url": "https://ubuntu.com/security/CVE-2023-44487"
+                },
+                {
+                    "url": "https://www.cisa.gov/news-events/alerts/2023/10/10/http2-rapid-reset-vulnerability-cve-2023-44487"
+                },
+                {
+                    "url": "https://www.darkreading.com/cloud/internet-wide-zero-day-bug-fuels-largest-ever-ddos-event"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5521"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5522"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/13/4"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/13/9"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00023.html"
+                },
+                {
+                    "url": "https://lists.w3.org/Archives/Public/ietf-http-wg/2023OctDec/0025.html"
+                },
+                {
+                    "url": "https://github.com/grpc/grpc-go/releases"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00024.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00045.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00047.html"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5540"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/18/4"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/18/8"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/19/6"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/20/8"
+                },
+                {
+                    "url": "https://discuss.hashicorp.com/t/hcsec-2023-32-vault-consul-and-boundary-affected-by-http-2-rapid-reset-denial-of-service-vulnerability-cve-2023-44487/59715"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/11/msg00001.html"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5549"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/11/msg00012.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202311-09"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5558"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5570"
+                },
+                {
+                    "url": "https://tomcat.apache.org/security-11.html#Fixed_in_Apache_Tomcat_11.0.0-M12"
+                },
+                {
+                    "url": "https://tomcat.apache.org/security-8.html#Fixed_in_Apache_Tomcat_8.5.94"
+                },
+                {
+                    "url": "https://tomcat.apache.org/security-9.html#Fixed_in_Apache_Tomcat_9.0.81"
+                },
+                {
+                    "url": "https://arstechnica.com/security/2023/10/how-ddosers-used-the-http-2-protocol-to-deliver-attacks-of-unprecedented-size"
+                },
+                {
+                    "url": "https://aws.amazon.com/security/security-bulletins/AWS-2023-011"
+                },
+                {
+                    "url": "https://blog.cloudflare.com/technical-breakdown-http2-rapid-reset-ddos-attack"
+                },
+                {
+                    "url": "https://blog.cloudflare.com/zero-day-rapid-reset-http2-record-breaking-ddos-attack"
+                },
+                {
+                    "url": "https://blog.litespeedtech.com/2023/10/11/rapid-reset-http-2-vulnerablilty"
+                },
+                {
+                    "url": "https://blog.vespa.ai/cve-2023-44487"
+                },
+                {
+                    "url": "https://cloud.google.com/blog/products/identity-security/google-cloud-mitigated-largest-ddos-attack-peaking-above-398-million-rps"
+                },
+                {
+                    "url": "https://istio.io/latest/news/security/istio-security-2023-004"
+                },
+                {
+                    "url": "https://linkerd.io/2023/10/12/linkerd-cve-2023-44487"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/2MBEPPC36UBVOZZNAXFHKLFGSLCMN5LI"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/3N4NJ7FR4X4FPZUGNTQAPSTVB2HB2Y4A"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/BFQD3KUEMFBHPAPBGLWQC34L4OWL5HAZ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/CLB4TW7KALB3EEQWNWCN7OUIWWVWWCG2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/E72T67UPDRXHIDLO3OROR25YAMN4GGW5"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/FNA62Q767CFAFHBCDKYNPBMZWB7TWYVU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/HT7T2R4MQKLIF4ODV4BDLPARWFPCJ5CZ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/JIZSEFC3YKCGABA2BZW6ZJRMDZJMB7PJ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/JMEXY22BFG5Q64HQCM5CK2Q7KDKVV4TY"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/KSEGD2IWKNUO3DWY4KQGUQM5BISRWHQE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/LKYHSZQFDNR7RSA7LHVLLIAQMVYCUGBG"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/LNMZJCDHGLJJLXO4OXWJMTVQRNWOC7UL"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/VHUHTSXLXGXS7JYKBXTA3VINUPHTNGVU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/VSRDIV77HNKUSM7SJC5BKE5JSHLHU2NK"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/WE2I52RHNNU42PX6NZ2RBUHSFFJ2LVZX"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/WLPRQ5TWUQQXYWBJM7ECYDAIL2YVKIUH"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/X6QXN4ORIVF6XBW4WWFE7VNPVC74S45Y"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/XFOIBB4YFICHDM7IBOP7PWXW3FX4HLL2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ZB43REMKRQR62NJEI7I5NQ4FSXNLBKRT"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ZKQSIKIAT5TJ3WSLU3RDBQ35YX4GY4V3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ZLU6U2R2IC2K64NDPNMV55AUAO65MAF4"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3N4NJ7FR4X4FPZUGNTQAPSTVB2HB2Y4A"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/BFQD3KUEMFBHPAPBGLWQC34L4OWL5HAZ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CLB4TW7KALB3EEQWNWCN7OUIWWVWWCG2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/E72T67UPDRXHIDLO3OROR25YAMN4GGW5"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FNA62Q767CFAFHBCDKYNPBMZWB7TWYVU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/HT7T2R4MQKLIF4ODV4BDLPARWFPCJ5CZ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/JIZSEFC3YKCGABA2BZW6ZJRMDZJMB7PJ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/JMEXY22BFG5Q64HQCM5CK2Q7KDKVV4TY"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KSEGD2IWKNUO3DWY4KQGUQM5BISRWHQE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/LKYHSZQFDNR7RSA7LHVLLIAQMVYCUGBG"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/LNMZJCDHGLJJLXO4OXWJMTVQRNWOC7UL"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VHUHTSXLXGXS7JYKBXTA3VINUPHTNGVU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VSRDIV77HNKUSM7SJC5BKE5JSHLHU2NK"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WLPRQ5TWUQQXYWBJM7ECYDAIL2YVKIUH"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/X6QXN4ORIVF6XBW4WWFE7VNPVC74S45Y"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XFOIBB4YFICHDM7IBOP7PWXW3FX4HLL2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZB43REMKRQR62NJEI7I5NQ4FSXNLBKRT"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZKQSIKIAT5TJ3WSLU3RDBQ35YX4GY4V3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZLU6U2R2IC2K64NDPNMV55AUAO65MAF4"
+                },
+                {
+                    "url": "https://msrc.microsoft.com/blog/2023/10/microsoft-response-to-distributed-denial-of-service-ddos-attacks-against-http/2"
+                },
+                {
+                    "url": "https://openssf.org/blog/2023/10/10/http-2-rapid-reset-vulnerability-highlights-need-for-rapid-response"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20231016-0001"
+                },
+                {
+                    "url": "https://www.bleepingcomputer.com/news/security/new-http-2-rapid-reset-zero-day-attack-breaks-ddos-records"
+                },
+                {
+                    "url": "https://www.eclipse.org/lists/jetty-announce/msg00181.html"
+                },
+                {
+                    "url": "https://www.netlify.com/blog/netlify-successfully-mitigates-cve-2023-44487"
+                },
+                {
+                    "url": "https://www.nginx.com/blog/http-2-rapid-reset-attack-impacting-f5-nginx-products"
+                },
+                {
+                    "url": "https://www.theregister.com/2023/10/10/http2_rapid_reset_zeroday"
+                },
+                {
+                    "url": "https://github.com/akka/akka-http/pull/4325"
+                },
+                {
+                    "url": "https://github.com/akka/akka-http/pull/4324"
+                },
+                {
+                    "url": "https://akka.io/security/akka-http-cve-2023-44487.html"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240426-0007"
+                }
+            ],
+            "published_at": "2023-10-10T21:28:24Z",
+            "updated_at": "2024-05-06T05:03:30Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.17.0",
+                    "first_patched_version": {
+                        "identifier": "0.17.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.58.0, < 1.58.3",
+                    "first_patched_version": {
+                        "identifier": "1.58.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.57.0, < 1.57.1",
+                    "first_patched_version": {
+                        "identifier": "1.57.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.56.3",
+                    "first_patched_version": {
+                        "identifier": "1.56.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat:tomcat"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 11.0.0-M1, < 11.0.0-M12",
+                    "first_patched_version": {
+                        "identifier": "11.0.0-M12"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat:tomcat"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 10.0.0, < 10.1.14",
+                    "first_patched_version": {
+                        "identifier": "10.1.14"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat:tomcat"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.0.0, < 9.0.81",
+                    "first_patched_version": {
+                        "identifier": "9.0.81"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat:tomcat"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 8.5.0, < 8.5.94",
+                    "first_patched_version": {
+                        "identifier": "8.5.94"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat.embed:tomcat-embed-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 11.0.0-M1, < 11.0.0-M12",
+                    "first_patched_version": {
+                        "identifier": "11.0.0-M12"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat.embed:tomcat-embed-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 10.0.0, < 10.1.14",
+                    "first_patched_version": {
+                        "identifier": "10.1.14"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat.embed:tomcat-embed-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.0.0, < 9.0.81",
+                    "first_patched_version": {
+                        "identifier": "9.0.81"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat.embed:tomcat-embed-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 8.5.0, < 8.5.94",
+                    "first_patched_version": {
+                        "identifier": "8.5.94"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "swift",
+                        "name": "github.com/apple/swift-nio-http2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.28.0",
+                    "first_patched_version": {
+                        "identifier": "1.28.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-common"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.3.0, < 9.4.53",
+                    "first_patched_version": {
+                        "identifier": "9.4.53"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-common"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 10.0.0, < 10.0.17",
+                    "first_patched_version": {
+                        "identifier": "10.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-common"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 11.0.0, < 11.0.17",
+                    "first_patched_version": {
+                        "identifier": "11.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-server"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.3.0, < 9.4.53",
+                    "first_patched_version": {
+                        "identifier": "9.4.53"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-server"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 10.0.0, < 10.0.17",
+                    "first_patched_version": {
+                        "identifier": "10.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-server"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 11.0.0, < 11.0.17",
+                    "first_patched_version": {
+                        "identifier": "11.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:jetty-http2-common"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 12.0.0, < 12.0.2",
+                    "first_patched_version": {
+                        "identifier": "12.0.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:jetty-http2-server"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 12.0.0, < 12.0.2",
+                    "first_patched_version": {
+                        "identifier": "12.0.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.typesafe.akka:akka-http-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.5.3",
+                    "first_patched_version": {
+                        "identifier": "10.5.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.typesafe.akka:akka-http-core_2.13"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.5.3",
+                    "first_patched_version": {
+                        "identifier": "10.5.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.typesafe.akka:akka-http-core_2.12"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.5.3",
+                    "first_patched_version": {
+                        "identifier": "10.5.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.typesafe.akka:akka-http-core_2.11"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 10.1.15",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "google.golang.org/grpc"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.56.3",
+            "first_patched_version": {
+                "identifier": "1.56.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/16",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/16",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "google.golang.org/grpc"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-m425-mq94-257g",
+            "cve_id": null,
+            "summary": "gRPC-Go HTTP/2 Rapid Reset vulnerability",
+            "description": "### Impact\nIn affected releases of gRPC-Go, it is possible for an attacker to send HTTP/2 requests, cancel them, and send subsequent requests, which is valid by the HTTP/2 protocol, but would cause the gRPC-Go server to launch more concurrent method handlers than the configured maximum stream limit.\n\n### Patches\nThis vulnerability was addressed by #6703 and has been included in patch releases: 1.56.3, 1.57.1, 1.58.3.  It is also included in the latest release, 1.59.0.\n\nAlong with applying the patch, users should also ensure they are using the `grpc.MaxConcurrentStreams` server option to apply a limit to the server's resources used for any single connection.\n\n### Workarounds\nNone.\n\n### References\n#6703\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-m425-mq94-257g",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/grpc/grpc-go/security/advisories/GHSA-m425-mq94-257g"
+                },
+                {
+                    "url": "https://github.com/grpc/grpc-go/pull/6703"
+                },
+                {
+                    "url": "https://github.com/grpc/grpc-go/commit/f2180b4d5403d2210b30b93098eb7da31c05c721"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-m425-mq94-257g"
+                }
+            ],
+            "published_at": "2023-10-25T21:17:37Z",
+            "updated_at": "2023-10-25T21:17:39Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.56.3",
+                    "first_patched_version": {
+                        "identifier": "1.56.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.57.0, < 1.57.1",
+                    "first_patched_version": {
+                        "identifier": "1.57.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.58.0, < 1.58.3",
+                    "first_patched_version": {
+                        "identifier": "1.58.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "google.golang.org/grpc"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 1.56.3",
+            "first_patched_version": {
+                "identifier": "1.56.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/15",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qppj-fm5r-hxr3",
+            "cve_id": "CVE-2023-44487",
+            "summary": "HTTP/2 Stream Cancellation Attack",
+            "description": "## HTTP/2 Rapid reset attack\nThe HTTP/2 protocol allows clients to indicate to the server that a previous stream should be canceled by sending a RST_STREAM frame. The protocol does not require the client and server to coordinate the cancellation in any way, the client may do it unilaterally. The client may also assume that the cancellation will take effect immediately when the server receives the RST_STREAM frame, before any other data from that TCP connection is processed.\n\nAbuse of this feature is called a Rapid Reset attack because it relies on the ability for an endpoint to send a RST_STREAM frame immediately after sending a request frame, which makes the other endpoint start working and then rapidly resets the request. The request is canceled, but leaves the HTTP/2 connection open. \n\nThe HTTP/2 Rapid Reset attack built on this capability is simple: The client opens a large number of streams at once as in the standard HTTP/2 attack, but rather than waiting for a response to each request stream from the server or proxy, the client cancels each request immediately.\n\nThe ability to reset streams immediately allows each connection to have an indefinite number of requests in flight. By explicitly canceling the requests, the attacker never exceeds the limit on the number of concurrent open streams. The number of in-flight requests is no longer dependent on the round-trip time (RTT), but only on the available network bandwidth.\n\nIn a typical HTTP/2 server implementation, the server will still have to do significant amounts of work for canceled requests, such as allocating new stream data structures, parsing the query and doing header decompression, and mapping the URL to a resource. For reverse proxy implementations, the request may be proxied to the backend server before the RST_STREAM frame is processed. The client on the other hand paid almost no costs for sending the requests. This creates an exploitable cost asymmetry between the server and the client.\n\nMultiple software artifacts implementing HTTP/2 are affected. This advisory was originally ingested from the `swift-nio-http2` repo advisory and their original conent follows.\n\n## swift-nio-http2 specific advisory\nswift-nio-http2 is vulnerable to a denial-of-service vulnerability in which a malicious client can create and then reset a large number of HTTP/2 streams in a short period of time. This causes swift-nio-http2 to commit to a large amount of expensive work which it then throws away, including creating entirely new `Channel`s to serve the traffic. This can easily overwhelm an `EventLoop` and prevent it from making forward progress.\n\nswift-nio-http2 1.28 contains a remediation for this issue that applies reset counter using a sliding window. This constrains the number of stream resets that may occur in a given window of time. Clients violating this limit will have their connections torn down. This allows clients to continue to cancel streams for legitimate reasons, while constraining malicious actors.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-qppj-fm5r-hxr3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-44487",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/apple/swift-nio-http2/security/advisories/GHSA-qppj-fm5r-hxr3"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-44487"
+                },
+                {
+                    "url": "https://github.com/alibaba/tengine/issues/1872"
+                },
+                {
+                    "url": "https://github.com/caddyserver/caddy/issues/5877"
+                },
+                {
+                    "url": "https://github.com/eclipse/jetty.project/issues/10679"
+                },
+                {
+                    "url": "https://github.com/haproxy/haproxy/issues/2312"
+                },
+                {
+                    "url": "https://github.com/hyperium/hyper/issues/3337"
+                },
+                {
+                    "url": "https://github.com/envoyproxy/envoy/pull/30055"
+                },
+                {
+                    "url": "https://github.com/grpc/grpc-go/pull/6703"
+                },
+                {
+                    "url": "https://github.com/nghttp2/nghttp2/pull/1961"
+                },
+                {
+                    "url": "https://github.com/netty/netty/commit/58f75f665aa81a8cbcf6ffa74820042a285c5e61"
+                },
+                {
+                    "url": "https://bugzilla.proxmox.com/show_bug.cgi?id=4988"
+                },
+                {
+                    "url": "https://cgit.freebsd.org/ports/commit/?id=c64c329c2c1752f46b73e3e6ce9f4329be6629f9"
+                },
+                {
+                    "url": "https://chaos.social/@icing/111210915918780532"
+                },
+                {
+                    "url": "https://cloud.google.com/blog/products/identity-security/how-it-works-the-novel-http2-rapid-reset-ddos-attack"
+                },
+                {
+                    "url": "https://forums.swift.org/t/swift-nio-http2-security-update-cve-2023-44487-http-2-dos/67764"
+                },
+                {
+                    "url": "https://github.com/apache/tomcat/tree/main/java/org/apache/coyote/http2"
+                },
+                {
+                    "url": "https://github.com/bcdannyboy/CVE-2023-44487"
+                },
+                {
+                    "url": "https://github.com/icing/mod_h2/blob/0a864782af0a942aa2ad4ed960a6b32cd35bcf0a/mod_http2/README.md?plain=1#L239-L244"
+                },
+                {
+                    "url": "https://github.com/nghttp2/nghttp2/releases/tag/v1.57.0"
+                },
+                {
+                    "url": "https://mailman.nginx.org/pipermail/nginx-devel/2023-October/S36Q5HBXR7CAIMPLLPRSSSYR4PCMWILK.html"
+                },
+                {
+                    "url": "https://my.f5.com/manage/s/article/K000137106"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37830987"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37830998"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37831062"
+                },
+                {
+                    "url": "https://www.phoronix.com/news/HTTP2-Rapid-Reset-Attack"
+                },
+                {
+                    "url": "https://github.com/h2o/h2o/security/advisories/GHSA-2m7v-gc89-fjqf"
+                },
+                {
+                    "url": "https://github.com/dotnet/announcements/issues/277"
+                },
+                {
+                    "url": "https://github.com/golang/go/issues/63417"
+                },
+                {
+                    "url": "https://github.com/apache/trafficserver/pull/10564"
+                },
+                {
+                    "url": "https://github.com/facebook/proxygen/pull/466"
+                },
+                {
+                    "url": "https://github.com/h2o/h2o/pull/3291"
+                },
+                {
+                    "url": "https://github.com/microsoft/CBL-Mariner/pull/6381"
+                },
+                {
+                    "url": "https://github.com/nodejs/node/pull/50121"
+                },
+                {
+                    "url": "https://edg.io/lp/blog/resets-leaks-ddos-and-the-tale-of-a-hidden-cve"
+                },
+                {
+                    "url": "https://gist.github.com/adulau/7c2bfb8e9cdbe4b35a5e131c66a0c088"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vx74-f528-fxqg"
+                },
+                {
+                    "url": "https://github.com/micrictor/http2-rst-stream"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/iNNxDTCjZvo"
+                },
+                {
+                    "url": "https://lists.apache.org/thread/5py8h42mxfsn8l1wy6o41xwhsjlsd87q"
+                },
+                {
+                    "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2023-44487"
+                },
+                {
+                    "url": "https://seanmonstar.com/post/730794151136935936/hyper-http2-rapid-reset-unaffected"
+                },
+                {
+                    "url": "https://tomcat.apache.org/security-10.html#Fixed_in_Apache_Tomcat_10.1.14"
+                },
+                {
+                    "url": "https://www.openwall.com/lists/oss-security/2023/10/10/6"
+                },
+                {
+                    "url": "https://github.com/opensearch-project/data-prepper/issues/3474"
+                },
+                {
+                    "url": "https://github.com/kubernetes/kubernetes/pull/121120"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-xpw8-rcwv-8f8p"
+                },
+                {
+                    "url": "https://github.com/dotnet/core/blob/e4613450ea0da7fd2fc6b61dfb2c1c1dec1ce9ec/release-notes/6.0/6.0.23/6.0.23.md?plain=1#L73"
+                },
+                {
+                    "url": "https://github.com/oqtane/oqtane.framework/discussions/3367"
+                },
+                {
+                    "url": "https://netty.io/news/2023/10/10/4-1-100-Final.html"
+                },
+                {
+                    "url": "https://www.haproxy.com/blog/haproxy-is-not-affected-by-the-http-2-rapid-reset-attack-cve-2023-44487"
+                },
+                {
+                    "url": "https://github.com/Azure/AKS/issues/3947"
+                },
+                {
+                    "url": "https://github.com/akka/akka-http/issues/4323"
+                },
+                {
+                    "url": "https://github.com/apache/apisix/issues/10320"
+                },
+                {
+                    "url": "https://github.com/etcd-io/etcd/issues/16740"
+                },
+                {
+                    "url": "https://github.com/junkurihara/rust-rpxy/issues/97"
+                },
+                {
+                    "url": "https://github.com/kazu-yamamoto/http2/issues/93"
+                },
+                {
+                    "url": "https://github.com/ninenines/cowboy/issues/1615"
+                },
+                {
+                    "url": "https://github.com/openresty/openresty/issues/930"
+                },
+                {
+                    "url": "https://github.com/tempesta-tech/tempesta/issues/1986"
+                },
+                {
+                    "url": "https://github.com/varnishcache/varnish-cache/issues/3996"
+                },
+                {
+                    "url": "https://github.com/apache/httpd-site/pull/10"
+                },
+                {
+                    "url": "https://github.com/line/armeria/pull/5232"
+                },
+                {
+                    "url": "https://github.com/linkerd/website/pull/1695/commits/4b9c6836471bc8270ab48aae6fd2181bc73fd632"
+                },
+                {
+                    "url": "https://github.com/projectcontour/contour/pull/5826"
+                },
+                {
+                    "url": "https://github.com/kazu-yamamoto/http2/commit/f61d41a502bd0f60eb24e1ce14edc7b6df6722a1"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/cve-2023-44487"
+                },
+                {
+                    "url": "https://blog.qualys.com/vulnerabilities-threat-research/2023/10/10/cve-2023-44487-http-2-rapid-reset-attack"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2242803"
+                },
+                {
+                    "url": "https://bugzilla.suse.com/show_bug.cgi?id=1216123"
+                },
+                {
+                    "url": "https://community.traefik.io/t/is-traefik-vulnerable-to-cve-2023-44487/20125"
+                },
+                {
+                    "url": "https://github.com/Kong/kong/discussions/11741"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qppj-fm5r-hxr3"
+                },
+                {
+                    "url": "https://github.com/apache/httpd/blob/afcdbeebbff4b0c50ea26cdd16e178c0d1f24152/modules/http2/h2_mplx.c#L1101-L1113"
+                },
+                {
+                    "url": "https://github.com/arkrwn/PoC/tree/main/CVE-2023-44487"
+                },
+                {
+                    "url": "https://github.com/caddyserver/caddy/releases/tag/v2.7.5"
+                },
+                {
+                    "url": "https://go.dev/cl/534215"
+                },
+                {
+                    "url": "https://go.dev/cl/534235"
+                },
+                {
+                    "url": "https://go.dev/issue/63417"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/iNNxDTCjZvo/m/UDd7VKQuAAAJ"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00020.html"
+                },
+                {
+                    "url": "https://martinthomson.github.io/h2-stream-limits/draft-thomson-httpbis-h2-stream-limits.html"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37837043"
+                },
+                {
+                    "url": "https://security.paloaltonetworks.com/CVE-2023-44487"
+                },
+                {
+                    "url": "https://ubuntu.com/security/CVE-2023-44487"
+                },
+                {
+                    "url": "https://www.cisa.gov/news-events/alerts/2023/10/10/http2-rapid-reset-vulnerability-cve-2023-44487"
+                },
+                {
+                    "url": "https://www.darkreading.com/cloud/internet-wide-zero-day-bug-fuels-largest-ever-ddos-event"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5521"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5522"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/13/4"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/13/9"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00023.html"
+                },
+                {
+                    "url": "https://lists.w3.org/Archives/Public/ietf-http-wg/2023OctDec/0025.html"
+                },
+                {
+                    "url": "https://github.com/grpc/grpc-go/releases"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00024.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00045.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00047.html"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5540"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/18/4"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/18/8"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/19/6"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/10/20/8"
+                },
+                {
+                    "url": "https://discuss.hashicorp.com/t/hcsec-2023-32-vault-consul-and-boundary-affected-by-http-2-rapid-reset-denial-of-service-vulnerability-cve-2023-44487/59715"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/11/msg00001.html"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5549"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/11/msg00012.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202311-09"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5558"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5570"
+                },
+                {
+                    "url": "https://tomcat.apache.org/security-11.html#Fixed_in_Apache_Tomcat_11.0.0-M12"
+                },
+                {
+                    "url": "https://tomcat.apache.org/security-8.html#Fixed_in_Apache_Tomcat_8.5.94"
+                },
+                {
+                    "url": "https://tomcat.apache.org/security-9.html#Fixed_in_Apache_Tomcat_9.0.81"
+                },
+                {
+                    "url": "https://arstechnica.com/security/2023/10/how-ddosers-used-the-http-2-protocol-to-deliver-attacks-of-unprecedented-size"
+                },
+                {
+                    "url": "https://aws.amazon.com/security/security-bulletins/AWS-2023-011"
+                },
+                {
+                    "url": "https://blog.cloudflare.com/technical-breakdown-http2-rapid-reset-ddos-attack"
+                },
+                {
+                    "url": "https://blog.cloudflare.com/zero-day-rapid-reset-http2-record-breaking-ddos-attack"
+                },
+                {
+                    "url": "https://blog.litespeedtech.com/2023/10/11/rapid-reset-http-2-vulnerablilty"
+                },
+                {
+                    "url": "https://blog.vespa.ai/cve-2023-44487"
+                },
+                {
+                    "url": "https://cloud.google.com/blog/products/identity-security/google-cloud-mitigated-largest-ddos-attack-peaking-above-398-million-rps"
+                },
+                {
+                    "url": "https://istio.io/latest/news/security/istio-security-2023-004"
+                },
+                {
+                    "url": "https://linkerd.io/2023/10/12/linkerd-cve-2023-44487"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/2MBEPPC36UBVOZZNAXFHKLFGSLCMN5LI"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/3N4NJ7FR4X4FPZUGNTQAPSTVB2HB2Y4A"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/BFQD3KUEMFBHPAPBGLWQC34L4OWL5HAZ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/CLB4TW7KALB3EEQWNWCN7OUIWWVWWCG2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/E72T67UPDRXHIDLO3OROR25YAMN4GGW5"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/FNA62Q767CFAFHBCDKYNPBMZWB7TWYVU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/HT7T2R4MQKLIF4ODV4BDLPARWFPCJ5CZ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/JIZSEFC3YKCGABA2BZW6ZJRMDZJMB7PJ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/JMEXY22BFG5Q64HQCM5CK2Q7KDKVV4TY"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/KSEGD2IWKNUO3DWY4KQGUQM5BISRWHQE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/LKYHSZQFDNR7RSA7LHVLLIAQMVYCUGBG"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/LNMZJCDHGLJJLXO4OXWJMTVQRNWOC7UL"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/VHUHTSXLXGXS7JYKBXTA3VINUPHTNGVU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/VSRDIV77HNKUSM7SJC5BKE5JSHLHU2NK"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/WE2I52RHNNU42PX6NZ2RBUHSFFJ2LVZX"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/WLPRQ5TWUQQXYWBJM7ECYDAIL2YVKIUH"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/X6QXN4ORIVF6XBW4WWFE7VNPVC74S45Y"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/XFOIBB4YFICHDM7IBOP7PWXW3FX4HLL2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ZB43REMKRQR62NJEI7I5NQ4FSXNLBKRT"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ZKQSIKIAT5TJ3WSLU3RDBQ35YX4GY4V3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ZLU6U2R2IC2K64NDPNMV55AUAO65MAF4"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3N4NJ7FR4X4FPZUGNTQAPSTVB2HB2Y4A"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/BFQD3KUEMFBHPAPBGLWQC34L4OWL5HAZ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CLB4TW7KALB3EEQWNWCN7OUIWWVWWCG2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/E72T67UPDRXHIDLO3OROR25YAMN4GGW5"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FNA62Q767CFAFHBCDKYNPBMZWB7TWYVU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/HT7T2R4MQKLIF4ODV4BDLPARWFPCJ5CZ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/JIZSEFC3YKCGABA2BZW6ZJRMDZJMB7PJ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/JMEXY22BFG5Q64HQCM5CK2Q7KDKVV4TY"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KSEGD2IWKNUO3DWY4KQGUQM5BISRWHQE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/LKYHSZQFDNR7RSA7LHVLLIAQMVYCUGBG"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/LNMZJCDHGLJJLXO4OXWJMTVQRNWOC7UL"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VHUHTSXLXGXS7JYKBXTA3VINUPHTNGVU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VSRDIV77HNKUSM7SJC5BKE5JSHLHU2NK"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WLPRQ5TWUQQXYWBJM7ECYDAIL2YVKIUH"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/X6QXN4ORIVF6XBW4WWFE7VNPVC74S45Y"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XFOIBB4YFICHDM7IBOP7PWXW3FX4HLL2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZB43REMKRQR62NJEI7I5NQ4FSXNLBKRT"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZKQSIKIAT5TJ3WSLU3RDBQ35YX4GY4V3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZLU6U2R2IC2K64NDPNMV55AUAO65MAF4"
+                },
+                {
+                    "url": "https://msrc.microsoft.com/blog/2023/10/microsoft-response-to-distributed-denial-of-service-ddos-attacks-against-http/2"
+                },
+                {
+                    "url": "https://openssf.org/blog/2023/10/10/http-2-rapid-reset-vulnerability-highlights-need-for-rapid-response"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20231016-0001"
+                },
+                {
+                    "url": "https://www.bleepingcomputer.com/news/security/new-http-2-rapid-reset-zero-day-attack-breaks-ddos-records"
+                },
+                {
+                    "url": "https://www.eclipse.org/lists/jetty-announce/msg00181.html"
+                },
+                {
+                    "url": "https://www.netlify.com/blog/netlify-successfully-mitigates-cve-2023-44487"
+                },
+                {
+                    "url": "https://www.nginx.com/blog/http-2-rapid-reset-attack-impacting-f5-nginx-products"
+                },
+                {
+                    "url": "https://www.theregister.com/2023/10/10/http2_rapid_reset_zeroday"
+                },
+                {
+                    "url": "https://github.com/akka/akka-http/pull/4325"
+                },
+                {
+                    "url": "https://github.com/akka/akka-http/pull/4324"
+                },
+                {
+                    "url": "https://akka.io/security/akka-http-cve-2023-44487.html"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240426-0007"
+                }
+            ],
+            "published_at": "2023-10-10T21:28:24Z",
+            "updated_at": "2024-05-06T05:03:30Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.17.0",
+                    "first_patched_version": {
+                        "identifier": "0.17.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.58.0, < 1.58.3",
+                    "first_patched_version": {
+                        "identifier": "1.58.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.57.0, < 1.57.1",
+                    "first_patched_version": {
+                        "identifier": "1.57.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "google.golang.org/grpc"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.56.3",
+                    "first_patched_version": {
+                        "identifier": "1.56.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat:tomcat"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 11.0.0-M1, < 11.0.0-M12",
+                    "first_patched_version": {
+                        "identifier": "11.0.0-M12"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat:tomcat"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 10.0.0, < 10.1.14",
+                    "first_patched_version": {
+                        "identifier": "10.1.14"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat:tomcat"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.0.0, < 9.0.81",
+                    "first_patched_version": {
+                        "identifier": "9.0.81"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat:tomcat"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 8.5.0, < 8.5.94",
+                    "first_patched_version": {
+                        "identifier": "8.5.94"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat.embed:tomcat-embed-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 11.0.0-M1, < 11.0.0-M12",
+                    "first_patched_version": {
+                        "identifier": "11.0.0-M12"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat.embed:tomcat-embed-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 10.0.0, < 10.1.14",
+                    "first_patched_version": {
+                        "identifier": "10.1.14"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat.embed:tomcat-embed-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.0.0, < 9.0.81",
+                    "first_patched_version": {
+                        "identifier": "9.0.81"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.tomcat.embed:tomcat-embed-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 8.5.0, < 8.5.94",
+                    "first_patched_version": {
+                        "identifier": "8.5.94"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "swift",
+                        "name": "github.com/apple/swift-nio-http2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.28.0",
+                    "first_patched_version": {
+                        "identifier": "1.28.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-common"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.3.0, < 9.4.53",
+                    "first_patched_version": {
+                        "identifier": "9.4.53"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-common"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 10.0.0, < 10.0.17",
+                    "first_patched_version": {
+                        "identifier": "10.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-common"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 11.0.0, < 11.0.17",
+                    "first_patched_version": {
+                        "identifier": "11.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-server"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.3.0, < 9.4.53",
+                    "first_patched_version": {
+                        "identifier": "9.4.53"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-server"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 10.0.0, < 10.0.17",
+                    "first_patched_version": {
+                        "identifier": "10.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:http2-server"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 11.0.0, < 11.0.17",
+                    "first_patched_version": {
+                        "identifier": "11.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:jetty-http2-common"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 12.0.0, < 12.0.2",
+                    "first_patched_version": {
+                        "identifier": "12.0.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.eclipse.jetty.http2:jetty-http2-server"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 12.0.0, < 12.0.2",
+                    "first_patched_version": {
+                        "identifier": "12.0.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.typesafe.akka:akka-http-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.5.3",
+                    "first_patched_version": {
+                        "identifier": "10.5.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.typesafe.akka:akka-http-core_2.13"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.5.3",
+                    "first_patched_version": {
+                        "identifier": "10.5.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.typesafe.akka:akka-http-core_2.12"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.5.3",
+                    "first_patched_version": {
+                        "identifier": "10.5.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.typesafe.akka:akka-http-core_2.11"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 10.1.15",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.17.0",
+            "first_patched_version": {
+                "identifier": "0.17.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/14",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2wrh-6pvc-2jm9",
+            "cve_id": "CVE-2023-3978",
+            "summary": "Improper rendering of text nodes in golang.org/x/net/html",
+            "description": "Text nodes not in the HTML namespace are incorrectly literally rendered, causing text which should be escaped to not be. This could lead to an XSS attack. ",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-2wrh-6pvc-2jm9",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-3978",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-3978"
+                },
+                {
+                    "url": "https://go.dev/cl/514896"
+                },
+                {
+                    "url": "https://go.dev/issue/61615"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2023-1988"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2wrh-6pvc-2jm9"
+                }
+            ],
+            "published_at": "2023-08-02T21:30:20Z",
+            "updated_at": "2023-11-08T05:05:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.13.0",
+                    "first_patched_version": {
+                        "identifier": "0.13.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.13.0",
+            "first_patched_version": {
+                "identifier": "0.13.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/13",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4374-p667-p6c8",
+            "cve_id": "CVE-2023-39325",
+            "summary": "HTTP/2 rapid reset can cause excessive work in net/http",
+            "description": "A malicious HTTP/2 client which rapidly creates requests and immediately resets them can cause excessive server resource consumption. While the total number of requests is bounded by the http2.Server.MaxConcurrentStreams setting, resetting an in-progress request allows the attacker to create a new request while the existing one is still executing. \n\nWith the fix applied, HTTP/2 servers now bound the number of simultaneously executing handler goroutines to the stream concurrency limit (MaxConcurrentStreams). New requests arriving when at the limit (which can only happen after the client has reset an existing, in-flight request) will be queued until a handler exits. If the request queue grows too large, the server will terminate the connection. \n\nThis issue is also fixed in golang.org/x/net/http2 for users manually configuring HTTP/2.\n\nThe default stream concurrency limit is 250 streams (requests) per HTTP/2 connection. This value may be adjusted using the golang.org/x/net/http2 package; see the Server.MaxConcurrentStreams setting and the ConfigureServer function.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-4374-p667-p6c8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-39325",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/golang/go/issues/63417"
+                },
+                {
+                    "url": "https://go.dev/cl/534215"
+                },
+                {
+                    "url": "https://go.dev/cl/534235"
+                },
+                {
+                    "url": "https://go.dev/issue/63417"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/iNNxDTCjZvo/m/UDd7VKQuAAAJ"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-39325"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2023-2102"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202311-09"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3OVW5V2DM5K5IC3H7O42YDUGNJ74J35O"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3SZN67IL7HMGMNAVLOTIXLIHUDXZK4LH"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4BUK2ZIAGCULOOYDNH25JPU6JBES5NF2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5RSKA2II6QTD4YUKUNDVJQSRYSFC4VFR"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/AVZDNSMVDAQJ64LJC5I5U5LDM5753647"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CHHITS4PUOZAKFIUBQAQZC7JWXMOYE4B"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CLB4TW7KALB3EEQWNWCN7OUIWWVWWCG2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/D2BBIDR2ZMB3X5BC7SR4SLQMHRMVPY6L"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ECRC75BQJP6FJN2L7KCKYZW4DSBD7QSD"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FTMJ3NJIDAZFWJQQSP3L22MUFJ3UP2PT"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/GSY7SXFFTPZFWDM6XELSDSHZLVW3AHK7"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/HZQIELEIRSZUYTFFH5KTH2YJ4IIQG2KE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IPWCNYB5PQ5PCVZ4NJT6G56ZYFZ5QBU6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KEOTKBUPZXHE3F352JBYNTSNRXYLWD6P"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KSEGD2IWKNUO3DWY4KQGUQM5BISRWHQE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/MZQYOOKHQDQ57LV2IAG6NRFOVXKHJJ3Z"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/NG7IMPL55MVWU3LCI4JQJT3K2U5CHDV7"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OXGWPQOJ3JNDW2XIYKIVJ7N7QUIFNM2Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PJCUNGIQDUMZ4Z6HWVYIMR66A35F5S74"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QF5QSYAOPDOWLY6DUHID56Q4HQFYB45I"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/R3UETKPUB3V5JS5TLZOF3SMTGT5K5APS"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/REMHVVIBDNKSRKNOTV7EQSB7CYQWOUOU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/T7N5GV4CHH6WAGX3GFMDD3COEOVCZ4RI"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ULQQONMSCQSH5Z5OWFFQHCGEZ3NL4DRJ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UTT7DG3QOF5ZNJLUGHDNLRUIN6OWZARP"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/W2LZSWTV4NV4SNQARNXG5T6LRHP26EW2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WCNCBYKZXLDFGAJUB7ZP5VLC3YTHJNVH"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XFOIBB4YFICHDM7IBOP7PWXW3FX4HLL2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XTNLSL44Y5FB6JWADSZH6DCV4JJAAEQY"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/YRKEXKANQ7BKJW2YTAMP625LJUJZLJ4P"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZSVEMQV5ROY5YW5QE3I57HT3ITWG5GCV"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20231110-0008"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/L5E5JSJBZLYXOTZWXHJKRVCIXIHVWKJ6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/YJWHBLVZDM5KQSDFRBFRKU5KSSOLIRQ4"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ODBY7RVMGZCBSTWF2OZGIZS57FNFUL67"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QXOU2JZUBEBP7GBKAYIJRPRBZSJCD7ST"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3WJ4QVX2AMUJ2F2S27POOAHRC4K3CHU4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4374-p667-p6c8"
+                }
+            ],
+            "published_at": "2023-10-11T20:35:43Z",
+            "updated_at": "2024-04-28T06:31:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.17.0",
+                    "first_patched_version": {
+                        "identifier": "0.17.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.17.0",
+            "first_patched_version": {
+                "identifier": "0.17.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/12",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/sys"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p782-xgp4-8hr8",
+            "cve_id": "CVE-2022-29526",
+            "summary": "golang.org/x/sys/unix has Incorrect privilege reporting in syscall",
+            "description": "Go before 1.17.10 and 1.18.x before 1.18.2 has Incorrect Privilege Reporting in syscall. When called with a non-zero flags parameter, the Faccessat function could incorrectly report that a file is accessible.\n\n### Specific Go Packages Affected\ngolang.org/x/sys/unix",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-p782-xgp4-8hr8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-29526",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-29526"
+                },
+                {
+                    "url": "https://github.com/golang/go/issues/52313"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/Y5qrqw_lWdU"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202208-02"
+                },
+                {
+                    "url": "https://go.dev/cl/399539"
+                },
+                {
+                    "url": "https://go.dev/cl/400074"
+                },
+                {
+                    "url": "https://go.dev/issue/52313"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2022-0493"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/Q6GE5EQGE4L2KRVGW4T75QVIYAXCLO5X"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/RQXU752ALW53OJAF5MG3WMR5CCZVLWW6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/Z55VUVGO7E5PJFXIOVAY373NZRHBNCI5"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZY2SLWOQR4ZURQ7UBRZ7JIX6H6F5JHJR"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20220729-0001"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p782-xgp4-8hr8"
+                }
+            ],
+            "published_at": "2022-06-24T00:00:30Z",
+            "updated_at": "2024-05-20T21:27:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/sys"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.0.0-20220412211240-33da011f77ad",
+                    "first_patched_version": {
+                        "identifier": "0.0.0-20220412211240-33da011f77ad"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-269",
+                    "name": "Improper Privilege Management"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/sys"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.0.0-20220412211240-33da011f77ad",
+            "first_patched_version": {
+                "identifier": "0.0.0-20220412211240-33da011f77ad"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/11",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fxg5-wq6x-vr4w",
+            "cve_id": "CVE-2022-41721",
+            "summary": "golang.org/x/net/http2/h2c vulnerable to request smuggling attack",
+            "description": "A request smuggling attack is possible when using MaxBytesHandler. When using MaxBytesHandler, the body of an HTTP request is not fully consumed. When the server attempts to read HTTP2 frames from the connection, it will instead be reading the body of the HTTP request, which could be attacker-manipulated to represent arbitrary HTTP2 requests.\n\n### Specific Go Packages Affected\ngolang.org/x/net/http2/h2c",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-fxg5-wq6x-vr4w",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-41721",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-41721"
+                },
+                {
+                    "url": "https://go.dev/cl/447396"
+                },
+                {
+                    "url": "https://go.dev/issue/56352"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2023-1495"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/X3H3EWQXM2XL5AGBX6UL443JEJ3GQXJN"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fxg5-wq6x-vr4w"
+                }
+            ],
+            "published_at": "2023-01-14T00:30:23Z",
+            "updated_at": "2024-05-20T21:43:15Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0.0.0-20220524220425-1d687d428aca, < 0.1.1-0.20221104162952-702349b0e862",
+                    "first_patched_version": {
+                        "identifier": "0.1.1-0.20221104162952-702349b0e862"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 0.0.0-20220524220425-1d687d428aca, < 0.1.1-0.20221104162952-702349b0e862",
+            "first_patched_version": {
+                "identifier": "0.1.1-0.20221104162952-702349b0e862"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/10",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/text"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-ppp9-7jff-5vj2",
+            "cve_id": "CVE-2021-38561",
+            "summary": "golang.org/x/text/language Out-of-bounds Read vulnerability",
+            "description": "golang.org/x/text/language in golang.org/x/text before 0.3.7 can panic with an out-of-bounds read during BCP 47 language tag parsing. Index calculation is mishandled. If parsing untrusted user input, this can be used as a vector for a denial-of-service attack.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-ppp9-7jff-5vj2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-38561",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-38561"
+                },
+                {
+                    "url": "https://deps.dev/advisory/OSV/GO-2021-0113"
+                },
+                {
+                    "url": "https://go.googlesource.com/text/+/383b2e75a7a4198c42f8f87833eefb772868a56f"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce"
+                },
+                {
+                    "url": "https://pkg.go.dev/golang.org/x/text/language"
+                },
+                {
+                    "url": "https://go.dev/cl/340830"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2021-0113"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-ppp9-7jff-5vj2"
+                }
+            ],
+            "published_at": "2022-12-26T06:30:22Z",
+            "updated_at": "2023-10-02T11:21:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/text"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.3.7",
+                    "first_patched_version": {
+                        "identifier": "0.3.7"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/text"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.3.7",
+            "first_patched_version": {
+                "identifier": "0.3.7"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/9",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-83g2-8m93-v3w7",
+            "cve_id": "CVE-2021-33194",
+            "summary": "golang.org/x/net/html Infinite Loop vulnerability",
+            "description": "Go through 1.15.12 and 1.16.x through 1.16.4 has a golang.org/x/net/html infinite loop via crafted ParseFragment input.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-83g2-8m93-v3w7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-33194",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-33194"
+                },
+                {
+                    "url": "https://github.com/golang/net/commit/37e1c6afe02340126705deced573a85ab75209d7"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/wPunbCPkWUg"
+                },
+                {
+                    "url": "https://go.dev/cl/311090"
+                },
+                {
+                    "url": "https://go.dev/issue/46288"
+                },
+                {
+                    "url": "https://go.googlesource.com/net/+/37e1c6afe02340126705deced573a85ab75209d7"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2021-0238"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4CHKSFMHZVOBCZSSVRE3UEYNKARTBMTM"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-83g2-8m93-v3w7"
+                }
+            ],
+            "published_at": "2022-05-24T19:03:21Z",
+            "updated_at": "2024-05-20T20:30:54Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.0.0-20210520170846-37e1c6afe023",
+                    "first_patched_version": {
+                        "identifier": "0.0.0-20210520170846-37e1c6afe023"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-835",
+                    "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.0.0-20210520170846-37e1c6afe023",
+            "first_patched_version": {
+                "identifier": "0.0.0-20210520170846-37e1c6afe023"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/8",
+        "created_at": "2024-05-20T13:20:18Z",
+        "updated_at": "2024-05-20T13:20:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h86h-8ppg-mxmh",
+            "cve_id": "CVE-2021-31525",
+            "summary": "golang.org/x/net/http/httpguts vulnerable to Uncontrolled Recursion",
+            "description": "golang.org/x/net/http/httpguts in Go before 1.15.12 and 1.16.x before 1.16.4 allows remote attackers to cause a denial of service (panic) via a large header to ReadRequest or ReadResponse. Server, Transport, and Client can each be affected in some configurations.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h86h-8ppg-mxmh",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-31525",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-31525"
+                },
+                {
+                    "url": "https://github.com/golang/go/issues/45710"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/cu9SP4eSXMc"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202208-02"
+                },
+                {
+                    "url": "https://go.dev/cl/313069"
+                },
+                {
+                    "url": "https://go.dev/issue/45710"
+                },
+                {
+                    "url": "https://go.googlesource.com/net/+/89ef3d95e781148a0951956029c92a211477f7f9"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2022-0236"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ISRZZ6NY5R2TBYE72KZFOCO25TEUQTBF"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h86h-8ppg-mxmh"
+                }
+            ],
+            "published_at": "2022-05-24T19:03:29Z",
+            "updated_at": "2024-05-20T20:31:00Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.0.0-20210428140749-89ef3d95e781",
+                    "first_patched_version": {
+                        "identifier": "0.0.0-20210428140749-89ef3d95e781"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-674",
+                    "name": "Uncontrolled Recursion"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.0.0-20210428140749-89ef3d95e781",
+            "first_patched_version": {
+                "identifier": "0.0.0-20210428140749-89ef3d95e781"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/7",
+        "created_at": "2024-05-20T13:20:17Z",
+        "updated_at": "2024-05-20T13:20:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/text"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-69ch-w2m2-3vjp",
+            "cve_id": "CVE-2022-32149",
+            "summary": "golang.org/x/text/language Denial of service via crafted Accept-Language header",
+            "description": "The BCP 47 tag parser has quadratic time complexity due to inherent aspects of its design. Since the parser is, by design, exposed to untrusted user input, this can be leveraged to force a program to consume significant time parsing Accept-Language headers. The parser cannot be easily rewritten to fix this behavior for various reasons. Instead the solution implemented in this CL is to limit the total complexity of tags passed into ParseAcceptLanguage by limiting the number of dashes in the string to 1000. This should be more than enough for the majority of real world use cases, where the number of tags being sent is likely to be in the single digits.\n\n### Specific Go Packages Affected\ngolang.org/x/text/language",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-69ch-w2m2-3vjp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-32149",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-32149"
+                },
+                {
+                    "url": "https://go.dev/cl/442235"
+                },
+                {
+                    "url": "https://go.dev/issue/56152"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/-hjNw559_tE/m/KlGTfid5CAAJ"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2022-1059"
+                },
+                {
+                    "url": "https://github.com/golang/go/issues/56152"
+                },
+                {
+                    "url": "https://github.com/golang/text/commit/434eadcdbc3b0256971992e8c70027278364c72c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-69ch-w2m2-3vjp"
+                }
+            ],
+            "published_at": "2022-10-14T19:00:40Z",
+            "updated_at": "2023-10-02T11:18:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/text"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.3.8",
+                    "first_patched_version": {
+                        "identifier": "0.3.8"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-772",
+                    "name": "Missing Release of Resource after Effective Lifetime"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/text"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.3.8",
+            "first_patched_version": {
+                "identifier": "0.3.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/6",
+        "created_at": "2024-05-20T13:20:17Z",
+        "updated_at": "2024-05-20T13:20:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-69cg-p879-7622",
+            "cve_id": "CVE-2022-27664",
+            "summary": "golang.org/x/net/http2 Denial of Service vulnerability",
+            "description": "In net/http in Go before 1.18.6 and 1.19.x before 1.19.1, attackers can cause a denial of service because an HTTP/2 connection can hang during closing if shutdown were preempted by a fatal error.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-69cg-p879-7622",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-27664",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-27664"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/x49AQzIVX-s"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202209-26"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2022-0969"
+                },
+                {
+                    "url": "https://go.dev/cl/428735"
+                },
+                {
+                    "url": "https://go.dev/issue/54658"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/JXKTHIGE5F576MAPFYCIJXNRGBSPISUF"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TXS2OQ57KZC5XZKK5UW4SYKPVQAHIOJX"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20220923-0004"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-69cg-p879-7622"
+                }
+            ],
+            "published_at": "2022-09-07T00:01:51Z",
+            "updated_at": "2024-05-20T21:33:39Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.0.0-20220906165146-f3363e06e74c",
+                    "first_patched_version": {
+                        "identifier": "0.0.0-20220906165146-f3363e06e74c"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net/http2"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.0.0-20220906165146-f3363e06e74c",
+                    "first_patched_version": {
+                        "identifier": "0.0.0-20220906165146-f3363e06e74c"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.0.0-20220906165146-f3363e06e74c",
+            "first_patched_version": {
+                "identifier": "0.0.0-20220906165146-f3363e06e74c"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/5",
+        "created_at": "2024-05-20T13:20:17Z",
+        "updated_at": "2024-05-20T13:20:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "manifest_path": "grpc-client/go/go.mod",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-vvpx-j8f3-3w6h",
+            "cve_id": "CVE-2022-41723",
+            "summary": "golang.org/x/net vulnerable to Uncontrolled Resource Consumption",
+            "description": "A maliciously crafted HTTP/2 stream could cause excessive CPU consumption in the HPACK decoder, sufficient to cause a denial of service from a small number of small requests.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-vvpx-j8f3-3w6h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-41723",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-41723"
+                },
+                {
+                    "url": "https://go.dev/cl/468135"
+                },
+                {
+                    "url": "https://go.dev/issue/57855"
+                },
+                {
+                    "url": "https://groups.google.com/g/golang-announce/c/V0aBFqaFs_E"
+                },
+                {
+                    "url": "https://vuln.go.dev/ID/GO-2023-1571.json"
+                },
+                {
+                    "url": "https://go.dev/cl/468295"
+                },
+                {
+                    "url": "https://pkg.go.dev/vuln/GO-2023-1571"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202311-09"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4BUK2ZIAGCULOOYDNH25JPU6JBES5NF2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/4MA5XS5DAOJ5PKKNG5TUXKPQOFHT5VBC"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/REMHVVIBDNKSRKNOTV7EQSB7CYQWOUOU"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/RGW7GE2Z32ZT47UFAQFDRQE33B7Q7LMT"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/RLBQ3A7ROLEQXQLXFDLNJ7MYPKG5GULE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/T7N5GV4CHH6WAGX3GFMDD3COEOVCZ4RI"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XX3IMUTZKRQ73PBZM4E2JP4BKYH4C6XE"
+                },
+                {
+                    "url": "https://www.couchbase.com/alerts"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vvpx-j8f3-3w6h"
+                }
+            ],
+            "published_at": "2023-02-17T14:00:02Z",
+            "updated_at": "2024-05-20T21:46:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "golang.org/x/net"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.7.0",
+                    "first_patched_version": {
+                        "identifier": "0.7.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "go",
+                "name": "golang.org/x/net"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.7.0",
+            "first_patched_version": {
+                "identifier": "0.7.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/4",
+        "created_at": "2024-05-20T13:20:17Z",
+        "updated_at": "2024-05-20T13:20:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "examples/inference-graph/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37q5-v5qm-c9v8",
+            "cve_id": "CVE-2024-3568",
+            "summary": "Transformers Deserialization of Untrusted Data vulnerability",
+            "description": "The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-37q5-v5qm-c9v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3568",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3568"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/693667b8ac8138b83f8adb6522ddaf42fa07c125"
+                },
+                {
+                    "url": "https://huntr.com/bounties/b3c36992-5264-4d7f-9906-a996efafba8f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37q5-v5qm-c9v8"
+                }
+            ],
+            "published_at": "2024-04-10T18:30:48Z",
+            "updated_at": "2024-04-10T22:20:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.38.0",
+                    "first_patched_version": {
+                        "identifier": "4.38.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                "score": 3.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.38.0",
+            "first_patched_version": {
+                "identifier": "4.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/3",
+        "created_at": "2024-05-20T13:20:17Z",
+        "updated_at": "2024-05-20T13:20:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "examples/inference-graph/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3863-2447-669p",
+            "cve_id": "CVE-2023-6730",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-3863-2447-669p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6730"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/423611ee-7a2a-442a-babb-3ed2f8385c16"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3863-2447-669p"
+                }
+            ],
+            "published_at": "2023-12-19T15:30:30Z",
+            "updated_at": "2023-12-28T05:05:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "score": 9.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/2",
+        "created_at": "2024-05-20T13:20:17Z",
+        "updated_at": "2024-05-20T13:20:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "examples/inference-graph/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v68g-wm8c-6x7j",
+            "cve_id": "CVE-2023-7018",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v68g-wm8c-6x7j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-7018",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-7018"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/e1a3e548-e53a-48df-b708-9ee62140963c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v68g-wm8c-6x7j"
+                }
+            ],
+            "published_at": "2023-12-20T18:30:32Z",
+            "updated_at": "2024-01-02T15:27:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/BentoML/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/BentoML/security/dependabot/1",
+        "created_at": "2024-05-20T13:20:17Z",
+        "updated_at": "2024-05-20T13:20:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]
