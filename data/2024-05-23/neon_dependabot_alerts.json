@@ -1,0 +1,3421 @@
+[
+    {
+        "number": 105,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "manifest_path": "vis_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h75v-3vvj-5mfj",
+            "cve_id": "CVE-2024-34064",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing non-attribute characters. XML/HTML attributes cannot contain spaces, `/`, `>`, or `=`, as each would then be interpreted as starting a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. The fix for the previous GHSA-h5c8-rqwp-cp95 CVE-2024-22195 only addressed spaces but not other characters.\n\nAccepting keys as user input is now explicitly considered an unintended use case of the `xmlattr` filter, and code that does so without otherwise validating the input should be flagged as insecure, regardless of Jinja version. Accepting _values_ as user input continues to be safe.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h75v-3vvj-5mfj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34064",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h75v-3vvj-5mfj"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/0668239dc6b44ef38e7a6c9f91f312fd4ca581cb"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34064"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h75v-3vvj-5mfj"
+                }
+            ],
+            "published_at": "2024-05-06T14:20:59Z",
+            "updated_at": "2024-05-06T16:17:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/105",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/105",
+        "created_at": "2024-05-24T01:34:08Z",
+        "updated_at": "2024-05-24T01:34:08Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 104,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": "vis_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h5c8-rqwp-cp95",
+            "cve_id": "CVE-2024-22195",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing spaces. XML/HTML attributes cannot contain spaces, as each would then be interpreted as a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. Note that accepting keys as user input is not common or a particularly intended use case of the `xmlattr` filter, and an application doing so should already be verifying what keys are provided regardless of this fix.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h5c8-rqwp-cp95",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-22195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h5c8-rqwp-cp95"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-22195"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/716795349a41d4983a9a4771f7d883c96ea17be7"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5XCWZD464AJJJUBOO7CMPXQ4ROBC6JX2/"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/01/msg00010.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/DELCVUUYX75I5K4Q5WMJG4MUZJA6VAIP/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/O7YWRBX6JQCWC2XXCTZ55C7DPMGICCN3/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h5c8-rqwp-cp95"
+                }
+            ],
+            "published_at": "2024-01-11T15:20:48Z",
+            "updated_at": "2024-01-27T03:30:20Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.3",
+                    "first_patched_version": {
+                        "identifier": "3.1.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.3",
+            "first_patched_version": {
+                "identifier": "3.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/104",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/104",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 103,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": "vis_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-g3rq-g295-4j3m",
+            "cve_id": "CVE-2020-28493",
+            "summary": "Regular Expression Denial of Service (ReDoS) in Jinja2",
+            "description": "This affects the package jinja2 from 0.0.0 and before 2.11.3. The ReDOS vulnerability of the regex is mainly due to the sub-pattern [a-zA-Z0-9._-]+.[a-zA-Z0-9._-]+ This issue can be mitigated by Markdown to format user content instead of the urlize filter, or by implementing request timeouts and limiting process memory.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-g3rq-g295-4j3m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-28493",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-28493"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/pull/1343"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/blob/ab81fd9c277900c85da0c322a2ff9d68a235b2e6/src/jinja2/utils.py%23L20"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-PYTHON-JINJA2-1012994"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PVAKCOO7VBVUBM3Q6CBBTPBFNP5NDXF4/"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202107-19"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/15ef8f09b659f9100610583938005a7a10472d4d"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-g3rq-g295-4j3m"
+                }
+            ],
+            "published_at": "2021-03-19T21:28:05Z",
+            "updated_at": "2023-09-07T19:35:25Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.11.3",
+                    "first_patched_version": {
+                        "identifier": "2.11.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.11.3",
+            "first_patched_version": {
+                "identifier": "2.11.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/103",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/103",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 102,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "manifest_path": "vis_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-462w-v97r-4m45",
+            "cve_id": "CVE-2019-10906",
+            "summary": "Jinja2 sandbox escape via string formatting",
+            "description": "In Pallets Jinja before 2.10.1, `str.format_map` allows a sandbox escape.\n\nThe sandbox is used to restrict what code can be evaluated when rendering untrusted, user-provided templates. Due to the way string formatting works in Python, the `str.format_map` method could be used to escape the sandbox.\n\nThis issue was previously addressed for the `str.format` method in Jinja 2.8.1, which discusses the issue in detail. However, the less-common `str.format_map` method was overlooked. This release applies the same sandboxing to both methods.\n\nIf you cannot upgrade Jinja, you can override the `is_safe_attribute` method on the sandbox and explicitly disallow the `format_map` method on string objects.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-462w-v97r-4m45",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-10906",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-10906"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2019:1152"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2019:1237"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2019:1329"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-462w-v97r-4m45"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/09fc842ff444cd43d9d4c510756fec625ef8eb1175f14fd21de2605f@%3Cdevnull.infra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/2b52b9c8b9d6366a4f1b407a8bde6af28d9fc73fdb3b37695fd0d9ac@%3Cdevnull.infra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/320441dccbd9a545320f5f07306d711d4bbd31ba43dc9eebcfc602df@%3Cdevnull.infra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/46c055e173b52d599c648a98199972dbd6a89d2b4c4647b0500f2284@%3Cdevnull.infra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/57673a78c4d5c870d3f21465c7e2946b9f8285c7c57e54c2ae552f02@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/7f39f01392d320dfb48e4901db68daeece62fd60ef20955966739993@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/b2380d147b508bbcb90d2cad443c159e63e12555966ab4f320ee22da@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/f0c4a03418bcfe70c539c5dbaf99c04c98da13bfa1d3266f08564316@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/DSW3QZMFVVR7YE3UT4YRQA272TYAL5AF/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QCDYIS254EJMBNWOG4S5QY6AOTOR4TZU/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TS7IVZAJBWOHNRDMFJDIZVFCMRP6YIUQ/"
+                },
+                {
+                    "url": "https://palletsprojects.com/blog/jinja-2-10-1-released"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4011-1/"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4011-2/"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2019-05/msg00030.html"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2019-06/msg00064.html"
+                }
+            ],
+            "published_at": "2019-04-10T14:30:24Z",
+            "updated_at": "2023-08-30T21:01:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Jinja2"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 2.10.1",
+                    "first_patched_version": {
+                        "identifier": "2.10.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+                "score": 8.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-693",
+                    "name": "Protection Mechanism Failure"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 2.10.1",
+            "first_patched_version": {
+                "identifier": "2.10.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/102",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/102",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 101,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v9pc-9mvp-x87g",
+            "cve_id": "CVE-2016-3076",
+            "summary": "Pillow Buffer overflow in Jpeg2KEncode.c",
+            "description": "Heap-based buffer overflow in the j2k_encode_entry function in Pillow 2.5.0 through 3.1.1 allows remote attackers to cause a denial of service (memory corruption) via a crafted Jpeg2000 file.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-v9pc-9mvp-x87g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2016-3076",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2016-3076"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1321929"
+                },
+                {
+                    "url": "http://pillow.readthedocs.io/en/4.1.x/releasenotes/3.1.2.html"
+                },
+                {
+                    "url": "http://www.securityfocus.com/bid/98042"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/blob/4.1.x/docs/releasenotes/3.1.2.rst"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v9pc-9mvp-x87g"
+                }
+            ],
+            "published_at": "2022-05-17T02:47:20Z",
+            "updated_at": "2024-04-22T22:34:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pillow"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.5.0, < 3.1.2",
+                    "first_patched_version": {
+                        "identifier": "3.1.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-119",
+                    "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 2.5.0, < 3.1.2",
+            "first_patched_version": {
+                "identifier": "3.1.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/101",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/101",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 100,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-44wm-f244-xhp3",
+            "cve_id": "CVE-2024-28219",
+            "summary": "Pillow buffer overflow vulnerability",
+            "description": "In _imagingcms.c in Pillow before 10.3.0, a buffer overflow exists because strcpy is used instead of strncpy.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-44wm-f244-xhp3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28219",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28219"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/10.3.0.html#security"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/2a93aba5cfcf6e241ab4f9392c13e3b74032c061"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/04/msg00008.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/4XLPUT3VK4GQ6EVY525TT2QNUIXNRU5M"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-44wm-f244-xhp3"
+                }
+            ],
+            "published_at": "2024-04-03T03:30:30Z",
+            "updated_at": "2024-04-20T05:06:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pillow"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.3.0",
+                    "first_patched_version": {
+                        "identifier": "10.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+                "score": 6.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-120",
+                    "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+                },
+                {
+                    "cwe_id": "CWE-676",
+                    "name": "Use of Potentially Dangerous Function"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 10.3.0",
+            "first_patched_version": {
+                "identifier": "10.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/100",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/100",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 99,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3f63-hfp8-52jq",
+            "cve_id": "CVE-2023-50447",
+            "summary": "Arbitrary Code Execution in Pillow",
+            "description": "Pillow through 10.1.0 allows PIL.ImageMath.eval Arbitrary Code Execution via the environment parameter, a different vulnerability than CVE-2022-22817 (which was about the expression parameter).",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3f63-hfp8-52jq",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-50447",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-50447"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/45c726fd4daa63236a8f3653530f297dc87b160a"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/10.2.0.html#security"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/01/20/1"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/releases"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/01/msg00019.html"
+                },
+                {
+                    "url": "https://devhub.checkmarx.com/cve-details/CVE-2023-50447"
+                },
+                {
+                    "url": "https://duartecsantos.github.io/2023-01-02-CVE-2023-50447"
+                },
+                {
+                    "url": "https://duartecsantos.github.io/2024-01-02-CVE-2023-50447"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3f63-hfp8-52jq"
+                }
+            ],
+            "published_at": "2024-01-19T21:30:35Z",
+            "updated_at": "2024-03-27T23:53:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 10.2.0",
+                    "first_patched_version": {
+                        "identifier": "10.2.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 8.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-94",
+                    "name": "Improper Control of Generation of Code ('Code Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 10.2.0",
+            "first_patched_version": {
+                "identifier": "10.2.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/99",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/99",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 98,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8ghj-p4vj-mr35",
+            "cve_id": "CVE-2023-44271",
+            "summary": "Pillow Denial of Service vulnerability",
+            "description": "An issue was discovered in Pillow before 10.0.0. It is a Denial of Service that uncontrollably allocates memory to process a given task, potentially causing a service to crash by having it run out of memory. This occurs for truetype in ImageFont when textlength in an ImageDraw instance operates on a long text argument.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-8ghj-p4vj-mr35",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-44271",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-44271"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/7244"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/1fe1bb49c452b0318cad12ea9d97c3bef188e9a7"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pillow/PYSEC-2023-227.yaml"
+                },
+                {
+                    "url": "https://devhub.checkmarx.com/cve-details/CVE-2023-44271"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/03/msg00021.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/N2JOEDUJDQLCUII2LQYZYSM7RJL2I3P4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8ghj-p4vj-mr35"
+                }
+            ],
+            "published_at": "2023-11-03T06:36:30Z",
+            "updated_at": "2024-03-22T15:25:43Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0, < 10.0.0",
+                    "first_patched_version": {
+                        "identifier": "10.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 0, < 10.0.0",
+            "first_patched_version": {
+                "identifier": "10.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/98",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/98",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 97,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-56pw-mpj4-fxww",
+            "cve_id": null,
+            "summary": "Bundled libwebp in Pillow vulnerable",
+            "description": "Pillow versions before v10.0.1 bundled libwebp binaries in wheels that are vulnerable to CVE-2023-5129 (previously CVE-2023-4863). Pillow v10.0.1 upgrades the bundled libwebp binary to v1.3.2.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-56pw-mpj4-fxww",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-4863"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-5129"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pillow/PYSEC-2023-175.yaml"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/blob/main/CHANGES.rst#1001-2023-09-15"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-56pw-mpj4-fxww"
+                }
+            ],
+            "published_at": "2023-10-05T00:06:58Z",
+            "updated_at": "2023-10-05T00:06:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 10.0.1",
+                    "first_patched_version": {
+                        "identifier": "10.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 10.0.1",
+            "first_patched_version": {
+                "identifier": "10.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/97",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/97",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 96,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-j7hp-h8jx-5ppr",
+            "cve_id": "CVE-2023-4863",
+            "summary": "libwebp: OOB write in BuildHuffmanTable",
+            "description": "Heap buffer overflow in libwebp allow a remote attacker to perform an out of bounds memory write via a crafted HTML page. ",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-j7hp-h8jx-5ppr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-4863",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-4863"
+                },
+                {
+                    "url": "https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_11.html"
+                },
+                {
+                    "url": "https://crbug.com/1479274"
+                },
+                {
+                    "url": "https://github.com/qnighy/libwebp-sys2-rs/pull/21"
+                },
+                {
+                    "url": "https://github.com/qnighy/libwebp-sys2-rs/commit/4560c473a76ec8bd8c650f19ddf9d7a44f719f8b"
+                },
+                {
+                    "url": "https://github.com/webmproject/libwebp/commit/902bc9190331343b2017211debcec8d2ab87e17a"
+                },
+                {
+                    "url": "https://bugzilla.suse.com/show_bug.cgi?id=1215231"
+                },
+                {
+                    "url": "https://en.bandisoft.com/honeyview/history/"
+                },
+                {
+                    "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2023-4863"
+                },
+                {
+                    "url": "https://news.ycombinator.com/item?id=37478403"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2023-0060.html"
+                },
+                {
+                    "url": "https://security-tracker.debian.org/tracker/CVE-2023-4863"
+                },
+                {
+                    "url": "https://stackdiary.com/critical-vulnerability-in-webp-codec-cve-2023-4863/"
+                },
+                {
+                    "url": "https://www.bleepingcomputer.com/news/google/google-fixes-another-chrome-zero-day-bug-exploited-in-attacks/"
+                },
+                {
+                    "url": "https://www.mozilla.org/en-US/security/advisories/mfsa2023-40/"
+                },
+                {
+                    "url": "https://github.com/electron/electron/pull/39823"
+                },
+                {
+                    "url": "https://github.com/electron/electron/pull/39825"
+                },
+                {
+                    "url": "https://github.com/electron/electron/pull/39826"
+                },
+                {
+                    "url": "https://github.com/electron/electron/pull/39827"
+                },
+                {
+                    "url": "https://github.com/electron/electron/pull/39828"
+                },
+                {
+                    "url": "https://adamcaudill.com/2023/09/14/whose-cve-is-it-anyway/"
+                },
+                {
+                    "url": "https://github.com/webmproject/libwebp/releases/tag/v1.3.2"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00015.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00016.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/09/msg00017.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6T655QF7CQ3DYAMPFV7IECQYGDEUIVVT/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FYYKLG6CRGEDTNRBSU26EEWAO6D6U645/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OZDGWWMJREPAGKWCJKSCM4WYLANSKIFX/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PYZV7TMKF4QHZ54SFJX54BDN52VHGGCX/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WHOLML7N2G5KCAZXFWC5IDFFHSQS5SDB/"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2023-0061.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202309-05"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5496"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5497"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5498"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KUQ7CTX3W372X3UY56VVNAHCH6H2F4X3/"
+                },
+                {
+                    "url": "https://blog.isosceles.com/the-webp-0day/"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/21/4"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/22/1"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/22/3"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/22/4"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/22/5"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/22/6"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/22/7"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/22/8"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/26/1"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/26/7"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/28/1"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/28/2"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/09/28/4"
+                },
+                {
+                    "url": "https://github.com/jaredforth/webp/pull/30"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/7395"
+                },
+                {
+                    "url": "https://github.com/jaredforth/webp/commit/9d4c56e63abecc777df71c702503c3eaabd7dcbc"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WTRUIS3564P7ZLM2S2IH4Y4KZ327LI4I/"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/10.0.1.html#security"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230929-0011/"
+                },
+                {
+                    "url": "https://github.com/ImageMagick/ImageMagick/discussions/6664"
+                },
+                {
+                    "url": "https://github.com/dlemstra/Magick.NET/releases/tag/13.3.0"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202401-10"
+                },
+                {
+                    "url": "https://sethmlarson.dev/security-developer-in-residence-weekly-report-16"
+                },
+                {
+                    "url": "https://www.bentley.com/advisories/be-2023-0001/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-j7hp-h8jx-5ppr"
+                }
+            ],
+            "published_at": "2023-09-12T15:30:20Z",
+            "updated_at": "2024-01-08T15:38:39Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "libwebp-sys2"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.1.8",
+                    "first_patched_version": {
+                        "identifier": "0.1.8"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "libwebp-sys"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.9.3",
+                    "first_patched_version": {
+                        "identifier": "0.9.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "electron"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 22.0.0, < 22.3.24",
+                    "first_patched_version": {
+                        "identifier": "22.3.24"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "electron"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 24.0.0, < 24.8.3",
+                    "first_patched_version": {
+                        "identifier": "24.8.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "electron"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 25.0.0, < 25.8.1",
+                    "first_patched_version": {
+                        "identifier": "25.8.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "electron"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 26.0.0, < 26.2.1",
+                    "first_patched_version": {
+                        "identifier": "26.2.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "electron"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 27.0.0-beta.1, < 27.0.0-beta.2",
+                    "first_patched_version": {
+                        "identifier": "27.0.0-beta.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "SkiaSharp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.88.6",
+                    "first_patched_version": {
+                        "identifier": "2.88.6"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "github.com/chai2010/webp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.0.0",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 10.0.1",
+                    "first_patched_version": {
+                        "identifier": "10.0.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "webp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.2.6",
+                    "first_patched_version": {
+                        "identifier": "0.2.6"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "magick.net-q16-anycpu"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 13.3.0",
+                    "first_patched_version": {
+                        "identifier": "13.3.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "magick.net-q16-hdri-anycpu"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 13.3.0",
+                    "first_patched_version": {
+                        "identifier": "13.3.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "magick.net-q16-x64"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 13.3.0",
+                    "first_patched_version": {
+                        "identifier": "13.3.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "magick.net-q8-anycpu"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 13.3.0",
+                    "first_patched_version": {
+                        "identifier": "13.3.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "magick.net-q8-openmp-x64"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 13.3.0",
+                    "first_patched_version": {
+                        "identifier": "13.3.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "magick.net-q8-x64"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 13.3.0",
+                    "first_patched_version": {
+                        "identifier": "13.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 10.0.1",
+            "first_patched_version": {
+                "identifier": "10.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/96",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/96",
+        "created_at": "2024-05-24T01:34:07Z",
+        "updated_at": "2024-05-24T01:34:07Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 95,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9fq2-x9r6-wfmf",
+            "cve_id": "CVE-2019-6446",
+            "summary": "Numpy Deserialization of Untrusted Data",
+            "description": "** DISPUTED **   An issue was discovered in NumPy 1.16.0 and earlier. It uses the pickle Python module unsafely, which allows remote attackers to execute arbitrary code via a crafted serialized object, as demonstrated by a numpy.load call. NOTE: third parties dispute this issue because it is  a behavior that might have legitimate applications in (for example)  loading serialized Python object arrays from trusted and authenticated  sources.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-9fq2-x9r6-wfmf",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-6446",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-6446"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/12759"
+                },
+                {
+                    "url": "https://bugzilla.suse.com/show_bug.cgi?id=1122208"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2019-09/msg00091.html"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2019-09/msg00092.html"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2019-10/msg00015.html"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/pull/12889"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2019:3335"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2019:3704"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/7ZZAYIQNUUYXGMKHSPEEXS4TRYFOUYE4"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/7ZZAYIQNUUYXGMKHSPEEXS4TRYFOUYE4"
+                },
+                {
+                    "url": "https://web.archive.org/web/20210124234613/https://www.securityfocus.com/bid/106670"
+                },
+                {
+                    "url": "http://www.securityfocus.com/bid/106670"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9fq2-x9r6-wfmf"
+                }
+            ],
+            "published_at": "2022-05-24T22:00:57Z",
+            "updated_at": "2024-04-22T21:20:59Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "numpy"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 1.16.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 1.16.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/95",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/95",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 94,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "future"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v3c5-jqr6-7qm8",
+            "cve_id": "CVE-2022-40899",
+            "summary": "Python Charmers Future denial of service vulnerability",
+            "description": "An issue discovered in Python Charmers Future 0.18.2 and earlier allows remote attackers to cause a denial of service via crafted Set-Cookie header from malicious web server. This issue has been patched in version 0.18.3.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v3c5-jqr6-7qm8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-40899",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-40899"
+                },
+                {
+                    "url": "https://github.com/python/cpython/pull/17157"
+                },
+                {
+                    "url": "https://github.com/PythonCharmers/python-future/blob/master/src/future/backports/http/cookiejar.py#L215"
+                },
+                {
+                    "url": "https://pypi.org/project/future/"
+                },
+                {
+                    "url": "https://pyup.io/posts/pyup-discovers-redos-vulnerabilities-in-top-python-packages/"
+                },
+                {
+                    "url": "https://github.com/PythonCharmers/python-future/commit/c91d70b34ef0402aef3e9d04364ba98509dca76f"
+                },
+                {
+                    "url": "https://github.com/PythonCharmers/python-future/pull/610"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v3c5-jqr6-7qm8"
+                }
+            ],
+            "published_at": "2022-12-23T00:30:23Z",
+            "updated_at": "2023-01-28T05:06:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "future"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.18.2",
+                    "first_patched_version": {
+                        "identifier": "0.18.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "future"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 0.18.2",
+            "first_patched_version": {
+                "identifier": "0.18.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/94",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/94",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 93,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mvg9-xffr-p774",
+            "cve_id": "CVE-2021-25291",
+            "summary": "Out of bounds read in Pillow",
+            "description": "An issue was discovered in Pillow before 8.2.0. In `TiffDecode.c`, there is an out-of-bounds read in `TiffreadRGBATile` via invalid tile boundaries.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-mvg9-xffr-p774",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-25291",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-25291"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/cbdce6c5d054fccaf4af34b47f212355c64ace7a"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/8.1.1.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202107-33"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/8b8076bdcb3815be0ef0d279651d8d1342b8ea61"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mvg9-xffr-p774"
+                }
+            ],
+            "published_at": "2021-03-29T16:35:57Z",
+            "updated_at": "2024-03-26T18:52:15Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 8.2.0",
+                    "first_patched_version": {
+                        "identifier": "8.2.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 8.2.0",
+            "first_patched_version": {
+                "identifier": "8.2.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/93",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/93",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 92,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-m2vv-5vj5-2hm7",
+            "cve_id": "CVE-2022-45198",
+            "summary": "Pillow vulnerable to Data Amplification attack.",
+            "description": "Pillow before 9.2.0 performs Improper Handling of Highly Compressed GIF Data (Data Amplification).",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-m2vv-5vj5-2hm7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-45198",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-45198"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/6402"
+                },
+                {
+                    "url": "https://bugs.gentoo.org/855683"
+                },
+                {
+                    "url": "https://cwe.mitre.org/data/definitions/409.html"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/releases/tag/9.2.0"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/6402/commits/c9f1b35e981075110a23487a8d4a6cbb59a588ea"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/11918eac0628ec8ac0812670d9838361ead2d6a4"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202211-10"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-m2vv-5vj5-2hm7"
+                }
+            ],
+            "published_at": "2022-11-14T12:00:15Z",
+            "updated_at": "2023-09-05T09:35:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 9.2.0",
+                    "first_patched_version": {
+                        "identifier": "9.2.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-409",
+                    "name": "Improper Handling of Highly Compressed Data (Data Amplification)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 9.2.0",
+            "first_patched_version": {
+                "identifier": "9.2.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/92",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/92",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 91,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fpfv-jqm9-f5jm",
+            "cve_id": "CVE-2021-34141",
+            "summary": "Incorrect Comparison in NumPy",
+            "description": "Incomplete string comparison in the numpy.core component in NumPy1.9.x, which allows attackers to fail the APIs via constructing specific string objects.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fpfv-jqm9-f5jm",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-34141",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-34141"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/18993"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/18993#issuecomment-1010735102"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fpfv-jqm9-f5jm"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/numpy/PYSEC-2021-855.yaml"
+                }
+            ],
+            "published_at": "2021-12-18T00:00:41Z",
+            "updated_at": "2023-01-27T05:07:10Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "numpy"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.22",
+                    "first_patched_version": {
+                        "identifier": "1.22"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-697",
+                    "name": "Incorrect Comparison"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.22",
+            "first_patched_version": {
+                "identifier": "1.22"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/91",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/91",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 90,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-r7rm-8j6h-r933",
+            "cve_id": "CVE-2020-5311",
+            "summary": "Buffer Copy without Checking Size of Input in Pillow",
+            "description": "`libImaging/SgiRleDecode.c` in Pillow before 6.2.2 has an SGI buffer overflow.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-r7rm-8j6h-r933",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-5311",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-5311"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/a79b65c47c7dc6fe623aadf09aa6192fc54548f3"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2020:0566"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2020:0580"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2MMU3WT2X64GS5WHDPKKC2WZA7UIIQ3A/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3DUMIBUYGJRAVJCTFUWBRLVQKOUTVX5P/"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/6.2.2.html"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4272-1/"
+                },
+                {
+                    "url": "https://www.debian.org/security/2020/dsa-4631"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-r7rm-8j6h-r933"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pillow/PYSEC-2020-82.yaml"
+                }
+            ],
+            "published_at": "2022-05-24T17:05:33Z",
+            "updated_at": "2023-09-05T09:18:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pillow"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 6.2.1",
+                    "first_patched_version": {
+                        "identifier": "6.2.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-120",
+                    "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 6.2.1",
+            "first_patched_version": {
+                "identifier": "6.2.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/90",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/90",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 89,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5545-2q6w-2gh6",
+            "cve_id": "CVE-2021-41495",
+            "summary": "NumPy NULL Pointer Dereference",
+            "description": "Null Pointer Dereference vulnerability exists in numpy.sort in NumPy &lt and 1.19 in the PyArray_DescrNew function due to missing return-value validation, which allows attackers to conduct DoS attacks by repetitively creating sort arrays.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5545-2q6w-2gh6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-41495",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-41495"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/19038"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5545-2q6w-2gh6"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/numpy/PYSEC-2021-856.yaml"
+                }
+            ],
+            "published_at": "2022-02-08T00:00:56Z",
+            "updated_at": "2023-01-29T05:01:55Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "numpy"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.18.5",
+                    "first_patched_version": {
+                        "identifier": "1.19"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.18.5",
+            "first_patched_version": {
+                "identifier": "1.19"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/89",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/89",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 88,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f7c7-j99h-c22f",
+            "cve_id": "CVE-2021-41496",
+            "summary": "Buffer Copy without Checking Size of Input in NumPy",
+            "description": "Buffer overflow in the array_from_pyobj function of fortranobject.c in NumPy < 1.19, which allows attackers to conduct a Denial of Service attacks by carefully constructing an array with negative values.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-f7c7-j99h-c22f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-41496",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-41496"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/19000"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f7c7-j99h-c22f"
+                }
+            ],
+            "published_at": "2022-02-08T00:00:56Z",
+            "updated_at": "2023-01-27T05:02:20Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "numpy"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 1.18.5",
+                    "first_patched_version": {
+                        "identifier": "1.19"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-120",
+                    "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 1.18.5",
+            "first_patched_version": {
+                "identifier": "1.19"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/88",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/88",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 87,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-frgw-fgh6-9g52",
+            "cve_id": "CVE-2017-12852",
+            "summary": "Numpy missing input validation",
+            "description": "The numpy.pad function in Numpy 1.13.1 and older versions is missing input validation. An empty list or ndarray will stick into an infinite loop, which can allow attackers to cause a DoS attack.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-frgw-fgh6-9g52",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2017-12852",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2017-12852"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/9560#issuecomment-322395292"
+                },
+                {
+                    "url": "https://github.com/BT123/testcasesForMyRequest/tree/master/CVE-2017-12852"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/releases/tag/v1.13.3"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-frgw-fgh6-9g52"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/numpy/PYSEC-2017-1.yaml"
+                }
+            ],
+            "published_at": "2022-05-13T01:42:46Z",
+            "updated_at": "2023-01-27T05:07:54Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "numpy"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.13.3",
+                    "first_patched_version": {
+                        "identifier": "1.13.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-835",
+                    "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 1.13.3",
+            "first_patched_version": {
+                "identifier": "1.13.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/87",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/87",
+        "created_at": "2024-05-24T01:34:06Z",
+        "updated_at": "2024-05-24T01:34:06Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 86,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4fx9-vc88-q2xc",
+            "cve_id": null,
+            "summary": "Infinite loop in Pillow",
+            "description": "JpegImagePlugin may append an EOF marker to the end of a truncated file, so that the last segment of the data will still be processed by the decoder.\n\nIf the EOF marker is not detected as such however, this could lead to an infinite loop where JpegImagePlugin keeps trying to end the file.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-4fx9-vc88-q2xc",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/baae9ec4b67c68e3adaf1208cf54e8de5e38a6fd"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/9.0.0.html#ensure-jpegimageplugin-stops-at-the-end-of-a-truncated-file"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4fx9-vc88-q2xc"
+                }
+            ],
+            "published_at": "2022-03-11T23:39:27Z",
+            "updated_at": "2023-01-11T05:05:44Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 9.0.0",
+                    "first_patched_version": {
+                        "identifier": "9.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 9.0.0",
+            "first_patched_version": {
+                "identifier": "9.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/86",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/86",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 85,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8vj2-vxx3-667w",
+            "cve_id": "CVE-2022-22817",
+            "summary": "Arbitrary expression injection in Pillow",
+            "description": "`PIL.ImageMath.eval` in Pillow before 9.0.0 allows evaluation of arbitrary expressions, such as ones that use the Python exec method `ImageMath.eval(\"exec(exit())\")`.\n\nWhile Pillow 9.0.0 restricted top-level builtins available to PIL.ImageMath.eval(), it did not prevent builtins available to lambda expressions. These are now also restricted in 9.0.1.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-8vj2-vxx3-667w",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-22817",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-22817"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/9.0.0.html#restrict-builtins-available-to-imagemath-eval"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/01/msg00018.html"
+                },
+                {
+                    "url": "https://www.debian.org/security/2022/dsa-5053"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/8531b01d6cdf0b70f256f93092caa2a5d91afc11"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/9.0.1.html#security"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202211-10"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/03/msg00021.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8vj2-vxx3-667w"
+                }
+            ],
+            "published_at": "2022-01-12T20:07:33Z",
+            "updated_at": "2024-04-22T21:11:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 9.0.1",
+                    "first_patched_version": {
+                        "identifier": "9.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 9.0.1",
+            "first_patched_version": {
+                "identifier": "9.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/85",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/85",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 84,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9j59-75qj-795w",
+            "cve_id": "CVE-2022-24303",
+            "summary": "Path traversal in Pillow",
+            "description": "Pillow before 9.0.1 allows attackers to delete files because spaces in temporary pathnames are mishandled.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-9j59-75qj-795w",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-24303",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-24303"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/427221ef5f19157001bf8b1ad7cfe0b905ca8c26"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/9.0.1.html#security"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pillow/PYSEC-2022-168.yaml"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202211-10"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/6010"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/10c4f75aaa383bd9671e923e3b91d391ea12d781"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/143032103c9f2d55a0a7960bd3e630cb72549e8a"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/blob/e8ab5640774716c5486d3cb05167f74f742ad6ef/CHANGES.rst?plain=1#L1172"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/W4ZUXPKEX72O3E5IHBPVY5ZCPMJ4GHHV"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XR6UP2XONXOVXI4446VY72R63YRO2YTP"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9j59-75qj-795w"
+                }
+            ],
+            "published_at": "2022-03-11T23:10:32Z",
+            "updated_at": "2024-04-03T19:56:24Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 9.0.1",
+                    "first_patched_version": {
+                        "identifier": "9.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+                "score": 9.1
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 9.0.1",
+            "first_patched_version": {
+                "identifier": "9.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/84",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/84",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 83,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-xrcv-f9gm-v42c",
+            "cve_id": "CVE-2022-22816",
+            "summary": "Out-of-bounds Read in Pillow",
+            "description": "path_getbbox in path.c in Pillow before 9.0.0 has a buffer over-read during initialization of ImagePath.Path.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-xrcv-f9gm-v42c",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-22816",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-22816"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/blob/c5d9223a8b5e9295d15b5a9b1ef1dae44c8499f3/src/path.c#L331"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/9.0.0.html#fixed-imagepath-path-array-handling"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/01/msg00018.html"
+                },
+                {
+                    "url": "https://www.debian.org/security/2022/dsa-5053"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202211-10"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/5920"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/5543e4e2d409cd9e409bc64cdc77be0af007a31f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-xrcv-f9gm-v42c"
+                }
+            ],
+            "published_at": "2022-01-12T20:07:41Z",
+            "updated_at": "2023-09-04T16:45:20Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 9.0.0",
+                    "first_patched_version": {
+                        "identifier": "9.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 9.0.0",
+            "first_patched_version": {
+                "identifier": "9.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/83",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/83",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 82,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-pw3c-h7wp-cvhx",
+            "cve_id": "CVE-2022-22815",
+            "summary": "Improper Initialization in Pillow",
+            "description": "Pillow is the friendly PIL (Python Imaging Library) fork. `path_getbbox` in `path.c` in Pillow before 9.0.0 improperly initializes `ImagePath.Path`.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-pw3c-h7wp-cvhx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-22815",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-22815"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/blob/c5d9223a8b5e9295d15b5a9b1ef1dae44c8499f3/src/path.c#L331"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/9.0.0.html#fixed-imagepath-path-array-handling"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/01/msg00018.html"
+                },
+                {
+                    "url": "https://www.debian.org/security/2022/dsa-5053"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/c48271ab354db49cdbd740bc45e13be4f0f7993c"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/5920"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/1e092419b6806495c683043ab3feb6ce264f3b9c"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/blob/e8ab5640774716c5486d3cb05167f74f742ad6ef/CHANGES.rst?plain=1#L1187"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-pw3c-h7wp-cvhx"
+                }
+            ],
+            "published_at": "2022-01-12T20:07:43Z",
+            "updated_at": "2024-04-03T20:28:19Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 9.0.0",
+                    "first_patched_version": {
+                        "identifier": "9.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-665",
+                    "name": "Improper Initialization"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 9.0.0",
+            "first_patched_version": {
+                "identifier": "9.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/82",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/82",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 81,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6p56-wp2h-9hxr",
+            "cve_id": "CVE-2021-33430",
+            "summary": "NumPy Buffer Overflow (Disputed)",
+            "description": "A Buffer Overflow vulnerability exists in NumPy 1.9.x in the PyArray_NewFromDescr_int function of ctors.c when specifying arrays of large dimensions (over 32) from Python code, which could let a malicious user cause a Denial of Service.\n\nNOTE: The vendor does not agree this is a vulnerability; In (very limited) circumstances a user may be able provoke the buffer overflow, the user is most likely already privileged to at least provoke denial of service by exhausting memory. Triggering this further requires the use of uncommon API (complicated structured dtypes), which is very unlikely to be available to an unprivileged user.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-6p56-wp2h-9hxr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-33430",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-33430"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/issues/18939"
+                },
+                {
+                    "url": "https://github.com/numpy/numpy/commit/ae317fd9ff3e79c0eac357d723bfc29cbd625f2e"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6p56-wp2h-9hxr"
+                }
+            ],
+            "published_at": "2022-01-07T00:09:39Z",
+            "updated_at": "2024-01-11T21:28:19Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "numpy"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.9.0, < 1.21",
+                    "first_patched_version": {
+                        "identifier": "1.21"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-120",
+                    "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "numpy"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 1.9.0, < 1.21",
+            "first_patched_version": {
+                "identifier": "1.21"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/81",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/81",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 80,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pyyaml"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3pqx-4fqf-j49f",
+            "cve_id": "CVE-2019-20477",
+            "summary": "Deserialization of Untrusted Data in PyYAML",
+            "description": "PyYAML 5.1 through 5.1.2 has insufficient restrictions on the load and load_all functions because of a class deserialization issue, e.g., Popen is a class in the subprocess module. NOTE: this issue exists because of an incomplete fix for CVE-2017-18342.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3pqx-4fqf-j49f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-20477",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-20477"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/blob/master/CHANGES"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/33VBUY73AA6CTTYL3LRWHNFDULV7PFPN/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/52N5XS73Z5S4ZN7I7R56ICCPCTKCUV4H/"
+                },
+                {
+                    "url": "https://www.exploit-db.com/download/47655"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3pqx-4fqf-j49f"
+                }
+            ],
+            "published_at": "2021-04-20T16:40:42Z",
+            "updated_at": "2023-02-01T05:05:14Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pyyaml"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 5.1, < 5.2",
+                    "first_patched_version": {
+                        "identifier": "5.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pyyaml"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 5.1, < 5.2",
+            "first_patched_version": {
+                "identifier": "5.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/80",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/80",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 79,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p49h-hjvm-jg3h",
+            "cve_id": "CVE-2020-5312",
+            "summary": "PCX P mode buffer overflow in Pillow",
+            "description": "libImaging/PcxDecode.c in Pillow before 6.2.2 has a PCX P mode buffer overflow.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-p49h-hjvm-jg3h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-5312",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-5312"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/93b22b846e0269ee9594ff71a72bec02d2bea8fd"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2020:0566"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2020:0578"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2020:0580"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2020:0681"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2020:0683"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2020:0694"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-db/blob/7872b0a91b4d980f749e6d75a81f8cc1af32829f/vulns/pillow/PYSEC-2020-83.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2MMU3WT2X64GS5WHDPKKC2WZA7UIIQ3A/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3DUMIBUYGJRAVJCTFUWBRLVQKOUTVX5P/"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/6.2.2.html"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4272-1/"
+                },
+                {
+                    "url": "https://www.debian.org/security/2020/dsa-4631"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p49h-hjvm-jg3h"
+                }
+            ],
+            "published_at": "2021-11-03T18:05:04Z",
+            "updated_at": "2023-02-01T05:06:14Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 6.2.2",
+                    "first_patched_version": {
+                        "identifier": "6.2.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-120",
+                    "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 6.2.2",
+            "first_patched_version": {
+                "identifier": "6.2.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/79",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/79",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 78,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3xv8-3j54-hgrp",
+            "cve_id": "CVE-2020-10378",
+            "summary": "Out-of-bounds read in Pillow",
+            "description": "In `libImaging/PcxDecode.c` in Pillow before 7.1.0, an out-of-bounds read can occur when reading PCX files where `state->shuffle` is instructed to read beyond `state->buffer`.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-3xv8-3j54-hgrp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-10378",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-10378"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/4538"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/6a83e4324738bb0452fbe8074a995b1c73f08de7#diff-9478f2787e3ae9668a15123b165c23ac"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-db/blob/7872b0a91b4d980f749e6d75a81f8cc1af32829f/vulns/pillow/PYSEC-2020-77.yaml"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commits/master/src/libImaging"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/6.2.3.html"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/7.1.0.html"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/issues/4750"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/124f4bb591e16212605d0e41c413ed53e242cba2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/BEBCPE4F2VHTIT6EZA2YZQZLPVDEBJGD"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/HOKHNWV2VS5GESY7IBD237E7C6T3I427"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4430-1"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4430-2"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3xv8-3j54-hgrp"
+                }
+            ],
+            "published_at": "2021-11-03T18:04:53Z",
+            "updated_at": "2024-04-06T05:01:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 7.1.0",
+                    "first_patched_version": {
+                        "identifier": "7.1.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 7.1.0",
+            "first_patched_version": {
+                "identifier": "7.1.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/78",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/78",
+        "created_at": "2024-05-24T01:34:05Z",
+        "updated_at": "2024-05-24T01:34:05Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 77,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-vcqg-3p29-xw73",
+            "cve_id": "CVE-2020-5310",
+            "summary": "Integer overflow in Pillow",
+            "description": "libImaging/TiffDecode.c in Pillow before 6.2.2 has a TIFF decoding integer overflow, related to realloc.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-vcqg-3p29-xw73",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-5310",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-5310"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/4e2def2539ec13e53a82e06c4b3daf00454100c4"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-db/blob/7872b0a91b4d980f749e6d75a81f8cc1af32829f/vulns/pillow/PYSEC-2020-81.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2MMU3WT2X64GS5WHDPKKC2WZA7UIIQ3A/"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/6.2.2.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3DUMIBUYGJRAVJCTFUWBRLVQKOUTVX5P/"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4272-1/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vcqg-3p29-xw73"
+                }
+            ],
+            "published_at": "2021-11-03T18:04:41Z",
+            "updated_at": "2023-01-24T18:07:17Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 6.2.2",
+                    "first_patched_version": {
+                        "identifier": "6.2.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-190",
+                    "name": "Integer Overflow or Wraparound"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 6.2.2",
+            "first_patched_version": {
+                "identifier": "6.2.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/77",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/77",
+        "created_at": "2024-05-24T01:34:04Z",
+        "updated_at": "2024-05-24T01:34:04Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 76,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "manifest_path": "tox_requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7534-mm45-c74v",
+            "cve_id": "CVE-2021-34552",
+            "summary": "Buffer Overflow in Pillow",
+            "description": "Pillow through 8.2.0 and PIL (aka Python Imaging Library) through 1.1.7 allow an attacker to pass controlled parameters directly into a convert function to trigger a buffer overflow in Convert.c.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-7534-mm45-c74v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-34552",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-34552"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2021/07/msg00018.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/7V6LCG525ARIX6LX5QRYNAWVDD2MD2SV/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VUGBBT63VL7G4JNOEIPDJIOC34ZFBKNJ/"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/8.3.0.html#buffer-overflow"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/index.html"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/pull/5567"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202211-10"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/31c473898c29d1b7cb6555ce67d9503a4906b83f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7534-mm45-c74v"
+                }
+            ],
+            "published_at": "2021-10-05T20:24:41Z",
+            "updated_at": "2023-04-17T18:59:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pillow"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 8.3.0",
+                    "first_patched_version": {
+                        "identifier": "8.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-120",
+                    "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 8.3.0",
+            "first_patched_version": {
+                "identifier": "8.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/neon/dependabot/alerts/76",
+        "html_url": "https://github.com/fcas/neon/security/dependabot/76",
+        "created_at": "2024-05-24T01:34:04Z",
+        "updated_at": "2024-05-24T01:34:04Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

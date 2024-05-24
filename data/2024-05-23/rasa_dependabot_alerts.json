@@ -1,0 +1,2993 @@
+[
+    {
+        "number": 146,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-05-20T22:07:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/146",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/146",
+        "created_at": "2024-05-24T01:34:02Z",
+        "updated_at": "2024-05-24T01:34:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 145,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Werkzeug"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2g68-c3qc-8985",
+            "cve_id": "CVE-2024-34069",
+            "summary": "Werkzeug debugger vulnerable to remote execution when interacting with attacker controlled domain",
+            "description": "The debugger in affected versions of Werkzeug can allow an attacker to execute code on a developer's machine under some circumstances. This requires the attacker to get the developer to interact with a domain and subdomain they control, and enter the debugger PIN, but if they are successful it allows access to the debugger even if it is only running on localhost. This also requires the attacker to guess a URL in the developer's application that will trigger the debugger.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-2g68-c3qc-8985",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34069",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/werkzeug/security/advisories/GHSA-2g68-c3qc-8985"
+                },
+                {
+                    "url": "https://github.com/pallets/werkzeug/commit/3386395b24c7371db11a5b8eaac0c91da5362692"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34069"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2g68-c3qc-8985"
+                }
+            ],
+            "published_at": "2024-05-06T14:21:27Z",
+            "updated_at": "2024-05-06T16:17:35Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Werkzeug"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.0.3",
+                    "first_patched_version": {
+                        "identifier": "3.0.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-352",
+                    "name": "Cross-Site Request Forgery (CSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Werkzeug"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.0.3",
+            "first_patched_version": {
+                "identifier": "3.0.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/145",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/145",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 144,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h75v-3vvj-5mfj",
+            "cve_id": "CVE-2024-34064",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing non-attribute characters. XML/HTML attributes cannot contain spaces, `/`, `>`, or `=`, as each would then be interpreted as starting a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. The fix for the previous GHSA-h5c8-rqwp-cp95 CVE-2024-22195 only addressed spaces but not other characters.\n\nAccepting keys as user input is now explicitly considered an unintended use case of the `xmlattr` filter, and code that does so without otherwise validating the input should be flagged as insecure, regardless of Jinja version. Accepting _values_ as user input continues to be safe.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h75v-3vvj-5mfj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34064",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h75v-3vvj-5mfj"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/0668239dc6b44ef38e7a6c9f91f312fd4ca581cb"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34064"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h75v-3vvj-5mfj"
+                }
+            ],
+            "published_at": "2024-05-06T14:20:59Z",
+            "updated_at": "2024-05-06T16:17:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/144",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/144",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 143,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tqdm"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-g7vv-2v7x-gj9p",
+            "cve_id": "CVE-2024-34062",
+            "summary": "tqdm CLI arguments injection attack",
+            "description": "### Impact\nAny optional non-boolean CLI arguments (e.g. `--delim`, `--buf-size`, `--manpath`) are passed through python's `eval`, allowing arbitrary code execution. Example:\n\n```sh\npython -m tqdm --manpath=\"\\\" + str(exec(\\\"import os\\nos.system('echo hi && killall python3')\\\")) + \\\"\"\n```\n\n### Patches\nhttps://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316 released in `tqdm>=4.66.3`\n\n### Workarounds\nNone\n\n### References\n- https://github.com/tqdm/tqdm/releases/tag/v4.66.3",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-g7vv-2v7x-gj9p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34062",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/tqdm/tqdm/security/advisories/GHSA-g7vv-2v7x-gj9p"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34062"
+                },
+                {
+                    "url": "https://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-g7vv-2v7x-gj9p"
+                }
+            ],
+            "published_at": "2024-05-03T19:33:28Z",
+            "updated_at": "2024-05-03T19:33:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "tqdm"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 4.4.0, < 4.66.3",
+                    "first_patched_version": {
+                        "identifier": "4.66.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+                "score": 3.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tqdm"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 4.4.0, < 4.66.3",
+            "first_patched_version": {
+                "identifier": "4.66.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/143",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/143",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 142,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5m98-qgg9-wh84",
+            "cve_id": "CVE-2024-30251",
+            "summary": "aiohttp vulnerable to Denial of Service when trying to parse malformed POST requests",
+            "description": "### Summary\nAn attacker can send a specially crafted POST (multipart/form-data) request. When the aiohttp server processes it, the server will enter an infinite loop and be unable to process any further requests.\n\n### Impact\nAn attacker can stop the application from serving requests after sending a single request.\n\n-------\n\nFor anyone needing to patch older versions of aiohttp, the minimum diff needed to resolve the issue is (located in `_read_chunk_from_length()`):\n\n```diff\ndiff --git a/aiohttp/multipart.py b/aiohttp/multipart.py\nindex 227be605c..71fc2654a 100644\n--- a/aiohttp/multipart.py\n+++ b/aiohttp/multipart.py\n@@ -338,6 +338,8 @@ class BodyPartReader:\n         assert self._length is not None, \"Content-Length required for chunked read\"\n         chunk_size = min(size, self._length - self._read_bytes)\n         chunk = await self._content.read(chunk_size)\n+        if self._content.at_eof():\n+            self._at_eof = True\n         return chunk\n \n     async def _read_chunk_from_stream(self, size: int) -> bytes:\n```\n\nThis does however introduce some very minor issues with handling form data. So, if possible, it would be recommended to also backport the changes in:\nhttps://github.com/aio-libs/aiohttp/commit/cebe526b9c34dc3a3da9140409db63014bc4cf19\nhttps://github.com/aio-libs/aiohttp/commit/7eecdff163ccf029fbb1ddc9de4169d4aaeb6597\nhttps://github.com/aio-libs/aiohttp/commit/f21c6f2ca512a026ce7f0f6c6311f62d6a638866",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5m98-qgg9-wh84",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-30251",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-5m98-qgg9-wh84"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-30251"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/7eecdff163ccf029fbb1ddc9de4169d4aaeb6597"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/cebe526b9c34dc3a3da9140409db63014bc4cf19"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/f21c6f2ca512a026ce7f0f6c6311f62d6a638866"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/05/02/4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5m98-qgg9-wh84"
+                }
+            ],
+            "published_at": "2024-05-03T17:29:54Z",
+            "updated_at": "2024-05-03T17:30:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.9.4",
+                    "first_patched_version": {
+                        "identifier": "3.9.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-835",
+                    "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.9.4",
+            "first_patched_version": {
+                "identifier": "3.9.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/142",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/142",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 141,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pydantic"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mr82-8j83-vxmv",
+            "cve_id": "CVE-2024-3772",
+            "summary": "Pydantic regular expression denial of service",
+            "description": "Regular expression denial of service in Pydantic < 2.4.0, < 1.10.13 allows remote attackers to cause denial of service via a crafted email string.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-mr82-8j83-vxmv",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3772",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3772"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/pull/7360"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/commit/59d8f38fd6220e3917c53785dbc70317d6f8e631"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/commit/e4393ae6145c4dadff739990bb0116c6dec3441b"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6JBZLMSH4GAZOVBMT2JUO2LXHY7M2ALI"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mr82-8j83-vxmv"
+                }
+            ],
+            "published_at": "2024-04-15T03:31:00Z",
+            "updated_at": "2024-04-26T03:30:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pydantic"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.4.0",
+                    "first_patched_version": {
+                        "identifier": "2.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pydantic"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.10.13",
+                    "first_patched_version": {
+                        "identifier": "1.10.13"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pydantic"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.10.13",
+            "first_patched_version": {
+                "identifier": "1.10.13"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/141",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/141",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 140,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7gpw-8wmc-pm8g",
+            "cve_id": "CVE-2024-27306",
+            "summary": "aiohttp Cross-site Scripting vulnerability on index pages for static file handling",
+            "description": "### Summary\n\nA XSS vulnerability exists on index pages for static file handling.\n\n### Details\n\nWhen using `web.static(..., show_index=True)`, the resulting index pages do not escape file names.\n\nIf users can upload files with arbitrary filenames to the static directory, the server is vulnerable to XSS attacks.\n\n### Workaround\n\nWe have always recommended using a reverse proxy server (e.g. nginx) for serving static files. Users following the recommendation are unaffected.\n\nOther users can disable `show_index` if unable to upgrade.\n\n-----\n\nPatch: https://github.com/aio-libs/aiohttp/pull/8319/files",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-7gpw-8wmc-pm8g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-27306",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-7gpw-8wmc-pm8g"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8319/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/28335525d1eac015a7e7584137678cbb6ff19397"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-27306"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8319"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2EXRGTN2WG7VZLUZ7WOXU5GQJKCPPHKP"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/NWEI6NIHZ3G7DURDZVMRK7ZEFC2BTD3U"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZIVBMPEY7WWOFMC3CWXFBRQPFECV4SW3"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7gpw-8wmc-pm8g"
+                }
+            ],
+            "published_at": "2024-04-18T13:45:21Z",
+            "updated_at": "2024-05-02T03:30:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.9.4",
+                    "first_patched_version": {
+                        "identifier": "3.9.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.9.4",
+            "first_patched_version": {
+                "identifier": "3.9.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/140",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/140",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 139,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "dnspython"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3rq5-2g8h-59hc",
+            "cve_id": "CVE-2023-29483",
+            "summary": "Potential DoS via the Tudoor mechanism in eventlet and dnspython",
+            "description": "eventlet before 0.35.2, as used in dnspython before 2.6.0, allows remote attackers to interfere with DNS name resolution by quickly sending an invalid packet from the expected IP address and source port, aka a \"TuDoor\" attack. In other words, dnspython does not have the preferred behavior in which the DNS name resolution algorithm would proceed, within the full time window, in order to wait for a valid packet. NOTE: dnspython 2.6.0 is unusable for a different reason that was addressed in 2.6.1.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-3rq5-2g8h-59hc",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-29483",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-29483"
+                },
+                {
+                    "url": "https://github.com/eventlet/eventlet/issues/913"
+                },
+                {
+                    "url": "https://github.com/rthalley/dnspython/issues/1045"
+                },
+                {
+                    "url": "https://github.com/eventlet/eventlet/releases/tag/v0.35.2"
+                },
+                {
+                    "url": "https://github.com/rthalley/dnspython/releases/tag/v2.6.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-PYTHON-DNSPYTHON-6241713"
+                },
+                {
+                    "url": "https://github.com/eventlet/eventlet/commit/51e3c4928d4938beb576eff34f3bf97e6e64e6b4"
+                },
+                {
+                    "url": "https://github.com/rthalley/dnspython/commit/0ea5ad0a4583e1f519b9bcc67cfac381230d9cf2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/VOHJOO3OM65UIUUUVDEXMCTXNM6LXZEH"
+                },
+                {
+                    "url": "https://www.dnspython.org"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3rq5-2g8h-59hc"
+                }
+            ],
+            "published_at": "2024-04-11T15:30:48Z",
+            "updated_at": "2024-05-03T20:21:13Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "eventlet"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.35.2",
+                    "first_patched_version": {
+                        "identifier": "0.35.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "dnspython"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.6.1",
+                    "first_patched_version": {
+                        "identifier": "2.6.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-696",
+                    "name": "Incorrect Behavior Order"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "dnspython"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.6.1",
+            "first_patched_version": {
+                "identifier": "2.6.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/139",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/139",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 138,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "idna"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jjg7-2v4v-x38h",
+            "cve_id": "CVE-2024-3651",
+            "summary": "Internationalized Domain Names in Applications (IDNA) vulnerable to denial of service from specially crafted inputs to idna.encode",
+            "description": "### Impact\nA specially crafted argument to the `idna.encode()` function could consume significant resources. This may lead to a denial-of-service.\n\n### Patches\nThe function has been refined to reject such strings without the associated resource consumption in version 3.7.\n\n### Workarounds\nDomain names cannot exceed 253 characters in length, if this length limit is enforced prior to passing the domain to the `idna.encode()` function it should no longer consume significant resources. This is triggered by arbitrarily large inputs that would not occur in normal usage, but may be passed to the library assuming there is no preliminary input validation by the higher-level application.\n\n### References\n* https://huntr.com/bounties/93d78d07-d791-4b39-a845-cbfabc44aadb",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jjg7-2v4v-x38h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3651",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/kjd/idna/security/advisories/GHSA-jjg7-2v4v-x38h"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jjg7-2v4v-x38h"
+                }
+            ],
+            "published_at": "2024-04-11T21:32:40Z",
+            "updated_at": "2024-04-11T21:32:40Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "idna"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.7",
+                    "first_patched_version": {
+                        "identifier": "3.7"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 6.2
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "idna"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.7",
+            "first_patched_version": {
+                "identifier": "3.7"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/138",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/138",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 137,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37q5-v5qm-c9v8",
+            "cve_id": "CVE-2024-3568",
+            "summary": "Transformers Deserialization of Untrusted Data vulnerability",
+            "description": "The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-37q5-v5qm-c9v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3568",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3568"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/693667b8ac8138b83f8adb6522ddaf42fa07c125"
+                },
+                {
+                    "url": "https://huntr.com/bounties/b3c36992-5264-4d7f-9906-a996efafba8f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37q5-v5qm-c9v8"
+                }
+            ],
+            "published_at": "2024-04-10T18:30:48Z",
+            "updated_at": "2024-04-10T22:20:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.38.0",
+                    "first_patched_version": {
+                        "identifier": "4.38.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                "score": 3.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.38.0",
+            "first_patched_version": {
+                "identifier": "4.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/137",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/137",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 136,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pymongo"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cr6f-gf5w-vhrc",
+            "cve_id": "CVE-2024-21506",
+            "summary": "PyMongo Out-of-bounds Read in the bson module",
+            "description": "Versions of the package pymongo before 4.6.3 are vulnerable to Out-of-bounds Read in the bson module. Using the crafted payload the attacker could force the parser to deserialize unmanaged memory. The parser tries to interpret bytes next to buffer and throws an exception with string. If the following bytes are not printable UTF-8 the parser throws an exception with a single byte.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cr6f-gf5w-vhrc",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21506",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21506"
+                },
+                {
+                    "url": "https://github.com/mongodb/mongo-python-driver/commit/56b6b6dbc267d365d97c037082369dabf37405d2"
+                },
+                {
+                    "url": "https://gist.github.com/keltecc/62a7c2bf74a997d0a7b48a0ff3853a03"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-PYTHON-PYMONGO-6370597"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cr6f-gf5w-vhrc"
+                }
+            ],
+            "published_at": "2024-04-06T06:31:08Z",
+            "updated_at": "2024-04-08T15:40:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pymongo"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.6.3",
+                    "first_patched_version": {
+                        "identifier": "4.6.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:L",
+                "score": 5.2
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pymongo"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.6.3",
+            "first_patched_version": {
+                "identifier": "4.6.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/136",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/136",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 135,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-44wm-f244-xhp3",
+            "cve_id": "CVE-2024-28219",
+            "summary": "Pillow buffer overflow vulnerability",
+            "description": "In _imagingcms.c in Pillow before 10.3.0, a buffer overflow exists because strcpy is used instead of strncpy.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-44wm-f244-xhp3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28219",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28219"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/10.3.0.html#security"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/2a93aba5cfcf6e241ab4f9392c13e3b74032c061"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/04/msg00008.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/4XLPUT3VK4GQ6EVY525TT2QNUIXNRU5M"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-44wm-f244-xhp3"
+                }
+            ],
+            "published_at": "2024-04-03T03:30:30Z",
+            "updated_at": "2024-04-20T05:06:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pillow"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.3.0",
+                    "first_patched_version": {
+                        "identifier": "10.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+                "score": 6.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-120",
+                    "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+                },
+                {
+                    "cwe_id": "CWE-676",
+                    "name": "Use of Potentially Dangerous Function"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pillow"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 10.3.0",
+            "first_patched_version": {
+                "identifier": "10.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/135",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/135",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 134,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fj7x-q9j7-g6q6",
+            "cve_id": "CVE-2024-21503",
+            "summary": "Black vulnerable to Regular Expression Denial of Service (ReDoS)",
+            "description": "Versions of the package black before 24.3.0 are vulnerable to Regular Expression Denial of Service (ReDoS) via the lines_with_leading_tabs_expanded function in the strings.py file. An attacker could exploit this vulnerability by crafting a malicious input that causes a denial of service.\n\nExploiting this vulnerability is possible when running Black on untrusted input, or if you habitually put thousands of leading tab characters in your docstrings.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fj7x-q9j7-g6q6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21503",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21503"
+                },
+                {
+                    "url": "https://github.com/psf/black/commit/f00093672628d212b8965a8993cee8bedf5fe9b8"
+                },
+                {
+                    "url": "https://github.com/psf/black/releases/tag/24.3.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-PYTHON-BLACK-6256273"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/black/PYSEC-2024-48.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fj7x-q9j7-g6q6"
+                }
+            ],
+            "published_at": "2024-03-19T06:30:52Z",
+            "updated_at": "2024-03-20T15:24:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "black"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0, < 24.3.0",
+                    "first_patched_version": {
+                        "identifier": "24.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0, < 24.3.0",
+            "first_patched_version": {
+                "identifier": "24.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/134",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/134",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 133,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6vqw-3v5j-54x4",
+            "cve_id": "CVE-2024-26130",
+            "summary": "cryptography NULL pointer dereference with pkcs12.serialize_key_and_certificates when called with a non-matching certificate and private key and an hmac_hash override",
+            "description": "If `pkcs12.serialize_key_and_certificates` is called with both:\n\n1. A certificate whose public key did not match the provided private key\n2. An `encryption_algorithm` with `hmac_hash` set (via `PrivateFormat.PKCS12.encryption_builder().hmac_hash(...)`\n\nThen a NULL pointer dereference would occur, crashing the Python process.\n\nThis has been resolved, and now a `ValueError` is properly raised.\n\nPatched in https://github.com/pyca/cryptography/pull/10423",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-6vqw-3v5j-54x4",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-26130",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pyca/cryptography/security/advisories/GHSA-6vqw-3v5j-54x4"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/pull/10423"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/97d231672763cdb5959a3b191e692a362f1b9e55"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-26130"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6vqw-3v5j-54x4"
+                }
+            ],
+            "published_at": "2024-02-21T18:04:40Z",
+            "updated_at": "2024-02-21T22:45:35Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 38.0.0, < 42.0.4",
+                    "first_patched_version": {
+                        "identifier": "42.0.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 38.0.0, < 42.0.4",
+            "first_patched_version": {
+                "identifier": "42.0.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/133",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/133",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 132,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9v9h-cgj8-h64p",
+            "cve_id": "CVE-2024-0727",
+            "summary": "Null pointer dereference in PKCS12 parsing",
+            "description": "Issue summary: Processing a maliciously formatted PKCS12 file may lead OpenSSL\nto crash leading to a potential Denial of Service attack\n\nImpact summary: Applications loading files in the PKCS12 format from untrusted\nsources might terminate abruptly.\n\nA file in PKCS12 format can contain certificates and keys and may come from an\nuntrusted source. The PKCS12 specification allows certain fields to be NULL, but\nOpenSSL does not correctly check for this case. This can lead to a NULL pointer\ndereference that results in OpenSSL crashing. If an application processes PKCS12\nfiles from an untrusted source using the OpenSSL APIs then that application will\nbe vulnerable to this issue.\n\nOpenSSL APIs that are vulnerable to this are: PKCS12_parse(),\nPKCS12_unpack_p7data(), PKCS12_unpack_p7encdata(), PKCS12_unpack_authsafes()\nand PKCS12_newpass().\n\nWe have also fixed a similar issue in SMIME_write_PKCS7(). However since this\nfunction is related to writing data we do not consider it security significant.\n\nThe FIPS modules in 3.2, 3.1 and 3.0 are not affected by this issue.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9v9h-cgj8-h64p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-0727",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-0727"
+                },
+                {
+                    "url": "https://github.com/openssl/openssl/commit/09df4395b5071217b76dc7d3d2e630eb8c5a79c2"
+                },
+                {
+                    "url": "https://github.com/openssl/openssl/commit/775acfdbd0c6af9ac855f34969cdab0c0c90844a"
+                },
+                {
+                    "url": "https://github.com/openssl/openssl/commit/d135eeab8a5dbf72b3da5240bab9ddb7678dbd2c"
+                },
+                {
+                    "url": "https://github.openssl.org/openssl/extended-releases/commit/03b3941d60c4bce58fab69a0c22377ab439bc0e8"
+                },
+                {
+                    "url": "https://github.openssl.org/openssl/extended-releases/commit/aebaa5883e31122b404e450732dc833dc9dee539"
+                },
+                {
+                    "url": "https://www.openssl.org/news/secadv/20240125.txt"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/pull/3472"
+                },
+                {
+                    "url": "https://github.com/openssl/openssl/pull/23362"
+                },
+                {
+                    "url": "https://github.com/alexcrichton/openssl-src-rs/commit/add20f73b6b42be7451af2e1044d4e0e778992b2"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/3519591d255d4506fbcd0d04037d45271903c64d"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240208-0006"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/03/11/1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9v9h-cgj8-h64p"
+                }
+            ],
+            "published_at": "2024-01-26T09:30:23Z",
+            "updated_at": "2024-05-12T05:03:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 42.0.2",
+                    "first_patched_version": {
+                        "identifier": "42.0.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                "score": 5.5
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 42.0.2",
+            "first_patched_version": {
+                "identifier": "42.0.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/132",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/132",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 131,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3ww4-gg4f-jr7f",
+            "cve_id": "CVE-2023-50782",
+            "summary": "Python Cryptography package vulnerable to Bleichenbacher timing oracle attack",
+            "description": "A flaw was found in the python-cryptography package. This issue may allow a remote attacker to decrypt captured messages in TLS servers that use RSA key exchanges, which may lead to exposure of confidential or sensitive data.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3ww4-gg4f-jr7f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-50782",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-50782"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2023-50782"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2254432"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/issues/9785"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3ww4-gg4f-jr7f"
+                }
+            ],
+            "published_at": "2024-02-05T21:30:31Z",
+            "updated_at": "2024-02-14T21:31:39Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 42.0.0",
+                    "first_patched_version": {
+                        "identifier": "42.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-203",
+                    "name": "Observable Discrepancy"
+                },
+                {
+                    "cwe_id": "CWE-208",
+                    "name": "Observable Timing Discrepancy"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 42.0.0",
+            "first_patched_version": {
+                "identifier": "42.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/131",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/131",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 130,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5h86-8mv2-jq9f",
+            "cve_id": "CVE-2024-23334",
+            "summary": "aiohttp is vulnerable to directory traversal",
+            "description": "### Summary\nImproperly configuring static resource resolution in aiohttp when used as a web server can result in the unauthorized reading of arbitrary files on the system.\n\n### Details\nWhen using aiohttp as a web server and configuring static routes, it is necessary to specify the root path for static files. Additionally, the option 'follow_symlinks' can be used to determine whether to follow symbolic links outside the static root directory. When 'follow_symlinks' is set to True, there is no validation to check if a given file path is within the root directory.This can lead to directory traversal vulnerabilities, resulting in unauthorized access to arbitrary files on the system, even when symlinks are not present.\n\ni.e. An application is only vulnerable with setup code like:\n```\napp.router.add_routes([\n    web.static(\"/static\", \"static/\", follow_symlinks=True),  # Remove follow_symlinks to avoid the vulnerability\n])\n```\n\n### Impact\nThis is a directory traversal vulnerability with CWE ID 22. When using aiohttp as a web server and enabling static resource resolution with `follow_symlinks` set to True, it can lead to this vulnerability. This vulnerability has been present since the introduction of the `follow_symlinks` parameter.\n\n### Workaround\nEven if upgrading to a patched version of aiohttp, we recommend following these steps regardless.\n\nIf using `follow_symlinks=True` outside of a restricted local development environment, disable the option immediately. This option is NOT needed to follow symlinks which point to a location _within_ the static root directory, it is _only_ intended to allow a symlink to break out of the static directory. Even with this CVE fixed, there is still a substantial risk of misconfiguration when using this option on a server that accepts requests from remote users.\n\nAdditionally, aiohttp has always recommended using a reverse proxy server (such as nginx) to handle static resources and _not_ to use these static resources in aiohttp for production environments. Doing so also protects against this vulnerability, and is why we expect the number of affected users to be very low.\n\n-----\n\nPatch: https://github.com/aio-libs/aiohttp/pull/8079/files",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-5h86-8mv2-jq9f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-23334",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-5h86-8mv2-jq9f"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8079/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/1c335944d6a8b1298baf179b7c0b3069f10c514b"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-23334"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8079"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2024-24.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XXWVZIVAYWEBHNRIILZVB3R3SDQNNAA7/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ICUOCFGTB25WUT336BZ4UNYLSZOUVKBD/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5h86-8mv2-jq9f"
+                }
+            ],
+            "published_at": "2024-01-29T22:31:03Z",
+            "updated_at": "2024-02-18T05:08:00Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.0.5, < 3.9.2",
+                    "first_patched_version": {
+                        "identifier": "3.9.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 1.0.5, < 3.9.2",
+            "first_patched_version": {
+                "identifier": "3.9.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/130",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/130",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 129,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8qpw-xqxj-h4r2",
+            "cve_id": "CVE-2024-23829",
+            "summary": "aiohttp's HTTP parser (the python one, not llhttp) still overly lenient about separators",
+            "description": "### Summary\nSecurity-sensitive parts of the *Python HTTP parser* retained minor differences in allowable character sets, that must trigger error handling to robustly match frame boundaries of proxies in order to protect against injection of additional requests. Additionally, validation could trigger exceptions that were not handled consistently with processing of other malformed input.\n\n### Details\nThese problems are rooted in pattern matching protocol elements, previously improved by PR #3235 and GHSA-gfw2-4jvh-wgfg:\n\n1. The expression `HTTP/(\\d).(\\d)` lacked another backslash to clarify that the separator should be a literal dot, not just *any* Unicode code point (result: `HTTP/(\\d)\\.(\\d)`).\n\n2. The HTTP version was permitting Unicode digits, where only ASCII digits are standards-compliant.\n\n3. Distinct regular expressions for validating HTTP Method and Header field names were used - though both should (at least) apply the common restrictions of rfc9110 `token`.\n\n### PoC\n`GET / HTTP/1ö1`\n`GET / HTTP/1.𝟙`\n`GET/: HTTP/1.1`\n`Content-Encoding?: chunked`\n\n### Impact\nPrimarily concerns running an aiohttp server without llhttp:\n 1. **behind a proxy**: Being more lenient than internet standards require could, depending on deployment environment, assist in request smuggling.\n 2. **directly accessible** or exposed behind proxies relaying malformed input: the unhandled exception could cause excessive resource consumption on the application server and/or its logging facilities.\n\n-----\n\nPatch: https://github.com/aio-libs/aiohttp/pull/8074/files",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-8qpw-xqxj-h4r2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-23829",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-8qpw-xqxj-h4r2"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-gfw2-4jvh-wgfg"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/3235"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8074/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/33ccdfb0a12690af5bb49bda2319ec0907fa7827"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-23829"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8074"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2024-26.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XXWVZIVAYWEBHNRIILZVB3R3SDQNNAA7/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ICUOCFGTB25WUT336BZ4UNYLSZOUVKBD/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8qpw-xqxj-h4r2"
+                }
+            ],
+            "published_at": "2024-01-29T22:30:07Z",
+            "updated_at": "2024-02-18T05:08:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.9.2",
+                    "first_patched_version": {
+                        "identifier": "3.9.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.9.2",
+            "first_patched_version": {
+                "identifier": "3.9.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/129",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/129",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 128,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3f63-hfp8-52jq",
+            "cve_id": "CVE-2023-50447",
+            "summary": "Arbitrary Code Execution in Pillow",
+            "description": "Pillow through 10.1.0 allows PIL.ImageMath.eval Arbitrary Code Execution via the environment parameter, a different vulnerability than CVE-2022-22817 (which was about the expression parameter).",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3f63-hfp8-52jq",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-50447",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-50447"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/commit/45c726fd4daa63236a8f3653530f297dc87b160a"
+                },
+                {
+                    "url": "https://pillow.readthedocs.io/en/stable/releasenotes/10.2.0.html#security"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/01/20/1"
+                },
+                {
+                    "url": "https://github.com/python-pillow/Pillow/releases"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/01/msg00019.html"
+                },
+                {
+                    "url": "https://devhub.checkmarx.com/cve-details/CVE-2023-50447"
+                },
+                {
+                    "url": "https://duartecsantos.github.io/2023-01-02-CVE-2023-50447"
+                },
+                {
+                    "url": "https://duartecsantos.github.io/2024-01-02-CVE-2023-50447"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3f63-hfp8-52jq"
+                }
+            ],
+            "published_at": "2024-01-19T21:30:35Z",
+            "updated_at": "2024-03-27T23:53:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Pillow"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 10.2.0",
+                    "first_patched_version": {
+                        "identifier": "10.2.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 8.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-94",
+                    "name": "Improper Control of Generation of Code ('Code Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Pillow"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 10.2.0",
+            "first_patched_version": {
+                "identifier": "10.2.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/128",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/128",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 127,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h5c8-rqwp-cp95",
+            "cve_id": "CVE-2024-22195",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing spaces. XML/HTML attributes cannot contain spaces, as each would then be interpreted as a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. Note that accepting keys as user input is not common or a particularly intended use case of the `xmlattr` filter, and an application doing so should already be verifying what keys are provided regardless of this fix.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h5c8-rqwp-cp95",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-22195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h5c8-rqwp-cp95"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-22195"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/716795349a41d4983a9a4771f7d883c96ea17be7"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5XCWZD464AJJJUBOO7CMPXQ4ROBC6JX2/"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/01/msg00010.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/DELCVUUYX75I5K4Q5WMJG4MUZJA6VAIP/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/O7YWRBX6JQCWC2XXCTZ55C7DPMGICCN3/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h5c8-rqwp-cp95"
+                }
+            ],
+            "published_at": "2024-01-11T15:20:48Z",
+            "updated_at": "2024-01-27T03:30:20Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.3",
+                    "first_patched_version": {
+                        "identifier": "3.1.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.3",
+            "first_patched_version": {
+                "identifier": "3.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/127",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/127",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 126,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "GitPython"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2mqj-m65w-jghx",
+            "cve_id": "CVE-2024-22190",
+            "summary": "Untrusted search path under some conditions on Windows allows arbitrary code execution",
+            "description": "### Summary\n\nThis issue exists because of an incomplete fix for CVE-2023-40590. On Windows, GitPython uses an untrusted search path if it uses a shell to run `git`, as well as when it runs `bash.exe` to interpret hooks. If either of those features are used on Windows, a malicious `git.exe` or `bash.exe` may be run from an untrusted repository.\n\n### Details\n\nAlthough GitPython often avoids executing programs found in an untrusted search path since 3.1.33, two situations remain where this still occurs. Either can allow arbitrary code execution under some circumstances.\n\n#### When a shell is used\n\nGitPython can be told to run `git` commands through a shell rather than as direct subprocesses, by passing `shell=True` to any method that accepts it, or by both setting `Git.USE_SHELL = True` and not passing `shell=False`. Then the Windows `cmd.exe` shell process performs the path search, and GitPython does not prevent that shell from finding and running `git` in the current directory.\n\nWhen GitPython runs `git` directly rather than through a shell, the GitPython process performs the path search, and currently omits the current directory by setting `NoDefaultCurrentDirectoryInExePath` in its own environment during the `Popen` call. Although the `cmd.exe` shell will honor this environment variable when present, GitPython does not currently pass it into the shell subprocess's environment.\n\nFurthermore, because GitPython sets the subprocess CWD to the root of a repository's working tree, using a shell will run a malicious `git.exe` in an untrusted repository even if GitPython itself is run from a trusted location.\n\nThis also applies if `Git.execute` is called directly with `shell=True` (or after `Git.USE_SHELL = True`) to run any command.\n\n#### When hook scripts are run\n\nOn Windows, GitPython uses `bash.exe` to run hooks that appear to be scripts. However, unlike when running `git`, no steps are taken to avoid finding and running `bash.exe` in the current directory.\n\nThis allows the author of an untrusted fork or branch to cause a malicious `bash.exe` to be run in some otherwise safe workflows. An example of such a scenario is if the user installs a trusted hook while on a trusted branch, then switches to an untrusted feature branch (possibly from a fork) to review proposed changes. If the untrusted feature branch contains a malicious `bash.exe` and the user's current working directory is the working tree, and the user performs an action that runs the hook, then although the hook itself is uncorrupted, it runs with the malicious `bash.exe`.\n\nNote that, while `bash.exe` is a shell, this is a separate scenario from when `git` is run using the unrelated Windows `cmd.exe` shell.\n\n### PoC\n\nOn Windows, create a `git.exe` file in a repository. Then create a `Repo` object, and call any method through it (directly or indirectly) that supports the `shell` keyword argument with `shell=True`:\n\n```powershell\nmkdir testrepo\ngit init testrepo\ncp ... testrepo git.exe # Replace \"...\" with any executable of choice.\npython -c \"import git; print(git.Repo('testrepo').git.version(shell=True))\"\n```\n\nThe `git.exe` executable in the repository directory will be run.\n\nOr use no `Repo` object, but do it from the location with the `git.exe`:\n\n```powershell\ncd testrepo\npython -c \"import git; print(git.Git().version(shell=True))\"\n```\n\nThe `git.exe` executable in the current directory will be run.\n\nFor the scenario with hooks, install a hook in a repository, create a `bash.exe` file in the current directory, and perform an operation that causes GitPython to attempt to run the hook:\n\n```powershell\nmkdir testrepo\ncd testrepo\ngit init\nmv .git/hooks/pre-commit.sample .git/hooks/pre-commit\ncp ... bash.exe # Replace \"...\" with any executable of choice.\necho \"Some text\" >file.txt\ngit add file.txt\npython -c \"import git; git.Repo().index.commit('Some message')\"\n```\n\nThe `bash.exe` executable in the current directory will be run.\n\n### Impact\n\nThe greatest impact is probably in applications that set `Git.USE_SHELL = True` for historical reasons. (Undesired console windows had, in the past, been created in some kinds of applications, when it was not used.) Such an application may be vulnerable to arbitrary code execution from a malicious repository, even with no other exacerbating conditions. This is to say that, if a shell is used to run `git`, the full effect of CVE-2023-40590 is still present. Furthermore, as noted above, running the application itself from a trusted directory is not a sufficient mitigation.\n\nAn application that does not direct GitPython to use a shell to run `git` subprocesses thus avoids most of the risk. However, there is no such straightforward way to prevent GitPython from running `bash.exe` to interpret hooks. So while the conditions needed for that to be exploited are more involved, it may be harder to mitigate decisively prior to patching.\n\n### Possible solutions\n\nA straightforward approach would be to address each bug directly:\n\n- When a shell is used, pass `NoDefaultCurrentDirectoryInExePath` into the subprocess environment, because in that scenario the subprocess is the `cmd.exe` shell that itself performs the path search.\n- Set `NoDefaultCurrentDirectoryInExePath` in the GitPython process environment during the `Popen` call made to run hooks with a `bash.exe` subprocess.\n\nThese need only be done on Windows.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-2mqj-m65w-jghx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-22190",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-2mqj-m65w-jghx"
+                },
+                {
+                    "url": "https://github.com/gitpython-developers/GitPython/pull/1792"
+                },
+                {
+                    "url": "https://github.com/gitpython-developers/GitPython/commit/ef3192cc414f2fd9978908454f6fd95243784c7f"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-22190"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/gitpython/PYSEC-2024-4.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2mqj-m65w-jghx"
+                }
+            ],
+            "published_at": "2024-01-10T15:46:00Z",
+            "updated_at": "2024-01-19T16:24:51Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "GitPython"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.1.41",
+                    "first_patched_version": {
+                        "identifier": "3.1.41"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-426",
+                    "name": "Untrusted Search Path"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "GitPython"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.1.41",
+            "first_patched_version": {
+                "identifier": "3.1.41"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/126",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/126",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 125,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "fonttools"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6673-4983-2vx5",
+            "cve_id": "CVE-2023-45139",
+            "summary": "fonttools XML External Entity Injection (XXE) Vulnerability",
+            "description": "### Summary\n\nAs of `fonttools>=4.28.2` the subsetting module has a XML External Entity Injection (XXE) vulnerability which allows an attacker to resolve arbitrary entities when a candidate font (OT-SVG fonts), which contains a SVG table, is parsed. \n\nThis allows attackers to include arbitrary files from the filesystem fontTools is running on or make web requests from the host system. \n\n### PoC\n\n\nThe vulnerability can be reproduced following the bellow steps on a unix based system.\n\n1. Build a OT-SVG font which includes a external entity in the SVG table which resolves a local file. In our testing we utilised `/etc/passwd` for our POC file to include and modified an existing subset integration test to build the POC font - see bellow.\n\n```python\n\nfrom string import ascii_letters\nfrom fontTools.fontBuilder import FontBuilder\nfrom fontTools.pens.ttGlyphPen import TTGlyphPen\nfrom fontTools.ttLib import newTable\n\n\nXXE_SVG = \"\"\"\\\n<?xml version=\"1.0\"?>\n<!DOCTYPE svg [<!ENTITY test SYSTEM 'file:///etc/passwd'>]>\n<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <g id=\"glyph1\">\n    <text font-size=\"10\" x=\"0\" y=\"10\">&test;</text>\n  </g>\n</svg>\n\"\"\"\n\ndef main():\n    # generate a random TTF font with an SVG table\n    glyph_order = [\".notdef\"] + list(ascii_letters)\n    pen = TTGlyphPen(glyphSet=None)\n    pen.moveTo((0, 0))\n    pen.lineTo((0, 500))\n    pen.lineTo((500, 500))\n    pen.lineTo((500, 0))\n    pen.closePath()\n    glyph = pen.glyph()\n    glyphs = {g: glyph for g in glyph_order}\n\n    fb = FontBuilder(unitsPerEm=1024, isTTF=True)\n    fb.setupGlyphOrder(glyph_order)\n    fb.setupCharacterMap({ord(c): c for c in ascii_letters})\n    fb.setupGlyf(glyphs)\n    fb.setupHorizontalMetrics({g: (500, 0) for g in glyph_order})\n    fb.setupHorizontalHeader()\n    fb.setupOS2()\n    fb.setupPost()\n    fb.setupNameTable({\"familyName\": \"TestSVG\", \"styleName\": \"Regular\"})\n\n    svg_table = newTable(\"SVG \")\n    svg_table.docList = [\n       (XXE_SVG, 1, 12)\n    ]\n    fb.font[\"SVG \"] = svg_table\n\n    fb.font.save('poc-payload.ttf')\n\nif __name__ == '__main__':\n    main()\n\n```\n\n2. Subset the font with an affected version of fontTools - we tested on `fonttools==4.42.1` and `fonttools==4.28.2` - using the following flags (which just ensure the malicious glyph is mapped by the font and not discard in the subsetting process):\n\n```shell\npyftsubset poc-payload.ttf --output-file=\"poc-payload.subset.ttf\" --unicodes=\"*\" --ignore-missing-glyphs\n```\n\n3. Read the parsed SVG table in the subsetted font:\n\n```shell\nttx -t SVG poc-payload.subset.ttf && cat poc-payload.subset.ttx\n```\n\nObserved the included contents of the `/etc/passwd` file. \n\n### Impact\n\nNote the final severity is dependant on the environment fontTools is running in.\n\n- The vulnerability has the most impact on consumers of fontTools who leverage the subsetting utility to subset untrusted OT-SVG fonts where the vulnerability may be exploited to read arbitrary files from the filesystem of the host fonttools is running on\n\n\n\n### Possible Mitigations \n\nThere may be other ways to mitigate the issue, but some suggestions:\n\n1. Set the `resolve_entities=False` flag on parsing methods\n2. Consider further methods of disallowing doctype declarations\n3. Consider recursive regex matching\n\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-6673-4983-2vx5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-45139",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fonttools/fonttools/security/advisories/GHSA-6673-4983-2vx5"
+                },
+                {
+                    "url": "https://github.com/fonttools/fonttools/commit/9f61271dc1ca82ed91f529b130fe5dc5c9bf1f4c"
+                },
+                {
+                    "url": "https://github.com/fonttools/fonttools/releases/tag/4.43.0"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-45139"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VY63B4SGY4QOQGUXMECRGD6K3YT3GJ75"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/03/08/2"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/03/09/1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6673-4983-2vx5"
+                }
+            ],
+            "published_at": "2024-01-09T16:01:10Z",
+            "updated_at": "2024-05-02T13:09:25Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "fonttools"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.28.2, < 4.43.0",
+                    "first_patched_version": {
+                        "identifier": "4.43.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-611",
+                    "name": "Improper Restriction of XML External Entity Reference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "fonttools"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 4.28.2, < 4.43.0",
+            "first_patched_version": {
+                "identifier": "4.43.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/125",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/125",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 124,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3863-2447-669p",
+            "cve_id": "CVE-2023-6730",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-3863-2447-669p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6730"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/423611ee-7a2a-442a-babb-3ed2f8385c16"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3863-2447-669p"
+                }
+            ],
+            "published_at": "2023-12-19T15:30:30Z",
+            "updated_at": "2023-12-28T05:05:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "score": 9.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/124",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/124",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 123,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v68g-wm8c-6x7j",
+            "cve_id": "CVE-2023-7018",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v68g-wm8c-6x7j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-7018",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-7018"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/e1a3e548-e53a-48df-b708-9ee62140963c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v68g-wm8c-6x7j"
+                }
+            ],
+            "published_at": "2023-12-20T18:30:32Z",
+            "updated_at": "2024-01-02T15:27:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/123",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/123",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 122,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jfhm-5ghh-2f97",
+            "cve_id": "CVE-2023-49083",
+            "summary": "cryptography vulnerable to NULL-dereference when loading PKCS7 certificates",
+            "description": "### Summary\n\nCalling `load_pem_pkcs7_certificates` or `load_der_pkcs7_certificates` could lead to a NULL-pointer dereference and segfault.\n\n### PoC\nHere is a Python code that triggers the issue:\n```python\nfrom cryptography.hazmat.primitives.serialization.pkcs7 import load_der_pkcs7_certificates, load_pem_pkcs7_certificates\n\npem_p7 = b\"\"\"\n-----BEGIN PKCS7-----\nMAsGCSqGSIb3DQEHAg==\n-----END PKCS7-----\n\"\"\"\n\nder_p7 = b\"\\x30\\x0B\\x06\\x09\\x2A\\x86\\x48\\x86\\xF7\\x0D\\x01\\x07\\x02\"\n\nload_pem_pkcs7_certificates(pem_p7)\nload_der_pkcs7_certificates(der_p7)\n```\n\n### Impact\nExploitation of this vulnerability poses a serious risk of Denial of Service (DoS) for any application attempting to deserialize a PKCS7 blob/certificate. The consequences extend to potential disruptions in system availability and stability.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jfhm-5ghh-2f97",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-49083",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pyca/cryptography/security/advisories/GHSA-jfhm-5ghh-2f97"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/f09c261ca10a31fe41b1262306db7f8f1da0e48a"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-49083"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/pull/9926"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/11/29/2"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/cryptography/PYSEC-2023-254.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QMNTYMUGFJSDBYBU22FUYBHFRZODRKXV"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jfhm-5ghh-2f97"
+                }
+            ],
+            "published_at": "2023-11-28T20:46:46Z",
+            "updated_at": "2024-02-20T18:14:36Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.1, < 41.0.6",
+                    "first_patched_version": {
+                        "identifier": "41.0.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 3.1, < 41.0.6",
+            "first_patched_version": {
+                "identifier": "41.0.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/122",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/122",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 121,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q3qx-c6g2-7pw2",
+            "cve_id": "CVE-2023-49081",
+            "summary": "aiohttp's ClientSession is vulnerable to CRLF injection via version",
+            "description": "### Summary\nImproper validation make it possible for an attacker to modify the HTTP request (e.g. to insert a new header) or even create a new HTTP request if the attacker controls the HTTP version.\n\n### Details\nThe vulnerability only occurs if the attacker can control the HTTP version of the request (including its type).\nFor example if an unvalidated JSON value is used as a version and the attacker is then able to pass an array as the `version` parameter.\nFurthermore, the vulnerability only occurs when the `Connection` header is passed to the `headers` parameter.\n\nAt this point, the library will use the parsed value to create the request. If a list is passed, then it bypasses validation and it is possible to perform CRLF injection.\n\n### PoC\nThe POC below shows an example of providing an unvalidated array as a version:\nhttps://gist.github.com/jnovikov/184afb593d9c2114d77f508e0ccd508e\n\n### Impact\nCRLF injection leading to Request Smuggling.\n\n### Workaround\nIf these specific conditions are met and you are unable to upgrade, then validate the user input to the `version` parameter to ensure it is a `str`.\n\nPatch: https://github.com/aio-libs/aiohttp/pull/7835/files",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-q3qx-c6g2-7pw2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-49081",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-q3qx-c6g2-7pw2"
+                },
+                {
+                    "url": "https://gist.github.com/jnovikov/184afb593d9c2114d77f508e0ccd508e"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-49081"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TY5SI6NK5243DEEDQUFKQKW5GQNKQUMA/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WSYWMP64ZFCTC3VO6RY6EC6VSSMV6I3A/"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/7835/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/1e86b777e61cf4eefc7d92fa57fa19dcc676013b"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2023-250.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q3qx-c6g2-7pw2"
+                }
+            ],
+            "published_at": "2023-11-27T23:17:42Z",
+            "updated_at": "2024-01-29T19:27:16Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.9.0",
+                    "first_patched_version": {
+                        "identifier": "3.9.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+                "score": 7.2
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.9.0",
+            "first_patched_version": {
+                "identifier": "3.9.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/121",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/121",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 120,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qvrw-v9rv-5rjx",
+            "cve_id": "CVE-2023-49082",
+            "summary": "aiohttp's ClientSession is vulnerable to CRLF injection via method",
+            "description": "### Summary\nImproper validation makes it possible for an attacker to modify the HTTP request (e.g. insert a new header) or even create a new HTTP request if the attacker controls the HTTP method.\n\n### Details\nThe vulnerability occurs only if the attacker can control the HTTP method (GET, POST etc.) of the request.\n\nPrevious releases performed no validation on the provided value. If an attacker controls the HTTP method it will be used as is and can lead to HTTP request smuggling.\n\n### PoC\nA minimal example can be found here:\nhttps://gist.github.com/jnovikov/7f411ae9fe6a9a7804cf162a3bdbb44b\n\n### Impact\nIf the attacker can control the HTTP version of the request it will be able to modify the request (request smuggling).\n\n### Workaround\nIf unable to upgrade and using user-provided values for the request method, perform manual validation of the user value (e.g. by restricting it to a few known values like GET, POST etc.).\n\nPatch: https://github.com/aio-libs/aiohttp/pull/7806/files",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-qvrw-v9rv-5rjx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-49082",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-qvrw-v9rv-5rjx"
+                },
+                {
+                    "url": "https://gist.github.com/jnovikov/7f411ae9fe6a9a7804cf162a3bdbb44b"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-49082"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TY5SI6NK5243DEEDQUFKQKW5GQNKQUMA/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WSYWMP64ZFCTC3VO6RY6EC6VSSMV6I3A/"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/7806/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/e4ae01c2077d2cfa116aa82e4ff6866857f7c466"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2023-251.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qvrw-v9rv-5rjx"
+                }
+            ],
+            "published_at": "2023-11-27T23:17:24Z",
+            "updated_at": "2024-01-29T19:27:06Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.9.0",
+                    "first_patched_version": {
+                        "identifier": "3.9.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.9.0",
+            "first_patched_version": {
+                "identifier": "3.9.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/120",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/120",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 119,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-pjjw-qhg8-p2p9",
+            "cve_id": null,
+            "summary": "aiohttp has vulnerable dependency that is vulnerable to request smuggling",
+            "description": "### Summary\nllhttp 8.1.1 is vulnerable to two request smuggling vulnerabilities.\nDetails have not been disclosed yet, so refer to llhttp for future information.\nThe issue is resolved by using llhttp 9+ (which is included in aiohttp 3.8.6+).",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-pjjw-qhg8-p2p9",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-pjjw-qhg8-p2p9"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/996de2629ef6b4c2934a7c04dfd49d0950d4c43b"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/bcc416e533796d04fb8124ef1e7686b1f338767a"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-pjjw-qhg8-p2p9"
+                }
+            ],
+            "published_at": "2023-11-27T23:15:38Z",
+            "updated_at": "2023-11-27T23:15:39Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.8.6",
+                    "first_patched_version": {
+                        "identifier": "3.8.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.8.6",
+            "first_patched_version": {
+                "identifier": "3.8.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/119",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/119",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 118,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gfw2-4jvh-wgfg",
+            "cve_id": "CVE-2023-47627",
+            "summary": "AIOHTTP has problems in HTTP parser (the python one, not llhttp)",
+            "description": "# Summary\nThe HTTP parser in AIOHTTP has numerous problems with header parsing, which could lead to request smuggling.\nThis parser is only used when `AIOHTTP_NO_EXTENSIONS` is enabled (or not using a prebuilt wheel).\n \n# Details\n\n## Bug 1: Bad parsing of `Content-Length` values\n\n### Description\nRFC 9110 says this:\n> `Content-Length = 1*DIGIT`\n\nAIOHTTP does not enforce this rule, presumably because of an incorrect usage of the builtin `int` constructor. Because the `int` constructor accepts `+` and `-` prefixes, and digit-separating underscores, using `int` to parse CL values leads AIOHTTP to significant misinterpretation.\n\n### Examples\n```\nGET / HTTP/1.1\\r\\n\nContent-Length: -0\\r\\n\n\\r\\n\nX\n```\n```\nGET / HTTP/1.1\\r\\n\nContent-Length: +0_1\\r\\n\n\\r\\n\nX\n```\n\n### Suggested action\nVerify that a `Content-Length` value consists only of ASCII digits before parsing, as the standard requires.\n\n## Bug 2: Improper handling of NUL, CR, and LF in header values\n\n### Description\nRFC 9110 says this:\n> Field values containing CR, LF, or NUL characters are invalid and dangerous, due to the varying ways that implementations might parse and interpret those characters; a recipient of CR, LF, or NUL within a field value MUST either reject the message or replace each of those characters with SP before further processing or forwarding of that message.\n\nAIOHTTP's HTTP parser does not enforce this rule, and will happily process header values containing these three forbidden characters without replacing them with SP.\n### Examples\n```\nGET / HTTP/1.1\\r\\n\nHeader: v\\x00alue\\r\\n\n\\r\\n\n```\n```\nGET / HTTP/1.1\\r\\n\nHeader: v\\ralue\\r\\n\n\\r\\n\n```\n```\nGET / HTTP/1.1\\r\\n\nHeader: v\\nalue\\r\\n\n\\r\\n\n```\n### Suggested action\nReject all messages with NUL, CR, or LF in a header value. The translation to space thing, while technically allowed, does not seem like a good idea to me.\n\n## Bug 3: Improper stripping of whitespace before colon in HTTP headers\n\n### Description\nRFC 9112 says this:\n> No whitespace is allowed between the field name and colon. In the past, differences in the handling of such whitespace have led to security vulnerabilities in request routing and response handling. A server MUST reject, with a response status code of 400 (Bad Request), any received request message that contains whitespace between a header field name and colon.\n\nAIOHTTP does not enforce this rule, and will simply strip any whitespace before the colon in an HTTP header.\n\n### Example\n```\nGET / HTTP/1.1\\r\\n\nContent-Length : 1\\r\\n\n\\r\\n\nX\n```\n\n### Suggested action\nReject all messages with whitespace before a colon in a header field, as the standard requires.\n\n# PoC\nExample requests are embedded in the previous section. To reproduce these bugs, start an AIOHTTP server without llhttp (i.e. `AIOHTTP_NO_EXTENSIONS=1`) and send the requests given in the previous section. (e.g. by `printf`ing into `nc`)\n\n# Impact\nEach of these bugs can be used for request smuggling.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-gfw2-4jvh-wgfg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-47627",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-gfw2-4jvh-wgfg"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-47627"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/d5c12ba890557a575c313bb3017910d7616fce3d"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/releases/tag/v3.8.6"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2023-246.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VDKQ6HM3KNDU4OQI476ZWT4O7DMSIT35/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WQYQL6WV535EEKSNH7KRARLLMOW5WXDM/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FUSJVQ7OQ55RWL4XAX2F5EZ73N4ZSH6U/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gfw2-4jvh-wgfg"
+                }
+            ],
+            "published_at": "2023-11-14T22:20:59Z",
+            "updated_at": "2024-02-15T05:07:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.8.6",
+                    "first_patched_version": {
+                        "identifier": "3.8.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.8.6",
+            "first_patched_version": {
+                "identifier": "3.8.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/118",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/118",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 117,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "werkzeug"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hrfv-mqp8-q5rw",
+            "cve_id": "CVE-2023-46136",
+            "summary": "Werkzeug DoS: High resource usage when parsing multipart/form-data containing a large part with CR/LF character at the beginning",
+            "description": "Werkzeug multipart data parser needs to find a boundary that may be between consecutive chunks. That's why parsing is based on looking for newline characters. Unfortunately, code looking for partial boundary in the buffer is written inefficiently, so if we upload a file that starts with CR or LF and then is followed by megabytes of data without these characters: all of these bytes are appended chunk by chunk into internal bytearray and lookup for boundary is performed on growing buffer.\n\nThis allows an attacker to cause a denial of service by sending crafted multipart data to an endpoint that will parse it. The amount of CPU time required can block worker processes from handling legitimate requests. The amount of RAM required can trigger an out of memory kill of the process. If many concurrent requests are sent continuously, this can exhaust or kill all available workers.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-hrfv-mqp8-q5rw",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-46136",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/werkzeug/security/advisories/GHSA-hrfv-mqp8-q5rw"
+                },
+                {
+                    "url": "https://github.com/pallets/werkzeug/commit/b1916c0c083e0be1c9d887ee2f3d696922bfc5c1"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-46136"
+                },
+                {
+                    "url": "https://github.com/pallets/werkzeug/commit/f3c803b3ade485a45f12b6d6617595350c0f03e2"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/werkzeug/PYSEC-2023-221.yaml"
+                },
+                {
+                    "url": "https://github.com/pallets/werkzeug/commit/f2300208d5e2a5076cbbb4c2aad71096fd040ef9"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20231124-0008/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hrfv-mqp8-q5rw"
+                }
+            ],
+            "published_at": "2023-10-25T14:22:59Z",
+            "updated_at": "2023-12-03T05:04:51Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "werkzeug"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.0.0, < 3.0.1",
+                    "first_patched_version": {
+                        "identifier": "3.0.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "werkzeug"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.3.8",
+                    "first_patched_version": {
+                        "identifier": "2.3.8"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "werkzeug"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.3.8",
+            "first_patched_version": {
+                "identifier": "2.3.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rasa/dependabot/alerts/117",
+        "html_url": "https://github.com/fcas/rasa/security/dependabot/117",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

@@ -1,0 +1,107 @@
+[
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "bower"
+            },
+            "manifest_path": "tdb_ext/package.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p6mr-pxg4-68hx",
+            "cve_id": "CVE-2019-5484",
+            "summary": "Symlink Arbitrary File Overwrite in bower",
+            "description": "Versions of `bower` prior to 1.8.8 are affected by an arbitrary file write vulnerability. The vulnerability occurs because `bower` does not verify that extracted symbolic links do not resolve to targets outside of the extraction root directory.\n\n\n\n## Recommendation\n\nUpdate to version 1.8.8 or later",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-p6mr-pxg4-68hx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-5484",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-5484"
+                },
+                {
+                    "url": "https://github.com/bower/bower/commit/45c6bfa86f6e57731b153baca9e0b41a1cc699e3"
+                },
+                {
+                    "url": "https://hackerone.com/reports/473811"
+                },
+                {
+                    "url": "https://snyk.io/blog/severe-security-vulnerability-in-bowers-zip-archive-extraction"
+                },
+                {
+                    "url": "https://github.com/nodejs/security-wg/blob/master/vuln/npm/487.json"
+                },
+                {
+                    "url": "https://www.npmjs.com/advisories/776"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r8ba4c628fba7181af58817d452119481adce4ba92e889c643e4c7dd3@%3Ccommits.netbeans.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb5ac16fad337d1f3bb7079549f97d8166d0ef3082629417c39f12d63@%3Cnotifications.netbeans.apache.org%3E"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p6mr-pxg4-68hx"
+                }
+            ],
+            "published_at": "2019-09-17T23:21:34Z",
+            "updated_at": "2023-03-01T01:53:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "bower"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.8.8",
+                    "first_patched_version": {
+                        "identifier": "1.8.8"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "bower"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 1.8.8",
+            "first_patched_version": {
+                "identifier": "1.8.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/tdb/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/tdb/security/dependabot/1",
+        "created_at": "2024-05-24T01:34:29Z",
+        "updated_at": "2024-05-24T01:34:29Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

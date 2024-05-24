@@ -1,0 +1,400 @@
+[
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pydantic"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mr82-8j83-vxmv",
+            "cve_id": "CVE-2024-3772",
+            "summary": "Pydantic regular expression denial of service",
+            "description": "Regular expression denial of service in Pydantic < 2.4.0, < 1.10.13 allows remote attackers to cause denial of service via a crafted email string.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-mr82-8j83-vxmv",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3772",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3772"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/pull/7360"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/commit/59d8f38fd6220e3917c53785dbc70317d6f8e631"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/commit/e4393ae6145c4dadff739990bb0116c6dec3441b"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6JBZLMSH4GAZOVBMT2JUO2LXHY7M2ALI"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mr82-8j83-vxmv"
+                }
+            ],
+            "published_at": "2024-04-15T03:31:00Z",
+            "updated_at": "2024-04-26T03:30:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pydantic"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.4.0",
+                    "first_patched_version": {
+                        "identifier": "2.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pydantic"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.10.13",
+                    "first_patched_version": {
+                        "identifier": "1.10.13"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pydantic"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.10.13",
+            "first_patched_version": {
+                "identifier": "1.10.13"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/4",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fj7x-q9j7-g6q6",
+            "cve_id": "CVE-2024-21503",
+            "summary": "Black vulnerable to Regular Expression Denial of Service (ReDoS)",
+            "description": "Versions of the package black before 24.3.0 are vulnerable to Regular Expression Denial of Service (ReDoS) via the lines_with_leading_tabs_expanded function in the strings.py file. An attacker could exploit this vulnerability by crafting a malicious input that causes a denial of service.\n\nExploiting this vulnerability is possible when running Black on untrusted input, or if you habitually put thousands of leading tab characters in your docstrings.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fj7x-q9j7-g6q6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21503",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21503"
+                },
+                {
+                    "url": "https://github.com/psf/black/commit/f00093672628d212b8965a8993cee8bedf5fe9b8"
+                },
+                {
+                    "url": "https://github.com/psf/black/releases/tag/24.3.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-PYTHON-BLACK-6256273"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/black/PYSEC-2024-48.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fj7x-q9j7-g6q6"
+                }
+            ],
+            "published_at": "2024-03-19T06:30:52Z",
+            "updated_at": "2024-03-20T15:24:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "black"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0, < 24.3.0",
+                    "first_patched_version": {
+                        "identifier": "24.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0, < 24.3.0",
+            "first_patched_version": {
+                "identifier": "24.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/3",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h75v-3vvj-5mfj",
+            "cve_id": "CVE-2024-34064",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing non-attribute characters. XML/HTML attributes cannot contain spaces, `/`, `>`, or `=`, as each would then be interpreted as starting a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. The fix for the previous GHSA-h5c8-rqwp-cp95 CVE-2024-22195 only addressed spaces but not other characters.\n\nAccepting keys as user input is now explicitly considered an unintended use case of the `xmlattr` filter, and code that does so without otherwise validating the input should be flagged as insecure, regardless of Jinja version. Accepting _values_ as user input continues to be safe.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h75v-3vvj-5mfj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34064",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h75v-3vvj-5mfj"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/0668239dc6b44ef38e7a6c9f91f312fd4ca581cb"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34064"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h75v-3vvj-5mfj"
+                }
+            ],
+            "published_at": "2024-05-06T14:20:59Z",
+            "updated_at": "2024-05-06T16:17:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h5c8-rqwp-cp95",
+            "cve_id": "CVE-2024-22195",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing spaces. XML/HTML attributes cannot contain spaces, as each would then be interpreted as a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. Note that accepting keys as user input is not common or a particularly intended use case of the `xmlattr` filter, and an application doing so should already be verifying what keys are provided regardless of this fix.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h5c8-rqwp-cp95",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-22195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h5c8-rqwp-cp95"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-22195"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/716795349a41d4983a9a4771f7d883c96ea17be7"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5XCWZD464AJJJUBOO7CMPXQ4ROBC6JX2/"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/01/msg00010.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/DELCVUUYX75I5K4Q5WMJG4MUZJA6VAIP/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/O7YWRBX6JQCWC2XXCTZ55C7DPMGICCN3/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h5c8-rqwp-cp95"
+                }
+            ],
+            "published_at": "2024-01-11T15:20:48Z",
+            "updated_at": "2024-01-27T03:30:20Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.3",
+                    "first_patched_version": {
+                        "identifier": "3.1.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.3",
+            "first_patched_version": {
+                "identifier": "3.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

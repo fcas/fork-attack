@@ -49,11 +49,19 @@ def vulnerability_analysis(repo_name):
         d["repo_name"] = repo_name
         global code_analysis_result
         code_analysis_result = pd.concat([code_analysis_result, d])
-    if isinstance(dependabot_alerts_response, list) and dependabot_alerts_response:
-        d = pd.json_normalize(dependabot_alerts_response)
-        d["repo_name"] = repo_name
-        global dependabot_result
-        dependabot_result = pd.concat([dependabot_result, d])
+    elif isinstance(code_analysis_response, dict):
+        logger.warning(f"{repo_name}:{code_analysis_response}")
+
+    if isinstance(dependabot_alerts_response, list):
+        if dependabot_alerts_response:
+            d = pd.json_normalize(dependabot_alerts_response)
+            d["repo_name"] = repo_name
+            global dependabot_result
+            dependabot_result = pd.concat([dependabot_result, d])
+        elif isinstance(dependabot_alerts_response, dict):
+            logger.warning(f"{repo_name}:{dependabot_alerts_response}")
+    elif isinstance(dependabot_alerts_response, dict):
+        logger.warning(f"{repo_name}:{dependabot_alerts_response}")
 
     now = date.today()
 
@@ -103,7 +111,7 @@ def attack():
             if check_archive:
                 response = requests.request("GET", f"https://api.github.com/repos/{repo_owner}/{repo_name}",
                                             headers=headers, data={}).json()
-                if response.get("disabled", True):
+                if response.get("archived", True):
                     logger.warning(f"Repository {repo_str} is disabled")
 
             fork(branch, clone, repo_name, repo_owner)

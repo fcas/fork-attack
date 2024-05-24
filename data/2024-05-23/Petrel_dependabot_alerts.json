@@ -1,0 +1,1947 @@
+[
+    {
+        "number": 16,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pyyaml"
+            },
+            "manifest_path": "petrel/setup.py",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rprw-h62v-c2w7",
+            "cve_id": "CVE-2017-18342",
+            "summary": "PyYAML insecurely deserializes YAML strings leading to arbitrary code execution",
+            "description": "In PyYAML before 4.1, the `yaml.load()` API could execute arbitrary code. In other words, `yaml.safe_load` is not used.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-rprw-h62v-c2w7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2017-18342",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2017-18342"
+                },
+                {
+                    "url": "https://github.com/marshmallow-code/apispec/issues/278"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/issues/193"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/pull/74"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/blob/master/CHANGES"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/wiki/PyYAML-yaml.load(input)-Deprecation"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/JEX7IPV5P2QJITAMA5Z63GQCZA5I6NVZ/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KSQQMRUQSXBSUXLCRD3TSZYQ7SEZRKCE/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/M6JCFGEIEOFMWWIXGHSELMKQDD4CV2BA/"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202003-45"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/commit/7b68405c81db889f83c32846462b238ccae5be80"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rprw-h62v-c2w7"
+                }
+            ],
+            "published_at": "2019-01-04T17:45:26Z",
+            "updated_at": "2023-09-05T17:58:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pyyaml"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.1",
+                    "first_patched_version": {
+                        "identifier": "4.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pyyaml"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.1",
+            "first_patched_version": {
+                "identifier": "4.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/16",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/16",
+        "created_at": "2024-05-24T01:34:17Z",
+        "updated_at": "2024-05-24T01:34:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pyyaml"
+            },
+            "manifest_path": "petrel/setup.py",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6757-jp84-gxfx",
+            "cve_id": "CVE-2020-1747",
+            "summary": "Improper Input Validation in PyYAML",
+            "description": "A vulnerability was discovered in the PyYAML library in versions before 5.3.1, where it is susceptible to arbitrary code execution when it processes untrusted YAML files through the full_load method or with the FullLoader loader. Applications that use the library to process untrusted input may be vulnerable to this flaw. An attacker could use this flaw to execute arbitrary code on the system by abusing the python/object/new constructor.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-6757-jp84-gxfx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-1747",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-1747"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/pull/386"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2020-1747"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/7PPAS6C4SZRDQLR7C22A5U3QOLXY33JX/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/K5HEPD7LEVDPCITY5IMDYWXUMX37VFMY/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/MMQXSZXNJT6ERABJZAAICI3DQSQLCP3D/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WORRFHPQVAFKKXXWLSSW6XKUYLWM6CSH/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZBJA3SGNJKCAYPSHOHWY3KBCWNM5NYK2/"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2020-04/msg00017.html"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2020-05/msg00017.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/commit/5080ba513377b6355a0502104846ee804656f1e0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6757-jp84-gxfx"
+                }
+            ],
+            "published_at": "2021-04-20T16:14:24Z",
+            "updated_at": "2023-08-25T00:08:24Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pyyaml"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 5.3.1",
+                    "first_patched_version": {
+                        "identifier": "5.3.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pyyaml"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 5.3.1",
+            "first_patched_version": {
+                "identifier": "5.3.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/15",
+        "created_at": "2024-05-24T01:34:17Z",
+        "updated_at": "2024-05-24T01:34:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "PyYAML"
+            },
+            "manifest_path": "petrel/setup.py",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8q59-q68h-6hv4",
+            "cve_id": "CVE-2020-14343",
+            "summary": "Improper Input Validation in PyYAML",
+            "description": "A vulnerability was discovered in the PyYAML library in versions before 5.4, where it is susceptible to arbitrary code execution when it processes untrusted YAML files through the full_load method or with the FullLoader loader. Applications that use the library to process untrusted input may be vulnerable to this flaw. This flaw allows an attacker to execute arbitrary code on the system by abusing the python/object/new constructor. This flaw is due to an incomplete fix for CVE-2020-1747.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-8q59-q68h-6hv4",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-14343",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-14343"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/commit/a001f2782501ad2d24986959f0239a354675f9dc"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1860466"
+                },
+                {
+                    "url": "https://pypi.org/project/PyYAML/"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/issues/420#issuecomment-663673966"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpuapr2022.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://github.com/SeldonIO/seldon-core/issues/2252"
+                },
+                {
+                    "url": "https://github.com/yaml/pyyaml/issues/420"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8q59-q68h-6hv4"
+                }
+            ],
+            "published_at": "2021-03-25T21:26:26Z",
+            "updated_at": "2023-08-23T23:02:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "PyYAML"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 5.4",
+                    "first_patched_version": {
+                        "identifier": "5.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "PyYAML"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 5.4",
+            "first_patched_version": {
+                "identifier": "5.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/14",
+        "created_at": "2024-05-24T01:34:17Z",
+        "updated_at": "2024-05-24T01:34:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-898j-5cc8-cmf5",
+            "cve_id": "CVE-2018-8008",
+            "summary": "ZipSlip in org.apache.storm:storm-core",
+            "description": "Apache Storm version 1.0.6 and earlier, 1.2.1 and earlier, and version 1.1.2 and earlier expose an arbitrary file write vulnerability, that can be achieved using a specially crafted zip archive (affects other archives as well, bzip2, tar, xz, war, cpio, 7z), that holds path traversal filenames. So when the filename gets concatenated to the target extraction directory, the final path ends up outside of the target folder.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-898j-5cc8-cmf5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-8008",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-8008"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-898j-5cc8-cmf5"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/613b2fca8bcd0a3b12c0b763ea8f7cf62e422e9f79fce6cfa5b08a58@%3Cdev.storm.apache.org%3E"
+                },
+                {
+                    "url": "http://www.securityfocus.com/bid/104418"
+                },
+                {
+                    "url": "https://github.com/apache/storm/commit/0fc6b522487c061f89e8cdacf09f722d3f20589"
+                },
+                {
+                    "url": "https://github.com/apache/storm/commit/efad4cca2d7d461f5f8c08a0d7b51fabeb82d0a"
+                },
+                {
+                    "url": "https://github.com/apache/storm/commit/f61e5daf299d6c37c7ad65744d02556c94a16a4"
+                },
+                {
+                    "url": "https://issues.apache.org/jira/browse/STORM-3052"
+                }
+            ],
+            "published_at": "2018-10-16T17:35:24Z",
+            "updated_at": "2024-03-20T17:34:56Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.2.0, < 1.2.2",
+                    "first_patched_version": {
+                        "identifier": "1.2.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.1.0, < 1.1.3",
+                    "first_patched_version": {
+                        "identifier": "1.1.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.0.7",
+                    "first_patched_version": {
+                        "identifier": "1.0.7"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.0.7",
+            "first_patched_version": {
+                "identifier": "1.0.7"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/13",
+        "created_at": "2024-05-24T01:34:17Z",
+        "updated_at": "2024-05-24T01:34:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mjmj-j48q-9wg2",
+            "cve_id": "CVE-2022-1471",
+            "summary": "SnakeYaml Constructor Deserialization Remote Code Execution",
+            "description": "### Summary\nSnakeYaml's `Constructor` class, which inherits from `SafeConstructor`, allows any type be deserialized given the following line:\n\nnew Yaml(new Constructor(TestDataClass.class)).load(yamlContent);\n\nTypes do not have to match the types of properties in the target class. A `ConstructorException` is thrown, but only after a malicious payload is deserialized.\n\n### Severity\nHigh, lack of type checks during deserialization allows remote code execution.\n\n### Proof of Concept\nExecute `bash run.sh`. The PoC uses Constructor to deserialize a payload\nfor RCE. RCE is demonstrated by using a payload which performs a http request to\nhttp://127.0.0.1:8000.\n\nExample output of successful run of proof of concept:\n\n```\n$ bash run.sh\n\n[+] Downloading snakeyaml if needed\n[+] Starting mock HTTP server on 127.0.0.1:8000 to demonstrate RCE\nnc: no process found\n[+] Compiling and running Proof of Concept, which a payload that sends a HTTP request to mock web server.\n[+] An exception is expected.\nException:\nCannot create property=payload for JavaBean=Main$TestDataClass@3cbbc1e0\n in 'string', line 1, column 1:\n    payload: !!javax.script.ScriptEn ... \n    ^\nCan not set java.lang.String field Main$TestDataClass.payload to javax.script.ScriptEngineManager\n in 'string', line 1, column 10:\n    payload: !!javax.script.ScriptEngineManag ... \n             ^\n\n\tat org.yaml.snakeyaml.constructor.Constructor$ConstructMapping.constructJavaBean2ndStep(Constructor.java:291)\n\tat org.yaml.snakeyaml.constructor.Constructor$ConstructMapping.construct(Constructor.java:172)\n\tat org.yaml.snakeyaml.constructor.Constructor$ConstructYamlObject.construct(Constructor.java:332)\n\tat org.yaml.snakeyaml.constructor.BaseConstructor.constructObjectNoCheck(BaseConstructor.java:230)\n\tat org.yaml.snakeyaml.constructor.BaseConstructor.constructObject(BaseConstructor.java:220)\n\tat org.yaml.snakeyaml.constructor.BaseConstructor.constructDocument(BaseConstructor.java:174)\n\tat org.yaml.snakeyaml.constructor.BaseConstructor.getSingleData(BaseConstructor.java:158)\n\tat org.yaml.snakeyaml.Yaml.loadFromReader(Yaml.java:491)\n\tat org.yaml.snakeyaml.Yaml.load(Yaml.java:416)\n\tat Main.main(Main.java:37)\nCaused by: java.lang.IllegalArgumentException: Can not set java.lang.String field Main$TestDataClass.payload to javax.script.ScriptEngineManager\n\tat java.base/jdk.internal.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:167)\n\tat java.base/jdk.internal.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:171)\n\tat java.base/jdk.internal.reflect.UnsafeObjectFieldAccessorImpl.set(UnsafeObjectFieldAccessorImpl.java:81)\n\tat java.base/java.lang.reflect.Field.set(Field.java:780)\n\tat org.yaml.snakeyaml.introspector.FieldProperty.set(FieldProperty.java:44)\n\tat org.yaml.snakeyaml.constructor.Constructor$ConstructMapping.constructJavaBean2ndStep(Constructor.java:286)\n\t... 9 more\n[+] Dumping Received HTTP Request. Will not be empty if PoC worked\nGET /proof-of-concept HTTP/1.1\nUser-Agent: Java/11.0.14\nHost: localhost:8000\nAccept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\nConnection: keep-alive\n```\n\n### Further Analysis\nPotential mitigations include, leveraging SnakeYaml's SafeConstructor while parsing untrusted content.\n\nSee https://bitbucket.org/snakeyaml/snakeyaml/issues/561/cve-2022-1471-vulnerability-in#comment-64581479 for discussion on the subject.\n\nA fix was released in version 2.0. See https://bitbucket.org/snakeyaml/snakeyaml/issues/561/cve-2022-1471-vulnerability-in#comment-64876314 for more information.\n\n### Timeline\n**Date reported**: 4/11/2022\n**Date fixed**: \n**Date disclosed**: 10/13/2022",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-mjmj-j48q-9wg2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-1471",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/google/security-research/security/advisories/GHSA-mjmj-j48q-9wg2"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-1471"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/561/cve-2022-1471-vulnerability-in#comment-64581479"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/561/cve-2022-1471-vulnerability-in#comment-64634374"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/wiki/CVE-2022-1471"
+                },
+                {
+                    "url": "https://github.com/mbechler/marshalsec"
+                },
+                {
+                    "url": "https://snyk.io/blog/unsafe-deserialization-snakeyaml-java-cve-2022-1471/"
+                },
+                {
+                    "url": "https://www.github.com/mbechler/marshalsec/blob/master/marshalsec.pdf?raw=true"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/commits/5014df1a36f50aca54405bb8433bc99a8847f758"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/commits/acc44099f5f4af26ff86b4e4e4cc1c874e2dc5c4"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/561/cve-2022-1471-vulnerability-in#comment-64876314"
+                },
+                {
+                    "url": "https://groups.google.com/g/kubernetes-security-announce/c/mwrakFaEdnc"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230818-0015/"
+                },
+                {
+                    "url": "http://packetstormsecurity.com/files/175095/PyTorch-Model-Server-Registration-Deserialization-Remote-Code-Execution.html"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/11/19/1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mjmj-j48q-9wg2"
+                }
+            ],
+            "published_at": "2022-12-12T21:19:47Z",
+            "updated_at": "2023-11-20T22:16:15Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.yaml:snakeyaml"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.33",
+                    "first_patched_version": {
+                        "identifier": "2.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+                "score": 8.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.33",
+            "first_patched_version": {
+                "identifier": "2.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/12",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-w37g-rhq8-7m4j",
+            "cve_id": "CVE-2022-41854",
+            "summary": "Snakeyaml vulnerable to Stack overflow leading to denial of service",
+            "description": "Those using Snakeyaml to parse untrusted YAML files may be vulnerable to Denial of Service attacks (DOS). If the parser is running on user supplied input, an attacker may supply content that causes the parser to crash by stack overflow. This effect may support a denial of service attack.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-w37g-rhq8-7m4j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-41854",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-41854"
+                },
+                {
+                    "url": "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=50355"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/commits/e230a1758842beec93d28eddfde568c21774780a"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/531"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/3DDXEXXWAZGF5AVHIPGFPXIWL6TSMKJE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/7MKE4XWRXTH32757H7QJU4ACS67DYDCR"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/KSPAJ5Y45A4ZDION2KN5RDWLHK4XKY2J"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3DDXEXXWAZGF5AVHIPGFPXIWL6TSMKJE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/7MKE4XWRXTH32757H7QJU4ACS67DYDCR"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KSPAJ5Y45A4ZDION2KN5RDWLHK4XKY2J"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240315-0009"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-w37g-rhq8-7m4j"
+                }
+            ],
+            "published_at": "2022-11-11T19:00:31Z",
+            "updated_at": "2024-03-15T19:06:31Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.yaml:snakeyaml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.32",
+                    "first_patched_version": {
+                        "identifier": "1.32"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-121",
+                    "name": "Stack-based Buffer Overflow"
+                },
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.32",
+            "first_patched_version": {
+                "identifier": "1.32"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/11",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-r9pv-hg64-jqrp",
+            "cve_id": "CVE-2019-0202",
+            "summary": "Exposure of Sensitive Information in Apache Storm Logviewer",
+            "description": "The Apache Storm Logviewer daemon exposes HTTP-accessible endpoints to read/search log files on hosts running Storm. In Apache Storm versions 0.9.1-incubating to 1.2.2, it is possible to read files off the host's file system that were not intended to be accessible via these endpoints.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-r9pv-hg64-jqrp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-0202",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-0202"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/220f1a77ff20749326a4c130446c5521db854da0afe81d1974b8109f@%3Cuser.storm.apache.org%3E"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-r9pv-hg64-jqrp"
+                }
+            ],
+            "published_at": "2022-05-24T16:51:28Z",
+            "updated_at": "2023-02-02T05:04:16Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0.9.1-incubating, < 1.2.3",
+                    "first_patched_version": {
+                        "identifier": "1.2.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 0.9.1-incubating, < 1.2.3",
+            "first_patched_version": {
+                "identifier": "1.2.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/10",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hhhw-99gj-p3c3",
+            "cve_id": "CVE-2022-38750",
+            "summary": "snakeYAML before 1.31 vulnerable to Denial of Service due to Out-of-bounds Write",
+            "description": "Using snakeYAML to parse untrusted YAML files may be vulnerable to Denial of Service attacks (DOS). If the parser is running on user supplied input, an attacker may supply content that causes the parser to crash by stackoverflow.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-hhhw-99gj-p3c3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-38750",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-38750"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/526/stackoverflow-oss-fuzz-47027"
+                },
+                {
+                    "url": "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=47027"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/10/msg00001.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202305-28"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240315-0010"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hhhw-99gj-p3c3"
+                }
+            ],
+            "published_at": "2022-09-06T00:00:27Z",
+            "updated_at": "2024-03-15T12:30:36Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.yaml:snakeyaml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.31",
+                    "first_patched_version": {
+                        "identifier": "1.31"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-121",
+                    "name": "Stack-based Buffer Overflow"
+                },
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.31",
+            "first_patched_version": {
+                "identifier": "1.31"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/9",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-98wm-3w3q-mw94",
+            "cve_id": "CVE-2022-38751",
+            "summary": "snakeYAML before 1.31 vulnerable to Denial of Service due to Out-of-bounds Write",
+            "description": "Using snakeYAML to parse untrusted YAML files may be vulnerable to Denial of Service attacks (DOS). If the parser is running on user supplied input, an attacker may supply content that causes the parser to crash by stackoverflow.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-98wm-3w3q-mw94",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-38751",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-38751"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/530/stackoverflow-oss-fuzz-47039"
+                },
+                {
+                    "url": "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=47039"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/src/master/src/test/java/org/yaml/snakeyaml/issues/issue530/Fuzzy47039Test.java"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/10/msg00001.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202305-28"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240315-0010"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-98wm-3w3q-mw94"
+                }
+            ],
+            "published_at": "2022-09-06T00:00:27Z",
+            "updated_at": "2024-03-15T12:30:36Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.yaml:snakeyaml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.31",
+                    "first_patched_version": {
+                        "identifier": "1.31"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-121",
+                    "name": "Stack-based Buffer Overflow"
+                },
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.31",
+            "first_patched_version": {
+                "identifier": "1.31"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/8",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-c4r9-r8fh-9vj2",
+            "cve_id": "CVE-2022-38749",
+            "summary": "snakeYAML before 1.31 vulnerable to Denial of Service due to Out-of-bounds Write",
+            "description": "Using snakeYAML to parse untrusted YAML files may be vulnerable to Denial of Service attacks (DOS). If the parser is running on user supplied input, an attacker may supply content that causes the parser to crash by stackoverflow.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-c4r9-r8fh-9vj2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-38749",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-38749"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/525/got-stackoverflowerror-for-many-open"
+                },
+                {
+                    "url": "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=47024"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/10/msg00001.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202305-28"
+                },
+                {
+                    "url": "https://arxiv.org/pdf/2306.05534.pdf"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240315-0010"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-c4r9-r8fh-9vj2"
+                }
+            ],
+            "published_at": "2022-09-06T00:00:27Z",
+            "updated_at": "2024-03-15T12:30:36Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.yaml:snakeyaml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.31",
+                    "first_patched_version": {
+                        "identifier": "1.31"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "be.cylab:snakeyaml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "= 1.25.1",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.alipay.sofa.acts:acts-common-util"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "= 1.0.0",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "io.prometheus.jmx:jmx_prometheus_httpserver"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "= 0.17.0",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "io.prometheus.jmx:jmx_prometheus_httpserver_java6"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 0.18.0",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.testifyproject.external:external-snakeyaml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 1.0.6",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "pl.droidsonroids.yaml:snakeyaml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 1.18.2",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-121",
+                    "name": "Stack-based Buffer Overflow"
+                },
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.31",
+            "first_patched_version": {
+                "identifier": "1.31"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/7",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9w3m-gqgf-c4p9",
+            "cve_id": "CVE-2022-38752",
+            "summary": "snakeYAML before 1.32 vulnerable to Denial of Service due to Out-of-bounds Write",
+            "description": "Using snakeYAML to parse untrusted YAML files may be vulnerable to Denial of Service attacks (DoS). If the parser is running on user supplied input, an attacker may supply content that causes the parser to crash by stack-overflow.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9w3m-gqgf-c4p9",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-38752",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-38752"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/531/stackoverflow-oss-fuzz-47081"
+                },
+                {
+                    "url": "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=47081"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202305-28"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240315-0009"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9w3m-gqgf-c4p9"
+                }
+            ],
+            "published_at": "2022-09-06T00:00:27Z",
+            "updated_at": "2024-03-15T12:30:36Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.yaml:snakeyaml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.32",
+                    "first_patched_version": {
+                        "identifier": "1.32"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-121",
+                    "name": "Stack-based Buffer Overflow"
+                },
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.32",
+            "first_patched_version": {
+                "identifier": "1.32"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/6",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3mc7-4q67-w48m",
+            "cve_id": "CVE-2022-25857",
+            "summary": "Uncontrolled Resource Consumption in snakeyaml",
+            "description": "The package org.yaml:snakeyaml from 0 and before 1.31 are vulnerable to Denial of Service (DoS) due missing to nested depth limitation for collections.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3mc7-4q67-w48m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-25857",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-25857"
+                },
+                {
+                    "url": "https://github.com/snakeyaml/snakeyaml/commit/fc300780da21f4bb92c148bc90257201220cf174"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/commits/fc300780da21f4bb92c148bc90257201220cf174"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/525"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGYAML-2806360"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/10/msg00001.html"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240315-0010"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3mc7-4q67-w48m"
+                }
+            ],
+            "published_at": "2022-08-31T00:00:24Z",
+            "updated_at": "2024-03-15T19:06:46Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.yaml:snakeyaml"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.31",
+                    "first_patched_version": {
+                        "identifier": "1.31"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-776",
+                    "name": "Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 1.31",
+            "first_patched_version": {
+                "identifier": "1.31"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/5",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rvwf-54qp-4r6v",
+            "cve_id": "CVE-2017-18640",
+            "summary": "SnakeYAML Entity Expansion during load operation",
+            "description": "The Alias feature in SnakeYAML 1.18 allows entity expansion during a load operation, a related issue to CVE-2003-1564.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-rvwf-54qp-4r6v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2017-18640",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2017-18640"
+                },
+                {
+                    "url": "https://bitbucket.org/asomov/snakeyaml/commits/da11ddbd91c1f8392ea932b37fa48110fa54ed8c"
+                },
+                {
+                    "url": "https://bitbucket.org/asomov/snakeyaml/issues/377/allow-configuration-for-preventing-billion"
+                },
+                {
+                    "url": "https://bitbucket.org/asomov/snakeyaml/wiki/Billion%20laughs%20attack"
+                },
+                {
+                    "url": "https://bitbucket.org/asomov/snakeyaml/wiki/Changes"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r1058e7646988394de6a3fd0857ea9b1ee0de14d7bb28fee5ff782457@%3Ccommits.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r154090b871cf96d985b90864442d84eb027c72c94bc3f0a5727ba2d1@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r1703a402f30c8a2ee409f8c6f393e95a63f8c952cc9ee5bf9dd586dc@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r191ceadb1b883357384981848dfa5235cb02a90070c553afbaf9b3d9@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r1aab47b48a757c70e40fc0bcb1fcf1a3951afa6a17aee7cd66cf79f8@%3Ccommon-commits.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r1dfac8b6a7097bcb4979402bbb6e2f8c36d0d9001e3018717eb22b7e@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r1ffce2ed3017e9964f03ad2c539d69e49144fc8e9bf772d641612f98@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r20350031c60a77b45e0eded33e9b3e9cb0cbfc5e24e1c63bf264df12@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r22ac2aa053b7d9c6b75a49db78125c9316499668d0f4a044f3402e2f@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r28c9009a48d52cf448f8b02cd823da0f8601d2dff4d66f387a35f1e0@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r2a5b84fdf59042dc398497e914b5bb1aed77328320b1438144ae1953@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r2b05744c0c2867daa5d1a96832965b7d6220328b0ead06c22a6e7854@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r2db207a2431a5e9e95e899858ab1f5eabd9bcc790a6ca7193ae07e94@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r436988d2cfe8a770ae361c82b181c5b2bf48a249bad84d8a55a3b46e@%3Cdev.phoenix.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r4c682fb8cf69dd14162439656a6ebdf42ea6ad0e4edba95907ea3f14@%3Ccommits.servicecomb.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r4d7f37da1bc2df90a5a0f56eb7629b5ea131bfe11eeeb4b4c193f64a@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r5510f0125ba409fc1cabd098ab8b457741e5fa314cbd0e61e4339422@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r55d807f31e64a080c54455897c20b1667ec792e5915132c7b7750533@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r56805265475919252ba7fc10123f15b91097f3009bae86476624ca25@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r643ba53f002ae59068f9352fe1d82e1b6f375387ffb776f13efe8fda@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r666f29a7d0e1f98fa1425ca01efcfa86e6e3856e01d300828aa7c6ea@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r6c91e52b3cc9f4e64afe0f34f20507143fd1f756d12681a56a9b38da@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r6d54c2da792c74cc14b9b7665ea89e144c9e238ed478d37fd56292e6@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r72a3588d62b2de1361dc9648f5d355385735e47f7ba49d089b0e680d@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r7ce3de03facf7e7f3e24fc25d26d555818519dafdb20f29398a3414b@%3Cdev.phoenix.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r8464b6ec951aace8c807bac9ea526d4f9e3116aa16d38be06f7c6524@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r8b57c57cffa01e418868a3c7535b987635ff1fb5ab534203bfa2d64a@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r900e020760c89f082df1c6e0d46320eba721e4e47bb9eb521e68cd95@%3Ccommits.servicecomb.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/raebd2019b3da8c2f90f31e8b203b45353f78770ca93bfe5376f5532e@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb0e033d5ec8233360203431ad96580cf2ec56f47d9a425d894e279c2@%3Cpr.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb34d8d3269ad47a1400f5a1a2d8310e13a80b6576ebd7f512144198d@%3Ccommon-dev.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb5c33d0069c927fae16084f0605895b98d231d7c48527bcb822ac48c@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb7b28ac741e32dd5edb2c22485d635275bead7290b056ee56baf8ce0@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rbaa1f513d903c89a08267c91d86811fa5bcc82e0596b6142c5cea7ea@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rc3211c71f7e0973a1825d1988a3921288c06cd9d793eae97ecd34948@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rcb2a7037366c58bac6aec6ce3df843a11ef97ae4eb049f05f410eaa5@%3Ccommon-commits.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rcb4b61dbe2ed1c7a88781a9aff5a9e7342cc7ed026aec0418ee67596@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rce5c93bba6e815fb62ad38e28ca1943b3019af1eddeb06507ad4e11a@%3Ccommits.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rd582c64f66c354240290072f340505f5d026ca944ec417226bb0272e@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/re791a854001ec1f79cd4f47328b270e7a1d9d7056debb8f16d962722@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/re851bbfbedd47c690b6e01942acb98ee08bd00df1a94910b905bc8cd@%3Cdev.atlas.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/reb1751562ee5146d3aca654a2df76a2c13d8036645ce69946f9c219e@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/recfe569f4f260328b0036f1c82b2956e864d519ab941a5e75d0d832d@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rf95bebee6dfcc55067cebe8482bd31e6f481d9f74ba8e03f860c3ec7@%3Ccommits.cassandra.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CKN7VGIKTYBCAKYBRG55QHXAY5UDZ7HA/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PTVJC54XGX26UJVVYCXZ7D25X3R5T2G6/"
+                },
+                {
+                    "url": "https://mvnrepository.com/artifact/org.yaml/snakeyaml/1.25/usages"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpuApr2021.html"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r2721aba31a8562639c4b937150897e24f78f747cdbda8641c0f659fe@%3Cusers.kafka.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r16ae4e529401b75a1f5aa462b272b31bf2a108236f882f06fddc14bc@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r182e9cf6f3fb22b9be0cac4ff0685199741d2ab6e9a4e27a3693c224@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r465d2553a31265b042cf5457ef649b71e0722ab89b6ea94a5d59529b@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rdd34c0479587e32a656d976649409487d51ca0d296b3e26b6b89c3f5@%3Ccommon-commits.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rfe0aab6c3bebbd9cbfdedb65ff3fdf420714bcb8acdfd346077e1263@%3Ccommon-commits.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/issues/377"
+                },
+                {
+                    "url": "https://bitbucket.org/snakeyaml/snakeyaml/wiki/Changes"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202305-28"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rvwf-54qp-4r6v"
+                }
+            ],
+            "published_at": "2021-06-04T21:37:45Z",
+            "updated_at": "2023-05-22T20:17:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.yaml:snakeyaml"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.26",
+                    "first_patched_version": {
+                        "identifier": "1.26"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-776",
+                    "name": "Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.yaml:snakeyaml"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 1.26",
+            "first_patched_version": {
+                "identifier": "1.26"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/4",
+        "created_at": "2024-05-24T01:34:16Z",
+        "updated_at": "2024-05-24T01:34:16Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q35p-chc6-7x57",
+            "cve_id": "CVE-2018-1332",
+            "summary": "Moderate severity vulnerability that affects org.apache.storm:storm-core",
+            "description": "Apache Storm version 1.0.6 and earlier, 1.2.1 and earlier, and version 1.1.2 and earlier expose a vulnerability that could allow a user to impersonate another user when communicating with some Storm Daemons.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-q35p-chc6-7x57",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-1332",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-1332"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q35p-chc6-7x57"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/50f1d6a7af27f49d2e498a9ab2975685302cd8ca47000b7c38f339a4@%3Cdev.storm.apache.org%3E"
+                },
+                {
+                    "url": "http://www.securityfocus.com/bid/104399"
+                }
+            ],
+            "published_at": "2018-10-17T19:48:18Z",
+            "updated_at": "2023-01-09T05:03:20Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.1.3",
+                    "first_patched_version": {
+                        "identifier": "1.1.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.2.0, < 1.2.2",
+                    "first_patched_version": {
+                        "identifier": "1.2.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.1.3",
+            "first_patched_version": {
+                "identifier": "1.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/3",
+        "created_at": "2024-05-24T01:34:15Z",
+        "updated_at": "2024-05-24T01:34:15Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p8jx-x2vw-wm33",
+            "cve_id": "CVE-2018-1331",
+            "summary": "Code execution in org.apache.storm:storm-core",
+            "description": "In Apache Storm 0.10.0 through 0.10.2, 1.0.0 through 1.0.6, 1.1.0 through 1.1.2, and 1.2.0 through 1.2.1, an attacker with access to a secure storm cluster in some cases could execute arbitrary code as a different user.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-p8jx-x2vw-wm33",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-1331",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-1331"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p8jx-x2vw-wm33"
+                },
+                {
+                    "url": "http://storm.apache.org/2018/06/04/storm113-released.html"
+                },
+                {
+                    "url": "http://storm.apache.org/2018/06/04/storm122-released.html"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2018/07/10/4"
+                },
+                {
+                    "url": "http://www.securityfocus.com/bid/104732"
+                },
+                {
+                    "url": "http://www.securitytracker.com/id/1041273"
+                }
+            ],
+            "published_at": "2018-10-17T19:48:06Z",
+            "updated_at": "2024-04-19T19:46:41Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.2.0, < 1.2.2",
+                    "first_patched_version": {
+                        "identifier": "1.2.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.1.3",
+                    "first_patched_version": {
+                        "identifier": "1.1.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 1.1.3",
+            "first_patched_version": {
+                "identifier": "1.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/2",
+        "created_at": "2024-05-24T01:34:15Z",
+        "updated_at": "2024-05-24T01:34:15Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "manifest_path": "jvmpetrel/pom.xml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-x825-rjww-2245",
+            "cve_id": "CVE-2017-9799",
+            "summary": "Apache Storm it is possible for the owner of a topology to trick the supervisor to launch a worker as a different, non-root, user",
+            "description": "It was found that under some situations and configurations of Apache Storm 1.x before 1.0.4 and 1.1.x before 1.1.1, it is theoretically possible for the owner of a topology to trick the supervisor to launch a worker as a different, non-root, user. In the worst case this could lead to secure credentials of the other user being compromised.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-x825-rjww-2245",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2017-9799",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2017-9799"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-x825-rjww-2245"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/b9125bf507ed6f2ca6e85ba1a4b44e232aa70eeddfba2a9d8a954127@%3Cdev.storm.apache.org%3E"
+                },
+                {
+                    "url": "http://www.securityfocus.com/bid/100235"
+                },
+                {
+                    "url": "http://www.securitytracker.com/id/1039116"
+                }
+            ],
+            "published_at": "2018-10-17T18:30:01Z",
+            "updated_at": "2023-01-09T05:03:24Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "= 1.1.0",
+                    "first_patched_version": {
+                        "identifier": "1.1.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.storm:storm-core"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.0.0, < 1.0.4",
+                    "first_patched_version": {
+                        "identifier": "1.0.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.storm:storm-core"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 1.0.0, < 1.0.4",
+            "first_patched_version": {
+                "identifier": "1.0.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Petrel/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/Petrel/security/dependabot/1",
+        "created_at": "2024-05-24T01:34:15Z",
+        "updated_at": "2024-05-24T01:34:15Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]
