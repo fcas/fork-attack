@@ -1,0 +1,253 @@
+[
+    {
+        "number": 5,
+        "created_at": "2024-05-23T09:38:10Z",
+        "updated_at": "2024-05-23T09:38:13Z",
+        "url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/rasa/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-temporary-file",
+            "severity": "error",
+            "description": "Insecure temporary file",
+            "name": "py/insecure-temporary-file",
+            "tags": [
+                "external/cwe/cwe-377",
+                "security"
+            ],
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "d60a3f4c73fc8226eebf0f8378455b41f85dee2e",
+            "message": {
+                "text": "Call to deprecated function tempfile.mktemp may be insecure."
+            },
+            "location": {
+                "path": "tests/engine/training/test_fingerprinting.py",
+                "start_line": 89,
+                "end_line": 89,
+                "start_column": 16,
+                "end_column": 33
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/5/instances"
+    },
+    {
+        "number": 4,
+        "created_at": "2024-05-23T09:38:10Z",
+        "updated_at": "2024-05-23T09:38:13Z",
+        "url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/rasa/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "py/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "d60a3f4c73fc8226eebf0f8378455b41f85dee2e",
+            "message": {
+                "text": "Suspicious character range that overlaps with \\u2702-\\u27b0 in the same character class, and overlaps with \\ufffd-\\ufffd in the same character class."
+            },
+            "location": {
+                "path": "rasa/utils/io.py",
+                "start_line": 223,
+                "end_line": 223,
+                "start_column": 25,
+                "end_column": 29
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/4/instances"
+    },
+    {
+        "number": 3,
+        "created_at": "2024-05-23T09:38:10Z",
+        "updated_at": "2024-05-23T09:38:13Z",
+        "url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/rasa/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "py/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "d60a3f4c73fc8226eebf0f8378455b41f85dee2e",
+            "message": {
+                "text": "Suspicious character range that overlaps with \\ufffd-\\ufffd in the same character class."
+            },
+            "location": {
+                "path": "rasa/utils/io.py",
+                "start_line": 223,
+                "end_line": 223,
+                "start_column": 16,
+                "end_column": 20
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/3/instances"
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-23T09:38:10Z",
+        "updated_at": "2024-05-23T09:38:13Z",
+        "url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/rasa/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "py/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "d60a3f4c73fc8226eebf0f8378455b41f85dee2e",
+            "message": {
+                "text": "Suspicious character range that overlaps with \\ufffd-\\ufffd in the same character class."
+            },
+            "location": {
+                "path": "rasa/utils/io.py",
+                "start_line": 223,
+                "end_line": 223,
+                "start_column": 13,
+                "end_column": 17
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/2/instances"
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-23T09:38:10Z",
+        "updated_at": "2024-05-23T09:38:13Z",
+        "url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/rasa/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "py/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "d60a3f4c73fc8226eebf0f8378455b41f85dee2e",
+            "message": {
+                "text": "Suspicious character range that overlaps with \\ufffd-\\ufffd in the same character class."
+            },
+            "location": {
+                "path": "rasa/utils/io.py",
+                "start_line": 223,
+                "end_line": 223,
+                "start_column": 10,
+                "end_column": 14
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/rasa/code-scanning/alerts/1/instances"
+    }
+]

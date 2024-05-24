@@ -1,0 +1,1095 @@
+[
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "manifest_path": "lib/dev-requirements.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fj7x-q9j7-g6q6",
+            "cve_id": "CVE-2024-21503",
+            "summary": "Black vulnerable to Regular Expression Denial of Service (ReDoS)",
+            "description": "Versions of the package black before 24.3.0 are vulnerable to Regular Expression Denial of Service (ReDoS) via the lines_with_leading_tabs_expanded function in the strings.py file. An attacker could exploit this vulnerability by crafting a malicious input that causes a denial of service.\n\nExploiting this vulnerability is possible when running Black on untrusted input, or if you habitually put thousands of leading tab characters in your docstrings.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fj7x-q9j7-g6q6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21503",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21503"
+                },
+                {
+                    "url": "https://github.com/psf/black/commit/f00093672628d212b8965a8993cee8bedf5fe9b8"
+                },
+                {
+                    "url": "https://github.com/psf/black/releases/tag/24.3.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-PYTHON-BLACK-6256273"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/black/PYSEC-2024-48.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fj7x-q9j7-g6q6"
+                }
+            ],
+            "published_at": "2024-03-19T06:30:52Z",
+            "updated_at": "2024-03-20T15:24:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "black"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0, < 24.3.0",
+                    "first_patched_version": {
+                        "identifier": "24.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0, < 24.3.0",
+            "first_patched_version": {
+                "identifier": "24.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/11",
+        "created_at": "2024-05-24T01:34:12Z",
+        "updated_at": "2024-05-24T01:34:12Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3wc5-fcw2-2329",
+            "cve_id": "CVE-2024-28246",
+            "summary": "KaTeX missing normalization of the protocol in URLs allows bypassing forbidden protocols",
+            "description": "### Impact\n\nCode that uses KaTeX's `trust` option, specifically that provides a function to block-list certain URL protocols, can be fooled by URLs in malicious inputs that use uppercase characters in the protocol. In particular, this can allow for malicious input to generate `javascript:` links in the output, even if the `trust` function tries to forbid this protocol via `trust: (context) => context.protocol !== 'javascript'`.\n\n### Patches\nUpgrade to KaTeX v0.16.10 to remove this vulnerability.\n\n### Workarounds\n* Allow-list instead of block protocols in your `trust` function.\n* Manually lowercase `context.protocol` via `context.protocol.toLowerCase()` before attempting to check for certain protocols.\n* Avoid use of or turn off the `trust` option.\n\n\n### Details\nKaTeX did not normalize the `protocol` entry of the `context` object provided to a user-specified `trust`-function, so it could be a mix of lowercase and/or uppercase letters.\n\nIt is generally better to allow-list by protocol, in which case this would normally not be an issue. But in some cases, you might want to block-list, and the [KaTeX documentation](https://katex.org/docs/options.html) even provides such an example:\n\n> Allow all commands but forbid specific protocol: `trust: (context) => context.protocol !== 'file'`\n\nCurrently KaTeX internally sees `file:` and `File:` URLs as different protocols, so `context.protocol` can be `file` or `File`, so the above check does not suffice.  A simple workaround would be:\n\n> `trust: (context) => context.protocol.toLowerCase() !== 'file'`\n\nMost URL parsers normalize the scheme to lowercase. For example, [RFC3986](https://datatracker.ietf.org/doc/html/rfc3986#section-3.1) says:\n\n> Although schemes are case-insensitive, the canonical form is lowercase and documents that specify schemes must do so with lowercase letters. An implementation should accept uppercase letters as equivalent to lowercase in scheme names (e.g., allow \"HTTP\" as well as \"http\") for the sake of robustness but should only produce lowercase scheme names for consistency.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-3wc5-fcw2-2329",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28246",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/security/advisories/GHSA-3wc5-fcw2-2329"
+                },
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/commit/fc5af64183a3ceb9be9d1c23a275999a728593de"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28246"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3wc5-fcw2-2329"
+                }
+            ],
+            "published_at": "2024-03-25T19:38:37Z",
+            "updated_at": "2024-03-25T22:32:12Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "katex"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.11.0, < 0.16.10",
+                    "first_patched_version": {
+                        "identifier": "0.16.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:L",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-184",
+                    "name": "Incomplete List of Disallowed Inputs"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.11.0, < 0.16.10",
+            "first_patched_version": {
+                "identifier": "0.16.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/10",
+        "created_at": "2024-05-24T01:34:12Z",
+        "updated_at": "2024-05-24T01:34:12Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f98w-7cxr-ff2h",
+            "cve_id": "CVE-2024-28245",
+            "summary": "KaTeX's `\\includegraphics` does not escape filename",
+            "description": "### Impact\nKaTeX users who render untrusted mathematical expressions could encounter malicious input using `\\includegraphics` that runs arbitrary JavaScript, or generate invalid HTML.\n\n### Patches\nUpgrade to KaTeX v0.16.10 to remove this vulnerability.\n\n### Workarounds\n* Avoid use of or turn off the `trust` option, or set it to forbid `\\includegraphics` commands.\n* Forbid inputs containing the substring `\"\\\\includegraphics\"`.\n* Sanitize HTML output from KaTeX.\n\n### Details\n`\\includegraphics` did not properly quote its filename argument, allowing it to generate invalid or malicious HTML that runs scripts.\n\n### For more information\nIf you have any questions or comments about this advisory:\n\n* Open an issue or security advisory in the [KaTeX repository](https://github.com/KaTeX/KaTeX/)\n* Email us at katex-security@mit.edu",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-f98w-7cxr-ff2h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28245",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/security/advisories/GHSA-f98w-7cxr-ff2h"
+                },
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/commit/c5897fcd1f73da9612a53e6b5544f1d776e17770"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28245"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f98w-7cxr-ff2h"
+                }
+            ],
+            "published_at": "2024-03-25T19:38:34Z",
+            "updated_at": "2024-03-25T22:32:07Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "katex"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.11.0, < 0.16.10",
+                    "first_patched_version": {
+                        "identifier": "0.16.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                "score": 6.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-116",
+                    "name": "Improper Encoding or Escaping of Output"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.11.0, < 0.16.10",
+            "first_patched_version": {
+                "identifier": "0.16.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/9",
+        "created_at": "2024-05-24T01:34:12Z",
+        "updated_at": "2024-05-24T01:34:12Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cvr6-37gx-v8wc",
+            "cve_id": "CVE-2024-28244",
+            "summary": "KaTeX's maxExpand bypassed by Unicode sub/superscripts",
+            "description": "### Impact\nKaTeX users who render untrusted mathematical expressions could encounter malicious input using `\\def` or `\\newcommand` that causes a near-infinite loop, despite setting `maxExpand` to avoid such loops. This can be used as an availability attack, where e.g. a client rendering another user's KaTeX input will be unable to use the site due to memory overflow, tying up the main thread, or stack overflow.\n\n### Patches\nUpgrade to KaTeX v0.16.10 to remove this vulnerability.\n\n### Workarounds\nForbid inputs containing any of the characters `₊₋₌₍₎₀₁₂₃₄₅₆₇₈₉ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁺⁻⁼⁽⁾⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇᶜᵈᵉᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘʷˣʸᶻᵛᵝᵞᵟᵠᵡ` before passing them to KaTeX.\n(There is no easy workaround for the auto-render extension.)\n\n### Details\nKaTeX supports an option named `maxExpand` which aims to prevent infinitely recursive macros from consuming all available memory and/or triggering a stack overflow error. Unfortunately, [support for \"Unicode (sub|super)script characters\"](https://github.com/KaTeX/KaTeX/commit/d8fc35e6a97f8e561c723b93ad275cf5a7f3094a) allows an attacker to bypass this limit. Each sub/superscript group instantiated a separate Parser with its own limit on macro executions, without inheriting the current count of macro executions from its parent. This has been corrected in KaTeX v0.16.10.\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Open an issue or security advisory in the [KaTeX repository](https://github.com/KaTeX/KaTeX/)\n* Email us at [katex-security@mit.edu](mailto:katex-security@mit.edu)",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cvr6-37gx-v8wc",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28244",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/security/advisories/GHSA-cvr6-37gx-v8wc"
+                },
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/commit/085e21b5da05414efefa932570e7201a7c70e5b2"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28244"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cvr6-37gx-v8wc"
+                }
+            ],
+            "published_at": "2024-03-25T19:38:29Z",
+            "updated_at": "2024-03-25T22:32:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "katex"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.15.4, < 0.16.10",
+                    "first_patched_version": {
+                        "identifier": "0.16.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-606",
+                    "name": "Unchecked Input for Loop Condition"
+                },
+                {
+                    "cwe_id": "CWE-674",
+                    "name": "Uncontrolled Recursion"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.15.4, < 0.16.10",
+            "first_patched_version": {
+                "identifier": "0.16.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/8",
+        "created_at": "2024-05-24T01:34:12Z",
+        "updated_at": "2024-05-24T01:34:12Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-64fm-8hw2-v72w",
+            "cve_id": "CVE-2024-28243",
+            "summary": "KaTeX's maxExpand bypassed by `\\edef`",
+            "description": "### Impact\nKaTeX users who render untrusted mathematical expressions could encounter malicious input using `\\edef` that causes a near-infinite loop, despite setting `maxExpand` to avoid such loops. This can be used as an availability attack, where e.g. a client rendering another user's KaTeX input will be unable to use the site due to memory overflow, tying up the main thread, or stack overflow.\n\n### Patches\nUpgrade to KaTeX v0.16.10 to remove this vulnerability.\n\n### Workarounds\nForbid inputs containing the substring `\"\\\\edef\"` before passing them to KaTeX.\n(There is no easy workaround for the auto-render extension.)\n\n### Details\nKaTeX supports an option named `maxExpand` which prevents infinitely recursive macros from consuming all available memory and/or triggering a stack overflow error. However, what counted as an \"expansion\" is a single macro expanding to any number of tokens. The expand-and-define TeX command `\\edef` can be used to build up an exponential number of tokens using only a linear number of expansions according to this definition, e.g. by repeatedly doubling the previous definition. This has been corrected in KaTeX v0.16.10, where every expanded token in an `\\edef` counts as an expansion.\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Open an issue or security advisory in the [KaTeX repository](https://github.com/KaTeX/KaTeX/)\n* Email us at [katex-security@mit.edu](mailto:katex-security@mit.edu)",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-64fm-8hw2-v72w",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28243",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/security/advisories/GHSA-64fm-8hw2-v72w"
+                },
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/commit/e88b4c357f978b1bca8edfe3297f0aa309bcbe34"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28243"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-64fm-8hw2-v72w"
+                }
+            ],
+            "published_at": "2024-03-25T19:38:18Z",
+            "updated_at": "2024-03-25T22:31:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "katex"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.10.0-beta, < 0.16.10",
+                    "first_patched_version": {
+                        "identifier": "0.16.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-606",
+                    "name": "Unchecked Input for Loop Condition"
+                },
+                {
+                    "cwe_id": "CWE-674",
+                    "name": "Uncontrolled Recursion"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.10.0-beta, < 0.16.10",
+            "first_patched_version": {
+                "identifier": "0.16.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/7",
+        "created_at": "2024-05-24T01:34:11Z",
+        "updated_at": "2024-05-24T01:34:11Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "axios"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-wf5p-g6vw-rhxx",
+            "cve_id": "CVE-2023-45857",
+            "summary": "Axios Cross-Site Request Forgery Vulnerability",
+            "description": "An issue discovered in Axios 0.8.1 through 1.5.1 inadvertently reveals the confidential XSRF-TOKEN stored in cookies by including it in the HTTP header X-XSRF-TOKEN for every request made to any host allowing attackers to view sensitive information.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-wf5p-g6vw-rhxx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-45857",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-45857"
+                },
+                {
+                    "url": "https://github.com/axios/axios/issues/6006"
+                },
+                {
+                    "url": "https://github.com/axios/axios/issues/6022"
+                },
+                {
+                    "url": "https://github.com/axios/axios/pull/6028"
+                },
+                {
+                    "url": "https://github.com/axios/axios/commit/96ee232bd3ee4de2e657333d4d2191cd389e14d0"
+                },
+                {
+                    "url": "https://github.com/axios/axios/releases/tag/v1.6.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-AXIOS-6032459"
+                },
+                {
+                    "url": "https://github.com/axios/axios/pull/6091"
+                },
+                {
+                    "url": "https://github.com/axios/axios/commit/2755df562b9c194fba6d8b609a383443f6a6e967"
+                },
+                {
+                    "url": "https://github.com/axios/axios/releases/tag/v0.28.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx"
+                }
+            ],
+            "published_at": "2023-11-08T21:30:37Z",
+            "updated_at": "2024-02-20T20:02:28Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "axios"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.0.0, < 1.6.0",
+                    "first_patched_version": {
+                        "identifier": "1.6.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "axios"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.8.1, < 0.28.0",
+                    "first_patched_version": {
+                        "identifier": "0.28.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-352",
+                    "name": "Cross-Site Request Forgery (CSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "axios"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.8.1, < 0.28.0",
+            "first_patched_version": {
+                "identifier": "0.28.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/6",
+        "created_at": "2024-05-24T01:34:11Z",
+        "updated_at": "2024-05-24T01:34:11Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7fh5-64p2-3v2j",
+            "cve_id": "CVE-2023-44270",
+            "summary": "PostCSS line return parsing error",
+            "description": "An issue was discovered in PostCSS before 8.4.31. It affects linters using PostCSS to parse external Cascading Style Sheets (CSS). There may be `\\r` discrepancies, as demonstrated by `@font-face{ font:(\\r/*);}` in a rule.\n\nThis vulnerability affects linters using PostCSS to parse external untrusted CSS. An attacker can prepare CSS in such a way that it will contains parts parsed by PostCSS as a CSS comment. After processing by PostCSS, it will be included in the PostCSS output in CSS nodes (rules, properties) despite being originally included in a comment.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-7fh5-64p2-3v2j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-44270",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-44270"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/commit/58cc860b4c1707510c9cd1bc1fa30b423a9ad6c5"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/blob/main/lib/tokenize.js#L25"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/releases/tag/8.4.31"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/issues/2820"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7fh5-64p2-3v2j"
+                }
+            ],
+            "published_at": "2023-09-30T00:31:10Z",
+            "updated_at": "2023-11-05T05:05:37Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "postcss"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 8.4.31",
+                    "first_patched_version": {
+                        "identifier": "8.4.31"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                },
+                {
+                    "cwe_id": "CWE-144",
+                    "name": "Improper Neutralization of Line Delimiters"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 8.4.31",
+            "first_patched_version": {
+                "identifier": "8.4.31"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/5",
+        "created_at": "2024-05-24T01:34:11Z",
+        "updated_at": "2024-05-24T01:34:11Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "@cypress/request"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p8p7-x288-28g6",
+            "cve_id": "CVE-2023-28155",
+            "summary": "Server-Side Request Forgery in Request",
+            "description": "The `request` package through 2.88.2 for Node.js and the `@cypress/request` package prior to 3.0.0 allow a bypass of SSRF mitigations via an attacker-controller server that does a cross-protocol redirect (HTTP to HTTPS, or HTTPS to HTTP).\n\nNOTE: The `request` package is no longer supported by the maintainer.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-p8p7-x288-28g6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-28155",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28155"
+                },
+                {
+                    "url": "https://github.com/request/request/issues/3442"
+                },
+                {
+                    "url": "https://github.com/request/request/pull/3444"
+                },
+                {
+                    "url": "https://doyensec.com/resources/Doyensec_Advisory_RequestSSRF_Q12023.pdf"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/pull/2500"
+                },
+                {
+                    "url": "https://github.com/cypress-io/request/blob/master/lib/redirect.js#L116"
+                },
+                {
+                    "url": "https://github.com/request/request/blob/master/lib/redirect.js#L111"
+                },
+                {
+                    "url": "https://github.com/cypress-io/request/pull/28"
+                },
+                {
+                    "url": "https://github.com/cypress-io/request/commit/c5bcf21d40fb61feaff21a0e5a2b3934a440024f"
+                },
+                {
+                    "url": "https://github.com/cypress-io/request/releases/tag/v3.0.0"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230413-0007"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p8p7-x288-28g6"
+                }
+            ],
+            "published_at": "2023-03-16T15:30:19Z",
+            "updated_at": "2024-03-21T17:47:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "request"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 2.88.2",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "@cypress/request"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 2.88.12",
+                    "first_patched_version": {
+                        "identifier": "3.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-918",
+                    "name": "Server-Side Request Forgery (SSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "@cypress/request"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 2.88.12",
+            "first_patched_version": {
+                "identifier": "3.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/4",
+        "created_at": "2024-05-24T01:34:11Z",
+        "updated_at": "2024-05-24T01:34:11Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "tough-cookie"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-72xf-g2v4-qvf3",
+            "cve_id": "CVE-2023-26136",
+            "summary": "tough-cookie Prototype Pollution vulnerability",
+            "description": "Versions of the package tough-cookie before 4.1.3 are vulnerable to Prototype Pollution due to improper handling of Cookies when using CookieJar in `rejectPublicSuffixes=false` mode. This issue arises from the manner in which the objects are initialized.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-72xf-g2v4-qvf3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-26136",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-26136"
+                },
+                {
+                    "url": "https://github.com/salesforce/tough-cookie/issues/282"
+                },
+                {
+                    "url": "https://github.com/salesforce/tough-cookie/commit/12d474791bb856004e858fdb1c47b7608d09cf6e"
+                },
+                {
+                    "url": "https://github.com/salesforce/tough-cookie/releases/tag/v4.1.3"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-TOUGHCOOKIE-5672873"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/07/msg00010.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3HUE6ZR5SL73KHL7XUPAOEL6SB7HUDT2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6PVVPNSAGSDS63HQ74PJ7MZ3MU5IYNVZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-72xf-g2v4-qvf3"
+                }
+            ],
+            "published_at": "2023-07-01T06:30:16Z",
+            "updated_at": "2024-03-07T05:09:24Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "tough-cookie"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.1.3",
+                    "first_patched_version": {
+                        "identifier": "4.1.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1321",
+                    "name": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "tough-cookie"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.1.3",
+            "first_patched_version": {
+                "identifier": "4.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/3",
+        "created_at": "2024-05-24T01:34:11Z",
+        "updated_at": "2024-05-24T01:34:11Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "d3-color"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-36jr-mh4h-2g58",
+            "cve_id": null,
+            "summary": "d3-color vulnerable to ReDoS",
+            "description": "The d3-color module provides representations for various color spaces in the browser. Versions prior to 3.1.0 are vulnerable to a Regular expression Denial of Service. This issue has been patched in version 3.1.0. There are no known workarounds.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-36jr-mh4h-2g58",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/d3/d3-color/pull/100"
+                },
+                {
+                    "url": "https://github.com/d3/d3-color/releases/tag/v3.1.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-D3COLOR-1076592"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-36jr-mh4h-2g58"
+                }
+            ],
+            "published_at": "2022-09-29T14:12:55Z",
+            "updated_at": "2023-01-13T05:04:43Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "d3-color"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.1.0",
+                    "first_patched_version": {
+                        "identifier": "3.1.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "d3-color"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.1.0",
+            "first_patched_version": {
+                "identifier": "3.1.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/2",
+        "created_at": "2024-05-24T01:34:11Z",
+        "updated_at": "2024-05-24T01:34:11Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nth-check"
+            },
+            "manifest_path": "frontend/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rp65-9cf3-cjxr",
+            "cve_id": "CVE-2021-3803",
+            "summary": "Inefficient Regular Expression Complexity in nth-check",
+            "description": "There is a Regular Expression Denial of Service (ReDoS) vulnerability in nth-check that causes a denial of service when parsing crafted invalid CSS nth-checks.\n\nThe ReDoS vulnerabilities of the regex are mainly due to the sub-pattern `\\s*(?:([+-]?)\\s*(\\d+))?` with quantified overlapping adjacency and can be exploited with the following code.\n\n**Proof of Concept**\n```js\n// PoC.js\nvar nthCheck = require(\"nth-check\")\nfor(var i = 1; i <= 50000; i++) {\n    var time = Date.now();\n    var attack_str = '2n' + ' '.repeat(i*10000)+\"!\";\n    try {\n        nthCheck.parse(attack_str) \n    }\n    catch(err) {\n        var time_cost = Date.now() - time;\n        console.log(\"attack_str.length: \" + attack_str.length + \": \" + time_cost+\" ms\")\n    }\n}\n```\n\n**The Output**\n```\nattack_str.length: 10003: 174 ms\nattack_str.length: 20003: 1427 ms\nattack_str.length: 30003: 2602 ms\nattack_str.length: 40003: 4378 ms\nattack_str.length: 50003: 7473 ms\n```",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-rp65-9cf3-cjxr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-3803",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-3803"
+                },
+                {
+                    "url": "https://github.com/fb55/nth-check/commit/9894c1d2010870c351f66c6f6efcf656e26bb726"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/8cf8cc06-d2cf-4b4e-b42c-99fafb0b04d0"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/05/msg00023.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rp65-9cf3-cjxr"
+                }
+            ],
+            "published_at": "2021-09-20T20:47:31Z",
+            "updated_at": "2023-11-29T22:11:25Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "nth-check"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 2.0.1",
+                    "first_patched_version": {
+                        "identifier": "2.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nth-check"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 2.0.1",
+            "first_patched_version": {
+                "identifier": "2.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/streamlit/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/streamlit/security/dependabot/1",
+        "created_at": "2024-05-24T01:34:11Z",
+        "updated_at": "2024-05-24T01:34:11Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

@@ -1,0 +1,88 @@
+[
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "manifest_path": "docs/source/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jjw5-xxj6-pcv5",
+            "cve_id": "CVE-2020-13092",
+            "summary": "scikit-learn Deserialization of Untrusted Data",
+            "description": "scikit-learn (aka sklearn) through 0.23.0 can unserialize and execute commands from an untrusted file that is passed to the `joblib.load()` function, if `__reduce__` makes an `os.system call`.\nNOTE: third parties dispute this issue because the joblib.load() function is documented as unsafe and it is the user's responsibility to use the function in a secure manner.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-jjw5-xxj6-pcv5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-13092",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-13092"
+                },
+                {
+                    "url": "https://github.com/0FuzzingQ/vuln/blob/master/sklearn%20unserialize.md"
+                },
+                {
+                    "url": "https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jjw5-xxj6-pcv5"
+                }
+            ],
+            "published_at": "2022-05-24T17:17:59Z",
+            "updated_at": "2024-04-22T22:55:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "scikit-learn"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 0.23.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 0.23.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/mlens/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/mlens/security/dependabot/1",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

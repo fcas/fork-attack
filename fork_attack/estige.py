@@ -40,36 +40,41 @@ def vulnerability_analysis(repo_name):
     code_analysis_alerts_url = f"https://api.github.com/repos/fcas/{repo_name}/code-scanning/alerts"
     dependabot_alerts_url = f"https://api.github.com/repos/fcas/{repo_name}/dependabot/alerts"
 
-    payload = {}
+    code_analysis_data = extract_data(code_analysis_alerts_url, {}, repo_name)
+    dependabot_data = extract_data(dependabot_alerts_url, {}, repo_name)
 
-    code_analysis_response = requests.request("GET", code_analysis_alerts_url, headers=headers, data=payload).json()
-    dependabot_alerts_response = requests.request("GET", dependabot_alerts_url, headers=headers, data=payload).json()
-    if isinstance(code_analysis_response, list) and code_analysis_response:
-        d = pd.json_normalize(code_analysis_response)
+    dump_data(code_analysis_data, dependabot_data, repo_name)
+
+
+def extract_data(url, payload, repo_name):
+    response = requests.request("GET", url, headers=headers, data=payload)
+    data = response.json()
+    while 'next' in response.links.keys():
+        response = requests.get(response.links['next']['url'], headers=headers, data=payload)
+        data.extend(response.json())
+    if isinstance(data, list) and data:
+        d = pd.json_normalize(data)
         d["repo_name"] = repo_name
-        global code_analysis_result
-        code_analysis_result = pd.concat([code_analysis_result, d])
-    elif isinstance(code_analysis_response, dict):
-        logger.warning(f"{repo_name}:{code_analysis_response}")
+        global code_analysis_result, dependabot_result
+        if "dependabot" in url:
+            dependabot_result = pd.concat([dependabot_result, d])
+        else:
+            code_analysis_result = pd.concat([code_analysis_result, d])
+    elif isinstance(response, dict):
+        logger.warning(f"{repo_name}:{response}")
+    return data
 
-    if isinstance(dependabot_alerts_response, list) and dependabot_alerts_response:
-        d = pd.json_normalize(dependabot_alerts_response)
-        d["repo_name"] = repo_name
-        global dependabot_result
-        dependabot_result = pd.concat([dependabot_result, d])
-    elif isinstance(dependabot_alerts_response, dict):
-        logger.warning(f"{repo_name}:{dependabot_alerts_response}")
 
+def dump_data(code_analysis_data, dependabot_data, repo_name):
     now = date.today()
-
     code_analysis_filename = f'{now}/{repo_name}_code_analysis.json'
     dependabot_alerts_filename = f'{now}/{repo_name}_dependabot_alerts.json'
     os.makedirs(os.path.dirname(code_analysis_filename), exist_ok=True)
     os.makedirs(os.path.dirname(dependabot_alerts_filename), exist_ok=True)
     with open(code_analysis_filename, 'w', encoding='utf-8') as f:
-        json.dump(code_analysis_response, f, ensure_ascii=False, indent=4)
+        json.dump(code_analysis_data, f, ensure_ascii=False, indent=4)
     with open(dependabot_alerts_filename, 'w', encoding='utf-8') as f:
-        json.dump(dependabot_alerts_response, f, ensure_ascii=False, indent=4)
+        json.dump(dependabot_data, f, ensure_ascii=False, indent=4)
 
 
 def add_ymls(local_repo_path, branch):

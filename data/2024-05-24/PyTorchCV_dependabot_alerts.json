@@ -1,0 +1,505 @@
+[
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "gunicorn"
+            },
+            "manifest_path": "imagesite/install/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-w3h3-4rj7-4ph4",
+            "cve_id": "CVE-2024-1135",
+            "summary": "Request smuggling leading to endpoint restriction bypass in Gunicorn",
+            "description": "Gunicorn fails to properly validate Transfer-Encoding headers, leading to HTTP Request Smuggling (HRS) vulnerabilities. By crafting requests with conflicting Transfer-Encoding headers, attackers can bypass security restrictions and access restricted endpoints. This issue is due to Gunicorn's handling of Transfer-Encoding headers, where it incorrectly processes requests with multiple, conflicting Transfer-Encoding headers, treating them as chunked regardless of the final encoding specified. This vulnerability has been shown to allow access to endpoints restricted by gunicorn. This issue has been addressed in version 22.0.0.\n\nTo be affected users must have a network path which does not filter out invalid requests. These users are advised to block access to restricted endpoints via a firewall or other mechanism if they are unable to update.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-w3h3-4rj7-4ph4",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-1135",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-1135"
+                },
+                {
+                    "url": "https://huntr.com/bounties/22158e34-cfd5-41ad-97e0-a780773d96c1"
+                },
+                {
+                    "url": "https://github.com/benoitc/gunicorn/commit/ac29c9b0a758d21f1e0fb3b3457239e523fa9f1d"
+                },
+                {
+                    "url": "https://github.com/benoitc/gunicorn/releases/tag/22.0.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-w3h3-4rj7-4ph4"
+                }
+            ],
+            "published_at": "2024-04-16T00:30:32Z",
+            "updated_at": "2024-05-24T19:21:23Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "gunicorn"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 22.0.0",
+                    "first_patched_version": {
+                        "identifier": "22.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
+                "score": 8.2
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "gunicorn"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 22.0.0",
+            "first_patched_version": {
+                "identifier": "22.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/PyTorchCV/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/PyTorchCV/security/dependabot/5",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "flask"
+            },
+            "manifest_path": "imagesite/install/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5wv5-4vpf-pj6m",
+            "cve_id": "CVE-2019-1010083",
+            "summary": "Pallets Project Flask is vulnerable to Denial of Service via Unexpected memory usage",
+            "description": "The Pallets Project Flask before 1.0 is affected by unexpected memory usage. The impact is denial of service. The attack vector is crafted encoded JSON data. The fixed version is 1. NOTE this may overlap CVE-2018-1000656.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5wv5-4vpf-pj6m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-1010083",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-1010083"
+                },
+                {
+                    "url": "https://www.palletsprojects.com/blog/flask-1-0-released/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5wv5-4vpf-pj6m"
+                }
+            ],
+            "published_at": "2019-07-19T16:12:46Z",
+            "updated_at": "2023-08-14T21:11:53Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "flask"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.0",
+                    "first_patched_version": {
+                        "identifier": "1.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "flask"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 1.0",
+            "first_patched_version": {
+                "identifier": "1.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/PyTorchCV/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/PyTorchCV/security/dependabot/4",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "flask"
+            },
+            "manifest_path": "imagesite/install/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-m2qf-hxjv-5gpq",
+            "cve_id": "CVE-2023-30861",
+            "summary": "Flask vulnerable to possible disclosure of permanent session cookie due to missing Vary: Cookie header",
+            "description": "When all of the following conditions are met, a response containing data intended for one client may be cached and subsequently sent by a proxy to other clients. If the proxy also caches `Set-Cookie` headers, it may send one client's `session` cookie to other clients. The severity depends on the application's use of the session, and the proxy's behavior regarding cookies. The risk depends on _all_ these conditions being met.\n\n1. The application must be hosted behind a caching proxy that does not strip cookies or ignore responses with cookies.\n2. The application sets [`session.permanent = True`](https://flask.palletsprojects.com/en/2.3.x/api/#flask.session.permanent).\n2. The application does not access or modify the session at any point during a request.\n4. [`SESSION_REFRESH_EACH_REQUEST`](https://flask.palletsprojects.com/en/2.3.x/config/#SESSION_REFRESH_EACH_REQUEST) is enabled (the default).\n5. The application does not set a `Cache-Control` header to indicate that a page is private or should not be cached.\n\nThis happens because vulnerable versions of Flask only set the `Vary: Cookie` header when the session is accessed or modified, not when it is refreshed (re-sent to update the expiration) without being accessed or modified.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-m2qf-hxjv-5gpq",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-30861",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/flask/security/advisories/GHSA-m2qf-hxjv-5gpq"
+                },
+                {
+                    "url": "https://github.com/pallets/flask/commit/70f906c51ce49c485f1d355703e9cc3386b1cc2b"
+                },
+                {
+                    "url": "https://github.com/pallets/flask/releases/tag/2.3.2"
+                },
+                {
+                    "url": "https://github.com/pallets/flask/commit/afd63b16170b7c047f5758eb910c416511e9c965"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-30861"
+                },
+                {
+                    "url": "https://github.com/pallets/flask/releases/tag/2.2.5"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/flask/PYSEC-2023-62.yaml"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5442"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230818-0006/"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/08/msg00024.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-m2qf-hxjv-5gpq"
+                }
+            ],
+            "published_at": "2023-05-01T19:22:20Z",
+            "updated_at": "2023-11-06T05:03:38Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "flask"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.3.0, < 2.3.2",
+                    "first_patched_version": {
+                        "identifier": "2.3.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "flask"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 2.2.5",
+                    "first_patched_version": {
+                        "identifier": "2.2.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-539",
+                    "name": "Use of Persistent Cookies Containing Sensitive Information"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "flask"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 2.2.5",
+            "first_patched_version": {
+                "identifier": "2.2.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/PyTorchCV/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/PyTorchCV/security/dependabot/3",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "flask"
+            },
+            "manifest_path": "imagesite/install/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-562c-5r94-xh97",
+            "cve_id": "CVE-2018-1000656",
+            "summary": "Flask is vulnerable to Denial of Service via incorrect encoding of JSON data",
+            "description": "The Pallets Project flask version Before 0.12.3 contains a CWE-20: Improper Input Validation vulnerability in flask that can result in Large amount of memory usage possibly leading to denial of service. This attack appear to be exploitable via Attacker provides JSON data in incorrect encoding. This vulnerability appears to have been fixed in 0.12.3.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-562c-5r94-xh97",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-1000656",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-1000656"
+                },
+                {
+                    "url": "https://github.com/pallets/flask/pull/2691"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-562c-5r94-xh97"
+                },
+                {
+                    "url": "https://github.com/pallets/flask/releases/tag/0.12.3"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2019/08/msg00025.html"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20190221-0001/"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4378-1/"
+                },
+                {
+                    "url": "https://github.com/pallets/flask/commit/b178e89e4456e777b1a7ac6d7199052d0dfdbbbe"
+                }
+            ],
+            "published_at": "2018-08-23T19:10:40Z",
+            "updated_at": "2023-09-05T20:46:24Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "flask"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.12.3",
+                    "first_patched_version": {
+                        "identifier": "0.12.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "flask"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.12.3",
+            "first_patched_version": {
+                "identifier": "0.12.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/PyTorchCV/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/PyTorchCV/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "gunicorn"
+            },
+            "manifest_path": "imagesite/install/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-32pc-xphx-q4f6",
+            "cve_id": "CVE-2018-1000164",
+            "summary": "Gunicorn contains Improper Neutralization of CRLF sequences in HTTP headers",
+            "description": "gunicorn version 19.4.5 contains a CWE-113: Improper Neutralization of CRLF Sequences in HTTP Headers vulnerability in \"process_headers\" function in \"gunicorn/http/wsgi.py\" that can result in an attacker causing the server to return arbitrary HTTP headers. This vulnerability appears to have been fixed in 19.5.0.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-32pc-xphx-q4f6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-1000164",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-1000164"
+                },
+                {
+                    "url": "https://github.com/benoitc/gunicorn/issues/1227"
+                },
+                {
+                    "url": "https://epadillas.github.io/2018/04/02/http-header-splitting-in-gunicorn-19.4.5"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-32pc-xphx-q4f6"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2018/04/msg00022.html"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/4022-1/"
+                },
+                {
+                    "url": "https://www.debian.org/security/2018/dsa-4186"
+                }
+            ],
+            "published_at": "2018-07-12T20:30:49Z",
+            "updated_at": "2023-01-09T05:02:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "gunicorn"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 19.5.0",
+                    "first_patched_version": {
+                        "identifier": "19.5.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-93",
+                    "name": "Improper Neutralization of CRLF Sequences ('CRLF Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "gunicorn"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 19.5.0",
+            "first_patched_version": {
+                "identifier": "19.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/PyTorchCV/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/PyTorchCV/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

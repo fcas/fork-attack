@@ -1,0 +1,51 @@
+[
+    {
+        "number": 1,
+        "created_at": "2024-05-23T09:33:01Z",
+        "updated_at": "2024-05-23T09:33:02Z",
+        "url": "https://api.github.com/repos/fcas/shogun/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/shogun/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-temporary-file",
+            "severity": "error",
+            "description": "Insecure temporary file",
+            "name": "py/insecure-temporary-file",
+            "tags": [
+                "external/cwe/cwe-377",
+                "security"
+            ],
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/develop",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "e3c1824a9a0f9130f2e010ff570d2faee984ce8f",
+            "message": {
+                "text": "Call to deprecated function os.tmpnam may be insecure."
+            },
+            "location": {
+                "path": "scripts/count_git_changes.py",
+                "start_line": 13,
+                "end_line": 13,
+                "start_column": 9,
+                "end_column": 20
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/shogun/code-scanning/alerts/1/instances"
+    }
+]

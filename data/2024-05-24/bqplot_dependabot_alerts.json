@@ -1,0 +1,1596 @@
+[
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "sanitize-html"
+            },
+            "manifest_path": "ui-tests/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rm97-x556-q36h",
+            "cve_id": "CVE-2024-21501",
+            "summary": "sanitize-html Information Exposure vulnerability",
+            "description": "Versions of the package sanitize-html before 2.12.1 are vulnerable to Information Exposure when used on the backend and with the style attribute allowed, allowing enumeration of files in the system (including project dependencies). An attacker could exploit this vulnerability to gather details about the file system structure and dependencies of the targeted server.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-rm97-x556-q36h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21501",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21501"
+                },
+                {
+                    "url": "https://github.com/apostrophecms/sanitize-html/pull/650"
+                },
+                {
+                    "url": "https://github.com/apostrophecms/sanitize-html/commit/c5dbdf77fe8b836d3bf4554ea39edb45281ec0b4"
+                },
+                {
+                    "url": "https://gist.github.com/Slonser/8b4d061abe6ee1b2e10c7242987674cf"
+                },
+                {
+                    "url": "https://github.com/apostrophecms/apostrophe/discussions/4436"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-SANITIZEHTML-6256334"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-6276557"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rm97-x556-q36h"
+                }
+            ],
+            "published_at": "2024-02-24T06:30:17Z",
+            "updated_at": "2024-03-06T20:05:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "sanitize-html"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.12.1",
+                    "first_patched_version": {
+                        "identifier": "2.12.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "sanitize-html"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.12.1",
+            "first_patched_version": {
+                "identifier": "2.12.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/15",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "tar"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f5x3-32g6-xq36",
+            "cve_id": "CVE-2024-28863",
+            "summary": "Denial of service while parsing a tar file due to lack of folders count validation",
+            "description": "## Description: \nDuring some analysis today on npm's `node-tar` package I came across the folder creation process, Basicly if you provide node-tar with a path like this `./a/b/c/foo.txt` it would create every folder and sub-folder here a, b and c until it reaches the last folder to create `foo.txt`, In-this case I noticed that there's no validation at all on the amount of folders being created, that said we're actually able to CPU and memory consume the system running node-tar and even crash the nodejs client within few seconds of running it using a path with too many sub-folders inside\n\n## Steps To Reproduce:\nYou can reproduce this issue by downloading the tar file I provided in the resources and using node-tar to extract it, you should get the same behavior as the video\n\n## Proof Of Concept:\nHere's a [video](https://hackerone-us-west-2-production-attachments.s3.us-west-2.amazonaws.com/3i7uojw8s52psar6pg8zkdo4h9io?response-content-disposition=attachment%3B%20filename%3D%22tar-dos-poc.webm%22%3B%20filename%2A%3DUTF-8%27%27tar-dos-poc.webm&response-content-type=video%2Fwebm&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQGK6FURQSWWGDXHA%2F20240312%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240312T080103Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDcaCXVzLXdlc3QtMiJHMEUCID3xYDc6emXVPOg8iVR5dVk0u3gguTPIDJ0OIE%2BKxj17AiEAi%2BGiay1gGMWhH%2F031fvMYnSsa8U7CnpZpxvFAYqNRwgqsQUIQBADGgwwMTM2MTkyNzQ4NDkiDAaj6OgUL3gg4hhLLCqOBUUrOgWSqaK%2FmxN6nKRvB4Who3LIyzswFKm9LV94GiSVFP3zXYA480voCmAHTg7eBL7%2BrYgV2RtXbhF4aCFMCN3qu7GeXkIdH7xwVMi9zXHkekviSKZ%2FsZtVVjn7RFqOCKhJl%2FCoiLQJuDuju%2FtfdTGZbEbGsPgKHoILYbRp81K51zeRL21okjsOehmypkZzq%2BoGrXIX0ynPOKujxw27uqdF4T%2BF9ynodq01vGgwgVBEjHojc4OKOfr1oW5b%2FtGVV59%2BOBVI1hqIKHRG0Ed4SWmp%2BLd1hazGuZPvp52szmegnOj5qr3ubppnKL242bX%2FuAnQKzKK0HpwolqXjsuEeFeM85lxhqHV%2B1BJqaqSHHDa0HUMLZistMRshRlntuchcFQCR6HBa2c8PSnhpVC31zMzvYMfKsI12h4HB6l%2FudrmNrvmH4LmNpi4dZFcio21DzKj%2FRjWmxjH7l8egDyG%2FIgPMY6Ls4IiN7aR1jijYTrBCgPUUHets3BFvqLzHtPFnG3B7%2FYRPnhCLu%2FgzvKN3F8l38KqeTNMHJaxkuhCvEjpFB2SJbi2QZqZZbLj3xASqXoogzbsyPp0Tzp0tH7EKDhPA7H6wwiZukXfFhhlYzP8on9fO2Ajz%2F%2BTDkDjbfWw4KNJ0cFeDsGrUspqQZb5TAKlUge7iOZEc2TZ5uagatSy9Mg08E4nImBSE5QUHDc7Daya1gyqrETMDZBBUHH2RFkGA9qMpEtNrtJ9G%2BPedz%2FpPY1hh9OCp9Pg1BrX97l3SfVzlAMRfNibhywq6qnE35rVnZi%2BEQ1UgBjs9jD%2FQrW49%2FaD0oUDojVeuFFryzRnQxDbKtYgonRcItTvLT5Y0xaK9P0u6H1197%2FMk3XxmjD9%2Fb%2BvBjqxAQWWkKiIxpC1oHEWK9Jt8UdJ39xszDBGpBqjB6Tvt5ePAXSyX8np%2FrBi%2BAPx06O0%2Ba7pU4NmH800EVXxxhgfj9nMw3CeoUIdxorVKtU2Mxw%2FLaAiPgxPS4rqkt65NF7eQYfegcSYDTm2Z%2BHPbz9HfCaVZ28Zqeko6sR%2F29ML4bguqVvHAM4mWPLNDXH33mjG%2BuzLi8e1BF7tNveg2X9G%2FRdcMkojwKYbu6xN3M6aX2alQg%3D%3D&X-Amz-SignedHeaders=host&X-Amz-Signature=1e8235d885f1d61529b7d6b23ea3a0780c300c91d86e925dd8310d5b661ddbe2) show-casing the exploit: \n\n## Impact\n\nDenial of service by crashing the nodejs client when attempting to parse a tar archive, make it run out of heap memory and consuming server CPU and memory resources\n\n## Report resources\n[payload.txt](https://hackerone-us-west-2-production-attachments.s3.us-west-2.amazonaws.com/1e83ayb5dd3350fvj3gst0mqixwk?response-content-disposition=attachment%3B%20filename%3D%22payload.txt%22%3B%20filename%2A%3DUTF-8%27%27payload.txt&response-content-type=text%2Fplain&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQGK6FURQSWWGDXHA%2F20240312%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240312T080103Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDcaCXVzLXdlc3QtMiJHMEUCID3xYDc6emXVPOg8iVR5dVk0u3gguTPIDJ0OIE%2BKxj17AiEAi%2BGiay1gGMWhH%2F031fvMYnSsa8U7CnpZpxvFAYqNRwgqsQUIQBADGgwwMTM2MTkyNzQ4NDkiDAaj6OgUL3gg4hhLLCqOBUUrOgWSqaK%2FmxN6nKRvB4Who3LIyzswFKm9LV94GiSVFP3zXYA480voCmAHTg7eBL7%2BrYgV2RtXbhF4aCFMCN3qu7GeXkIdH7xwVMi9zXHkekviSKZ%2FsZtVVjn7RFqOCKhJl%2FCoiLQJuDuju%2FtfdTGZbEbGsPgKHoILYbRp81K51zeRL21okjsOehmypkZzq%2BoGrXIX0ynPOKujxw27uqdF4T%2BF9ynodq01vGgwgVBEjHojc4OKOfr1oW5b%2FtGVV59%2BOBVI1hqIKHRG0Ed4SWmp%2BLd1hazGuZPvp52szmegnOj5qr3ubppnKL242bX%2FuAnQKzKK0HpwolqXjsuEeFeM85lxhqHV%2B1BJqaqSHHDa0HUMLZistMRshRlntuchcFQCR6HBa2c8PSnhpVC31zMzvYMfKsI12h4HB6l%2FudrmNrvmH4LmNpi4dZFcio21DzKj%2FRjWmxjH7l8egDyG%2FIgPMY6Ls4IiN7aR1jijYTrBCgPUUHets3BFvqLzHtPFnG3B7%2FYRPnhCLu%2FgzvKN3F8l38KqeTNMHJaxkuhCvEjpFB2SJbi2QZqZZbLj3xASqXoogzbsyPp0Tzp0tH7EKDhPA7H6wwiZukXfFhhlYzP8on9fO2Ajz%2F%2BTDkDjbfWw4KNJ0cFeDsGrUspqQZb5TAKlUge7iOZEc2TZ5uagatSy9Mg08E4nImBSE5QUHDc7Daya1gyqrETMDZBBUHH2RFkGA9qMpEtNrtJ9G%2BPedz%2FpPY1hh9OCp9Pg1BrX97l3SfVzlAMRfNibhywq6qnE35rVnZi%2BEQ1UgBjs9jD%2FQrW49%2FaD0oUDojVeuFFryzRnQxDbKtYgonRcItTvLT5Y0xaK9P0u6H1197%2FMk3XxmjD9%2Fb%2BvBjqxAQWWkKiIxpC1oHEWK9Jt8UdJ39xszDBGpBqjB6Tvt5ePAXSyX8np%2FrBi%2BAPx06O0%2Ba7pU4NmH800EVXxxhgfj9nMw3CeoUIdxorVKtU2Mxw%2FLaAiPgxPS4rqkt65NF7eQYfegcSYDTm2Z%2BHPbz9HfCaVZ28Zqeko6sR%2F29ML4bguqVvHAM4mWPLNDXH33mjG%2BuzLi8e1BF7tNveg2X9G%2FRdcMkojwKYbu6xN3M6aX2alQg%3D%3D&X-Amz-SignedHeaders=host&X-Amz-Signature=bad9fe731f05a63a950f99828125653a8c1254750fe0ca7be882e89ecdd449ae)\n[archeive.tar.gz](https://hackerone-us-west-2-production-attachments.s3.us-west-2.amazonaws.com/ymkuh4xnfdcf1soeyi7jc2x4yt2i?response-content-disposition=attachment%3B%20filename%3D%22archive.tar.gz%22%3B%20filename%2A%3DUTF-8%27%27archive.tar.gz&response-content-type=application%2Fx-tar&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQGK6FURQSWWGDXHA%2F20240312%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240312T080103Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDcaCXVzLXdlc3QtMiJHMEUCID3xYDc6emXVPOg8iVR5dVk0u3gguTPIDJ0OIE%2BKxj17AiEAi%2BGiay1gGMWhH%2F031fvMYnSsa8U7CnpZpxvFAYqNRwgqsQUIQBADGgwwMTM2MTkyNzQ4NDkiDAaj6OgUL3gg4hhLLCqOBUUrOgWSqaK%2FmxN6nKRvB4Who3LIyzswFKm9LV94GiSVFP3zXYA480voCmAHTg7eBL7%2BrYgV2RtXbhF4aCFMCN3qu7GeXkIdH7xwVMi9zXHkekviSKZ%2FsZtVVjn7RFqOCKhJl%2FCoiLQJuDuju%2FtfdTGZbEbGsPgKHoILYbRp81K51zeRL21okjsOehmypkZzq%2BoGrXIX0ynPOKujxw27uqdF4T%2BF9ynodq01vGgwgVBEjHojc4OKOfr1oW5b%2FtGVV59%2BOBVI1hqIKHRG0Ed4SWmp%2BLd1hazGuZPvp52szmegnOj5qr3ubppnKL242bX%2FuAnQKzKK0HpwolqXjsuEeFeM85lxhqHV%2B1BJqaqSHHDa0HUMLZistMRshRlntuchcFQCR6HBa2c8PSnhpVC31zMzvYMfKsI12h4HB6l%2FudrmNrvmH4LmNpi4dZFcio21DzKj%2FRjWmxjH7l8egDyG%2FIgPMY6Ls4IiN7aR1jijYTrBCgPUUHets3BFvqLzHtPFnG3B7%2FYRPnhCLu%2FgzvKN3F8l38KqeTNMHJaxkuhCvEjpFB2SJbi2QZqZZbLj3xASqXoogzbsyPp0Tzp0tH7EKDhPA7H6wwiZukXfFhhlYzP8on9fO2Ajz%2F%2BTDkDjbfWw4KNJ0cFeDsGrUspqQZb5TAKlUge7iOZEc2TZ5uagatSy9Mg08E4nImBSE5QUHDc7Daya1gyqrETMDZBBUHH2RFkGA9qMpEtNrtJ9G%2BPedz%2FpPY1hh9OCp9Pg1BrX97l3SfVzlAMRfNibhywq6qnE35rVnZi%2BEQ1UgBjs9jD%2FQrW49%2FaD0oUDojVeuFFryzRnQxDbKtYgonRcItTvLT5Y0xaK9P0u6H1197%2FMk3XxmjD9%2Fb%2BvBjqxAQWWkKiIxpC1oHEWK9Jt8UdJ39xszDBGpBqjB6Tvt5ePAXSyX8np%2FrBi%2BAPx06O0%2Ba7pU4NmH800EVXxxhgfj9nMw3CeoUIdxorVKtU2Mxw%2FLaAiPgxPS4rqkt65NF7eQYfegcSYDTm2Z%2BHPbz9HfCaVZ28Zqeko6sR%2F29ML4bguqVvHAM4mWPLNDXH33mjG%2BuzLi8e1BF7tNveg2X9G%2FRdcMkojwKYbu6xN3M6aX2alQg%3D%3D&X-Amz-SignedHeaders=host&X-Amz-Signature=5e2c0d4b4de40373ac0fe91908c2659141a6dd4ab850271cc26042a3885c82ea)\n\n## Note\nThis report was originally reported to GitHub bug bounty program, they asked me to report it to you a month ago",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-f5x3-32g6-xq36",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28863",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/isaacs/node-tar/security/advisories/GHSA-f5x3-32g6-xq36"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28863"
+                },
+                {
+                    "url": "https://github.com/isaacs/node-tar/commit/fe8cd57da5686f8695415414bda49206a545f7f7"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f5x3-32g6-xq36"
+                }
+            ],
+            "published_at": "2024-03-22T16:57:05Z",
+            "updated_at": "2024-04-09T19:02:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "node-tar"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 6.2.1",
+                    "first_patched_version": {
+                        "identifier": "6.2.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "tar"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 6.2.1",
+                    "first_patched_version": {
+                        "identifier": "6.2.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "tar"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 6.2.1",
+            "first_patched_version": {
+                "identifier": "6.2.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/14",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "follow-redirects"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cxjh-pqwp-8mfp",
+            "cve_id": "CVE-2024-28849",
+            "summary": "follow-redirects' Proxy-Authorization header kept across hosts",
+            "description": "When using [axios](https://github.com/axios/axios), its dependency follow-redirects only clears authorization header during cross-domain redirect, but allows the proxy-authentication header which contains credentials too.\n\n## Steps To Reproduce & PoC\n\nTest code:\n\n```js\nconst axios = require('axios');\n\naxios.get('http://127.0.0.1:10081/', {\n headers: {\n 'AuThorization': 'Rear Test',\n 'ProXy-AuthoriZation': 'Rear Test',\n 'coOkie': 't=1'\n }\n})\n .then((response) => {\n console.log(response);\n })\n```\n\nWhen I meet the cross-domain redirect, the sensitive headers like authorization and cookie are cleared, but proxy-authentication header is kept.\n\n## Impact\n\nThis vulnerability may lead to credentials leak.\n\n## Recommendations\n\nRemove proxy-authentication header during cross-domain redirect\n\n### Recommended Patch\n\n[follow-redirects/index.js:464](https://github.com/follow-redirects/follow-redirects/commit/c4f847f85176991f95ab9c88af63b1294de8649b)\n\n```diff\n- removeMatchingHeaders(/^(?:authorization|cookie)$/i, this._options.headers);\n+ removeMatchingHeaders(/^(?:authorization|proxy-authorization|cookie)$/i, this._options.headers);\n```",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cxjh-pqwp-8mfp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28849",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/security/advisories/GHSA-cxjh-pqwp-8mfp"
+                },
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/commit/c4f847f85176991f95ab9c88af63b1294de8649b"
+                },
+                {
+                    "url": "https://fetch.spec.whatwg.org/#authentication-entries"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28849"
+                },
+                {
+                    "url": "https://github.com/psf/requests/issues/1885"
+                },
+                {
+                    "url": "https://hackerone.com/reports/2390009"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VOIF4EPQUCKDBEVTGRQDZ3CGTYQHPO7Z"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cxjh-pqwp-8mfp"
+                }
+            ],
+            "published_at": "2024-03-14T17:19:42Z",
+            "updated_at": "2024-04-02T17:54:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "follow-redirects"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 1.15.5",
+                    "first_patched_version": {
+                        "identifier": "1.15.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "follow-redirects"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 1.15.5",
+            "first_patched_version": {
+                "identifier": "1.15.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/13",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "sanitize-html"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rm97-x556-q36h",
+            "cve_id": "CVE-2024-21501",
+            "summary": "sanitize-html Information Exposure vulnerability",
+            "description": "Versions of the package sanitize-html before 2.12.1 are vulnerable to Information Exposure when used on the backend and with the style attribute allowed, allowing enumeration of files in the system (including project dependencies). An attacker could exploit this vulnerability to gather details about the file system structure and dependencies of the targeted server.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-rm97-x556-q36h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21501",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21501"
+                },
+                {
+                    "url": "https://github.com/apostrophecms/sanitize-html/pull/650"
+                },
+                {
+                    "url": "https://github.com/apostrophecms/sanitize-html/commit/c5dbdf77fe8b836d3bf4554ea39edb45281ec0b4"
+                },
+                {
+                    "url": "https://gist.github.com/Slonser/8b4d061abe6ee1b2e10c7242987674cf"
+                },
+                {
+                    "url": "https://github.com/apostrophecms/apostrophe/discussions/4436"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-SANITIZEHTML-6256334"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-6276557"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rm97-x556-q36h"
+                }
+            ],
+            "published_at": "2024-02-24T06:30:17Z",
+            "updated_at": "2024-03-06T20:05:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "sanitize-html"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.12.1",
+                    "first_patched_version": {
+                        "identifier": "2.12.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "sanitize-html"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.12.1",
+            "first_patched_version": {
+                "identifier": "2.12.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/12",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "ip"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-78xj-cgh5-2h22",
+            "cve_id": "CVE-2023-42282",
+            "summary": "NPM IP package incorrectly identifies some private IP addresses as public",
+            "description": "The `isPublic()` function in the NPM package `ip` doesn't correctly identify certain private IP addresses in uncommon formats such as `0x7F.1` as private. Instead, it reports them as public by returning `true`. This can lead to security issues such as Server-Side Request Forgery (SSRF) if `isPublic()` is used to protect sensitive code paths when passed user input. Versions 1.1.9 and 2.0.1 fix the issue.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-78xj-cgh5-2h22",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-42282",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-42282"
+                },
+                {
+                    "url": "https://cosmosofcyberspace.github.io/npm_ip_cve/npm_ip_cve.html"
+                },
+                {
+                    "url": "https://github.com/JoshGlazebrook/socks/issues/93#issue-2128357447"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/pull/3504#issuecomment-1937179999"
+                },
+                {
+                    "url": "https://github.com/indutny/node-ip/pull/138"
+                },
+                {
+                    "url": "https://github.com/indutny/node-ip/commit/32f468f1245574785ec080705737a579be1223aa"
+                },
+                {
+                    "url": "https://github.com/indutny/node-ip/commit/6a3ada9b471b09d5f0f5be264911ab564bf67894"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-78xj-cgh5-2h22"
+                }
+            ],
+            "published_at": "2024-02-08T18:30:39Z",
+            "updated_at": "2024-02-20T18:30:41Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ip"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "= 2.0.0",
+                    "first_patched_version": {
+                        "identifier": "2.0.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ip"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.1.9",
+                    "first_patched_version": {
+                        "identifier": "1.1.9"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-918",
+                    "name": "Server-Side Request Forgery (SSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "ip"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "= 2.0.0",
+            "first_patched_version": {
+                "identifier": "2.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/11",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "follow-redirects"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jchw-25xp-jwwc",
+            "cve_id": "CVE-2023-26159",
+            "summary": "Follow Redirects improperly handles URLs in the url.parse() function",
+            "description": "Versions of the package follow-redirects before 1.15.4 are vulnerable to Improper Input Validation due to the improper handling of URLs by the url.parse() function. When new URL() throws an error, it can be manipulated to misinterpret the hostname. An attacker could exploit this weakness to redirect traffic to a malicious site, potentially leading to information disclosure, phishing attacks, or other security breaches.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jchw-25xp-jwwc",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-26159",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-26159"
+                },
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/issues/235"
+                },
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/pull/236"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-FOLLOWREDIRECTS-6141137"
+                },
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/commit/7a6567e16dfa9ad18a70bfe91784c28653fbf19d"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZZ425BFKNBQ6AK7I5SAM56TWON5OF2XM/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jchw-25xp-jwwc"
+                }
+            ],
+            "published_at": "2024-01-02T06:30:30Z",
+            "updated_at": "2024-01-31T05:07:10Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "follow-redirects"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.15.4",
+                    "first_patched_version": {
+                        "identifier": "1.15.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-601",
+                    "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "follow-redirects"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.15.4",
+            "first_patched_version": {
+                "identifier": "1.15.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/10",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "browserify-sign"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-x9w5-v3q2-3rhw",
+            "cve_id": "CVE-2023-46234",
+            "summary": "browserify-sign upper bound check issue in `dsaVerify` leads to a signature forgery attack",
+            "description": "### Summary\nAn upper bound check issue in `dsaVerify` function allows an attacker to construct signatures that can be successfully verified by any public key, thus leading to a signature forgery attack.\n\n### Details\nIn `dsaVerify` function, it checks whether the value of the signature is legal by calling function `checkValue`, namely, whether `r` and `s` are both in the interval `[1, q - 1]`. However, the second line of the `checkValue` function wrongly checks the upper bound of the passed parameters, since the value of `b.cmp(q)` can only be `0`, `1` and `-1`, and it can never be greater than `q`. \n\nIn this way, although the values of `s` cannot be `0`, an attacker can achieve the same effect as zero by setting its value to `q`, and then send `(r, s) = (1, q)` to pass the verification of any public key.\n\n### Impact\nAll places in this project that involve DSA verification of user-input signatures will be affected by this vulnerability.\n\n\n### Fix PR:\nSince the temporary private fork was deleted, here's a webarchive of the PR discussion and diff pages: [PR webarchive.zip](https://github.com/browserify/browserify-sign/files/13172957/PR.webarchive.zip)\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-x9w5-v3q2-3rhw",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-46234",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/browserify/browserify-sign/security/advisories/GHSA-x9w5-v3q2-3rhw"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-46234"
+                },
+                {
+                    "url": "https://github.com/browserify/browserify-sign/commit/85994cd6348b50f2fd1b73c54e20881416f44a30"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00040.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3HUE6ZR5SL73KHL7XUPAOEL6SB7HUDT2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6PVVPNSAGSDS63HQ74PJ7MZ3MU5IYNVZ"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5539"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-x9w5-v3q2-3rhw"
+                }
+            ],
+            "published_at": "2023-10-26T20:53:21Z",
+            "updated_at": "2024-03-07T05:09:25Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "browserify-sign"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.6.0, <= 4.2.1",
+                    "first_patched_version": {
+                        "identifier": "4.2.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-347",
+                    "name": "Improper Verification of Cryptographic Signature"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "browserify-sign"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 2.6.0, <= 4.2.1",
+            "first_patched_version": {
+                "identifier": "4.2.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/9",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "@babel/traverse"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-67hx-6x53-jw92",
+            "cve_id": "CVE-2023-45133",
+            "summary": "Babel vulnerable to arbitrary code execution when compiling specifically crafted malicious code",
+            "description": "### Impact\n\nUsing Babel to compile code that was specifically crafted by an attacker can lead to arbitrary code execution during compilation, when using plugins that rely on the `path.evaluate()`or `path.evaluateTruthy()` internal Babel methods.\n\nKnown affected plugins are:\n- `@babel/plugin-transform-runtime`\n- `@babel/preset-env` when using its [`useBuiltIns`](https://babeljs.io/docs/babel-preset-env#usebuiltins) option\n- Any \"polyfill provider\" plugin that depends on `@babel/helper-define-polyfill-provider`, such as `babel-plugin-polyfill-corejs3`, `babel-plugin-polyfill-corejs2`, `babel-plugin-polyfill-es-shims`, `babel-plugin-polyfill-regenerator`\n\nNo other plugins under the `@babel/` namespace are impacted, but third-party plugins might be.\n\n**Users that only compile trusted code are not impacted.**\n\n### Patches\n\nThe vulnerability has been fixed in `@babel/traverse@7.23.2`.\n\nBabel 6 does not receive security fixes anymore (see [Babel's security policy](https://github.com/babel/babel/security/policy)), hence there is no patch planned for `babel-traverse@6`.\n\n### Workarounds\n\n- Upgrade `@babel/traverse` to v7.23.2 or higher. You can do this by deleting it from your package manager's lockfile and re-installing the dependencies. `@babel/core` >=7.23.2 will automatically pull in a non-vulnerable version.\n- If you cannot upgrade `@babel/traverse` and are using one of the affected packages mentioned above, upgrade them to their latest version to avoid triggering the vulnerable code path in affected `@babel/traverse` versions:\n  - `@babel/plugin-transform-runtime` v7.23.2\n  - `@babel/preset-env` v7.23.2\n  - `@babel/helper-define-polyfill-provider` v0.4.3\n  - `babel-plugin-polyfill-corejs2` v0.4.6\n  - `babel-plugin-polyfill-corejs3` v0.8.5\n  - `babel-plugin-polyfill-es-shims` v0.10.0\n  - `babel-plugin-polyfill-regenerator` v0.5.3",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-67hx-6x53-jw92",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-45133",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/babel/babel/security/advisories/GHSA-67hx-6x53-jw92"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-45133"
+                },
+                {
+                    "url": "https://github.com/babel/babel/pull/16033"
+                },
+                {
+                    "url": "https://github.com/babel/babel/commit/b13376b346946e3f62fc0848c1d2a23223314c82"
+                },
+                {
+                    "url": "https://github.com/babel/babel/releases/tag/v7.23.2"
+                },
+                {
+                    "url": "https://github.com/babel/babel/releases/tag/v8.0.0-alpha.4"
+                },
+                {
+                    "url": "https://www.debian.org/security/2023/dsa-5528"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/10/msg00026.html"
+                },
+                {
+                    "url": "https://babeljs.io/blog/2023/10/16/cve-2023-45133"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-67hx-6x53-jw92"
+                }
+            ],
+            "published_at": "2023-10-16T13:55:36Z",
+            "updated_at": "2024-04-04T14:26:11Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "@babel/traverse"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 7.23.2",
+                    "first_patched_version": {
+                        "identifier": "7.23.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "@babel/traverse"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": ">= 8.0.0-alpha.0, < 8.0.0-alpha.4",
+                    "first_patched_version": {
+                        "identifier": "8.0.0-alpha.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "babel-traverse"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 7.23.2",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                "score": 9.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-184",
+                    "name": "Incomplete List of Disallowed Inputs"
+                },
+                {
+                    "cwe_id": "CWE-697",
+                    "name": "Incorrect Comparison"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "@babel/traverse"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 7.23.2",
+            "first_patched_version": {
+                "identifier": "7.23.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/8",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7fh5-64p2-3v2j",
+            "cve_id": "CVE-2023-44270",
+            "summary": "PostCSS line return parsing error",
+            "description": "An issue was discovered in PostCSS before 8.4.31. It affects linters using PostCSS to parse external Cascading Style Sheets (CSS). There may be `\\r` discrepancies, as demonstrated by `@font-face{ font:(\\r/*);}` in a rule.\n\nThis vulnerability affects linters using PostCSS to parse external untrusted CSS. An attacker can prepare CSS in such a way that it will contains parts parsed by PostCSS as a CSS comment. After processing by PostCSS, it will be included in the PostCSS output in CSS nodes (rules, properties) despite being originally included in a comment.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-7fh5-64p2-3v2j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-44270",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-44270"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/commit/58cc860b4c1707510c9cd1bc1fa30b423a9ad6c5"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/blob/main/lib/tokenize.js#L25"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/releases/tag/8.4.31"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/issues/2820"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7fh5-64p2-3v2j"
+                }
+            ],
+            "published_at": "2023-09-30T00:31:10Z",
+            "updated_at": "2023-11-05T05:05:37Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "postcss"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 8.4.31",
+                    "first_patched_version": {
+                        "identifier": "8.4.31"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                },
+                {
+                    "cwe_id": "CWE-144",
+                    "name": "Improper Neutralization of Line Delimiters"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 8.4.31",
+            "first_patched_version": {
+                "identifier": "8.4.31"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/7",
+        "created_at": "2024-05-20T13:37:48Z",
+        "updated_at": "2024-05-20T13:37:48Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "debug"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gxpj-cx7g-858c",
+            "cve_id": "CVE-2017-16137",
+            "summary": "Regular Expression Denial of Service in debug",
+            "description": "Affected versions of `debug` are vulnerable to regular expression denial of service when untrusted user input is passed into the `o` formatter. \n\nAs it takes 50,000 characters to block the event loop for 2 seconds, this issue is a low severity issue.\n\nThis was later re-introduced in version v3.2.0, and then repatched in versions 3.2.7 and 4.3.1.\n\n## Recommendation\n\nVersion 2.x.x: Update to version 2.6.9 or later.\nVersion 3.1.x: Update to version 3.1.0 or later.\nVersion 3.2.x: Update to version 3.2.7 or later.\nVersion 4.x.x: Update to version 4.3.1 or later.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-gxpj-cx7g-858c",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2017-16137",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2017-16137"
+                },
+                {
+                    "url": "https://github.com/visionmedia/debug/issues/501"
+                },
+                {
+                    "url": "https://github.com/visionmedia/debug/pull/504"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r8ba4c628fba7181af58817d452119481adce4ba92e889c643e4c7dd3@%3Ccommits.netbeans.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb5ac16fad337d1f3bb7079549f97d8166d0ef3082629417c39f12d63@%3Cnotifications.netbeans.apache.org%3E"
+                },
+                {
+                    "url": "https://github.com/debug-js/debug/issues/797"
+                },
+                {
+                    "url": "https://github.com/debug-js/debug/commit/4e2150207c568adb9ead8f4c4528016081c88020"
+                },
+                {
+                    "url": "https://github.com/debug-js/debug/commit/71169065b5262f9858ac78cc0b688c84a438f290"
+                },
+                {
+                    "url": "https://github.com/debug-js/debug/commit/b6d12fdbc63b483e5c969da33ea6adc09946b5ac"
+                },
+                {
+                    "url": "https://github.com/debug-js/debug/commit/f53962e944a87e6ca9bb622a2a12dffc22a9bb5a"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gxpj-cx7g-858c"
+                }
+            ],
+            "published_at": "2018-08-09T20:18:07Z",
+            "updated_at": "2024-03-25T19:01:24Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "debug"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 2.6.9",
+                    "first_patched_version": {
+                        "identifier": "2.6.9"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "debug"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 3.0.0, < 3.1.0",
+                    "first_patched_version": {
+                        "identifier": "3.1.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "debug"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 3.2.0, < 3.2.7",
+                    "first_patched_version": {
+                        "identifier": "3.2.7"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "debug"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 4.0.0, < 4.3.1",
+                    "first_patched_version": {
+                        "identifier": "4.3.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 3.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "debug"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 3.2.0, < 3.2.7",
+            "first_patched_version": {
+                "identifier": "3.2.7"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/6",
+        "created_at": "2024-05-20T13:37:47Z",
+        "updated_at": "2024-05-20T13:37:47Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "get-func-name"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4q6p-r6v2-jvc5",
+            "cve_id": "CVE-2023-43646",
+            "summary": "Chaijs/get-func-name vulnerable to ReDoS",
+            "description": "The current regex implementation for parsing values in the module is susceptible to excessive backtracking, leading to potential DoS attacks. The regex implementation in question is as follows:\n\n```js\nconst functionNameMatch = /\\s*function(?:\\s|\\s*\\/\\*[^(?:*/)]+\\*\\/\\s*)*([^\\s(/]+)/;\n```\n\nThis vulnerability can be exploited when there is an imbalance in parentheses, which results in excessive backtracking and subsequently increases the CPU load and processing time significantly. This vulnerability can be triggered using the following input:\n\n```js\n'\\t'.repeat(54773) + '\\t/function/i'\n```\n\nHere is a simple PoC code to demonstrate the issue:\n\n```js\nconst protocolre = /\\sfunction(?:\\s|\\s/*[^(?:*\\/)]+*/\\s*)*([^\\(\\/]+)/;\n\nconst startTime = Date.now();\nconst maliciousInput = '\\t'.repeat(54773) + '\\t/function/i'\n\nprotocolre.test(maliciousInput);\n\nconst endTime = Date.now();\n\nconsole.log(\"process time: \", endTime - startTime, \"ms\");\n```",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-4q6p-r6v2-jvc5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-43646",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/chaijs/get-func-name/security/advisories/GHSA-4q6p-r6v2-jvc5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-43646"
+                },
+                {
+                    "url": "https://github.com/chaijs/get-func-name/commit/f934b228b5e2cb94d6c8576d3aac05493f667c69"
+                },
+                {
+                    "url": "https://github.com/chaijs/get-func-name/blob/78ad756441a83f3dc203e50f76c113ae3ac017dc/index.js#L15"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4q6p-r6v2-jvc5"
+                }
+            ],
+            "published_at": "2023-09-27T20:16:00Z",
+            "updated_at": "2023-11-06T05:02:00Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "get-func-name"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 2.0.1",
+                    "first_patched_version": {
+                        "identifier": "2.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "get-func-name"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 2.0.1",
+            "first_patched_version": {
+                "identifier": "2.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/5",
+        "created_at": "2024-05-20T13:37:47Z",
+        "updated_at": "2024-05-20T13:37:47Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "word-wrap"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-j8xg-fqg3-53r7",
+            "cve_id": "CVE-2023-26115",
+            "summary": "word-wrap vulnerable to Regular Expression Denial of Service",
+            "description": "All versions of the package word-wrap are vulnerable to Regular Expression Denial of Service (ReDoS) due to the usage of an insecure regular expression within the result variable.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-j8xg-fqg3-53r7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-26115",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-26115"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-4058657"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-WORDWRAP-3149973"
+                },
+                {
+                    "url": "https://github.com/jonschlinkert/word-wrap/blob/master/index.js#L39"
+                },
+                {
+                    "url": "https://github.com/jonschlinkert/word-wrap/releases/tag/1.2.4"
+                },
+                {
+                    "url": "https://github.com/jonschlinkert/word-wrap/commit/420dce9a2412b21881202b73a3c34f0edc53cb2e"
+                },
+                {
+                    "url": "https://github.com/jonschlinkert/word-wrap/blob/master/index.js%23L39"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-j8xg-fqg3-53r7"
+                }
+            ],
+            "published_at": "2023-06-22T06:30:18Z",
+            "updated_at": "2023-11-29T22:42:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "word-wrap"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.2.4",
+                    "first_patched_version": {
+                        "identifier": "1.2.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "word-wrap"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.2.4",
+            "first_patched_version": {
+                "identifier": "1.2.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/4",
+        "created_at": "2024-05-20T13:37:47Z",
+        "updated_at": "2024-05-20T13:37:47Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "flat"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2j2x-2gpw-g8fm",
+            "cve_id": "CVE-2020-36632",
+            "summary": "flat vulnerable to Prototype Pollution",
+            "description": "flat helps flatten/unflatten nested Javascript objects. A vulnerability, which was classified as critical, was found in hughsk flat up to 5.0.0. This affects the function unflatten of the file index.js. The manipulation leads to improperly controlled modification of object prototype attributes ('prototype pollution'). It is possible to initiate the attack remotely. Upgrading to version 5.0.1 can address this issue. The name of the patch is 20ef0ef55dfa028caddaedbcb33efbdb04d18e13. It is recommended to upgrade the affected component. The identifier VDB-216777 was assigned to this vulnerability.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-2j2x-2gpw-g8fm",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-36632",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-36632"
+                },
+                {
+                    "url": "https://github.com/hughsk/flat/issues/105"
+                },
+                {
+                    "url": "https://github.com/hughsk/flat/pull/106"
+                },
+                {
+                    "url": "https://github.com/hughsk/flat/commit/20ef0ef55dfa028caddaedbcb33efbdb04d18e13"
+                },
+                {
+                    "url": "https://github.com/hughsk/flat/releases/tag/5.0.1"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.216777"
+                },
+                {
+                    "url": "https://vuldb.com/?id.216777"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2j2x-2gpw-g8fm"
+                }
+            ],
+            "published_at": "2022-12-25T21:30:22Z",
+            "updated_at": "2023-01-29T05:01:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "flat"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 5.0.1",
+                    "first_patched_version": {
+                        "identifier": "5.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1321",
+                    "name": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "flat"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 5.0.1",
+            "first_patched_version": {
+                "identifier": "5.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/3",
+        "created_at": "2024-05-20T13:37:47Z",
+        "updated_at": "2024-05-20T13:37:47Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "minimatch"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f8q6-p94x-37v3",
+            "cve_id": "CVE-2022-3517",
+            "summary": "minimatch ReDoS vulnerability",
+            "description": "A vulnerability was found in the minimatch package. This flaw allows a Regular Expression Denial of Service (ReDoS) when calling the braceExpand function with specific arguments, resulting in a Denial of Service.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-f8q6-p94x-37v3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-3517",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-3517"
+                },
+                {
+                    "url": "https://github.com/grafana/grafana-image-renderer/issues/329"
+                },
+                {
+                    "url": "https://github.com/isaacs/minimatch/commit/a8763f4388e51956be62dc6025cec1126beeb5e6"
+                },
+                {
+                    "url": "https://github.com/nodejs/node/issues/42510"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/01/msg00011.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/MTEUUTNIEBHGKUKKLNUZSV7IEP6IP3Q3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UM6XJ73Q3NAM5KSGCOKJ2ZIA6GUWUJLK"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f8q6-p94x-37v3"
+                }
+            ],
+            "published_at": "2022-10-18T12:00:32Z",
+            "updated_at": "2024-02-14T18:15:17Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "minimatch"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.0.5",
+                    "first_patched_version": {
+                        "identifier": "3.0.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "minimatch"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.0.5",
+            "first_patched_version": {
+                "identifier": "3.0.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/2",
+        "created_at": "2024-05-20T13:37:47Z",
+        "updated_at": "2024-05-20T13:37:47Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "d3-color"
+            },
+            "manifest_path": "js/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-36jr-mh4h-2g58",
+            "cve_id": null,
+            "summary": "d3-color vulnerable to ReDoS",
+            "description": "The d3-color module provides representations for various color spaces in the browser. Versions prior to 3.1.0 are vulnerable to a Regular expression Denial of Service. This issue has been patched in version 3.1.0. There are no known workarounds.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-36jr-mh4h-2g58",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/d3/d3-color/pull/100"
+                },
+                {
+                    "url": "https://github.com/d3/d3-color/releases/tag/v3.1.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-D3COLOR-1076592"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-36jr-mh4h-2g58"
+                }
+            ],
+            "published_at": "2022-09-29T14:12:55Z",
+            "updated_at": "2023-01-13T05:04:43Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "d3-color"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.1.0",
+                    "first_patched_version": {
+                        "identifier": "3.1.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "d3-color"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.1.0",
+            "first_patched_version": {
+                "identifier": "3.1.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bqplot/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/bqplot/security/dependabot/1",
+        "created_at": "2024-05-20T13:37:47Z",
+        "updated_at": "2024-05-20T13:37:47Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]
