@@ -52,14 +52,11 @@ def vulnerability_analysis(repo_name):
     elif isinstance(code_analysis_response, dict):
         logger.warning(f"{repo_name}:{code_analysis_response}")
 
-    if isinstance(dependabot_alerts_response, list):
-        if dependabot_alerts_response:
-            d = pd.json_normalize(dependabot_alerts_response)
-            d["repo_name"] = repo_name
-            global dependabot_result
-            dependabot_result = pd.concat([dependabot_result, d])
-        elif isinstance(dependabot_alerts_response, dict):
-            logger.warning(f"{repo_name}:{dependabot_alerts_response}")
+    if isinstance(dependabot_alerts_response, list) and dependabot_alerts_response:
+        d = pd.json_normalize(dependabot_alerts_response)
+        d["repo_name"] = repo_name
+        global dependabot_result
+        dependabot_result = pd.concat([dependabot_result, d])
     elif isinstance(dependabot_alerts_response, dict):
         logger.warning(f"{repo_name}:{dependabot_alerts_response}")
 
