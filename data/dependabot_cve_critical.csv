@@ -1,0 +1,275 @@
+,security_advisory.cve_id,security_advisory.severity,security_advisory.summary,security_advisory.description,counts
+0,CVE-2017-18342,critical,PyYAML insecurely deserializes YAML strings leading to arbitrary code execution,"In PyYAML before 4.1, the `yaml.load()` API could execute arbitrary code. In other words, `yaml.safe_load` is not used.",3
+1,CVE-2018-7575,critical,Integer Overflow or Wraparound in Google TensorFlow,"### Issue Description
+Google TensorFlow 1.7.x and earlier is affected by a Buffer Overflow vulnerability. The type of exploitation is context-dependent. The block size in meta file might contain a large int64 value which causes an integer overflow upon addition. Subsequent code using n as index may cause an out-of-bounds read.
+
+### Impact
+A maliciously crafted meta checkpoint could be used to cause the TensorFlow process to perform an out of bounds read on in process memory.
+",1
+2,CVE-2019-16224,critical,py-lmdb Invalid write operation,"An issue was discovered in py-lmdb 0.97. For certain values of `md_flags`, `mdb_node_add` does not properly set up a memcpy destination, leading to an invalid write operation. NOTE: this outcome occurs when accessing a `data.mdb` file supplied by an attacker.",1
+3,CVE-2019-16225,critical,py-lmdb Invalid write operation,"An issue was discovered in py-lmdb 0.97. For certain values of `mp_flags`, `mdb_page_touch `does not properly set up `mc->mc_pg[mc->top]`, leading to an invalid write operation. NOTE: this outcome occurs when accessing a `data.mdb` file supplied by an attacker.",1
+4,CVE-2019-16227,critical,py-lmdb Invalid write operation,"An issue was discovered in py-lmdb 0.97. For certain values of `mn_flags`, `mdb_cursor_set` triggers a memcpy with an invalid write operation within `mdb_xcursor_init1`. NOTE: this outcome occurs when accessing a `data.mdb` file supplied by an attacker.",1
+5,CVE-2019-6446,critical,Numpy Deserialization of Untrusted Data,"** DISPUTED **   An issue was discovered in NumPy 1.16.0 and earlier. It uses the pickle Python module unsafely, which allows remote attackers to execute arbitrary code via a crafted serialized object, as demonstrated by a numpy.load call. NOTE: third parties dispute this issue because it is  a behavior that might have legitimate applications in (for example)  loading serialized Python object arrays from trusted and authenticated  sources.",9
+6,CVE-2019-7164,critical,SQLAlchemy vulnerable to SQL Injection via order_by parameter,SQLAlchemy through 1.2.17 and 1.3.x through 1.3.0b2 allows SQL Injection via the order_by parameter.,2
+7,CVE-2020-13092,critical,scikit-learn Deserialization of Untrusted Data,"scikit-learn (aka sklearn) through 0.23.0 can unserialize and execute commands from an untrusted file that is passed to the `joblib.load()` function, if `__reduce__` makes an `os.system call`.
+NOTE: third parties dispute this issue because the joblib.load() function is documented as unsafe and it is the user's responsibility to use the function in a secure manner.",11
+8,CVE-2020-14343,critical,Improper Input Validation in PyYAML,"A vulnerability was discovered in the PyYAML library in versions before 5.4, where it is susceptible to arbitrary code execution when it processes untrusted YAML files through the full_load method or with the FullLoader loader. Applications that use the library to process untrusted input may be vulnerable to this flaw. This flaw allows an attacker to execute arbitrary code on the system by abusing the python/object/new constructor. This flaw is due to an incomplete fix for CVE-2020-1747.",8
+9,CVE-2020-15202,critical,Integer truncation in Shard API usage,"### Impact
+The `Shard` API in TensorFlow expects the last argument to be a function taking two `int64` (i.e., `long long`) arguments:
+https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/core/util/work_sharder.h#L59-L60
+
+However, there are several places in TensorFlow where a lambda taking `int` or `int32` arguments is being used:
+https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/core/kernels/random_op.cc#L204-L205
+https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/core/kernels/random_op.cc#L317-L318
+
+In these cases, if the amount of work to be parallelized is large enough, integer truncation occurs. Depending on how the two arguments of the lambda are used, this can result in segfaults, read/write outside of heap allocated arrays, stack overflows, or data corruption.
+
+### Patches
+We have patched the issue in 27b417360cbd671ef55915e4bb6bb06af8b8a832 and ca8c013b5e97b1373b3bb1c97ea655e69f31a575. We will release patch releases for all versions between 1.15 and 2.3.
+
+We recommend users to upgrade to TensorFlow 1.15.4, 2.0.3, 2.1.2, 2.2.1, or 2.3.1.
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",3
+10,CVE-2020-15205,critical,Data leak in Tensorflow,"### Impact
+The `data_splits` argument of [`tf.raw_ops.StringNGrams`](https://www.tensorflow.org/api_docs/python/tf/raw_ops/StringNGrams) lacks validation. This allows a user to pass values that can cause heap overflow errors and even leak contents of memory
+```python
+>>> tf.raw_ops.StringNGrams(data=[""aa"", ""bb"", ""cc"", ""dd"", ""ee"", ""ff""], data_splits=[0,8], separator="" "", ngram_widths=[3], left_pad="""", right_pad="""", pad_width=0, preserve_short_sequences=False)
+StringNGrams(ngrams=<tf.Tensor: shape=(6,), dtype=string, numpy=
+array([b'aa bb cc', b'bb cc dd', b'cc dd ee', b'dd ee ff',
+       b'ee ff \xf4j\xa7q\x7f\x00\x00q\x00\x00\x00\x00\x00\x00\x00\xd8\x9b~\xa8q\x7f\x00',
+       b'ff \xf4j\xa7q\x7f\x00\x00q\x00\x00\x00\x00\x00\x00\x00\xd8\x9b~\xa8q\x7f\x00 \x9b~\xa8q\x7f\x00\x00p\xf5j\xa7q\x7f\x00\x00H\xf8j\xa7q\x7f\x00\x00\xf0\xf3\xf7\x85q\x7f\x00\x00`}\xa6\x00\x00\x00\x00\x00`~\xa6\x00\x00\x00\x00\x00\xb0~\xeb\x9bq\x7f\x00'],...
+```
+
+All the binary strings after `ee ff` are contents from the memory stack. Since these can contain return addresses, this data leak can be used to defeat ASLR.
+
+### Patches
+We have patched the issue in 0462de5b544ed4731aa2fb23946ac22c01856b80 and will release patch releases for all versions between 1.15 and 2.3.
+
+We recommend users to upgrade to TensorFlow 1.15.4, 2.0.3, 2.1.2, 2.2.1, or 2.3.1.
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",3
+11,CVE-2020-15206,critical,Denial of Service in Tensorflow,"### Impact
+Changing the TensorFlow's `SavedModel` protocol buffer and altering the name of required keys results in segfaults and data corruption while loading the model. This can cause a denial of service in products using `tensorflow-serving` or other inference-as-a-service installments.
+
+We have added fixes to this in f760f88b4267d981e13f4b302c437ae800445968 and fcfef195637c6e365577829c4d67681695956e7d (both going into TensorFlow 2.2.0 and 2.3.0 but not yet backported to earlier versions). However, this was not enough, as #41097 reports a different failure mode.
+
+### Patches
+We have patched the issue in adf095206f25471e864a8e63a0f1caef53a0e3a6 and will release patch releases for all versions between 1.15 and 2.3. Patch releases for versions between 1.15 and 2.1 will also contain cherry-picks of f760f88b4267d981e13f4b302c437ae800445968 and fcfef195637c6e365577829c4d67681695956e7d.
+
+We recommend users to upgrade to TensorFlow 1.15.4, 2.0.3, 2.1.2, 2.2.1, or 2.3.1.
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been reported by Shuaike Dong, from Alipay Tian Qian Security Lab && Lab for Applied Security Research, CUHK.",3
+12,CVE-2020-1747,critical,Improper Input Validation in PyYAML,"A vulnerability was discovered in the PyYAML library in versions before 5.3.1, where it is susceptible to arbitrary code execution when it processes untrusted YAML files through the full_load method or with the FullLoader loader. Applications that use the library to process untrusted input may be vulnerable to this flaw. An attacker could use this flaw to execute arbitrary code on the system by abusing the python/object/new constructor.",4
+13,CVE-2021-25287,critical,Out-of-bounds Read in Pillow,"An issue was discovered in Pillow before 8.2.0. There is an out-of-bounds read in J2kDecode, in j2ku_graya_la.",6
+14,CVE-2021-25288,critical,Out-of-bounds Read,"An issue was discovered in Pillow before 8.2.0. There is an out-of-bounds read in J2kDecode, in j2ku_gray_i. This dates to Pillow 2.4.0.",6
+15,CVE-2021-32798,critical,Special Element Injection in notebook,"### Impact
+
+Untrusted notebook can execute code on load. This is a remote code execution, but requires user action to open a notebook.
+
+### Patches
+
+5.7.11, 6.4.1
+
+### References
+
+[OWASP Page on Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html#injection-prevention-rules)
+
+### For more information
+
+If you have any questions or comments about this advisory, or vulnerabilities to report, please email our security list security@ipython.org.
+
+Credit: Guillaume Jeanne from Google
+
+
+### Example:
+
+A notebook with the following content in a cell and it would display an alert when opened for the first time in Notebook (in an untrusted state):
+
+```
+{ ""cell_type"": ""code"", ""execution_count"": 0, ""metadata"": {}, ""outputs"": [ { ""data"": { ""text/html"": [ ""<select><iframe></select><img src=x: onerror=alert('xss')>\n""], ""text/plain"": [] }, ""metadata"": {}, ""output_type"": ""display_data"" } ], ""source"": [ """" ] }
+````",3
+16,CVE-2021-34552,critical,Buffer Overflow in Pillow,Pillow through 8.2.0 and PIL (aka Python Imaging Library) through 1.1.7 allow an attacker to pass controlled parameters directly into a convert function to trigger a buffer overflow in Convert.c.,6
+17,CVE-2021-37678,critical,Arbitrary code execution due to YAML deserialization,"### Impact
+TensorFlow and Keras can be tricked to perform arbitrary code execution when deserializing a Keras model from YAML format.
+
+```python
+from tensorflow.keras import models
+
+payload = '''
+!!python/object/new:type
+args: ['z', !!python/tuple [], {'extend': !!python/name:exec }]
+listitems: ""__import__('os').system('cat /etc/passwd')""
+'''
+  
+models.model_from_yaml(payload)
+```
+  
+The [implementation](https://github.com/tensorflow/tensorflow/blob/460e000de3a83278fb00b61a16d161b1964f15f4/tensorflow/python/keras/saving/model_config.py#L66-L104) uses `yaml.unsafe_load` which can perform arbitrary code execution on the input.
+
+### Patches
+Given that YAML format support requires a significant amount of work, we have removed it for now.
+
+We have patched the issue in GitHub commit [23d6383eb6c14084a8fc3bdf164043b974818012](https://github.com/tensorflow/tensorflow/commit/23d6383eb6c14084a8fc3bdf164043b974818012).
+
+The fix will be included in TensorFlow 2.6.0. We will also cherrypick this commit on TensorFlow 2.5.1, TensorFlow 2.4.3, and TensorFlow 2.3.4, as these are also affected and still in supported range.
+
+### For more information 
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been reported by Arjun Shibu.",6
+18,CVE-2021-41208,critical,Incomplete validation in boosted trees code,"### Impact
+The [code for boosted trees in TensorFlow](https://github.com/tensorflow/tensorflow/blob/e0b6e58c328059829c3eb968136f17aa72b6c876/tensorflow/core/kernels/boosted_trees/stats_ops.cc) is still missing validation. As a result, attackers can trigger denial of service (via dereferencing `nullptr`s or via `CHECK`-failures) as well as abuse undefined behavior (binding references to `nullptr`s). An attacker can also read and write from heap buffers, depending on the API that gets used and the arguments that are passed to the call.
+
+**Note**: Given that the boosted trees implementation in TensorFlow is unmaintained, it is recommend to no longer use these APIs.  Instead, please use the downstream [TensorFlow Decision Forests](https://github.com/tensorflow/decision-forests) project which is newer and supports more features. We will deprecate TensorFlow's boosted trees APIs in subsequent releases.
+
+### Patches
+We have patched the issue in GitHub commit [5c8c9a8bfe750f9743d0c859bae112060b216f5c](https://github.com/tensorflow/tensorflow/commit/5c8c9a8bfe750f9743d0c859bae112060b216f5c).
+
+The fix will be included in TensorFlow 2.7.0. We will also cherrypick this commit on TensorFlow 2.6.1, TensorFlow 2.5.2, and TensorFlow 2.4.4, as these are also affected and still in supported range.
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",9
+19,CVE-2022-0845,critical,Code Injection in PyTorch Lightning,PyTorch Lightning version 1.5.10 and prior is vulnerable to code injection. An attacker could execute commands on the target OS running the operating system by setting the `PL_TRAINER_GPUS` when using the `Trainer` module. A [patch](https://github.com/pytorchlightning/pytorch-lightning/commit/8b7a12c52e52a06408e9231647839ddb4665e8ae) is included in the `1.6.0` release.,1
+20,CVE-2022-21797,critical,joblib vulnerable to arbitrary code execution,The package joblib from 0 and before 1.2.0 is vulnerable to Arbitrary Code Execution via the `pre_dispatch` flag in `Parallel()` class due to the `eval()` statement.,7
+21,CVE-2022-22817,critical,Arbitrary expression injection in Pillow,"`PIL.ImageMath.eval` in Pillow before 9.0.0 allows evaluation of arbitrary expressions, such as ones that use the Python exec method `ImageMath.eval(""exec(exit())"")`.
+
+While Pillow 9.0.0 restricted top-level builtins available to PIL.ImageMath.eval(), it did not prevent builtins available to lambda expressions. These are now also restricted in 9.0.1.",8
+22,CVE-2022-24303,critical,Path traversal in Pillow,Pillow before 9.0.1 allows attackers to delete files because spaces in temporary pathnames are mishandled.,8
+23,CVE-2022-45907,critical,PyTorch vulnerable to arbitrary code execution,"In PyTorch before trunk/89695, torch.jit.annotations.parse_type_line can cause arbitrary code execution because eval is used unsafely. The fix for this issue is available in version 1.13.1. There is a release checker in [issue #89855](https://github.com/pytorch/pytorch/issues/89855).",44
+24,CVE-2023-1177,critical,mlflow is vulnerable to remote file access in `mlflow server` and `mlflow ui` CLIs,"### Impact
+
+Users of the MLflow Open Source Project who are hosting the MLflow Model Registry using the `mlflow server` or `mlflow ui` commands using an MLflow version older than MLflow 2.2.1 may be vulnerable to a remote file access exploit if they are not limiting who can query their server (for example, by using a cloud VPC, an IP allowlist for inbound requests, or authentication / authorization middleware).
+
+This issue only affects users and integrations that run the `mlflow server` and `mlflow ui` commands. Integrations that do not make use of `mlflow server` or `mlflow ui` are unaffected; for example, the Databricks Managed MLflow product and MLflow on Azure Machine Learning do not make use of these commands and are not impacted by these vulnerabilities in any way.
+
+The vulnerability detailed in https://nvd.nist.gov/vuln/detail/CVE-2023-1177 enables an actor to download arbitrary files unrelated to MLflow from the host server, including any files stored in remote locations to which the host server has access.
+
+### Patches
+This vulnerability has been patched in MLflow 2.2.1, which was released to PyPI on March 2nd, 2023. If you are using `mlflow server` or `mlflow ui` with the MLflow Model Registry, we recommend upgrading to MLflow 2.2.1 as soon as possible.
+
+### Workarounds
+If you are using the MLflow open source `mlflow server` or `mlflow ui` commands, we strongly recommend limiting who can access your MLflow Model Registry and MLflow Tracking servers using a cloud VPC, an IP allowlist for inbound requests, authentication / authorization middleware, or another access restriction mechanism of your choosing.
+
+If you are using the MLflow open source `mlflow server` or `mlflow ui` commands, we also strongly recommend limiting the remote files to which your MLflow Model Registry and MLflow Tracking servers have access. For example, if your MLflow Model Registry or MLflow Tracking server uses cloud-hosted blob storage for MLflow artifacts, make sure to restrict the scope of your server's cloud credentials such that it can only access files and directories related to MLflow.
+
+### References
+More information about the vulnerability is available at https://nvd.nist.gov/vuln/detail/CVE-2023-1177.",1
+25,CVE-2023-2356,critical,Relative path traversal in mlflow,Relative Path Traversal in GitHub repository mlflow/mlflow prior to 2.3.1.,1
+26,CVE-2023-25668,critical,TensorFlow has a heap out-of-buffer read vulnerability in the QuantizeAndDequantize operation,"### Impact
+Attackers using Tensorflow can exploit the vulnerability. They can access heap memory which is not in the control of user, leading to a crash or RCE.
+When axis is larger than the dim of input, c->Dim(input,axis) goes out of bound.
+Same problem occurs in the QuantizeAndDequantizeV2/V3/V4/V4Grad operations too.
+```python
+import tensorflow as tf
+@tf.function
+def test():
+    tf.raw_ops.QuantizeAndDequantizeV2(input=[2.5],
+    								   input_min=[1.0],
+    								   input_max=[10.0],
+    								   signed_input=True,
+    								   num_bits=1,
+    								   range_given=True,
+    								   round_mode='HALF_TO_EVEN',
+    								   narrow_range=True,
+    								   axis=0x7fffffff)
+test()
+```
+
+
+
+### Patches
+We have patched the issue in GitHub commit [7b174a0f2e40ff3f3aa957aecddfd5aaae35eccb](https://github.com/tensorflow/tensorflow/commit/7b174a0f2e40ff3f3aa957aecddfd5aaae35eccb).
+
+The fix will be included in TensorFlow 2.12.0. We will also cherrypick this commit on TensorFlow 2.11.1
+
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+
+",11
+27,CVE-2023-2780,critical,mlflow Path Traversal vulnerability,mlflow prior to 2.3.0 is vulnerable to path traversal due to a bypass of the fix for CVE-2023-1177.,1
+28,CVE-2023-3765,critical,MLflow Path Traversal vulnerability,Absolute Path Traversal in GitHub repository mlflow/mlflow prior to 2.5.0.,2
+29,CVE-2023-40267,critical,GitPython vulnerable to remote code execution due to insufficient sanitization of input arguments,"GitPython before 3.1.32 does not block insecure non-multi options in `clone` and `clone_from`, making it vulnerable to Remote Code Execution (RCE) due to improper user input validation, which makes it possible to inject a maliciously crafted remote URL into the clone command. Exploiting this vulnerability is possible because the library makes external calls to git without sufficient sanitization of input arguments. NOTE: this issue exists because of an incomplete fix for CVE-2022-24439.",3
+30,CVE-2023-41419,critical,Gevent allows remote attacker to escalate privileges,An issue in Gevent before version 23.9.0 allows a remote attacker to escalate privileges via a crafted script to the WSGIServer component.,1
+31,CVE-2023-47248,critical,PyArrow: Arbitrary code execution when loading a malicious data file,"Deserialization of untrusted data in IPC and Parquet readers in PyArrow versions 0.14.0 to 14.0.0 allows arbitrary code execution. An application is vulnerable if it reads Arrow IPC, Feather or Parquet data from untrusted sources (for example user-supplied input files).
+
+This vulnerability only affects PyArrow, not other Apache Arrow implementations or bindings.
+
+It is recommended that users of PyArrow upgrade to 14.0.1. Similarly, it is recommended that downstream libraries upgrade their dependency requirements to PyArrow 14.0.1 or later. PyPI packages are already available, and we hope that conda-forge packages will be available soon.
+
+If it is not possible to upgrade, maintainers provide a separate package `pyarrow-hotfix` that disables the vulnerability on older PyArrow versions. See https://pypi.org/project/pyarrow-hotfix/  for instructions.",12
+32,CVE-2023-6014,critical,MLflow authentication requirement bypass can allow a user to arbitrarily create an account,An attacker is able to arbitrarily create an account in MLflow bypassing any authentication requirement.,3
+33,CVE-2023-6015,critical,MLflow allowed arbitrary files to be PUT onto the server,MLflow allowed arbitrary files to be PUT onto the server.,3
+34,CVE-2023-6018,critical,Remote Code Execution due to Full Controled File Write in mlflow,"The mlflow web server includes tools for tracking experiments, packaging code into reproducible runs, and sharing and deploying models. As this vulnerability allows to write / overwrite any file on the file system, it gives a lot of ways to archive code execution (like overwriting `/home/<user>/.bashrc`). A malicious user could use this issue to get command execution on the vulnerable machine and get access to data & models information.",4
+35,CVE-2023-6019,critical,Ray OS Command Injection vulnerability,A command injection exists in Ray's cpu_profile URL parameter allowing attackers to execute os commands on the system running the ray dashboard remotely without authentication.,1
+36,CVE-2023-6020,critical,Ray Missing Authorization vulnerability,LFI in Ray's /static/ directory allows attackers to read any file on the server without authentication. The issue is fixed in version 2.8.1+. Ray maintainers response can be found here: https://www.anyscale.com/blog/update-on-ray-cves-cve-2023-6019-cve-2023-6020-cve-2023-6021-cve-2023-48022-cve-2023-48023,1
+37,CVE-2023-6021,critical,Ray Path Traversal vulnerability,LFI in Ray's log API endpoint allows attackers to read any file on the server without authentication. The issue is fixed in version 2.8.1+. Ray maintainers response can be found here: https://www.anyscale.com/blog/update-on-ray-cves-cve-2023-6019-cve-2023-6020-cve-2023-6021-cve-2023-48022-cve-2023-48023,1
+38,CVE-2023-6569,critical,External Control of File Name or Path in h2oai/h2o-3,"Remote unauthenticated attackers can overwrite arbitrary server files with attacker-controllable data. The data that the attacker can control is not entirely arbitrary. h2o writes a CSV/XLS/etc file to disk, so the attacker data is wrapped in quotations and starts with ""C1"", if they're exporting as CSV.",1
+39,CVE-2023-6572,critical,Gradio Exposure of Sensitive Information to an Unauthorized Actor vulnerability,Exposure of Sensitive Information to an Unauthorized Actor in GitHub repository gradio-app/gradio prior to main.,4
+40,CVE-2023-6730,critical,transformers has a Deserialization of Untrusted Data vulnerability,Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.,33
+41,CVE-2023-6831,critical,Path traversal in MLflow,Path Traversal: '\..\filename' in GitHub repository mlflow/mlflow prior to 2.9.2.,4
+42,CVE-2023-6974,critical,MLflow Server-Side Request Forgery (SSRF),A malicious user could use this issue to access internal HTTP(s) servers and in the worst case (ie: aws instance) it could be abused to get a remote code execution on the victim machine.,4
+43,CVE-2023-6975,critical,MLFlow Path Traversal Vulnerability,A malicious user could use this issue to get command execution on the vulnerable machine and get access to data & models information.,4
+44,CVE-2024-2195,critical,Aim Web API vulnerable to Remote Code Execution,"A critical Remote Code Execution (RCE) vulnerability was identified in the aimhubio/aim project, specifically within the `/api/runs/search/run/` endpoint, affecting versions >= 3.0.0. The vulnerability resides in the `run_search_api` function of the `aim/web/api/runs/views.py` file, where improper restriction of user access to the `RunView` object allows for the execution of arbitrary code via the `query` parameter. This issue enables attackers to execute arbitrary commands on the server, potentially leading to full system compromise.",2
+45,CVE-2024-23730,critical,Unsafe yaml deserialization in llama-hub,The OpenAPI and ChatGPT plugin loaders in LlamaHub (aka llama-hub) before 0.0.67 allow attackers to execute arbitrary code because safe_load is not used for YAML.,1
+46,CVE-2024-23751,critical,SQL injection in llama-index,"LlamaIndex (aka llama_index) through 0.9.35 allows SQL injection via the Text-to-SQL feature in NLSQLTableQueryEngine, SQLTableRetrieverQueryEngine, NLSQLRetriever, RetrieverQueryEngine, and PGVectorSQLQueryEngine. For example, an attacker might be able to delete this year's student records via ""Drop the Students table"" within English language input.",1
+47,CVE-2024-25128,critical,Flask-AppBuilder vulnerable to incorrect authentication when using auth type OpenID ,"### Impact
+When Flask-AppBuilder is set to AUTH_TYPE AUTH_OID, allows an attacker to forge an HTTP request, that could deceive the backend into using any requested OpenID service. This vulnerability could grant an attacker unauthorised privilege access if a custom OpenID service is deployed by the attacker and accessible by the backend. 
+
+This vulnerability is only exploitable when the application is using the old (deprecated 10 years ago) OpenID 2.0 authorization protocol (which is very different from the popular OIDC - Open ID Connect - popular protocol used today). Currently, this protocol is regarded as legacy, with significantly reduced usage and not supported for several years by major authorization providers.
+
+### Patches
+Upgrade to Flask-AppBuilder 4.3.11
+
+### Workarounds
+If upgrade is not possible add the following to your config:
+
+```
+from flask import flash, redirect
+from flask_appbuilder import expose
+from flask_appbuilder.security.sqla.manager import SecurityManager
+from flask_appbuilder.security.views import AuthOIDView
+from flask_appbuilder.security.forms import LoginForm_oid
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+class FixedOIDView(AuthOIDView):
+    @expose(""/login/"", methods=[""GET"", ""POST""])
+    def login(self, flag=True):
+        form = LoginForm_oid()
+        if form.validate_on_submit():
+            identity_url = None
+            for provider in self.appbuilder.sm.openid_providers:
+                if provider.get(""url"") == form.openid.data:
+                    identity_url = form.openid.data
+            if identity_url is None:
+                flash(self.invalid_login_message, ""warning"")
+                return redirect(self.appbuilder.get_url_for_login)
+        return super().login(flag=flag)
+
+class FixedSecurityManager(SecurityManager):
+    authoidview = FixedOIDView
+
+
+FAB_SECURITY_MANAGER_CLASS = ""config.FixedSecurityManager""
+```",1
+48,CVE-2024-3573,critical,mlflow vulnerable to Path Traversal,"mlflow/mlflow is vulnerable to Local File Inclusion (LFI) due to improper parsing of URIs, allowing attackers to bypass checks and read arbitrary files on the system. The issue arises from the 'is_local_uri' function's failure to properly handle URIs with empty or 'file' schemes, leading to the misclassification of URIs as non-local. Attackers can exploit this by crafting malicious model versions with specially crafted 'source' parameters, enabling the reading of sensitive files within at least two directory levels from the server's root.",6
+49,CVE-2024-36039,critical,PyMySQL SQL Injection vulnerability,PyMySQL through 1.1.0 allows SQL injection if used with untrusted JSON input because keys are not escaped by `escape_dict`.,4
