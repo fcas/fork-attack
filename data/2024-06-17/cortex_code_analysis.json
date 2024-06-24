@@ -1,0 +1,155 @@
+[
+    {
+        "number": 3,
+        "created_at": "2024-05-19T03:21:14Z",
+        "updated_at": "2024-05-19T03:21:15Z",
+        "url": "https://api.github.com/repos/fcas/cortex/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/cortex/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-logging-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text logging of sensitive information",
+            "name": "py/clear-text-logging-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-359",
+                "external/cwe/cwe-532",
+                "security"
+            ],
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.4"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9d9949f3fbf3fddb36c79408c59b7f38d265867c",
+            "message": {
+                "text": "This expression logs sensitive data (secret) as clear text."
+            },
+            "location": {
+                "path": "dev/create_user.py",
+                "start_line": 100,
+                "end_line": 100,
+                "start_column": 7,
+                "end_column": 62
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/cortex/code-scanning/alerts/3/instances"
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-19T03:21:14Z",
+        "updated_at": "2024-05-19T03:21:15Z",
+        "url": "https://api.github.com/repos/fcas/cortex/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/cortex/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.4"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9d9949f3fbf3fddb36c79408c59b7f38d265867c",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "test/apis/batch/image-classifier-alexnet/app/main.py",
+                "start_line": 68,
+                "end_line": 68,
+                "start_column": 27,
+                "end_column": 50
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/cortex/code-scanning/alerts/2/instances"
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-19T03:21:14Z",
+        "updated_at": "2024-05-19T03:21:15Z",
+        "url": "https://api.github.com/repos/fcas/cortex/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/cortex/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.4"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9d9949f3fbf3fddb36c79408c59b7f38d265867c",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "test/apis/realtime/multi-container/app/main.py",
+                "start_line": 27,
+                "end_line": 27,
+                "start_column": 18,
+                "end_column": 62
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/cortex/code-scanning/alerts/1/instances"
+    }
+]

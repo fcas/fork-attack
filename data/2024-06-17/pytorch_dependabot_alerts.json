@@ -1,0 +1,491 @@
+[
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "tools/build/bazel/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/5",
+        "created_at": "2024-05-21T08:35:42Z",
+        "updated_at": "2024-05-21T08:35:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": ".github/requirements/conda-env-iOS.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/4",
+        "created_at": "2024-05-21T08:35:42Z",
+        "updated_at": "2024-05-21T08:35:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": ".github/requirements/conda-env-Linux-X64.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/3",
+        "created_at": "2024-05-21T08:35:41Z",
+        "updated_at": "2024-05-21T08:35:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": ".github/requirements-gha-cache.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/2",
+        "created_at": "2024-05-21T08:35:41Z",
+        "updated_at": "2024-05-21T08:35:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-vg3r-rm7w-2xgh",
+            "cve_id": "CVE-2024-35176",
+            "summary": "REXML contains a denial of service vulnerability",
+            "description": "### Impact\n\nThe REXML gem before 3.2.6 has a DoS vulnerability when it parses an XML that has many `<`s in an attribute value.\n\nIf you need to parse untrusted XMLs, you many be impacted to this vulnerability.\n\n### Patches\n\nThe REXML gem 3.2.7 or later include the patch to fix this vulnerability.\n\n### Workarounds\n\nDon't parse untrusted XMLs.\n\n### References\n\n* https://www.ruby-lang.org/en/news/2024/05/16/dos-rexml-cve-2024-35176/",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-vg3r-rm7w-2xgh",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35176",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-vg3r-rm7w-2xgh"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/commit/4325835f92f3f142ebd91a3fdba4e1f1ab7f1cfb"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2024/05/16/dos-rexml-cve-2024-35176"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35176"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vg3r-rm7w-2xgh"
+                }
+            ],
+            "published_at": "2024-05-16T17:44:04Z",
+            "updated_at": "2024-05-16T19:05:52Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "rexml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.2.7",
+                    "first_patched_version": {
+                        "identifier": "3.2.7"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.2.7",
+            "first_patched_version": {
+                "identifier": "3.2.7"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/1",
+        "created_at": "2024-05-16T21:05:54Z",
+        "updated_at": "2024-05-16T21:05:54Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

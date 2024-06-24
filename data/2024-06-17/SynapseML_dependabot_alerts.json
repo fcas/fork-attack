@@ -1,0 +1,1089 @@
+[
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "express"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rv95-896h-c2vc",
+            "cve_id": "CVE-2024-29041",
+            "summary": "Express.js Open Redirect in malformed URLs",
+            "description": "### Impact\n\nVersions of Express.js prior to 4.19.2 and pre-release alpha and beta versions before 5.0.0-beta.3 are affected by an open redirect vulnerability using malformed URLs.\n\nWhen a user of Express performs a redirect using a user-provided URL Express performs an encode [using `encodeurl`](https://github.com/pillarjs/encodeurl) on the contents before passing it to the `location` header. This can cause malformed URLs to be evaluated in unexpected ways by common redirect allow list implementations in Express applications, leading to an Open Redirect via bypass of a properly implemented allow list.\n\nThe main method impacted is `res.location()` but this is also called from within `res.redirect()`.\n\n### Patches\n\nhttps://github.com/expressjs/express/commit/0867302ddbde0e9463d0564fea5861feb708c2dd\nhttps://github.com/expressjs/express/commit/0b746953c4bd8e377123527db11f9cd866e39f94\n\nAn initial fix went out with `express@4.19.0`, we then patched a feature regression in `4.19.1` and added improved handling for the bypass in `4.19.2`.\n\n### Workarounds\n\nThe fix for this involves pre-parsing the url string with either `require('node:url').parse` or `new URL`. These are steps you can take on your own before passing the user input string to `res.location` or `res.redirect`.\n\n### References\n\nhttps://github.com/expressjs/express/pull/5539\nhttps://github.com/koajs/koa/issues/1800\nhttps://expressjs.com/en/4x/api.html#res.location",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-rv95-896h-c2vc",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-29041",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/expressjs/express/security/advisories/GHSA-rv95-896h-c2vc"
+                },
+                {
+                    "url": "https://github.com/koajs/koa/issues/1800"
+                },
+                {
+                    "url": "https://github.com/expressjs/express/pull/5539"
+                },
+                {
+                    "url": "https://github.com/expressjs/express/commit/0867302ddbde0e9463d0564fea5861feb708c2dd"
+                },
+                {
+                    "url": "https://github.com/expressjs/express/commit/0b746953c4bd8e377123527db11f9cd866e39f94"
+                },
+                {
+                    "url": "https://expressjs.com/en/4x/api.html#res.location"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-29041"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rv95-896h-c2vc"
+                }
+            ],
+            "published_at": "2024-03-25T19:40:26Z",
+            "updated_at": "2024-03-27T21:47:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "express"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.19.2",
+                    "first_patched_version": {
+                        "identifier": "4.19.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "express"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 5.0.0-alpha.1, < 5.0.0-beta.3",
+                    "first_patched_version": {
+                        "identifier": "5.0.0-beta.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-601",
+                    "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+                },
+                {
+                    "cwe_id": "CWE-1286",
+                    "name": "Improper Validation of Syntactic Correctness of Input"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "express"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.19.2",
+            "first_patched_version": {
+                "identifier": "4.19.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/10",
+        "created_at": "2024-05-24T01:33:44Z",
+        "updated_at": "2024-05-24T01:33:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3wc5-fcw2-2329",
+            "cve_id": "CVE-2024-28246",
+            "summary": "KaTeX missing normalization of the protocol in URLs allows bypassing forbidden protocols",
+            "description": "### Impact\n\nCode that uses KaTeX's `trust` option, specifically that provides a function to block-list certain URL protocols, can be fooled by URLs in malicious inputs that use uppercase characters in the protocol. In particular, this can allow for malicious input to generate `javascript:` links in the output, even if the `trust` function tries to forbid this protocol via `trust: (context) => context.protocol !== 'javascript'`.\n\n### Patches\nUpgrade to KaTeX v0.16.10 to remove this vulnerability.\n\n### Workarounds\n* Allow-list instead of block protocols in your `trust` function.\n* Manually lowercase `context.protocol` via `context.protocol.toLowerCase()` before attempting to check for certain protocols.\n* Avoid use of or turn off the `trust` option.\n\n\n### Details\nKaTeX did not normalize the `protocol` entry of the `context` object provided to a user-specified `trust`-function, so it could be a mix of lowercase and/or uppercase letters.\n\nIt is generally better to allow-list by protocol, in which case this would normally not be an issue. But in some cases, you might want to block-list, and the [KaTeX documentation](https://katex.org/docs/options.html) even provides such an example:\n\n> Allow all commands but forbid specific protocol: `trust: (context) => context.protocol !== 'file'`\n\nCurrently KaTeX internally sees `file:` and `File:` URLs as different protocols, so `context.protocol` can be `file` or `File`, so the above check does not suffice.  A simple workaround would be:\n\n> `trust: (context) => context.protocol.toLowerCase() !== 'file'`\n\nMost URL parsers normalize the scheme to lowercase. For example, [RFC3986](https://datatracker.ietf.org/doc/html/rfc3986#section-3.1) says:\n\n> Although schemes are case-insensitive, the canonical form is lowercase and documents that specify schemes must do so with lowercase letters. An implementation should accept uppercase letters as equivalent to lowercase in scheme names (e.g., allow \"HTTP\" as well as \"http\") for the sake of robustness but should only produce lowercase scheme names for consistency.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-3wc5-fcw2-2329",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28246",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/security/advisories/GHSA-3wc5-fcw2-2329"
+                },
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/commit/fc5af64183a3ceb9be9d1c23a275999a728593de"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28246"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3wc5-fcw2-2329"
+                }
+            ],
+            "published_at": "2024-03-25T19:38:37Z",
+            "updated_at": "2024-03-25T22:32:12Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "katex"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.11.0, < 0.16.10",
+                    "first_patched_version": {
+                        "identifier": "0.16.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:L",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-184",
+                    "name": "Incomplete List of Disallowed Inputs"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.11.0, < 0.16.10",
+            "first_patched_version": {
+                "identifier": "0.16.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/9",
+        "created_at": "2024-05-24T01:33:44Z",
+        "updated_at": "2024-05-24T01:33:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f98w-7cxr-ff2h",
+            "cve_id": "CVE-2024-28245",
+            "summary": "KaTeX's `\\includegraphics` does not escape filename",
+            "description": "### Impact\nKaTeX users who render untrusted mathematical expressions could encounter malicious input using `\\includegraphics` that runs arbitrary JavaScript, or generate invalid HTML.\n\n### Patches\nUpgrade to KaTeX v0.16.10 to remove this vulnerability.\n\n### Workarounds\n* Avoid use of or turn off the `trust` option, or set it to forbid `\\includegraphics` commands.\n* Forbid inputs containing the substring `\"\\\\includegraphics\"`.\n* Sanitize HTML output from KaTeX.\n\n### Details\n`\\includegraphics` did not properly quote its filename argument, allowing it to generate invalid or malicious HTML that runs scripts.\n\n### For more information\nIf you have any questions or comments about this advisory:\n\n* Open an issue or security advisory in the [KaTeX repository](https://github.com/KaTeX/KaTeX/)\n* Email us at katex-security@mit.edu",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-f98w-7cxr-ff2h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28245",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/security/advisories/GHSA-f98w-7cxr-ff2h"
+                },
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/commit/c5897fcd1f73da9612a53e6b5544f1d776e17770"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28245"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f98w-7cxr-ff2h"
+                }
+            ],
+            "published_at": "2024-03-25T19:38:34Z",
+            "updated_at": "2024-03-25T22:32:07Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "katex"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.11.0, < 0.16.10",
+                    "first_patched_version": {
+                        "identifier": "0.16.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                "score": 6.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-116",
+                    "name": "Improper Encoding or Escaping of Output"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.11.0, < 0.16.10",
+            "first_patched_version": {
+                "identifier": "0.16.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/8",
+        "created_at": "2024-05-24T01:33:44Z",
+        "updated_at": "2024-05-24T01:33:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-64fm-8hw2-v72w",
+            "cve_id": "CVE-2024-28243",
+            "summary": "KaTeX's maxExpand bypassed by `\\edef`",
+            "description": "### Impact\nKaTeX users who render untrusted mathematical expressions could encounter malicious input using `\\edef` that causes a near-infinite loop, despite setting `maxExpand` to avoid such loops. This can be used as an availability attack, where e.g. a client rendering another user's KaTeX input will be unable to use the site due to memory overflow, tying up the main thread, or stack overflow.\n\n### Patches\nUpgrade to KaTeX v0.16.10 to remove this vulnerability.\n\n### Workarounds\nForbid inputs containing the substring `\"\\\\edef\"` before passing them to KaTeX.\n(There is no easy workaround for the auto-render extension.)\n\n### Details\nKaTeX supports an option named `maxExpand` which prevents infinitely recursive macros from consuming all available memory and/or triggering a stack overflow error. However, what counted as an \"expansion\" is a single macro expanding to any number of tokens. The expand-and-define TeX command `\\edef` can be used to build up an exponential number of tokens using only a linear number of expansions according to this definition, e.g. by repeatedly doubling the previous definition. This has been corrected in KaTeX v0.16.10, where every expanded token in an `\\edef` counts as an expansion.\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Open an issue or security advisory in the [KaTeX repository](https://github.com/KaTeX/KaTeX/)\n* Email us at [katex-security@mit.edu](mailto:katex-security@mit.edu)",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-64fm-8hw2-v72w",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28243",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/security/advisories/GHSA-64fm-8hw2-v72w"
+                },
+                {
+                    "url": "https://github.com/KaTeX/KaTeX/commit/e88b4c357f978b1bca8edfe3297f0aa309bcbe34"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28243"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-64fm-8hw2-v72w"
+                }
+            ],
+            "published_at": "2024-03-25T19:38:18Z",
+            "updated_at": "2024-03-25T22:31:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "katex"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.10.0-beta, < 0.16.10",
+                    "first_patched_version": {
+                        "identifier": "0.16.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-606",
+                    "name": "Unchecked Input for Loop Condition"
+                },
+                {
+                    "cwe_id": "CWE-674",
+                    "name": "Uncontrolled Recursion"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "katex"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.10.0-beta, < 0.16.10",
+            "first_patched_version": {
+                "identifier": "0.16.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/7",
+        "created_at": "2024-05-24T01:33:44Z",
+        "updated_at": "2024-05-24T01:33:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "webpack-dev-middleware"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-wr3j-pwj9-hqq6",
+            "cve_id": "CVE-2024-29180",
+            "summary": "Path traversal in webpack-dev-middleware",
+            "description": "### Summary\n_The **webpack-dev-middleware** middleware does not validate the supplied URL address sufficiently before returning the local file. It is possible to access any file on the developer's machine._\n\n### Details\nThe middleware can either work with the physical filesystem when reading the files or it can use a virtualized in-memory _memfs_ filesystem.\nIf _writeToDisk_ configuration option is set to **true**, the physical filesystem is used:\n[https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/setupOutputFileSystem.js#L21](https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/setupOutputFileSystem.js#L21)\n\nThe _**getFilenameFromUrl**_ method is used to parse URL and build the local file path.\nThe public path prefix is stripped from the URL, and the **unsecaped** path suffix is appended to the _outputPath_:\n[https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/getFilenameFromUrl.js#L82](https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/getFilenameFromUrl.js#L82)\nAs the URL is not unescaped and normalized automatically before calling the midlleware, it is possible to use _%2e_ and _%2f_ sequences to perform path traversal attack.\n\n### PoC\n_A blank project can be created containing the following configuration file **webpack.config.js**:_\n`module.exports = {\n  devServer: {\n    devMiddleware: {\n      writeToDisk: true\n    }\n  }\n};\n`\n\nWhen started, it is possible to access any local file, e.g. _/etc/passwd_:\n`$ curl localhost:8080/public/..%2f..%2f..%2f..%2f../etc/passwd`\n```\nroot:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\n```\n\n### Impact\nThe developers using _webpack-dev-server_ or _webpack-dev-middleware_ are affected by the issue. When the project is started, an attacker might access any file on the developer's machine and exfiltrate the content (e.g. password, configuration files, private source code, ...).\n\nIf the development server is listening on a public IP address (or **0.0.0.0**), an attacker on the local network can access the local files without any interaction from the victim (direct connection to the port).\n\nIf the server allows access from third-party domains (CORS, **_Allow-Access-Origin: *_** ), an attacker can send a malicious link to the victim. When visited, the client side script can connect to the local server and exfiltrate the local files.\n\n### Recommendation\nThe URL should be unescaped and normalized before any further processing.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-wr3j-pwj9-hqq6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-29180",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/security/advisories/GHSA-wr3j-pwj9-hqq6"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-29180"
+                },
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/commit/189c4ac7d2344ec132a4689e74dc837ec5be0132"
+                },
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/commit/9670b3495da518fe667ff3428c5e4cb9f2f3d353"
+                },
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/commit/e10008c762e4d5821ed6990348dabf0d4d93a10e"
+                },
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/getFilenameFromUrl.js#L82"
+                },
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/blob/7ed24e0b9f53ad1562343f9f517f0f0ad2a70377/src/utils/setupOutputFileSystem.js#L21"
+                },
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/releases/tag/v5.3.4"
+                },
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/releases/tag/v6.1.2"
+                },
+                {
+                    "url": "https://github.com/webpack/webpack-dev-middleware/releases/tag/v7.1.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-wr3j-pwj9-hqq6"
+                }
+            ],
+            "published_at": "2024-03-21T18:59:28Z",
+            "updated_at": "2024-03-21T18:59:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "webpack-dev-middleware"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.1.0",
+                    "first_patched_version": {
+                        "identifier": "7.1.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "webpack-dev-middleware"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 6.0.0, < 6.1.2",
+                    "first_patched_version": {
+                        "identifier": "6.1.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "webpack-dev-middleware"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 5.3.3",
+                    "first_patched_version": {
+                        "identifier": "5.3.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+                "score": 7.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "webpack-dev-middleware"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 5.3.3",
+            "first_patched_version": {
+                "identifier": "5.3.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/6",
+        "created_at": "2024-05-24T01:33:44Z",
+        "updated_at": "2024-05-24T01:33:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "follow-redirects"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cxjh-pqwp-8mfp",
+            "cve_id": "CVE-2024-28849",
+            "summary": "follow-redirects' Proxy-Authorization header kept across hosts",
+            "description": "When using [axios](https://github.com/axios/axios), its dependency follow-redirects only clears authorization header during cross-domain redirect, but allows the proxy-authentication header which contains credentials too.\n\n## Steps To Reproduce & PoC\n\nTest code:\n\n```js\nconst axios = require('axios');\n\naxios.get('http://127.0.0.1:10081/', {\n headers: {\n 'AuThorization': 'Rear Test',\n 'ProXy-AuthoriZation': 'Rear Test',\n 'coOkie': 't=1'\n }\n})\n .then((response) => {\n console.log(response);\n })\n```\n\nWhen I meet the cross-domain redirect, the sensitive headers like authorization and cookie are cleared, but proxy-authentication header is kept.\n\n## Impact\n\nThis vulnerability may lead to credentials leak.\n\n## Recommendations\n\nRemove proxy-authentication header during cross-domain redirect\n\n### Recommended Patch\n\n[follow-redirects/index.js:464](https://github.com/follow-redirects/follow-redirects/commit/c4f847f85176991f95ab9c88af63b1294de8649b)\n\n```diff\n- removeMatchingHeaders(/^(?:authorization|cookie)$/i, this._options.headers);\n+ removeMatchingHeaders(/^(?:authorization|proxy-authorization|cookie)$/i, this._options.headers);\n```",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cxjh-pqwp-8mfp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-28849",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/security/advisories/GHSA-cxjh-pqwp-8mfp"
+                },
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/commit/c4f847f85176991f95ab9c88af63b1294de8649b"
+                },
+                {
+                    "url": "https://fetch.spec.whatwg.org/#authentication-entries"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28849"
+                },
+                {
+                    "url": "https://github.com/psf/requests/issues/1885"
+                },
+                {
+                    "url": "https://hackerone.com/reports/2390009"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VOIF4EPQUCKDBEVTGRQDZ3CGTYQHPO7Z"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cxjh-pqwp-8mfp"
+                }
+            ],
+            "published_at": "2024-03-14T17:19:42Z",
+            "updated_at": "2024-04-02T17:54:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "follow-redirects"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 1.15.5",
+                    "first_patched_version": {
+                        "identifier": "1.15.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "follow-redirects"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 1.15.5",
+            "first_patched_version": {
+                "identifier": "1.15.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/5",
+        "created_at": "2024-05-24T01:33:44Z",
+        "updated_at": "2024-05-24T01:33:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "axios"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-wf5p-g6vw-rhxx",
+            "cve_id": "CVE-2023-45857",
+            "summary": "Axios Cross-Site Request Forgery Vulnerability",
+            "description": "An issue discovered in Axios 0.8.1 through 1.5.1 inadvertently reveals the confidential XSRF-TOKEN stored in cookies by including it in the HTTP header X-XSRF-TOKEN for every request made to any host allowing attackers to view sensitive information.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-wf5p-g6vw-rhxx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-45857",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-45857"
+                },
+                {
+                    "url": "https://github.com/axios/axios/issues/6006"
+                },
+                {
+                    "url": "https://github.com/axios/axios/issues/6022"
+                },
+                {
+                    "url": "https://github.com/axios/axios/pull/6028"
+                },
+                {
+                    "url": "https://github.com/axios/axios/commit/96ee232bd3ee4de2e657333d4d2191cd389e14d0"
+                },
+                {
+                    "url": "https://github.com/axios/axios/releases/tag/v1.6.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-AXIOS-6032459"
+                },
+                {
+                    "url": "https://github.com/axios/axios/pull/6091"
+                },
+                {
+                    "url": "https://github.com/axios/axios/commit/2755df562b9c194fba6d8b609a383443f6a6e967"
+                },
+                {
+                    "url": "https://github.com/axios/axios/releases/tag/v0.28.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx"
+                }
+            ],
+            "published_at": "2023-11-08T21:30:37Z",
+            "updated_at": "2024-02-20T20:02:28Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "axios"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.0.0, < 1.6.0",
+                    "first_patched_version": {
+                        "identifier": "1.6.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "axios"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.8.1, < 0.28.0",
+                    "first_patched_version": {
+                        "identifier": "0.28.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-352",
+                    "name": "Cross-Site Request Forgery (CSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "axios"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.8.1, < 0.28.0",
+            "first_patched_version": {
+                "identifier": "0.28.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/4",
+        "created_at": "2024-05-24T01:33:44Z",
+        "updated_at": "2024-05-24T01:33:44Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "follow-redirects"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jchw-25xp-jwwc",
+            "cve_id": "CVE-2023-26159",
+            "summary": "Follow Redirects improperly handles URLs in the url.parse() function",
+            "description": "Versions of the package follow-redirects before 1.15.4 are vulnerable to Improper Input Validation due to the improper handling of URLs by the url.parse() function. When new URL() throws an error, it can be manipulated to misinterpret the hostname. An attacker could exploit this weakness to redirect traffic to a malicious site, potentially leading to information disclosure, phishing attacks, or other security breaches.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jchw-25xp-jwwc",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-26159",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-26159"
+                },
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/issues/235"
+                },
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/pull/236"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-FOLLOWREDIRECTS-6141137"
+                },
+                {
+                    "url": "https://github.com/follow-redirects/follow-redirects/commit/7a6567e16dfa9ad18a70bfe91784c28653fbf19d"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZZ425BFKNBQ6AK7I5SAM56TWON5OF2XM/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jchw-25xp-jwwc"
+                }
+            ],
+            "published_at": "2024-01-02T06:30:30Z",
+            "updated_at": "2024-01-31T05:07:10Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "follow-redirects"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.15.4",
+                    "first_patched_version": {
+                        "identifier": "1.15.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-601",
+                    "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "follow-redirects"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.15.4",
+            "first_patched_version": {
+                "identifier": "1.15.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/3",
+        "created_at": "2024-05-24T01:33:43Z",
+        "updated_at": "2024-05-24T01:33:43Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7fh5-64p2-3v2j",
+            "cve_id": "CVE-2023-44270",
+            "summary": "PostCSS line return parsing error",
+            "description": "An issue was discovered in PostCSS before 8.4.31. It affects linters using PostCSS to parse external Cascading Style Sheets (CSS). There may be `\\r` discrepancies, as demonstrated by `@font-face{ font:(\\r/*);}` in a rule.\n\nThis vulnerability affects linters using PostCSS to parse external untrusted CSS. An attacker can prepare CSS in such a way that it will contains parts parsed by PostCSS as a CSS comment. After processing by PostCSS, it will be included in the PostCSS output in CSS nodes (rules, properties) despite being originally included in a comment.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-7fh5-64p2-3v2j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-44270",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-44270"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/commit/58cc860b4c1707510c9cd1bc1fa30b423a9ad6c5"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/blob/main/lib/tokenize.js#L25"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/releases/tag/8.4.31"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/issues/2820"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7fh5-64p2-3v2j"
+                }
+            ],
+            "published_at": "2023-09-30T00:31:10Z",
+            "updated_at": "2023-11-05T05:05:37Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "postcss"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 8.4.31",
+                    "first_patched_version": {
+                        "identifier": "8.4.31"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                },
+                {
+                    "cwe_id": "CWE-144",
+                    "name": "Improper Neutralization of Line Delimiters"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 8.4.31",
+            "first_patched_version": {
+                "identifier": "8.4.31"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:43Z",
+        "updated_at": "2024-05-24T01:33:43Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "semver"
+            },
+            "manifest_path": "website/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-c2qf-rxjj-qqgw",
+            "cve_id": "CVE-2022-25883",
+            "summary": "semver vulnerable to Regular Expression Denial of Service",
+            "description": "Versions of the package semver before 7.5.2 on the 7.x branch, before 6.3.1 on the 6.x branch, and all other versions before 5.7.2 are vulnerable to Regular Expression Denial of Service (ReDoS) via the function new Range, when untrusted user data is provided as a range.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-c2qf-rxjj-qqgw",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-25883",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-25883"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/pull/564"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/commit/717534ee353682f3bcf33e60a8af4292626d4441"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-SEMVER-3247795"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/blob/main/classes/range.js#L97-L104"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/blob/main/internal/re.js#L138"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/blob/main/internal/re.js#L160"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/pull/585"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/commit/928e56d21150da0413a3333a3148b20e741a920c"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/pull/593"
+                },
+                {
+                    "url": "https://github.com/npm/node-semver/commit/2f8fd41487acf380194579ecb6f8b1bbfe116be0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-c2qf-rxjj-qqgw"
+                }
+            ],
+            "published_at": "2023-06-21T06:30:28Z",
+            "updated_at": "2024-02-14T14:58:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "semver"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.5.2",
+                    "first_patched_version": {
+                        "identifier": "7.5.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "semver"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 6.0.0, < 6.3.1",
+                    "first_patched_version": {
+                        "identifier": "6.3.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "semver"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 5.7.2",
+                    "first_patched_version": {
+                        "identifier": "5.7.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "semver"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 7.0.0, < 7.5.2",
+            "first_patched_version": {
+                "identifier": "7.5.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/SynapseML/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/SynapseML/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:43Z",
+        "updated_at": "2024-05-24T01:33:43Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

@@ -1,0 +1,1791 @@
+[
+    {
+        "number": 16,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "vite"
+            },
+            "manifest_path": "src/lightning/app/cli/react-ui-template/ui/yarn.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8jhw-289h-jh2g",
+            "cve_id": "CVE-2024-31207",
+            "summary": "Vite's `server.fs.deny` did not deny requests for patterns with directories.",
+            "description": "### Summary\n[Vite dev server option](https://vitejs.dev/config/server-options.html#server-fs-deny) `server.fs.deny` did not deny requests for patterns with directories. An example of such a pattern is `/foo/**/*`.\n\n### Impact\nOnly apps setting a custom `server.fs.deny` that includes a pattern with directories, and explicitly exposing the Vite dev server to the network (using `--host` or [`server.host` config option](https://vitejs.dev/config/server-options.html#server-host)) are affected.\n\n### Patches\nFixed in vite@5.2.6, vite@5.1.7, vite@5.0.13, vite@4.5.3, vite@3.2.10, vite@2.9.18\n\n### Details\n`server.fs.deny` uses picomatch with the config of `{ matchBase: true }`. [matchBase](https://github.com/micromatch/picomatch/blob/master/README.md#options:~:text=Description-,basename,-boolean) only matches the basename of the file, not the path due to a bug (https://github.com/micromatch/picomatch/issues/89). The vite config docs read like you should be able to set fs.deny to glob with picomatch. Vite also does not set `{ dot: true }` and that causes [dotfiles not to be denied](https://github.com/micromatch/picomatch/blob/master/README.md#options:~:text=error%20is%20thrown.-,dot,-boolean) unless they are explicitly defined.\n\n**Reproduction**\n\nSet fs.deny to `['**/.git/**']` and then curl for `/.git/config`.\n\n* with `matchBase: true`, you can get any file under  `.git/` (config, HEAD, etc).\n* with `matchBase: false`, you cannot get any file under  `.git/` (config, HEAD, etc).\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-8jhw-289h-jh2g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-31207",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/vitejs/vite/security/advisories/GHSA-8jhw-289h-jh2g"
+                },
+                {
+                    "url": "https://github.com/vitejs/vite/commit/011bbca350e447d1b499d242804ce62738c12bc0"
+                },
+                {
+                    "url": "https://github.com/vitejs/vite/commit/5a056dd2fc80dbafed033062fe6aaf4717309f48"
+                },
+                {
+                    "url": "https://github.com/vitejs/vite/commit/89c7c645f09d16a38f146ef4a1528f218e844d67"
+                },
+                {
+                    "url": "https://github.com/vitejs/vite/commit/96a7f3a41ef2f9351c46f3ab12489bb4efa03cc9"
+                },
+                {
+                    "url": "https://github.com/vitejs/vite/commit/ba5269cca81de3f5fbb0f49d58a1c55688043258"
+                },
+                {
+                    "url": "https://github.com/vitejs/vite/commit/d2db33f7d4b96750b35370c70dd2c35ec3b9b649"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-31207"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8jhw-289h-jh2g"
+                }
+            ],
+            "published_at": "2024-04-03T16:46:17Z",
+            "updated_at": "2024-04-04T20:24:28Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "vite"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.7.0, <= 2.9.17",
+                    "first_patched_version": {
+                        "identifier": "2.9.18"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "vite"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.0.0, <= 3.2.8",
+                    "first_patched_version": {
+                        "identifier": "3.2.10"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "vite"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 4.0.0, <= 4.5.2",
+                    "first_patched_version": {
+                        "identifier": "4.5.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "vite"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 5.0.0, <= 5.0.12",
+                    "first_patched_version": {
+                        "identifier": "5.0.13"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "vite"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 5.1.0, <= 5.1.6",
+                    "first_patched_version": {
+                        "identifier": "5.1.7"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "vite"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 5.2.0, <= 5.2.5",
+                    "first_patched_version": {
+                        "identifier": "5.2.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                },
+                {
+                    "cwe_id": "CWE-284",
+                    "name": "Improper Access Control"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "vite"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 2.7.0, <= 2.9.17",
+            "first_patched_version": {
+                "identifier": "2.9.18"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/16",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/16",
+        "created_at": "2024-05-24T01:34:02Z",
+        "updated_at": "2024-05-24T01:34:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "axios"
+            },
+            "manifest_path": "src/lightning/app/cli/pl-app-template/ui/package.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-wf5p-g6vw-rhxx",
+            "cve_id": "CVE-2023-45857",
+            "summary": "Axios Cross-Site Request Forgery Vulnerability",
+            "description": "An issue discovered in Axios 0.8.1 through 1.5.1 inadvertently reveals the confidential XSRF-TOKEN stored in cookies by including it in the HTTP header X-XSRF-TOKEN for every request made to any host allowing attackers to view sensitive information.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-wf5p-g6vw-rhxx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-45857",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-45857"
+                },
+                {
+                    "url": "https://github.com/axios/axios/issues/6006"
+                },
+                {
+                    "url": "https://github.com/axios/axios/issues/6022"
+                },
+                {
+                    "url": "https://github.com/axios/axios/pull/6028"
+                },
+                {
+                    "url": "https://github.com/axios/axios/commit/96ee232bd3ee4de2e657333d4d2191cd389e14d0"
+                },
+                {
+                    "url": "https://github.com/axios/axios/releases/tag/v1.6.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-AXIOS-6032459"
+                },
+                {
+                    "url": "https://github.com/axios/axios/pull/6091"
+                },
+                {
+                    "url": "https://github.com/axios/axios/commit/2755df562b9c194fba6d8b609a383443f6a6e967"
+                },
+                {
+                    "url": "https://github.com/axios/axios/releases/tag/v0.28.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx"
+                }
+            ],
+            "published_at": "2023-11-08T21:30:37Z",
+            "updated_at": "2024-02-20T20:02:28Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "axios"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.0.0, < 1.6.0",
+                    "first_patched_version": {
+                        "identifier": "1.6.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "axios"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.8.1, < 0.28.0",
+                    "first_patched_version": {
+                        "identifier": "0.28.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-352",
+                    "name": "Cross-Site Request Forgery (CSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "axios"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.8.1, < 0.28.0",
+            "first_patched_version": {
+                "identifier": "0.28.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/15",
+        "created_at": "2024-05-24T01:34:02Z",
+        "updated_at": "2024-05-24T01:34:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "requirements/pytorch/test.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h8wv-9h96-m4hr",
+            "cve_id": "CVE-2024-27319",
+            "summary": "Onnx Out-of-bounds Read vulnerability",
+            "description": "Versions of the package onnx before and including 1.15.0 are vulnerable to Out-of-bounds Read as the ONNX_ASSERT and ONNX_ASSERTM functions have an off by one string copy.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h8wv-9h96-m4hr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-27319",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-27319"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/commit/08a399ba75a805b7813ab8936b91d0e274b08287"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FGTBH5ZYL2LGYHIJDHN2MAUURIR5E7PY"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TFJJID2IZDOLFDMWVYTBDI75ZJQC6JOL"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h8wv-9h96-m4hr"
+                }
+            ],
+            "published_at": "2024-02-23T18:30:59Z",
+            "updated_at": "2024-04-24T14:38:10Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 1.15.0",
+                    "first_patched_version": {
+                        "identifier": "1.16.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:L",
+                "score": 4.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 1.15.0",
+            "first_patched_version": {
+                "identifier": "1.16.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/14",
+        "created_at": "2024-05-24T01:34:02Z",
+        "updated_at": "2024-05-24T01:34:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "requirements/pytorch/test.txt",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-whh8-fjgc-qp73",
+            "cve_id": "CVE-2024-27318",
+            "summary": "Onnx Directory Traversal vulnerability",
+            "description": "Versions of the package onnx before and including 1.15.0 are vulnerable to Directory Traversal as the external_data field of the tensor proto can have a path to the file which is outside the model current directory or user-provided directory. The vulnerability occurs as a bypass for the patch added for CVE-2022-25882.\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-whh8-fjgc-qp73",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-27318",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-27318"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/commit/66b7fb630903fdcf3e83b6b6d56d82e904264a20"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-PYTHON-ONNX-2395479"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FGTBH5ZYL2LGYHIJDHN2MAUURIR5E7PY"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TFJJID2IZDOLFDMWVYTBDI75ZJQC6JOL"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-whh8-fjgc-qp73"
+                }
+            ],
+            "published_at": "2024-02-23T18:30:59Z",
+            "updated_at": "2024-04-24T14:35:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.15.0",
+                    "first_patched_version": {
+                        "identifier": "1.16.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.15.0",
+            "first_patched_version": {
+                "identifier": "1.16.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/13",
+        "created_at": "2024-05-24T01:34:02Z",
+        "updated_at": "2024-05-24T01:34:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "requirements/pytorch/examples.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/12",
+        "created_at": "2024-05-24T01:34:02Z",
+        "updated_at": "2024-05-24T01:34:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "IPython"
+            },
+            "manifest_path": "requirements/pytorch/docs.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-29gw-9793-fvw7",
+            "cve_id": "CVE-2023-24816",
+            "summary": "IPython vulnerable to command injection via set_term_title",
+            "description": "IPython provides an interactive Python shell and Jupyter kernel to use Python interactively. Versions prior to 8.10.0 are vulnerable to command injection in the `set_term_title` [function](https://github.com/ipython/ipython/blob/3f0bf05f072a91b2a3042d23ce250e5e906183fd/IPython/utils/terminal.py#L103-L117) under specific conditions. This has been patched in version 8.10.0.\n\n### Impact \nUsers are only vulnerable when calling this function in Windows in a Python environment where [ctypes](https://docs.python.org/3/library/ctypes.html) is not available. The dependency on ctypes in `IPython.utils._process_win32` prevents the vulnerable code from ever being reached (making it effectively dead code). However, as a library that could be used by another tool, `set_term_title` could introduce a vulnerability for dependencies. Currently `set_term_title` is only called with (semi-)trusted input that contain the current working directory of the current IPython session. If an attacker can control directory names, and manage to get a user to `cd` into this directory, then the attacker can execute arbitrary commands contained in the folder names.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-29gw-9793-fvw7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-24816",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ipython/ipython/security/advisories/GHSA-29gw-9793-fvw7"
+                },
+                {
+                    "url": "https://github.com/ipython/ipython/commit/385d69325319a5972ee9b5983638e3617f21cb1f"
+                },
+                {
+                    "url": "https://github.com/ipython/ipython/commit/991849c247fc208628879e7ca2923b3c218a5a75"
+                },
+                {
+                    "url": "https://github.com/Carreau/ipython/blob/7557ade0ed927475d5ab5b573d0ea4febfb22683/docs/source/whatsnew/version8.rst#ipython-810"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-24816"
+                },
+                {
+                    "url": "https://github.com/ipython/ipython/blob/3f0bf05f072a91b2a3042d23ce250e5e906183fd/IPython/utils/terminal.py#L103-L117"
+                },
+                {
+                    "url": "https://github.com/ipython/ipython/blob/56e6925dfa50e2c7f4a6471547b8176275db7c25/IPython/utils/_process_win32.py#L20"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-29gw-9793-fvw7"
+                }
+            ],
+            "published_at": "2023-02-10T19:55:53Z",
+            "updated_at": "2023-09-02T05:03:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "IPython"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 8.10",
+                    "first_patched_version": {
+                        "identifier": "8.10"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                "score": 4.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-78",
+                    "name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "IPython"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 8.10",
+            "first_patched_version": {
+                "identifier": "8.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/11",
+        "created_at": "2024-05-24T01:34:02Z",
+        "updated_at": "2024-05-24T01:34:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "manifest_path": "requirements/pytorch/docs.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-r9hx-vwmv-q579",
+            "cve_id": "CVE-2022-40897",
+            "summary": "pypa/setuptools vulnerable to Regular Expression Denial of Service (ReDoS)",
+            "description": "Python Packaging Authority (PyPA)'s setuptools is a library designed to facilitate packaging Python projects. Setuptools version 65.5.0 and earlier could allow remote attackers to cause a denial of service by fetching malicious HTML from a PyPI package or custom PackageIndex page due to a vulnerable Regular Expression in `package_index`. This has been patched in version 65.5.1.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-r9hx-vwmv-q579",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-40897",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-40897"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/blob/fe8a98e696241487ba6ac9f91faa38ade939ec5d/setuptools/package_index.py#L200"
+                },
+                {
+                    "url": "https://pyup.io/posts/pyup-discovers-redos-vulnerabilities-in-top-python-packages/"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/issues/3659"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/commit/43a9c9bfa6aa626ec2a22540bea28d2ca77964be"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/compare/v65.5.0...v65.5.1"
+                },
+                {
+                    "url": "https://pyup.io/vulnerabilities/CVE-2022-40897/52495/"
+                },
+                {
+                    "url": "https://setuptools.pypa.io/en/latest/"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230214-0001/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ADES3NLOE5QJKBLGNZNI2RGVOSQXA37R/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/YNA2BAH2ACBZ4TVJZKFLCR7L23BG5C3H/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-r9hx-vwmv-q579"
+                }
+            ],
+            "published_at": "2022-12-23T00:30:23Z",
+            "updated_at": "2023-05-01T13:43:54Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "setuptools"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 65.5.1",
+                    "first_patched_version": {
+                        "identifier": "65.5.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 65.5.1",
+            "first_patched_version": {
+                "identifier": "65.5.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/10",
+        "created_at": "2024-05-24T01:34:02Z",
+        "updated_at": "2024-05-24T01:34:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "requirements/app/components.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5m98-qgg9-wh84",
+            "cve_id": "CVE-2024-30251",
+            "summary": "aiohttp vulnerable to Denial of Service when trying to parse malformed POST requests",
+            "description": "### Summary\nAn attacker can send a specially crafted POST (multipart/form-data) request. When the aiohttp server processes it, the server will enter an infinite loop and be unable to process any further requests.\n\n### Impact\nAn attacker can stop the application from serving requests after sending a single request.\n\n-------\n\nFor anyone needing to patch older versions of aiohttp, the minimum diff needed to resolve the issue is (located in `_read_chunk_from_length()`):\n\n```diff\ndiff --git a/aiohttp/multipart.py b/aiohttp/multipart.py\nindex 227be605c..71fc2654a 100644\n--- a/aiohttp/multipart.py\n+++ b/aiohttp/multipart.py\n@@ -338,6 +338,8 @@ class BodyPartReader:\n         assert self._length is not None, \"Content-Length required for chunked read\"\n         chunk_size = min(size, self._length - self._read_bytes)\n         chunk = await self._content.read(chunk_size)\n+        if self._content.at_eof():\n+            self._at_eof = True\n         return chunk\n \n     async def _read_chunk_from_stream(self, size: int) -> bytes:\n```\n\nThis does however introduce some very minor issues with handling form data. So, if possible, it would be recommended to also backport the changes in:\nhttps://github.com/aio-libs/aiohttp/commit/cebe526b9c34dc3a3da9140409db63014bc4cf19\nhttps://github.com/aio-libs/aiohttp/commit/7eecdff163ccf029fbb1ddc9de4169d4aaeb6597\nhttps://github.com/aio-libs/aiohttp/commit/f21c6f2ca512a026ce7f0f6c6311f62d6a638866",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5m98-qgg9-wh84",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-30251",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-5m98-qgg9-wh84"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-30251"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/7eecdff163ccf029fbb1ddc9de4169d4aaeb6597"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/cebe526b9c34dc3a3da9140409db63014bc4cf19"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/f21c6f2ca512a026ce7f0f6c6311f62d6a638866"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2024/05/02/4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5m98-qgg9-wh84"
+                }
+            ],
+            "published_at": "2024-05-03T17:29:54Z",
+            "updated_at": "2024-05-03T17:30:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.9.4",
+                    "first_patched_version": {
+                        "identifier": "3.9.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-835",
+                    "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.9.4",
+            "first_patched_version": {
+                "identifier": "3.9.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/9",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "requirements/app/components.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7gpw-8wmc-pm8g",
+            "cve_id": "CVE-2024-27306",
+            "summary": "aiohttp Cross-site Scripting vulnerability on index pages for static file handling",
+            "description": "### Summary\n\nA XSS vulnerability exists on index pages for static file handling.\n\n### Details\n\nWhen using `web.static(..., show_index=True)`, the resulting index pages do not escape file names.\n\nIf users can upload files with arbitrary filenames to the static directory, the server is vulnerable to XSS attacks.\n\n### Workaround\n\nWe have always recommended using a reverse proxy server (e.g. nginx) for serving static files. Users following the recommendation are unaffected.\n\nOther users can disable `show_index` if unable to upgrade.\n\n-----\n\nPatch: https://github.com/aio-libs/aiohttp/pull/8319/files",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-7gpw-8wmc-pm8g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-27306",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-7gpw-8wmc-pm8g"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8319/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/28335525d1eac015a7e7584137678cbb6ff19397"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-27306"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8319"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2EXRGTN2WG7VZLUZ7WOXU5GQJKCPPHKP"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/NWEI6NIHZ3G7DURDZVMRK7ZEFC2BTD3U"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZIVBMPEY7WWOFMC3CWXFBRQPFECV4SW3"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7gpw-8wmc-pm8g"
+                }
+            ],
+            "published_at": "2024-04-18T13:45:21Z",
+            "updated_at": "2024-05-02T03:30:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.9.4",
+                    "first_patched_version": {
+                        "identifier": "3.9.4"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.9.4",
+            "first_patched_version": {
+                "identifier": "3.9.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/8",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "requirements/app/components.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5h86-8mv2-jq9f",
+            "cve_id": "CVE-2024-23334",
+            "summary": "aiohttp is vulnerable to directory traversal",
+            "description": "### Summary\nImproperly configuring static resource resolution in aiohttp when used as a web server can result in the unauthorized reading of arbitrary files on the system.\n\n### Details\nWhen using aiohttp as a web server and configuring static routes, it is necessary to specify the root path for static files. Additionally, the option 'follow_symlinks' can be used to determine whether to follow symbolic links outside the static root directory. When 'follow_symlinks' is set to True, there is no validation to check if a given file path is within the root directory.This can lead to directory traversal vulnerabilities, resulting in unauthorized access to arbitrary files on the system, even when symlinks are not present.\n\ni.e. An application is only vulnerable with setup code like:\n```\napp.router.add_routes([\n    web.static(\"/static\", \"static/\", follow_symlinks=True),  # Remove follow_symlinks to avoid the vulnerability\n])\n```\n\n### Impact\nThis is a directory traversal vulnerability with CWE ID 22. When using aiohttp as a web server and enabling static resource resolution with `follow_symlinks` set to True, it can lead to this vulnerability. This vulnerability has been present since the introduction of the `follow_symlinks` parameter.\n\n### Workaround\nEven if upgrading to a patched version of aiohttp, we recommend following these steps regardless.\n\nIf using `follow_symlinks=True` outside of a restricted local development environment, disable the option immediately. This option is NOT needed to follow symlinks which point to a location _within_ the static root directory, it is _only_ intended to allow a symlink to break out of the static directory. Even with this CVE fixed, there is still a substantial risk of misconfiguration when using this option on a server that accepts requests from remote users.\n\nAdditionally, aiohttp has always recommended using a reverse proxy server (such as nginx) to handle static resources and _not_ to use these static resources in aiohttp for production environments. Doing so also protects against this vulnerability, and is why we expect the number of affected users to be very low.\n\n-----\n\nPatch: https://github.com/aio-libs/aiohttp/pull/8079/files",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-5h86-8mv2-jq9f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-23334",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-5h86-8mv2-jq9f"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8079/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/1c335944d6a8b1298baf179b7c0b3069f10c514b"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-23334"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8079"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2024-24.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XXWVZIVAYWEBHNRIILZVB3R3SDQNNAA7/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ICUOCFGTB25WUT336BZ4UNYLSZOUVKBD/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5h86-8mv2-jq9f"
+                }
+            ],
+            "published_at": "2024-01-29T22:31:03Z",
+            "updated_at": "2024-02-18T05:08:00Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.0.5, < 3.9.2",
+                    "first_patched_version": {
+                        "identifier": "3.9.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 1.0.5, < 3.9.2",
+            "first_patched_version": {
+                "identifier": "3.9.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/7",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "requirements/app/components.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8qpw-xqxj-h4r2",
+            "cve_id": "CVE-2024-23829",
+            "summary": "aiohttp's HTTP parser (the python one, not llhttp) still overly lenient about separators",
+            "description": "### Summary\nSecurity-sensitive parts of the *Python HTTP parser* retained minor differences in allowable character sets, that must trigger error handling to robustly match frame boundaries of proxies in order to protect against injection of additional requests. Additionally, validation could trigger exceptions that were not handled consistently with processing of other malformed input.\n\n### Details\nThese problems are rooted in pattern matching protocol elements, previously improved by PR #3235 and GHSA-gfw2-4jvh-wgfg:\n\n1. The expression `HTTP/(\\d).(\\d)` lacked another backslash to clarify that the separator should be a literal dot, not just *any* Unicode code point (result: `HTTP/(\\d)\\.(\\d)`).\n\n2. The HTTP version was permitting Unicode digits, where only ASCII digits are standards-compliant.\n\n3. Distinct regular expressions for validating HTTP Method and Header field names were used - though both should (at least) apply the common restrictions of rfc9110 `token`.\n\n### PoC\n`GET / HTTP/1ö1`\n`GET / HTTP/1.𝟙`\n`GET/: HTTP/1.1`\n`Content-Encoding?: chunked`\n\n### Impact\nPrimarily concerns running an aiohttp server without llhttp:\n 1. **behind a proxy**: Being more lenient than internet standards require could, depending on deployment environment, assist in request smuggling.\n 2. **directly accessible** or exposed behind proxies relaying malformed input: the unhandled exception could cause excessive resource consumption on the application server and/or its logging facilities.\n\n-----\n\nPatch: https://github.com/aio-libs/aiohttp/pull/8074/files",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-8qpw-xqxj-h4r2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-23829",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-8qpw-xqxj-h4r2"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-gfw2-4jvh-wgfg"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/3235"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8074/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/33ccdfb0a12690af5bb49bda2319ec0907fa7827"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-23829"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/8074"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2024-26.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/XXWVZIVAYWEBHNRIILZVB3R3SDQNNAA7/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ICUOCFGTB25WUT336BZ4UNYLSZOUVKBD/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8qpw-xqxj-h4r2"
+                }
+            ],
+            "published_at": "2024-01-29T22:30:07Z",
+            "updated_at": "2024-02-18T05:08:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.9.2",
+                    "first_patched_version": {
+                        "identifier": "3.9.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.9.2",
+            "first_patched_version": {
+                "identifier": "3.9.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/6",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "requirements/app/components.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q3qx-c6g2-7pw2",
+            "cve_id": "CVE-2023-49081",
+            "summary": "aiohttp's ClientSession is vulnerable to CRLF injection via version",
+            "description": "### Summary\nImproper validation make it possible for an attacker to modify the HTTP request (e.g. to insert a new header) or even create a new HTTP request if the attacker controls the HTTP version.\n\n### Details\nThe vulnerability only occurs if the attacker can control the HTTP version of the request (including its type).\nFor example if an unvalidated JSON value is used as a version and the attacker is then able to pass an array as the `version` parameter.\nFurthermore, the vulnerability only occurs when the `Connection` header is passed to the `headers` parameter.\n\nAt this point, the library will use the parsed value to create the request. If a list is passed, then it bypasses validation and it is possible to perform CRLF injection.\n\n### PoC\nThe POC below shows an example of providing an unvalidated array as a version:\nhttps://gist.github.com/jnovikov/184afb593d9c2114d77f508e0ccd508e\n\n### Impact\nCRLF injection leading to Request Smuggling.\n\n### Workaround\nIf these specific conditions are met and you are unable to upgrade, then validate the user input to the `version` parameter to ensure it is a `str`.\n\nPatch: https://github.com/aio-libs/aiohttp/pull/7835/files",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-q3qx-c6g2-7pw2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-49081",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-q3qx-c6g2-7pw2"
+                },
+                {
+                    "url": "https://gist.github.com/jnovikov/184afb593d9c2114d77f508e0ccd508e"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-49081"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TY5SI6NK5243DEEDQUFKQKW5GQNKQUMA/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WSYWMP64ZFCTC3VO6RY6EC6VSSMV6I3A/"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/7835/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/1e86b777e61cf4eefc7d92fa57fa19dcc676013b"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2023-250.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q3qx-c6g2-7pw2"
+                }
+            ],
+            "published_at": "2023-11-27T23:17:42Z",
+            "updated_at": "2024-01-29T19:27:16Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.9.0",
+                    "first_patched_version": {
+                        "identifier": "3.9.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+                "score": 7.2
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.9.0",
+            "first_patched_version": {
+                "identifier": "3.9.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/5",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "requirements/app/components.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qvrw-v9rv-5rjx",
+            "cve_id": "CVE-2023-49082",
+            "summary": "aiohttp's ClientSession is vulnerable to CRLF injection via method",
+            "description": "### Summary\nImproper validation makes it possible for an attacker to modify the HTTP request (e.g. insert a new header) or even create a new HTTP request if the attacker controls the HTTP method.\n\n### Details\nThe vulnerability occurs only if the attacker can control the HTTP method (GET, POST etc.) of the request.\n\nPrevious releases performed no validation on the provided value. If an attacker controls the HTTP method it will be used as is and can lead to HTTP request smuggling.\n\n### PoC\nA minimal example can be found here:\nhttps://gist.github.com/jnovikov/7f411ae9fe6a9a7804cf162a3bdbb44b\n\n### Impact\nIf the attacker can control the HTTP version of the request it will be able to modify the request (request smuggling).\n\n### Workaround\nIf unable to upgrade and using user-provided values for the request method, perform manual validation of the user value (e.g. by restricting it to a few known values like GET, POST etc.).\n\nPatch: https://github.com/aio-libs/aiohttp/pull/7806/files",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-qvrw-v9rv-5rjx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-49082",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-qvrw-v9rv-5rjx"
+                },
+                {
+                    "url": "https://gist.github.com/jnovikov/7f411ae9fe6a9a7804cf162a3bdbb44b"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-49082"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TY5SI6NK5243DEEDQUFKQKW5GQNKQUMA/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/WSYWMP64ZFCTC3VO6RY6EC6VSSMV6I3A/"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/7806/files"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/e4ae01c2077d2cfa116aa82e4ff6866857f7c466"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/aiohttp/PYSEC-2023-251.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qvrw-v9rv-5rjx"
+                }
+            ],
+            "published_at": "2023-11-27T23:17:24Z",
+            "updated_at": "2024-01-29T19:27:06Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.9.0",
+                    "first_patched_version": {
+                        "identifier": "3.9.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.9.0",
+            "first_patched_version": {
+                "identifier": "3.9.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/4",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "requirements/app/app.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/3",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "fastapi"
+            },
+            "manifest_path": "requirements/app/app.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2jv5-9r88-3w3p",
+            "cve_id": "CVE-2024-24762",
+            "summary": "python-multipart vulnerable to Content-Type Header ReDoS",
+            "description": "### Summary\n\nWhen using form data, `python-multipart` uses a Regular Expression to parse the HTTP `Content-Type` header, including options.\n\nAn attacker could send a custom-made `Content-Type` option that is very difficult for the RegEx to process, consuming CPU resources and stalling indefinitely (minutes or more) while holding the main event loop. This means that process can't handle any more requests.\n\nThis can create a ReDoS (Regular expression Denial of Service): https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS\n\nThis only applies when the app uses form data, parsed with `python-multipart`.\n\n### Details\n\nA regular HTTP `Content-Type` header could look like:\n\n```\nContent-Type: text/html; charset=utf-8\n```\n\n`python-multipart` parses the option with this RegEx: https://github.com/andrew-d/python-multipart/blob/d3d16dae4b061c34fe9d3c9081d9800c49fc1f7a/multipart/multipart.py#L72-L74\n\nA custom option could be made and sent to the server to break it with:\n\n```\nContent-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n```\n\n### PoC\n\nCreate a simple WSGI application, that just parses the `Content-Type`, and run it with `python main.py`:\n\n```Python\n# main.py\nfrom wsgiref.simple_server import make_server\nfrom wsgiref.validate import validator\n\nfrom multipart.multipart import parse_options_header\n\n\ndef simple_app(environ, start_response):\n    _, _ = parse_options_header(environ[\"CONTENT_TYPE\"])\n\n    start_response(\"200 OK\", [(\"Content-type\", \"text/plain\")])\n    return [b\"Ok\"]\n\n\nhttpd = make_server(\"\", 8123, validator(simple_app))\nprint(\"Serving on port 8123...\")\nhttpd.serve_forever()\n```\n\nThen send the attacking request with:\n\n```console\n$ curl -v -X 'POST' -H $'Content-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' --data-binary 'input=1' 'http://localhost:8123/'\n```\n\n### Impact\n\nIt's a ReDoS, (Regular expression Denial of Service), it only applies to those reading form data. This way it also affects other libraries using Starlette, like FastAPI.\n\n### Original Report\n\nThis was originally reported to FastAPI as an email to security@tiangolo.com, sent via https://huntr.com/, the original reporter is Marcello, https://github.com/byt3bl33d3r\n\n<details>\n<summary>Original report to FastAPI</summary>\n\nHey Tiangolo!\n\nMy name's Marcello and I work on the ProtectAI/Huntr Threat Research team, a few months ago we got a report (from @nicecatch2000) of a ReDoS affecting another very popular Python web framework. After some internal research, I found that FastAPI is vulnerable to the same ReDoS under certain conditions (only when it parses Form data not JSON).\n\nHere are the details: I'm using the latest version of FastAPI (0.109.0) and the following code:\n\n```Python\nfrom typing import Annotated\nfrom fastapi.responses import HTMLResponse\nfrom fastapi import FastAPI,Form\nfrom pydantic import BaseModel\n\nclass Item(BaseModel):\n    username: str\n\napp = FastAPI()\n\n@app.get(\"/\", response_class=HTMLResponse)\nasync def index():\n    return HTMLResponse(\"Test\", status_code=200)\n\n@app.post(\"/submit/\")\nasync def submit(username: Annotated[str, Form()]):\n    return {\"username\": username}\n\n@app.post(\"/submit_json/\")\nasync def submit_json(item: Item):\n    return {\"username\": item.username}\n```\n\nI'm running the above with uvicorn with the following command:\n\n```console\nuvicorn server:app\n```\n\nThen run the following cUrl command:\n\n```\ncurl -v -X 'POST' -H $'Content-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' --data-binary 'input=1' 'http://localhost:8000/submit/'\n```\n\nYou'll see the server locks up, is unable to serve anymore requests and one CPU core is pegged to 100%\n\nYou can even start uvicorn with multiple workers with the --workers 4 argument and as long as you send (workers + 1) requests you'll completely DoS the FastApi server.\n\nIf you try submitting Json to the /submit_json endpoint with the malicious Content-Type header you'll see it isn't vulnerable. So this only affects FastAPI when it parses Form data.\n\nCheers\n\n#### Impact\n\nAn attacker is able to cause a DoS on a FastApi server via a malicious Content-Type header if it parses Form data.\n\n#### Occurrences\n\n[params.py L586](https://github.com/tiangolo/fastapi/blob/d74b3b25659b42233a669f032529880de8bd6c2d/fastapi/params.py#L586)\n\n</details>",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-2jv5-9r88-3w3p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-24762",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/Kludex/python-multipart/security/advisories/GHSA-2jv5-9r88-3w3p"
+                },
+                {
+                    "url": "https://github.com/Kludex/python-multipart/commit/20f0ef6b4e4caf7d69a667c54dff57fe467109a4"
+                },
+                {
+                    "url": "https://github.com/andrew-d/python-multipart/blob/d3d16dae4b061c34fe9d3c9081d9800c49fc1f7a/multipart/multipart.py#L72-L74"
+                },
+                {
+                    "url": "https://github.com/encode/starlette/security/advisories/GHSA-93gm-qmq6-w238"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/security/advisories/GHSA-qf9m-vfgh-m389"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-24762"
+                },
+                {
+                    "url": "https://github.com/encode/starlette/commit/13e5c26a27f4903924624736abd6131b2da80cc5"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/commit/9d34ad0ee8a0dfbbcce06f76c2d5d851085024fc"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/fastapi/PYSEC-2024-38.yaml"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/releases/tag/0.109.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2jv5-9r88-3w3p"
+                }
+            ],
+            "published_at": "2024-02-12T17:28:12Z",
+            "updated_at": "2024-02-16T23:41:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "python-multipart"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.0.6",
+                    "first_patched_version": {
+                        "identifier": "0.0.7"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "fastapi"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.109.0",
+                    "first_patched_version": {
+                        "identifier": "0.109.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "starlette"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.36.1",
+                    "first_patched_version": {
+                        "identifier": "0.36.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "fastapi"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 0.109.0",
+            "first_patched_version": {
+                "identifier": "0.109.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/2",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-multipart"
+            },
+            "manifest_path": "requirements/app/app.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2jv5-9r88-3w3p",
+            "cve_id": "CVE-2024-24762",
+            "summary": "python-multipart vulnerable to Content-Type Header ReDoS",
+            "description": "### Summary\n\nWhen using form data, `python-multipart` uses a Regular Expression to parse the HTTP `Content-Type` header, including options.\n\nAn attacker could send a custom-made `Content-Type` option that is very difficult for the RegEx to process, consuming CPU resources and stalling indefinitely (minutes or more) while holding the main event loop. This means that process can't handle any more requests.\n\nThis can create a ReDoS (Regular expression Denial of Service): https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS\n\nThis only applies when the app uses form data, parsed with `python-multipart`.\n\n### Details\n\nA regular HTTP `Content-Type` header could look like:\n\n```\nContent-Type: text/html; charset=utf-8\n```\n\n`python-multipart` parses the option with this RegEx: https://github.com/andrew-d/python-multipart/blob/d3d16dae4b061c34fe9d3c9081d9800c49fc1f7a/multipart/multipart.py#L72-L74\n\nA custom option could be made and sent to the server to break it with:\n\n```\nContent-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n```\n\n### PoC\n\nCreate a simple WSGI application, that just parses the `Content-Type`, and run it with `python main.py`:\n\n```Python\n# main.py\nfrom wsgiref.simple_server import make_server\nfrom wsgiref.validate import validator\n\nfrom multipart.multipart import parse_options_header\n\n\ndef simple_app(environ, start_response):\n    _, _ = parse_options_header(environ[\"CONTENT_TYPE\"])\n\n    start_response(\"200 OK\", [(\"Content-type\", \"text/plain\")])\n    return [b\"Ok\"]\n\n\nhttpd = make_server(\"\", 8123, validator(simple_app))\nprint(\"Serving on port 8123...\")\nhttpd.serve_forever()\n```\n\nThen send the attacking request with:\n\n```console\n$ curl -v -X 'POST' -H $'Content-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' --data-binary 'input=1' 'http://localhost:8123/'\n```\n\n### Impact\n\nIt's a ReDoS, (Regular expression Denial of Service), it only applies to those reading form data. This way it also affects other libraries using Starlette, like FastAPI.\n\n### Original Report\n\nThis was originally reported to FastAPI as an email to security@tiangolo.com, sent via https://huntr.com/, the original reporter is Marcello, https://github.com/byt3bl33d3r\n\n<details>\n<summary>Original report to FastAPI</summary>\n\nHey Tiangolo!\n\nMy name's Marcello and I work on the ProtectAI/Huntr Threat Research team, a few months ago we got a report (from @nicecatch2000) of a ReDoS affecting another very popular Python web framework. After some internal research, I found that FastAPI is vulnerable to the same ReDoS under certain conditions (only when it parses Form data not JSON).\n\nHere are the details: I'm using the latest version of FastAPI (0.109.0) and the following code:\n\n```Python\nfrom typing import Annotated\nfrom fastapi.responses import HTMLResponse\nfrom fastapi import FastAPI,Form\nfrom pydantic import BaseModel\n\nclass Item(BaseModel):\n    username: str\n\napp = FastAPI()\n\n@app.get(\"/\", response_class=HTMLResponse)\nasync def index():\n    return HTMLResponse(\"Test\", status_code=200)\n\n@app.post(\"/submit/\")\nasync def submit(username: Annotated[str, Form()]):\n    return {\"username\": username}\n\n@app.post(\"/submit_json/\")\nasync def submit_json(item: Item):\n    return {\"username\": item.username}\n```\n\nI'm running the above with uvicorn with the following command:\n\n```console\nuvicorn server:app\n```\n\nThen run the following cUrl command:\n\n```\ncurl -v -X 'POST' -H $'Content-Type: application/x-www-form-urlencoded; !=\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' --data-binary 'input=1' 'http://localhost:8000/submit/'\n```\n\nYou'll see the server locks up, is unable to serve anymore requests and one CPU core is pegged to 100%\n\nYou can even start uvicorn with multiple workers with the --workers 4 argument and as long as you send (workers + 1) requests you'll completely DoS the FastApi server.\n\nIf you try submitting Json to the /submit_json endpoint with the malicious Content-Type header you'll see it isn't vulnerable. So this only affects FastAPI when it parses Form data.\n\nCheers\n\n#### Impact\n\nAn attacker is able to cause a DoS on a FastApi server via a malicious Content-Type header if it parses Form data.\n\n#### Occurrences\n\n[params.py L586](https://github.com/tiangolo/fastapi/blob/d74b3b25659b42233a669f032529880de8bd6c2d/fastapi/params.py#L586)\n\n</details>",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-2jv5-9r88-3w3p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-24762",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/Kludex/python-multipart/security/advisories/GHSA-2jv5-9r88-3w3p"
+                },
+                {
+                    "url": "https://github.com/Kludex/python-multipart/commit/20f0ef6b4e4caf7d69a667c54dff57fe467109a4"
+                },
+                {
+                    "url": "https://github.com/andrew-d/python-multipart/blob/d3d16dae4b061c34fe9d3c9081d9800c49fc1f7a/multipart/multipart.py#L72-L74"
+                },
+                {
+                    "url": "https://github.com/encode/starlette/security/advisories/GHSA-93gm-qmq6-w238"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/security/advisories/GHSA-qf9m-vfgh-m389"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-24762"
+                },
+                {
+                    "url": "https://github.com/encode/starlette/commit/13e5c26a27f4903924624736abd6131b2da80cc5"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/commit/9d34ad0ee8a0dfbbcce06f76c2d5d851085024fc"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/fastapi/PYSEC-2024-38.yaml"
+                },
+                {
+                    "url": "https://github.com/tiangolo/fastapi/releases/tag/0.109.1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2jv5-9r88-3w3p"
+                }
+            ],
+            "published_at": "2024-02-12T17:28:12Z",
+            "updated_at": "2024-02-16T23:41:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "python-multipart"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.0.6",
+                    "first_patched_version": {
+                        "identifier": "0.0.7"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "fastapi"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.109.0",
+                    "first_patched_version": {
+                        "identifier": "0.109.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "starlette"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.36.1",
+                    "first_patched_version": {
+                        "identifier": "0.36.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-multipart"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 0.0.6",
+            "first_patched_version": {
+                "identifier": "0.0.7"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch-lightning/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/pytorch-lightning/security/dependabot/1",
+        "created_at": "2024-05-24T01:34:01Z",
+        "updated_at": "2024-05-24T01:34:01Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

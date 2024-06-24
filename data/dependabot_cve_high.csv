@@ -1,40 +1,40 @@
-,security_advisory.cve_id,security_advisory.severity,security_advisory.summary,security_advisory.description,counts
-0,CVE-2015-5237,high,protobuf susceptible to buffer overflow,protobuf allows remote authenticated attackers to cause a heap-based buffer overflow.,2
-1,CVE-2016-10745,high,High severity vulnerability that affects Jinja2,"In Pallets Jinja before 2.8.1, str.format allows a sandbox escape.",2
-2,CVE-2017-12852,high,Numpy missing input validation,"The numpy.pad function in Numpy 1.13.1 and older versions is missing input validation. An empty list or ndarray will stick into an infinite loop, which can allow attackers to cause a DoS attack.",5
-3,CVE-2018-1000164,high,Gunicorn contains Improper Neutralization of CRLF sequences in HTTP headers,"gunicorn version 19.4.5 contains a CWE-113: Improper Neutralization of CRLF Sequences in HTTP Headers vulnerability in ""process_headers"" function in ""gunicorn/http/wsgi.py"" that can result in an attacker causing the server to return arbitrary HTTP headers. This vulnerability appears to have been fixed in 19.5.0.",1
-4,CVE-2018-1000656,high,Flask is vulnerable to Denial of Service via incorrect encoding of JSON data,The Pallets Project flask version Before 0.12.3 contains a CWE-20: Improper Input Validation vulnerability in flask that can result in Large amount of memory usage possibly leading to denial of service. This attack appear to be exploitable via Attacker provides JSON data in incorrect encoding. This vulnerability appears to have been fixed in 0.12.3.,2
-5,CVE-2018-10055,high,Improper Restriction of Operations within the Bounds of a Memory Buffer in Google TensorFlow,Invalid memory access and/or a heap buffer overflow in the TensorFlow XLA compiler in Google TensorFlow before 1.7.1 could cause a crash or read from other parts of process memory via a crafted configuration file.,1
-6,CVE-2018-18074,high,Insufficiently Protected Credentials in Requests,"The Requests package through 2.19.1 before 2018-09-14 for Python sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",2
-7,CVE-2018-7577,high,Improper Input Validation in Google TensorFlow,"Memcpy parameter overlap in Google Snappy library 1.1.4, as used in Google TensorFlow before 1.7.1, could result in a crash or read from other parts of process memory.",1
-8,CVE-2018-8768,high,"Jupyter Notebook file bypasses sanitization, executes JavaScript","In Jupyter Notebook before 5.4.1, a maliciously forged notebook file can bypass sanitization to execute JavaScript in the notebook context. Specifically, invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.",1
-9,CVE-2019-1010083,high,Pallets Project Flask is vulnerable to Denial of Service via Unexpected memory usage,The Pallets Project Flask before 1.0 is affected by unexpected memory usage. The impact is denial of service. The attack vector is crafted encoded JSON data. The fixed version is 1. NOTE this may overlap CVE-2018-1000656.,3
-10,CVE-2019-10906,high,Jinja2 sandbox escape via string formatting,"In Pallets Jinja before 2.10.1, `str.format_map` allows a sandbox escape.
+,security_advisory.cve_id,security_advisory.cwes,security_advisory.severity,security_advisory.summary,security_advisory.description,counts
+0,CVE-2015-5237,['CWE-787'],high,protobuf susceptible to buffer overflow,protobuf allows remote authenticated attackers to cause a heap-based buffer overflow.,2
+1,CVE-2016-10745,['CWE-134'],high,High severity vulnerability that affects Jinja2,"In Pallets Jinja before 2.8.1, str.format allows a sandbox escape.",2
+2,CVE-2017-12852,['CWE-835'],high,Numpy missing input validation,"The numpy.pad function in Numpy 1.13.1 and older versions is missing input validation. An empty list or ndarray will stick into an infinite loop, which can allow attackers to cause a DoS attack.",5
+3,CVE-2018-1000164,['CWE-93'],high,Gunicorn contains Improper Neutralization of CRLF sequences in HTTP headers,"gunicorn version 19.4.5 contains a CWE-113: Improper Neutralization of CRLF Sequences in HTTP Headers vulnerability in ""process_headers"" function in ""gunicorn/http/wsgi.py"" that can result in an attacker causing the server to return arbitrary HTTP headers. This vulnerability appears to have been fixed in 19.5.0.",1
+4,CVE-2018-1000656,['CWE-20'],high,Flask is vulnerable to Denial of Service via incorrect encoding of JSON data,The Pallets Project flask version Before 0.12.3 contains a CWE-20: Improper Input Validation vulnerability in flask that can result in Large amount of memory usage possibly leading to denial of service. This attack appear to be exploitable via Attacker provides JSON data in incorrect encoding. This vulnerability appears to have been fixed in 0.12.3.,2
+5,CVE-2018-10055,['CWE-119'],high,Improper Restriction of Operations within the Bounds of a Memory Buffer in Google TensorFlow,Invalid memory access and/or a heap buffer overflow in the TensorFlow XLA compiler in Google TensorFlow before 1.7.1 could cause a crash or read from other parts of process memory via a crafted configuration file.,1
+6,CVE-2018-18074,['CWE-522'],high,Insufficiently Protected Credentials in Requests,"The Requests package through 2.19.1 before 2018-09-14 for Python sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",2
+7,CVE-2018-7577,['CWE-20'],high,Improper Input Validation in Google TensorFlow,"Memcpy parameter overlap in Google Snappy library 1.1.4, as used in Google TensorFlow before 1.7.1, could result in a crash or read from other parts of process memory.",1
+8,CVE-2018-8768,[],high,"Jupyter Notebook file bypasses sanitization, executes JavaScript","In Jupyter Notebook before 5.4.1, a maliciously forged notebook file can bypass sanitization to execute JavaScript in the notebook context. Specifically, invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.",1
+9,CVE-2019-1010083,['CWE-400'],high,Pallets Project Flask is vulnerable to Denial of Service via Unexpected memory usage,The Pallets Project Flask before 1.0 is affected by unexpected memory usage. The impact is denial of service. The attack vector is crafted encoded JSON data. The fixed version is 1. NOTE this may overlap CVE-2018-1000656.,3
+10,CVE-2019-10906,['CWE-693'],high,Jinja2 sandbox escape via string formatting,"In Pallets Jinja before 2.10.1, `str.format_map` allows a sandbox escape.
 
 The sandbox is used to restrict what code can be evaluated when rendering untrusted, user-provided templates. Due to the way string formatting works in Python, the `str.format_map` method could be used to escape the sandbox.
 
 This issue was previously addressed for the `str.format` method in Jinja 2.8.1, which discusses the issue in detail. However, the less-common `str.format_map` method was overlooked. This release applies the same sandboxing to both methods.
 
 If you cannot upgrade Jinja, you can override the `is_safe_attribute` method on the sandbox and explicitly disallow the `format_map` method on string objects.",2
-11,CVE-2019-14322,high,Pallets Werkzeug vulnerable to Path Traversal,"In Pallets Werkzeug before 0.15.5, SharedDataMiddleware mishandles drive names (such as C:) in Windows pathnames.",1
-12,CVE-2019-14491,high,Out-of-bounds Read in OpenCV,"An issue was discovered in OpenCV before 3.4.7 and 4.x before 4.1.1 (OpenCV-Python before 3.4.7.28 and 4.x before 4.1.1.26). There is an out of bounds read in the function cv::predictOrdered<cv::HaarEvaluator> in modules/objdetect/src/cascadedetect.hpp, which leads to denial of service.",1
-13,CVE-2019-14492,high,Out-of-bounds Read and Out-of-bounds Write in OpenCV,"An issue was discovered in OpenCV before 3.4.7 and 4.x before 4.1.1 (OpenCV-Python before 3.4.7.28 and 4.x before 4.1.1.26). There is an out of bounds read/write in the function HaarEvaluator::OptFeature::calc in modules/objdetect/src/cascadedetect.hpp, which leads to denial of service.",1
-14,CVE-2019-14493,high,NULL Pointer Dereference in OpenCV.,An issue was discovered in OpenCV before 4.1.1 (OpenCV-Python before 4.1.1.26). There is a NULL pointer dereference in the function cv::XMLParser::parse at modules/core/src/persistence.cpp.,1
-15,CVE-2019-14751,high,NLTK Vulnerable To Path Traversal,"NLTK Downloader before 3.4.5 is vulnerable to a directory traversal, allowing attackers to write arbitrary files via a `../` (dot dot slash) in an NLTK package (ZIP archive) that is mishandled during extraction.",1
-16,CVE-2019-14806,high,Pallets Werkzeug Insufficient Entropy,"Pallets Werkzeug before 0.15.3, when used with Docker, has insufficient debugger PIN randomness because Docker containers share the same machine id.",1
-17,CVE-2019-16226,high,LMDB invalid write ,"An issue was discovered in py-lmdb 0.97. `mdb_node_del` does not validate a `memmove` in the case of an unexpected `node->mn_hi`, leading to an invalid write operation.",1
-18,CVE-2019-16228,high,py-lmdb Divide by Zero interruptions,An issue was discovered in py-lmdb 0.97. There is a divide-by-zero error in the function mdb_env_open2 if mdb_env_read_header obtains a zero value for a certain size field.,1
-19,CVE-2019-18874,high,Double Free in psutil,psutil (aka python-psutil) through 5.6.5 can have a double free. This occurs because of refcount mishandling within a while or for loop that converts system data into a Python object.,1
-20,CVE-2019-20477,high,Deserialization of Untrusted Data in PyYAML,"PyYAML 5.1 through 5.1.2 has insufficient restrictions on the load and load_all functions because of a class deserialization issue, e.g., Popen is a class in the subprocess module. NOTE: this issue exists because of an incomplete fix for CVE-2017-18342.",1
-21,CVE-2019-20916,high,Path Traversal in pip,"The pip package before 19.2 for Python allows Directory Traversal when a URL is given in an install command, because a Content-Disposition header can have ../ in a filename, as demonstrated by overwriting the /root/.ssh/authorized_keys file. This occurs in _download_http_url in _internal/download.py. A fix was committed 6704f2ace.",1
-22,CVE-2019-5063,high,Out-of-bounds Write in OpenCV,"An exploitable heap buffer overflow vulnerability exists in the data structure persistence functionality of OpenCV 4.1.0 (corresponds with OpenCV-Python 4.1.0.25). A specially crafted XML file can cause a buffer overflow, resulting in multiple heap corruptions and potential code execution. An attacker can provide a specially crafted file to trigger this vulnerability.",1
-23,CVE-2019-5064,high,Out-of-bounds Write in OpenCV,"An exploitable heap buffer overflow vulnerability exists in the data structure persistence functionality of OpenCV, version 4.1.0 (corresponds with OpenCV-Python version 4.1.2.30). A specially crafted JSON file can cause a buffer overflow, resulting in multiple heap corruptions and potentially code execution. An attacker can provide a specially crafted file to trigger this vulnerability.",1
-24,CVE-2019-7548,high,SQLAlchemy is vulnerable to SQL Injection via group_by parameter ,SQLAlchemy 1.2.17 has SQL Injection when the group_by parameter can be controlled.,2
-25,CVE-2019-9423,high,Out-of-bounds Write in OpenCV,"In opencv calls that use libpng, there is a possible out of bounds write due to a missing bounds check. This could lead to local escalation of privilege with no additional execution privileges required. User interaction is not required for exploitation. Product: AndroidVersions: Android-10Android ID: A-110986616",1
-26,CVE-2020-10379,high,Buffer overflow in Pillow,"In Pillow before 7.1.0, there are two Buffer Overflows in `libImaging/TiffDecode.c`.",1
-27,CVE-2020-11538,high,Out-of-bounds read in Pillow,"In libImaging/SgiRleDecode.c in Pillow through 7.0.0, a number of out-of-bounds reads exist in the parsing of SGI image files, a different issue than CVE-2020-5311.",1
-28,CVE-2020-13757,high,Python-RSA decryption of ciphertext leads to DoS,"Python-RSA before 4.1 ignores leading '\0' bytes during decryption of ciphertext. This could conceivably have a security-relevant impact, e.g., by helping an attacker to infer that an application uses Python-RSA, or if the length of accepted ciphertext affects application behavior (such as by causing excessive memory allocation).",1
-29,CVE-2020-15193,high,Memory corruption in Tensorflow,"### Impact
+11,CVE-2019-14322,['CWE-22'],high,Pallets Werkzeug vulnerable to Path Traversal,"In Pallets Werkzeug before 0.15.5, SharedDataMiddleware mishandles drive names (such as C:) in Windows pathnames.",1
+12,CVE-2019-14491,['CWE-125'],high,Out-of-bounds Read in OpenCV,"An issue was discovered in OpenCV before 3.4.7 and 4.x before 4.1.1 (OpenCV-Python before 3.4.7.28 and 4.x before 4.1.1.26). There is an out of bounds read in the function cv::predictOrdered<cv::HaarEvaluator> in modules/objdetect/src/cascadedetect.hpp, which leads to denial of service.",1
+13,CVE-2019-14492,"['CWE-125', 'CWE-787']",high,Out-of-bounds Read and Out-of-bounds Write in OpenCV,"An issue was discovered in OpenCV before 3.4.7 and 4.x before 4.1.1 (OpenCV-Python before 3.4.7.28 and 4.x before 4.1.1.26). There is an out of bounds read/write in the function HaarEvaluator::OptFeature::calc in modules/objdetect/src/cascadedetect.hpp, which leads to denial of service.",1
+14,CVE-2019-14493,['CWE-476'],high,NULL Pointer Dereference in OpenCV.,An issue was discovered in OpenCV before 4.1.1 (OpenCV-Python before 4.1.1.26). There is a NULL pointer dereference in the function cv::XMLParser::parse at modules/core/src/persistence.cpp.,1
+15,CVE-2019-14751,['CWE-22'],high,NLTK Vulnerable To Path Traversal,"NLTK Downloader before 3.4.5 is vulnerable to a directory traversal, allowing attackers to write arbitrary files via a `../` (dot dot slash) in an NLTK package (ZIP archive) that is mishandled during extraction.",1
+16,CVE-2019-14806,['CWE-331'],high,Pallets Werkzeug Insufficient Entropy,"Pallets Werkzeug before 0.15.3, when used with Docker, has insufficient debugger PIN randomness because Docker containers share the same machine id.",1
+17,CVE-2019-16226,['CWE-787'],high,LMDB invalid write ,"An issue was discovered in py-lmdb 0.97. `mdb_node_del` does not validate a `memmove` in the case of an unexpected `node->mn_hi`, leading to an invalid write operation.",1
+18,CVE-2019-16228,['CWE-369'],high,py-lmdb Divide by Zero interruptions,An issue was discovered in py-lmdb 0.97. There is a divide-by-zero error in the function mdb_env_open2 if mdb_env_read_header obtains a zero value for a certain size field.,1
+19,CVE-2019-18874,['CWE-415'],high,Double Free in psutil,psutil (aka python-psutil) through 5.6.5 can have a double free. This occurs because of refcount mishandling within a while or for loop that converts system data into a Python object.,1
+20,CVE-2019-20477,['CWE-502'],high,Deserialization of Untrusted Data in PyYAML,"PyYAML 5.1 through 5.1.2 has insufficient restrictions on the load and load_all functions because of a class deserialization issue, e.g., Popen is a class in the subprocess module. NOTE: this issue exists because of an incomplete fix for CVE-2017-18342.",1
+21,CVE-2019-20916,['CWE-22'],high,Path Traversal in pip,"The pip package before 19.2 for Python allows Directory Traversal when a URL is given in an install command, because a Content-Disposition header can have ../ in a filename, as demonstrated by overwriting the /root/.ssh/authorized_keys file. This occurs in _download_http_url in _internal/download.py. A fix was committed 6704f2ace.",1
+22,CVE-2019-5063,['CWE-787'],high,Out-of-bounds Write in OpenCV,"An exploitable heap buffer overflow vulnerability exists in the data structure persistence functionality of OpenCV 4.1.0 (corresponds with OpenCV-Python 4.1.0.25). A specially crafted XML file can cause a buffer overflow, resulting in multiple heap corruptions and potential code execution. An attacker can provide a specially crafted file to trigger this vulnerability.",1
+23,CVE-2019-5064,"['CWE-120', 'CWE-787']",high,Out-of-bounds Write in OpenCV,"An exploitable heap buffer overflow vulnerability exists in the data structure persistence functionality of OpenCV, version 4.1.0 (corresponds with OpenCV-Python version 4.1.2.30). A specially crafted JSON file can cause a buffer overflow, resulting in multiple heap corruptions and potentially code execution. An attacker can provide a specially crafted file to trigger this vulnerability.",1
+24,CVE-2019-7548,['CWE-89'],high,SQLAlchemy is vulnerable to SQL Injection via group_by parameter ,SQLAlchemy 1.2.17 has SQL Injection when the group_by parameter can be controlled.,2
+25,CVE-2019-9423,['CWE-787'],high,Out-of-bounds Write in OpenCV,"In opencv calls that use libpng, there is a possible out of bounds write due to a missing bounds check. This could lead to local escalation of privilege with no additional execution privileges required. User interaction is not required for exploitation. Product: AndroidVersions: Android-10Android ID: A-110986616",1
+26,CVE-2020-10379,['CWE-120'],high,Buffer overflow in Pillow,"In Pillow before 7.1.0, there are two Buffer Overflows in `libImaging/TiffDecode.c`.",1
+27,CVE-2020-11538,['CWE-125'],high,Out-of-bounds read in Pillow,"In libImaging/SgiRleDecode.c in Pillow through 7.0.0, a number of out-of-bounds reads exist in the parsing of SGI image files, a different issue than CVE-2020-5311.",1
+28,CVE-2020-13757,['CWE-327'],high,Python-RSA decryption of ciphertext leads to DoS,"Python-RSA before 4.1 ignores leading '\0' bytes during decryption of ciphertext. This could conceivably have a security-relevant impact, e.g., by helping an attacker to infer that an application uses Python-RSA, or if the length of accepted ciphertext affects application behavior (such as by causing excessive memory allocation).",1
+29,CVE-2020-15193,['CWE-908'],high,Memory corruption in Tensorflow,"### Impact
 The implementation of `dlpack.to_dlpack` can be made to use uninitialized memory resulting in further memory corruption. This is because the pybind11 glue code assumes that the argument is a tensor:
 https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/python/tfe_wrapper.cc#L1361
 
@@ -62,7 +62,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",2
-30,CVE-2020-15195,high,Heap buffer overflow in Tensorflow,"### Impact
+30,CVE-2020-15195,"['CWE-119', 'CWE-122', 'CWE-787']",high,Heap buffer overflow in Tensorflow,"### Impact
 The implementation of `SparseFillEmptyRowsGrad` uses a double indexing pattern:
 https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/core/kernels/sparse_fill_empty_rows_op.cc#L263-L269
 
@@ -78,7 +78,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",3
-31,CVE-2020-15203,high,Denial of Service in Tensorflow,"### Impact
+31,CVE-2020-15203,"['CWE-20', 'CWE-134']",high,Denial of Service in Tensorflow,"### Impact
 By controlling the `fill` argument of [`tf.strings.as_string`](https://www.tensorflow.org/api_docs/python/tf/strings/as_string), a malicious attacker is able to trigger a format string vulnerability due to the way the internal format use in a `printf` call is constructed: https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/core/kernels/as_string_op.cc#L68-L74
 
 This can result in unexpected output:
@@ -119,7 +119,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",3
-32,CVE-2020-15207,high,Segfault and data corruption in tensorflow-lite,"### Impact
+32,CVE-2020-15207,"['CWE-119', 'CWE-787']",high,Segfault and data corruption in tensorflow-lite,"### Impact
 To mimic Python's indexing with negative values, TFLite uses `ResolveAxis` to convert negative values to positive indices. However, the only check that the converted index is now valid is only present in debug builds:
 https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/lite/kernels/internal/reference/reduce.h#L68-L72
 
@@ -134,7 +134,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",3
-33,CVE-2020-15208,high,Data corruption in tensorflow-lite,"### Impact
+33,CVE-2020-15208,"['CWE-125', 'CWE-787']",high,Data corruption in tensorflow-lite,"### Impact
 When determining the common dimension size of two tensors, TFLite uses a `DCHECK` which is no-op outside of debug compilation modes:
 https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/lite/kernels/internal/types.h#L437-L442
 
@@ -150,7 +150,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",3
-34,CVE-2020-15212,high,Out of bounds access in tensorflow-lite,"### Impact
+34,CVE-2020-15212,['CWE-787'],high,Out of bounds access in tensorflow-lite,"### Impact
 In TensorFlow Lite models using segment sum can trigger writes outside of bounds of heap allocated buffers by inserting negative elements in the segment ids tensor:
 https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/lite/kernels/internal/reference/reference_ops.h#L2625-L2631
 
@@ -175,7 +175,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been discovered from a variant analysis of [GHSA-p2cq-cprg-frvm](https://github.com/tensorflow/tensorflow/security/advisories/GHSA-p2cq-cprg-frvm).",2
-35,CVE-2020-15214,high,Out of bounds write in tensorflow-lite,"### Impact
+35,CVE-2020-15214,['CWE-787'],high,Out of bounds write in tensorflow-lite,"### Impact
 In TensorFlow Lite models using segment sum can trigger a write out bounds / segmentation fault if the segment ids are not sorted. Code assumes that the segment ids are in increasing order, using the last element of the tensor holding them to determine the dimensionality of output tensor:
 https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/lite/kernels/segment_sum.cc#L39-L44
 
@@ -201,12 +201,12 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",2
-36,CVE-2020-25032,high,Flask-Cors Directory Traversal vulnerability,An issue was discovered in Flask-CORS (aka CORS Middleware for Flask) before 3.0.9. It allows `../` directory traversal to access private resources because resource matching does not ensure that pathnames are in a canonical format.,4
-37,CVE-2020-28975,high,scikit-learn Denial of Service,"svm_predict_values in svm.cpp in Libsvm v324, as used in scikit-learn 0.23.2 and other products, allows attackers to cause a denial of service (segmentation fault) via a crafted model SVM (introduced via pickle, json, or any other model permanence standard) with a large value in the _n_support array.
+36,CVE-2020-25032,['CWE-22'],high,Flask-Cors Directory Traversal vulnerability,An issue was discovered in Flask-CORS (aka CORS Middleware for Flask) before 3.0.9. It allows `../` directory traversal to access private resources because resource matching does not ensure that pathnames are in a canonical format.,4
+37,CVE-2020-28975,[],high,scikit-learn Denial of Service,"svm_predict_values in svm.cpp in Libsvm v324, as used in scikit-learn 0.23.2 and other products, allows attackers to cause a denial of service (segmentation fault) via a crafted model SVM (introduced via pickle, json, or any other model permanence standard) with a large value in the _n_support array.
 NOTE: the scikit-learn vendor's position is that the behavior can only occur if the library's API is violated by an application that changes a private attribute.",7
-38,CVE-2020-35653,high,Pillow Out-of-bounds Read,"In Pillow before 8.1.0, PcxDecode has a buffer over-read when decoding a crafted PCX file because the user-supplied stride value is trusted for buffer calculations.",6
-39,CVE-2020-35654,high,Pillow Out-of-bounds Write,"In Pillow before 8.1.0, TiffDecode has a heap-based buffer overflow when decoding crafted YCbCr files because of certain interpretation conflicts with LibTIFF in RGBA mode.",6
-40,CVE-2020-5215,high,Segmentation faultin TensorFlow when converting a Python string to `tf.float16`,"### Impact
+38,CVE-2020-35653,['CWE-125'],high,Pillow Out-of-bounds Read,"In Pillow before 8.1.0, PcxDecode has a buffer over-read when decoding a crafted PCX file because the user-supplied stride value is trusted for buffer calculations.",6
+39,CVE-2020-35654,['CWE-787'],high,Pillow Out-of-bounds Write,"In Pillow before 8.1.0, TiffDecode has a heap-based buffer overflow when decoding crafted YCbCr files because of certain interpretation conflicts with LibTIFF in RGBA mode.",6
+40,CVE-2020-5215,['CWE-754'],high,Segmentation faultin TensorFlow when converting a Python string to `tf.float16`,"### Impact
 
 Converting a string (from Python) to a `tf.float16` value results in a segmentation fault in eager mode as the format checks for this use case are only in the graph mode.
 
@@ -228,21 +228,21 @@ We encourage users to switch to TensorFlow 1.15.1, 2.0.1 or 2.1.0.
 ### For more information
 
 Please consult [`SECURITY.md`](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",1
-41,CVE-2020-7212,high,Uncontrolled Resource Consumption in urllib3,"The _encode_invalid_chars function in util/url.py in the urllib3 library 1.25.2 through 1.25.7 for Python allows a denial of service (CPU consumption) because of an inefficient algorithm. The percent_encodings array contains all matches of percent encodings. It is not deduplicated. For a URL of length N, the size of percent_encodings may be up to O(N). The next step (normalize existing percent-encoded bytes) also takes up to O(N) for each step, so the total time is O(N^2). If percent_encodings were deduplicated, the time to compute _encode_invalid_chars would be O(kN), where k is at most 484 ((10+6*2)^2).",1
-42,CVE-2021-20270,high,Infinite Loop in Pygments,"An infinite loop in SMLLexer in Pygments versions 1.5 to 2.7.3 may lead to denial of service when performing syntax highlighting of a Standard ML (SML) source file, as demonstrated by input that only contains the ""exception"" keyword.",4
-43,CVE-2021-22570,high,NULL Pointer Dereference in Protocol Buffers,"Nullptr dereference when a null char is present in a proto symbol. The symbol is parsed incorrectly, leading to an unchecked call into the proto file's name during generation of the resulting error message. Since the symbol is incorrectly parsed, the file is nullptr. We recommend upgrading to version 3.15.0 or greater.",3
-44,CVE-2021-23437,high,Uncontrolled Resource Consumption in pillow,The package pillow 5.2.0 and before 8.3.2 are vulnerable to Regular Expression Denial of Service (ReDoS) via the getrgb function.,6
-45,CVE-2021-23727,high,OS Command Injection in celery,"This affects the package celery before 5.2.2. It by default trusts the messages and metadata stored in backends (result stores). When reading task metadata from the backend, the data is deserialized. Given that an attacker can gain access to, or somehow manipulate the metadata within a celery backend, they could trigger a stored command injection vulnerability and potentially gain further access to the system.",1
-46,CVE-2021-25290,high,Out-of-bounds Write in Pillow,"An issue was discovered in Pillow before 8.1.1. In TiffDecode.c, there is a negative-offset memcpy with an invalid size.",6
-47,CVE-2021-25291,high,Out of bounds read in Pillow,"An issue was discovered in Pillow before 8.2.0. In `TiffDecode.c`, there is an out-of-bounds read in `TiffreadRGBATile` via invalid tile boundaries.",6
-48,CVE-2021-25293,high,Out of bounds read in Pillow,An issue was discovered in Pillow before 8.1.1. There is an out-of-bounds read in SGIRleDecode.c.,6
-49,CVE-2021-27291,high,Pygments vulnerable to Regular Expression Denial of Service (ReDoS),"In pygments 1.1+, fixed in 2.7.4, the lexers used to parse programming languages rely heavily on regular expressions. Some of the regular expressions have exponential or cubic worst-case complexity and are vulnerable to ReDoS. By crafting malicious input, an attacker can cause a denial of service.",4
-50,CVE-2021-27921,high,Pillow Denial of Service by Uncontrolled Resource Consumption,"Pillow before 8.1.1 allows attackers to cause a denial of service (memory consumption) because the reported size of a contained image is not properly checked for a BLP container, and thus an attempted memory allocation can be very large.",6
-51,CVE-2021-27922,high,Pillow Uncontrolled Resource Consumption,"Pillow before 8.1.1 allows attackers to cause a denial of service (memory consumption) because the reported size of a contained image is not properly checked for an ICNS container, and thus an attempted memory allocation can be very large.",6
-52,CVE-2021-27923,high,Pillow Denial of Service by Uncontrolled Resource Consumption,"Pillow before 8.1.1 allows attackers to cause a denial of service (memory consumption) because the reported size of a contained image is not properly checked for an ICO container, and thus an attempted memory allocation can be very large.",6
-53,CVE-2021-28676,high,Potential infinite loop in Pillow,"An issue was discovered in Pillow before 8.2.0. For FLI data, FliDecode did not properly check that the block advance was non-zero, potentially leading to an infinite loop on load.",6
-54,CVE-2021-28677,high,Uncontrolled Resource Consumption in Pillow,"An issue was discovered in Pillow before 8.2.0. For EPS data, the readline implementation used in EPSImageFile has to deal with any combination of \r and \n as line endings. It used an accidentally quadratic method of accumulating lines while looking for a line ending. A malicious EPS file could use this to perform a DoS of Pillow in the open phase, before an image was accepted for opening.",6
-55,CVE-2021-29591,high,Stack overflow due to looping TFLite subgraph,"### Impact
+41,CVE-2020-7212,['CWE-400'],high,Uncontrolled Resource Consumption in urllib3,"The _encode_invalid_chars function in util/url.py in the urllib3 library 1.25.2 through 1.25.7 for Python allows a denial of service (CPU consumption) because of an inefficient algorithm. The percent_encodings array contains all matches of percent encodings. It is not deduplicated. For a URL of length N, the size of percent_encodings may be up to O(N). The next step (normalize existing percent-encoded bytes) also takes up to O(N) for each step, so the total time is O(N^2). If percent_encodings were deduplicated, the time to compute _encode_invalid_chars would be O(kN), where k is at most 484 ((10+6*2)^2).",1
+42,CVE-2021-20270,['CWE-835'],high,Infinite Loop in Pygments,"An infinite loop in SMLLexer in Pygments versions 1.5 to 2.7.3 may lead to denial of service when performing syntax highlighting of a Standard ML (SML) source file, as demonstrated by input that only contains the ""exception"" keyword.",4
+43,CVE-2021-22570,['CWE-476'],high,NULL Pointer Dereference in Protocol Buffers,"Nullptr dereference when a null char is present in a proto symbol. The symbol is parsed incorrectly, leading to an unchecked call into the proto file's name during generation of the resulting error message. Since the symbol is incorrectly parsed, the file is nullptr. We recommend upgrading to version 3.15.0 or greater.",3
+44,CVE-2021-23437,"['CWE-125', 'CWE-400']",high,Uncontrolled Resource Consumption in pillow,The package pillow 5.2.0 and before 8.3.2 are vulnerable to Regular Expression Denial of Service (ReDoS) via the getrgb function.,6
+45,CVE-2021-23727,"['CWE-77', 'CWE-78']",high,OS Command Injection in celery,"This affects the package celery before 5.2.2. It by default trusts the messages and metadata stored in backends (result stores). When reading task metadata from the backend, the data is deserialized. Given that an attacker can gain access to, or somehow manipulate the metadata within a celery backend, they could trigger a stored command injection vulnerability and potentially gain further access to the system.",1
+46,CVE-2021-25290,['CWE-787'],high,Out-of-bounds Write in Pillow,"An issue was discovered in Pillow before 8.1.1. In TiffDecode.c, there is a negative-offset memcpy with an invalid size.",6
+47,CVE-2021-25291,['CWE-125'],high,Out of bounds read in Pillow,"An issue was discovered in Pillow before 8.2.0. In `TiffDecode.c`, there is an out-of-bounds read in `TiffreadRGBATile` via invalid tile boundaries.",6
+48,CVE-2021-25293,['CWE-125'],high,Out of bounds read in Pillow,An issue was discovered in Pillow before 8.1.1. There is an out-of-bounds read in SGIRleDecode.c.,6
+49,CVE-2021-27291,['CWE-400'],high,Pygments vulnerable to Regular Expression Denial of Service (ReDoS),"In pygments 1.1+, fixed in 2.7.4, the lexers used to parse programming languages rely heavily on regular expressions. Some of the regular expressions have exponential or cubic worst-case complexity and are vulnerable to ReDoS. By crafting malicious input, an attacker can cause a denial of service.",4
+50,CVE-2021-27921,['CWE-400'],high,Pillow Denial of Service by Uncontrolled Resource Consumption,"Pillow before 8.1.1 allows attackers to cause a denial of service (memory consumption) because the reported size of a contained image is not properly checked for a BLP container, and thus an attempted memory allocation can be very large.",6
+51,CVE-2021-27922,['CWE-400'],high,Pillow Uncontrolled Resource Consumption,"Pillow before 8.1.1 allows attackers to cause a denial of service (memory consumption) because the reported size of a contained image is not properly checked for an ICNS container, and thus an attempted memory allocation can be very large.",6
+52,CVE-2021-27923,['CWE-400'],high,Pillow Denial of Service by Uncontrolled Resource Consumption,"Pillow before 8.1.1 allows attackers to cause a denial of service (memory consumption) because the reported size of a contained image is not properly checked for an ICO container, and thus an attempted memory allocation can be very large.",6
+53,CVE-2021-28676,['CWE-835'],high,Potential infinite loop in Pillow,"An issue was discovered in Pillow before 8.2.0. For FLI data, FliDecode did not properly check that the block advance was non-zero, potentially leading to an infinite loop on load.",6
+54,CVE-2021-28677,['CWE-400'],high,Uncontrolled Resource Consumption in Pillow,"An issue was discovered in Pillow before 8.2.0. For EPS data, the readline implementation used in EPSImageFile has to deal with any combination of \r and \n as line endings. It used an accidentally quadratic method of accumulating lines while looking for a line ending. A malicious EPS file could use this to perform a DoS of Pillow in the open phase, before an image was accepted for opening.",6
+55,CVE-2021-29591,"['CWE-674', 'CWE-835']",high,Stack overflow due to looping TFLite subgraph,"### Impact
 TFlite graphs must not have loops between nodes. However, this condition was not checked and an attacker could craft models that would result in infinite loop during evaluation. In certain cases, the infinite loop would be replaced by stack overflow due to too many recursive calls.
 
 For example, the [`While` implementation](https://github.com/tensorflow/tensorflow/blob/106d8f4fb89335a2c52d7c895b7a7485465ca8d9/tensorflow/lite/kernels/while.cc) could be tricked into a scneario where both the body and the loop subgraphs are the same. Evaluating one of the subgraphs means calling the `Eval` function for the other and this quickly exhaust all stack space.
@@ -257,7 +257,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution 
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-56,CVE-2021-29605,high,Integer overflow in TFLite memory allocation,"### Impact
+56,CVE-2021-29605,['CWE-190'],high,Integer overflow in TFLite memory allocation,"### Impact
 The TFLite code for allocating `TFLiteIntArray`s is [vulnerable to an integer overflow issue](https://github.com/tensorflow/tensorflow/blob/4ceffae632721e52bf3501b736e4fe9d1221cdfa/tensorflow/lite/c/common.c#L24-L27):
 
 ```cc
@@ -289,7 +289,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-57,CVE-2021-29606,high,Heap OOB read in TFLite,"### Impact
+57,CVE-2021-29606,['CWE-125'],high,Heap OOB read in TFLite,"### Impact
 A specially crafted TFLite model could trigger an OOB read on heap in the TFLite implementation of [`Split_V`](https://github.com/tensorflow/tensorflow/blob/c59c37e7b2d563967da813fa50fe20b21f4da683/tensorflow/lite/kernels/split_v.cc#L99):
 
 ```cc
@@ -314,7 +314,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-58,CVE-2021-29614,high,Interpreter crash from `tf.io.decode_raw`,"### Impact
+58,CVE-2021-29614,"['CWE-665', 'CWE-787']",high,Interpreter crash from `tf.io.decode_raw`,"### Impact
 The implementation of `tf.io.decode_raw` produces incorrect results and crashes the Python interpreter when combining `fixed_length` and wider datatypes.
 
 ```python
@@ -370,7 +370,7 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",6
-59,CVE-2021-32797,high,JupyterLab: XSS due to lack of sanitization of the action attribute of an html <form>,"### Impact
+59,CVE-2021-32797,"['CWE-75', 'CWE-79', 'CWE-87']",high,JupyterLab: XSS due to lack of sanitization of the action attribute of an html <form>,"### Impact
 
 Untrusted notebook can execute code on load. This is a remote code execution, but requires user action to open a notebook.
 
@@ -388,7 +388,7 @@ If you have any questions or comments about this advisory, or vulnerabilities to
 
 Credit: Guillaume Jeanne from Google
 ",4
-60,CVE-2021-32805,high,URL Redirection to Untrusted Site ('Open Redirect') in Flask-AppBuilder,"### Impact
+60,CVE-2021-32805,['CWE-601'],high,URL Redirection to Untrusted Site ('Open Redirect') in Flask-AppBuilder,"### Impact
 If using Flask-AppBuilder OAuth, an attacker can share a carefully crafted URL with a trusted domain for an application built with Flask-AppBuilder, this URL can redirect a user to a malicious site. This is an open redirect vulnerability 
 
 ### Patches
@@ -397,7 +397,7 @@ Install Flask-AppBuilder 3.2.2 or above
 ### Workarounds
 Filter HTTP traffic containing `?next={next-site}` where the `next-site` domain is different from the application you are protecting
 ",1
-61,CVE-2021-33503,high,Catastrophic backtracking in URL authority parser when passed URL containing many @ characters,"### Impact
+61,CVE-2021-33503,['CWE-400'],high,Catastrophic backtracking in URL authority parser when passed URL containing many @ characters,"### Impact
 
 When provided with a URL containing many `@` characters in the authority component the authority regular expression exhibits catastrophic backtracking causing a denial of service if a URL were passed as a parameter or redirected to via an HTTP redirect.
 
@@ -418,7 +418,7 @@ If you have any questions or comments about this advisory:
 * Ask in our [community Discord](https://discord.gg/urllib3)
 * Email [sethmichaellarson@gmail.com](mailto:sethmichaellarson@gmail.com)
 ",3
-62,CVE-2021-37635,high,Heap out of bounds access in sparse reduction operations,"### Impact
+62,CVE-2021-37635,['CWE-125'],high,Heap out of bounds access in sparse reduction operations,"### Impact
 The implementation of sparse reduction operations in TensorFlow can trigger accesses outside of bounds of heap allocated data:
 
 ```python
@@ -443,7 +443,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-63,CVE-2021-37637,high,Null pointer dereference in `CompressElement`,"### Impact
+63,CVE-2021-37637,['CWE-476'],high,Null pointer dereference in `CompressElement`,"### Impact
 It is possible to trigger a null pointer dereference in TensorFlow by passing an invalid input to `tf.raw_ops.CompressElement`:
 
 ```python
@@ -464,7 +464,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360. Concurrently, it was resolved in `master` branch as it was also discovered internally and fixed before the report was handled.",6
-64,CVE-2021-37638,high,Null pointer dereference in `RaggedTensorToTensor`,"### Impact
+64,CVE-2021-37638,['CWE-476'],high,Null pointer dereference in `RaggedTensorToTensor`,"### Impact
 Sending invalid argument for `row_partition_types` of `tf.raw_ops.RaggedTensorToTensor` API results in a null pointer dereference and undefined behavior:
 
 ```python
@@ -490,7 +490,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-65,CVE-2021-37639,high,Null pointer dereference and heap OOB read in operations restoring tensors,"### Impact
+65,CVE-2021-37639,"['CWE-125', 'CWE-476']",high,Null pointer dereference and heap OOB read in operations restoring tensors,"### Impact
 When restoring tensors via raw APIs, if the tensor name is not provided, TensorFlow can be tricked into dereferencing a null pointer:
 
 ```python
@@ -544,7 +544,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-66,CVE-2021-37641,high,Heap OOB in `RaggedGather`,"### Impact
+66,CVE-2021-37641,['CWE-125'],high,Heap OOB in `RaggedGather`,"### Impact
 If the arguments to `tf.raw_ops.RaggedGather` don't determine a valid ragged tensor code can trigger a read from outside of bounds of heap allocated buffers.
                                                                                                                                                                                                                                                                                           
 ```python
@@ -571,7 +571,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-67,CVE-2021-37643,high,Null pointer dereference in `MatrixDiagPartOp`,"### Impact
+67,CVE-2021-37643,['CWE-476'],high,Null pointer dereference in `MatrixDiagPartOp`,"### Impact
 If a user does not provide a valid padding value to `tf.raw_ops.MatrixDiagPartOp`, then the code triggers a null pointer dereference (if input is empty) or produces invalid behavior, ignoring all values after the first:
 
 ```python
@@ -597,7 +597,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-68,CVE-2021-37647,high,Null pointer dereference in `SparseTensorSliceDataset`,"### Impact
+68,CVE-2021-37647,['CWE-476'],high,Null pointer dereference in `SparseTensorSliceDataset`,"### Impact
 When a user does not supply arguments that determine a valid sparse tensor, `tf.raw_ops.SparseTensorSliceDataset` implementation can be made to dereference a null pointer:
 
 ```python
@@ -632,7 +632,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-69,CVE-2021-37648,high,Incorrect validation of `SaveV2` inputs,"### Impact
+69,CVE-2021-37648,['CWE-476'],high,Incorrect validation of `SaveV2` inputs,"### Impact
 The code for `tf.raw_ops.SaveV2` does not properly validate the inputs and an attacker can trigger a null pointer dereference:
 
 ```python
@@ -659,7 +659,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-70,CVE-2021-37649,high,Null pointer dereference in `UncompressElement`,"### Impact
+70,CVE-2021-37649,['CWE-476'],high,Null pointer dereference in `UncompressElement`,"### Impact
 The code for `tf.raw_ops.UncompressElement` can be made to trigger a null pointer dereference: 
 
 ```python
@@ -684,7 +684,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-71,CVE-2021-37650,high,"Segfault and heap buffer overflow in `{Experimental,}DatasetToTFRecord`","### Impact
+71,CVE-2021-37650,"['CWE-120', 'CWE-787']",high,"Segfault and heap buffer overflow in `{Experimental,}DatasetToTFRecord`","### Impact
 The implementation for `tf.raw_ops.ExperimentalDatasetToTFRecord` and `tf.raw_ops.DatasetToTFRecord` can trigger heap buffer overflow and segmentation fault:
 
 ```python
@@ -710,7 +710,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-72,CVE-2021-37651,high,Heap buffer overflow in `FractionalAvgPoolGrad`,"### Impact
+72,CVE-2021-37651,"['CWE-125', 'CWE-787']",high,Heap buffer overflow in `FractionalAvgPoolGrad`,"### Impact
 The implementation for `tf.raw_ops.FractionalAvgPoolGrad` can be tricked into accessing data outside of bounds of heap allocated buffers:
 
 ```python
@@ -736,7 +736,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-73,CVE-2021-37652,high,Use after free in boosted trees creation,"### Impact
+73,CVE-2021-37652,"['CWE-415', 'CWE-416']",high,Use after free in boosted trees creation,"### Impact
 The implementation for `tf.raw_ops.BoostedTreesCreateEnsemble` can result in a use after free error if an attacker supplies specially crafted arguments:
 
 ```python
@@ -761,7 +761,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-74,CVE-2021-37654,high,Heap OOB and CHECK fail in `ResourceGather`,"### Impact
+74,CVE-2021-37654,['CWE-125'],high,Heap OOB and CHECK fail in `ResourceGather`,"### Impact
 An attacker can trigger a crash via a `CHECK`-fail in debug builds of TensorFlow using `tf.raw_ops.ResourceGather` or a read from outside the bounds of heap allocated data in the same API in a release build:
 
 ```python
@@ -806,7 +806,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-75,CVE-2021-37655,high,Heap OOB in `ResourceScatterUpdate`,"### Impact
+75,CVE-2021-37655,['CWE-125'],high,Heap OOB in `ResourceScatterUpdate`,"### Impact
 An attacker can trigger a read from outside of bounds of heap allocated data by sending invalid arguments to `tf.raw_ops.ResourceScatterUpdate`:
 
 ```python
@@ -831,7 +831,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
     
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-76,CVE-2021-37656,high,Reference binding to nullptr in `RaggedTensorToSparse`,"### Impact
+76,CVE-2021-37656,['CWE-824'],high,Reference binding to nullptr in `RaggedTensorToSparse`,"### Impact
 An attacker can cause undefined behavior via binding a reference to null pointer in `tf.raw_ops.RaggedTensorToSparse`:
 
 ```python
@@ -854,7 +854,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-77,CVE-2021-37657,high,Reference binding to nullptr in `MatrixDiagV*` ops,"### Impact
+77,CVE-2021-37657,['CWE-824'],high,Reference binding to nullptr in `MatrixDiagV*` ops,"### Impact
 An attacker can cause undefined behavior via binding a reference to null pointer in all operations of type `tf.raw_ops.MatrixDiagV*`:
 
 ```python
@@ -887,7 +887,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-78,CVE-2021-37658,high,Reference binding to nullptr in `MatrixSetDiagV*` ops,"### Impact
+78,CVE-2021-37658,['CWE-824'],high,Reference binding to nullptr in `MatrixSetDiagV*` ops,"### Impact
 An attacker can cause undefined behavior via binding a reference to null pointer in all operations of type `tf.raw_ops.MatrixSetDiagV*`:
 
 ```python
@@ -918,7 +918,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-79,CVE-2021-37659,high,Reference binding to nullptr and heap OOB in binary cwise ops,"### Impact
+79,CVE-2021-37659,['CWE-125'],high,Reference binding to nullptr and heap OOB in binary cwise ops,"### Impact
 An attacker can cause undefined behavior via binding a reference to null pointer in all binary cwise operations that don't require broadcasting (e.g., gradients of binary cwise operations):
 
 ```python
@@ -939,7 +939,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution 
 This vulnerability has been reported by members of the Aivul Team from Qihoo  360.",6
-80,CVE-2021-37662,high,Reference binding to nullptr in boosted trees,"### Impact
+80,CVE-2021-37662,['CWE-824'],high,Reference binding to nullptr in boosted trees,"### Impact
 An attacker can generate undefined behavior via a reference binding to nullptr in `BoostedTreesCalculateBestGainsPerFeature`:
 
 ```python
@@ -984,7 +984,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-81,CVE-2021-37663,high,Incomplete validation in `QuantizeV2`,"### Impact                                                                                                                                                                                                                                                                                
+81,CVE-2021-37663,['CWE-20'],high,Incomplete validation in `QuantizeV2`,"### Impact                                                                                                                                                                                                                                                                                
 Due to incomplete validation in `tf.raw_ops.QuantizeV2`, an attacker can trigger undefined behavior via binding a reference to a null pointer or can access data outside the bounds of heap allocated arrays:
 
 ```python
@@ -1014,7 +1014,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-82,CVE-2021-37664,high,Heap OOB in boosted trees,"### Impact
+82,CVE-2021-37664,['CWE-125'],high,Heap OOB in boosted trees,"### Impact
 An attacker can read from outside of bounds of heap allocated data by sending specially crafted illegal arguments to `BoostedTreesSparseCalculateBestFeatureSplit`:
 
 ```python
@@ -1044,7 +1044,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-83,CVE-2021-37665,high,Incomplete validation in MKL requantization,"### Impact
+83,CVE-2021-37665,['CWE-20'],high,Incomplete validation in MKL requantization,"### Impact
 Due to incomplete validation in MKL implementation of requantization, an  attacker can trigger undefined behavior via binding a reference to a null pointer or can access data outside the bounds of heap allocated arrays:
 
 ```python
@@ -1086,7 +1086,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-84,CVE-2021-37666,high,Reference binding to nullptr in `RaggedTensorToVariant`,"### Impact
+84,CVE-2021-37666,['CWE-824'],high,Reference binding to nullptr in `RaggedTensorToVariant`,"### Impact
 An attacker can cause undefined behavior via binding a reference to null pointer in `tf.raw_ops.RaggedTensorToVariant`:
 
 ```python
@@ -1110,7 +1110,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
   
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-85,CVE-2021-37667,high,Reference binding to nullptr in unicode encoding,"### Impact
+85,CVE-2021-37667,['CWE-824'],high,Reference binding to nullptr in unicode encoding,"### Impact
 An attacker can cause undefined behavior via binding a reference to null pointer in `tf.raw_ops.UnicodeEncode`:
 
 ```python
@@ -1143,7 +1143,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-86,CVE-2021-37671,high,Reference binding to nullptr in map operations,"### Impact
+86,CVE-2021-37671,['CWE-824'],high,Reference binding to nullptr in map operations,"### Impact
 An attacker can cause undefined behavior via binding a reference to null pointer in `tf.raw_ops.Map*` and `tf.raw_ops.OrderedMap*` operations:
 
 ```python
@@ -1169,7 +1169,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-87,CVE-2021-37676,high,Reference binding to nullptr in shape inference,"### Impact
+87,CVE-2021-37676,['CWE-824'],high,Reference binding to nullptr in shape inference,"### Impact
 An attacker can cause undefined behavior via binding a reference to null pointer in `tf.raw_ops.SparseFillEmptyRows`:
 
 ```python
@@ -1195,7 +1195,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Yakun Zhang of Baidu Security",6
-88,CVE-2021-37679,high,Heap OOB in nested `tf.map_fn` with `RaggedTensor`s,"### Impact
+88,CVE-2021-37679,"['CWE-125', 'CWE-681']",high,Heap OOB in nested `tf.map_fn` with `RaggedTensor`s,"### Impact
 It is possible to nest a `tf.map_fn` within another `tf.map_fn` call. However, if the input tensor is a `RaggedTensor` and there is no function signature provided, code assumes the output is a fully specified tensor and fills output buffer with uninitialized contents from the heap:
 
 ```python
@@ -1229,7 +1229,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Haris Sahovic.",6
-89,CVE-2021-37681,high,NPE in TFLite,"### Impact
+89,CVE-2021-37681,['CWE-476'],high,NPE in TFLite,"### Impact
 The implementation of SVDF in TFLite is [vulnerable to a null pointer error](https://github.com/tensorflow/tensorflow/blob/460e000de3a83278fb00b61a16d161b1964f15f4/tensorflow/lite/kernels/svdf.cc#L300-L313):
 
 ```cc
@@ -1260,7 +1260,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-90,CVE-2021-37688,high,Null pointer dereference in TFLite,"### Impact
+90,CVE-2021-37688,['CWE-476'],high,Null pointer dereference in TFLite,"### Impact
 An attacker can craft a TFLite model that would trigger a null pointer dereference, which would result in a crash and denial of service:
 
 ```python
@@ -1308,7 +1308,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Yakun Zhang of Baidu Security.",6
-91,CVE-2021-37689,high,Null pointer dereference in TFLite MLIR optimizations,"### Impact
+91,CVE-2021-37689,['CWE-476'],high,Null pointer dereference in TFLite MLIR optimizations,"### Impact
 An attacker can craft a TFLite model that would trigger a null pointer dereference, which would result in a crash and denial of service:
 
 This is caused by the MLIR optimization of `L2NormalizeReduceAxis` operator. The [implementation](https://github.com/tensorflow/tensorflow/blob/149562d49faa709ea80df1d99fc41d005b81082a/tensorflow/compiler/mlir/lite/transforms/optimize.cc#L67-L70) unconditionally dereferences a pointer to an iterator to a vector without checking that the vector has elements:
@@ -1334,10 +1334,10 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
           
 ### Attribution              
 This vulnerability has been reported by Yakun Zhang of Baidu Security.",6
-92,CVE-2021-3828,high,NLTK Vulnerable to REDoS,The nltk package is vulnerable to ReDoS (regular expression denial of service). An attacker that is able to provide as an input to the [`_read_comparison_block()`](https://github.com/nltk/nltk/blob/23f4b1c4b4006b0cb3ec278e801029557cec4e82/nltk/corpus/reader/comparative_sents.py#L259) function in the file `nltk/corpus/reader/comparative_sents.py` may cause an application to consume an excessive amount of CPU.,2
-93,CVE-2021-3842,high,NLTK Vulnerable to REDoS,NLTK is vulnerable to REDoS in some RegexpTaggers used in the functions `get_pos_tagger` and `malt_regex_tagger`.,2
-94,CVE-2021-4118,high,pytorch-lightning is vulnerable to Deserialization of Untrusted Data,pytorch-lightning is vulnerable to Deserialization of Untrusted Data.,1
-95,CVE-2021-41201,high,Unitialized access in `EinsumHelper::ParseEquation`,"### Impact
+92,CVE-2021-3828,"['CWE-697', 'CWE-1333']",high,NLTK Vulnerable to REDoS,The nltk package is vulnerable to ReDoS (regular expression denial of service). An attacker that is able to provide as an input to the [`_read_comparison_block()`](https://github.com/nltk/nltk/blob/23f4b1c4b4006b0cb3ec278e801029557cec4e82/nltk/corpus/reader/comparative_sents.py#L259) function in the file `nltk/corpus/reader/comparative_sents.py` may cause an application to consume an excessive amount of CPU.,2
+93,CVE-2021-3842,['CWE-1333'],high,NLTK Vulnerable to REDoS,NLTK is vulnerable to REDoS in some RegexpTaggers used in the functions `get_pos_tagger` and `malt_regex_tagger`.,2
+94,CVE-2021-4118,['CWE-502'],high,pytorch-lightning is vulnerable to Deserialization of Untrusted Data,pytorch-lightning is vulnerable to Deserialization of Untrusted Data.,1
+95,CVE-2021-41201,['CWE-824'],high,Unitialized access in `EinsumHelper::ParseEquation`,"### Impact
 During execution, [`EinsumHelper::ParseEquation()`](https://github.com/tensorflow/tensorflow/blob/e0b6e58c328059829c3eb968136f17aa72b6c876/tensorflow/core/kernels/linalg/einsum_op_impl.h#L126-L181) is supposed to set the flags in `input_has_ellipsis` vector and `*output_has_ellipsis` boolean to indicate whether there is ellipsis in the corresponding inputs and output.
 
 However, the code only changes these flags to `true` and never assigns `false`.
@@ -1371,7 +1371,7 @@ The fix will be included in TensorFlow 2.7.0. We will also cherrypick this commi
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",9
-96,CVE-2021-41203,high,Missing validation during checkpoint loading,"### Impact
+96,CVE-2021-41203,"['CWE-190', 'CWE-345']",high,Missing validation during checkpoint loading,"### Impact
 An attacker can trigger undefined behavior, integer overflows, segfaults and `CHECK`-fail crashes if they can change saved checkpoints from outside of TensorFlow.
 
 This is because the checkpoints loading infrastructure is missing validation for invalid file formats.
@@ -1383,7 +1383,7 @@ These fixes will be included in TensorFlow 2.7.0. We will also cherrypick these 
 
 ### For more information 
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",9
-97,CVE-2021-41205,high,Heap OOB read in all `tf.raw_ops.QuantizeAndDequantizeV*` ops,"### Impact
+97,CVE-2021-41205,['CWE-125'],high,Heap OOB read in all `tf.raw_ops.QuantizeAndDequantizeV*` ops,"### Impact
 The [shape inference functions for the `QuantizeAndDequantizeV*` operations](https://github.com/tensorflow/tensorflow/blob/8d72537c6abf5a44103b57b9c2e22c14f5f49698/tensorflow/core/ops/array_ops.cc) can trigger a read outside of bounds of heap allocated array as illustrated in the following sets of PoCs:
 
 ```python
@@ -1483,7 +1483,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.
 ",9
-98,CVE-2021-41206,high,Incomplete validation of shapes in multiple TF ops,"### Impact
+98,CVE-2021-41206,['CWE-354'],high,Incomplete validation of shapes in multiple TF ops,"### Impact
 Several TensorFlow operations are missing validation for the shapes of the tensor arguments involved in the call. Depending on the API, this can result in undefined behavior and segfault or `CHECK`-fail related crashes but in some scenarios writes and reads from heap populated arrays are also possible.
 
 We have discovered these issues internally via tooling while working on improving/testing GPU op determinism. As such, we don't have reproducers and there will be multiple fixes for these issues.
@@ -1495,7 +1495,7 @@ These fixes will be included in TensorFlow 2.7.0. We will also cherrypick these 
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",9
-99,CVE-2021-41210,high,Heap OOB read in `tf.raw_ops.SparseCountSparseOutput`,"### Impact
+99,CVE-2021-41210,['CWE-125'],high,Heap OOB read in `tf.raw_ops.SparseCountSparseOutput`,"### Impact
 The [shape inference functions for `SparseCountSparseOutput`](https://github.com/tensorflow/tensorflow/blob/e0b6e58c328059829c3eb968136f17aa72b6c876/tensorflow/core/ops/count_ops.cc#L43-L50) can trigger a read outside of bounds of heap allocated array:
 
 ```python
@@ -1529,7 +1529,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",9
-100,CVE-2021-41211,high,Heap OOB in shape inference for `QuantizeV2`,"### Impact
+100,CVE-2021-41211,['CWE-125'],high,Heap OOB in shape inference for `QuantizeV2`,"### Impact
 The [shape inference code for `QuantizeV2`](https://github.com/tensorflow/tensorflow/blob/8d72537c6abf5a44103b57b9c2e22c14f5f49698/tensorflow/core/framework/common_shape_fns.cc#L2509-L2530) can trigger a read outside of bounds of heap allocated array:
 
 ```python
@@ -1580,7 +1580,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",2
-101,CVE-2021-41212,high,Heap OOB read in `tf.ragged.cross`,"### Impact
+101,CVE-2021-41212,['CWE-125'],high,Heap OOB read in `tf.ragged.cross`,"### Impact
 The [shape inference code for `tf.ragged.cross`](https://github.com/tensorflow/tensorflow/blob/8d72537c6abf5a44103b57b9c2e22c14f5f49698/tensorflow/core/ops/ragged_array_ops.cc#L64) can trigger a read outside of bounds of heap allocated array:
 
 ```python
@@ -1615,7 +1615,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
     
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",9
-102,CVE-2021-41214,high,Reference binding to `nullptr` in `tf.ragged.cross`,"### Impact
+102,CVE-2021-41214,['CWE-824'],high,Reference binding to `nullptr` in `tf.ragged.cross`,"### Impact
 The [shape inference code for `tf.ragged.cross`](https://github.com/tensorflow/tensorflow/blob/8d72537c6abf5a44103b57b9c2e22c14f5f49698/tensorflow/core/ops/ragged_array_ops.cc#L64) has an undefined behavior due to binding a reference to `nullptr`. In the following scenario, this results in a crash:
 
 ```python
@@ -1639,7 +1639,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",9
-103,CVE-2021-41219,high,Undefined behavior via `nullptr` reference binding in sparse matrix multiplication,"### Impact
+103,CVE-2021-41219,"['CWE-125', 'CWE-824']",high,Undefined behavior via `nullptr` reference binding in sparse matrix multiplication,"### Impact
 The [code for sparse matrix multiplication](https://github.com/tensorflow/tensorflow/blob/8d72537c6abf5a44103b57b9c2e22c14f5f49698/tensorflow/core/kernels/sparse_matmul_op.cc#L954-L1086) is vulnerable to undefined behavior via binding a reference to `nullptr`:
 
 ```python
@@ -1667,7 +1667,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.
 ",9
-104,CVE-2021-41220,high,Use after free / memory leak in `CollectiveReduceV2`,"### Impact
+104,CVE-2021-41220,['CWE-416'],high,Use after free / memory leak in `CollectiveReduceV2`,"### Impact
 The [async implementation](https://github.com/tensorflow/tensorflow/blob/8d72537c6abf5a44103b57b9c2e22c14f5f49698/tensorflow/core/kernels/collective_ops.cc#L604-L615) of `CollectiveReduceV2` suffers from a memory leak and a use after free:
 
 ```python
@@ -1711,7 +1711,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.
 ",2
-105,CVE-2021-41221,high,Access to invalid memory during shape inference in `Cudnn*` ops,"### Impact
+105,CVE-2021-41221,"['CWE-120', 'CWE-787']",high,Access to invalid memory during shape inference in `Cudnn*` ops,"### Impact
 The [shape inference code](https://github.com/tensorflow/tensorflow/blob/9ff27787893f76d6971dcd1552eb5270d254f31b/tensorflow/core/ops/cudnn_rnn_ops.cc) for the `Cudnn*` operations in TensorFlow can be tricked into accessing invalid memory, via a heap buffer overflow:
 
 ```python
@@ -1749,7 +1749,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",9
-106,CVE-2021-41223,high,Heap OOB in `FusedBatchNorm` kernels,"### Impact
+106,CVE-2021-41223,['CWE-125'],high,Heap OOB in `FusedBatchNorm` kernels,"### Impact
 The [implementation](https://github.com/tensorflow/tensorflow/blob/e71b86d47f8bc1816bf54d7bddc4170e47670b97/tensorflow/core/kernels/fused_batch_norm_op.cc#L1292) of `FusedBatchNorm` kernels is vulnerable to a heap OOB:
 
 ```python
@@ -1776,7 +1776,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",9
-107,CVE-2021-41224,high,`SparseFillEmptyRows` heap OOB,"### Impact
+107,CVE-2021-41224,['CWE-125'],high,`SparseFillEmptyRows` heap OOB,"### Impact
 The [implementation](https://github.com/tensorflow/tensorflow/blob/e71b86d47f8bc1816bf54d7bddc4170e47670b97/tensorflow/core/kernels/sparse_fill_empty_rows_op.cc#L194-L241) of `SparseFillEmptyRows` can be made to trigger a heap OOB access:
 
 ```python
@@ -1801,7 +1801,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",9
-108,CVE-2021-41226,high,Heap OOB in `SparseBinCount`,"### Impact
+108,CVE-2021-41226,['CWE-125'],high,Heap OOB in `SparseBinCount`,"### Impact
 The [implementation](https://github.com/tensorflow/tensorflow/blob/e71b86d47f8bc1816bf54d7bddc4170e47670b97/tensorflow/core/kernels/bincount_op.cc#L353-L417) of `SparseBinCount` is vulnerable to a heap OOB:
 
 ```python
@@ -1839,7 +1839,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",9
-109,CVE-2021-41228,high,Code injection in `saved_model_cli`,"### Impact
+109,CVE-2021-41228,"['CWE-78', 'CWE-94']",high,Code injection in `saved_model_cli`,"### Impact
 TensorFlow's `saved_model_cli` tool is vulnerable to a code injection as it [calls `eval` on user supplied strings](https://github.com/tensorflow/tensorflow/blob/87462bfac761435a46641ff2f10ad0b6e5414a4b/tensorflow/python/tools/saved_model_cli.py#L524-L550)
   
 ```python
@@ -1865,7 +1865,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Omer Kaspi from Vdoo.",9
-110,CVE-2021-41265,high,Improper Authentication in Flask-AppBuilder,"### Impact
+110,CVE-2021-41265,['CWE-287'],high,Improper Authentication in Flask-AppBuilder,"### Impact
 Improper authentication on the REST API. Allows for a malicious actor with a carefully crafted request to successfully authenticate and gain access to existing protected REST API endpoints. Only affects non database authentication types, and new REST API endpoints.
 
 ### Patches
@@ -1875,10 +1875,10 @@ Upgrade to Flask-AppBuilder 3.3.4
 If you have any questions or comments about this advisory:
 * Open an issue in https://github.com/dpgaspar/Flask-AppBuilder
 ",1
-111,CVE-2021-41495,high,NumPy NULL Pointer Dereference,"Null Pointer Dereference vulnerability exists in numpy.sort in NumPy &lt and 1.19 in the PyArray_DescrNew function due to missing return-value validation, which allows attackers to conduct DoS attacks by repetitively creating sort arrays.",17
-112,CVE-2021-41500,high,Incorrect Comparison in cvxopt,"Incomplete string comparison vulnerability exits in cvxopt.org cvxop <= 1.2.6 in APIs (cvxopt.cholmod.diag, cvxopt.cholmod.getfactor, cvxopt.cholmod.solve, cvxopt.cholmod.spsolve), which allows attackers to conduct Denial of Service attacks by construct fake Capsule objects.",1
-113,CVE-2021-42771,high,Directory Traversal in Babel,"Babel.Locale in Babel before 2.9.1 allows attackers to load arbitrary locale .dat files (containing serialized Python objects) via directory traversal, leading to code execution.",1
-114,CVE-2021-43818,high,lxml's HTML Cleaner allows crafted and SVG embedded scripts to pass through,"### Impact
+111,CVE-2021-41495,['CWE-476'],high,NumPy NULL Pointer Dereference,"Null Pointer Dereference vulnerability exists in numpy.sort in NumPy &lt and 1.19 in the PyArray_DescrNew function due to missing return-value validation, which allows attackers to conduct DoS attacks by repetitively creating sort arrays.",17
+112,CVE-2021-41500,['CWE-697'],high,Incorrect Comparison in cvxopt,"Incomplete string comparison vulnerability exits in cvxopt.org cvxop <= 1.2.6 in APIs (cvxopt.cholmod.diag, cvxopt.cholmod.getfactor, cvxopt.cholmod.solve, cvxopt.cholmod.spsolve), which allows attackers to conduct Denial of Service attacks by construct fake Capsule objects.",1
+113,CVE-2021-42771,['CWE-22'],high,Directory Traversal in Babel,"Babel.Locale in Babel before 2.9.1 allows attackers to load arbitrary locale .dat files (containing serialized Python objects) via directory traversal, leading to code execution.",1
+114,CVE-2021-43818,"['CWE-74', 'CWE-79']",high,lxml's HTML Cleaner allows crafted and SVG embedded scripts to pass through,"### Impact
 The HTML Cleaner in lxml.html lets certain crafted script content pass through, as well as script content in SVG files embedded using data URIs.
 
 Users that employ the HTML cleaner in a security relevant context should upgrade to lxml 4.6.5.
@@ -1892,7 +1892,7 @@ None.
 ### References
 The issues are tracked under the report IDs GHSL-2021-1037 and GHSL-2021-1038.
 ",2
-115,CVE-2021-43854,high,"Inefficient Regular Expression Complexity in nltk (word_tokenize, sent_tokenize)","### Impact
+115,CVE-2021-43854,['CWE-400'],high,"Inefficient Regular Expression Complexity in nltk (word_tokenize, sent_tokenize)","### Impact
 The vulnerability is present in [`PunktSentenceTokenizer`](https://www.nltk.org/api/nltk.tokenize.punkt.html#nltk.tokenize.punkt.PunktSentenceTokenizer), [`sent_tokenize`](https://www.nltk.org/api/nltk.tokenize.html#nltk.tokenize.sent_tokenize)  and [`word_tokenize`](https://www.nltk.org/api/nltk.tokenize.html#nltk.tokenize.word_tokenize). Any users of this class, or these two functions, are vulnerable to a Regular Expression Denial of Service (ReDoS) attack. 
 In short, a specifically crafted long input to any of these vulnerable functions will cause them to take a significant amount of execution time. The effect of this vulnerability is noticeable with the following example:
 ```python
@@ -1946,8 +1946,8 @@ If you have any questions or comments about this advisory:
 * Open an issue in [github.com/nltk/nltk](https://github.com/nltk/nltk)
 * Email us at [nltk.team@gmail.com](mailto:nltk.team@gmail.com)
 ",2
-116,CVE-2022-0736,high,Insecure Temporary File in mlflow,mlflow prior to 1.23.1 contains an insecure temporary file. The insecure function `tempfile.mktemp()` is deprecated and `mkstemp()` should be used instead.,1
-117,CVE-2022-1941,high,protobuf-cpp and protobuf-python have potential Denial of Service issue,"### Summary
+116,CVE-2022-0736,"['CWE-377', 'CWE-668']",high,Insecure Temporary File in mlflow,mlflow prior to 1.23.1 contains an insecure temporary file. The insecure function `tempfile.mktemp()` is deprecated and `mkstemp()` should be used instead.,1
+117,CVE-2022-1941,"['CWE-119', 'CWE-1286']",high,protobuf-cpp and protobuf-python have potential Denial of Service issue,"### Summary
 
 A message parsing and memory management vulnerability in ProtocolBuffer’s C++ and Python implementations can trigger an out of memory (OOM) failure when processing a specially crafted message, which could lead to a denial of service (DoS) on services using the libraries.
 
@@ -1972,7 +1972,7 @@ For reproduction details, please refer to the unit test that identifies the spec
 Please update to the latest available versions of the following packages:
 - protobuf-cpp (3.18.3, 3.19.5, 3.20.2, 3.21.6)
 - protobuf-python (3.18.3, 3.19.5, 3.20.2, 4.21.6)",5
-118,CVE-2022-21699,high,Execution with Unnecessary Privileges in ipython,"We’d like to disclose an arbitrary code execution vulnerability in IPython that stems from IPython executing untrusted files in CWD. This vulnerability allows one user to run code as another.
+118,CVE-2022-21699,"['CWE-250', 'CWE-269', 'CWE-279']",high,Execution with Unnecessary Privileges in ipython,"We’d like to disclose an arbitrary code execution vulnerability in IPython that stems from IPython executing untrusted files in CWD. This vulnerability allows one user to run code as another.
  
 Proof of concept
 
@@ -2007,7 +2007,7 @@ See https://ipython.readthedocs.io/en/stable/whatsnew/version8.html#ipython-8-0-
 Version 8.0.1, 7.31.1 for current Python version are recommended. 
 Version 7.16.3 has also been published for Python 3.6 users, 
 Version 5.11 (source only, 5.x branch on github) for older Python versions.",4
-119,CVE-2022-21726,high,Out of bounds read in Tensorflow,"### Impact 
+119,CVE-2022-21726,['CWE-125'],high,Out of bounds read in Tensorflow,"### Impact 
 The [implementation of `Dequantize`](https://github.com/tensorflow/tensorflow/blob/5100e359aef5c8021f2e71c7b986420b85ce7b3d/tensorflow/core/kernels/dequantize_op.cc#L92-L153) does not fully validate the value of `axis` and can result in heap OOB accesses:
 
 ```python
@@ -2054,7 +2054,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
       
 ### Attribution
 This vulnerability has been reported by Yu Tian of Qihoo 360 AIVul Team.",10
-120,CVE-2022-21727,high,Integer overflow in Tensorflow,"### Impact 
+120,CVE-2022-21727,['CWE-190'],high,Integer overflow in Tensorflow,"### Impact 
 The [implementation of shape inference for `Dequantize`](https://github.com/tensorflow/tensorflow/blob/5100e359aef5c8021f2e71c7b986420b85ce7b3d/tensorflow/core/ops/array_ops.cc#L3001-L3034) is vulnerable to an integer overflow weakness:
 
 ```python
@@ -2105,7 +2105,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Yu Tian of Qihoo 360 AIVul Team.",10
-121,CVE-2022-21728,high,Out of bounds read in Tensorflow,"### Impact 
+121,CVE-2022-21728,['CWE-125'],high,Out of bounds read in Tensorflow,"### Impact 
 The [implementation of shape inference for `ReverseSequence`](https://github.com/tensorflow/tensorflow/blob/5100e359aef5c8021f2e71c7b986420b85ce7b3d/tensorflow/core/ops/array_ops.cc#L1636-L1671) does not fully validate the value of `batch_dim` and can result in a heap OOB read:
 
 ```python
@@ -2165,7 +2165,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Yu Tian of Qihoo 360 AIVul Team.",10
-122,CVE-2022-21730,high,Out of bounds read in Tensorflow,"### Impact 
+122,CVE-2022-21730,['CWE-125'],high,Out of bounds read in Tensorflow,"### Impact 
 The [implementation of `FractionalAvgPoolGrad`](https://github.com/tensorflow/tensorflow/blob/5100e359aef5c8021f2e71c7b986420b85ce7b3d/tensorflow/core/kernels/fractional_avg_pool_op.cc#L209-L360) does not consider cases where the input tensors are invalid allowing an attacker to read from outside of bounds of heap:
 
 ```python
@@ -2194,7 +2194,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
   
 ### Attribution
 This vulnerability has been reported by Yu Tian of Qihoo 360 AIVul Team.",10
-123,CVE-2022-21736,high,Undefined behavior in `SparseTensorSliceDataset`,"### Impact 
+123,CVE-2022-21736,['CWE-476'],high,Undefined behavior in `SparseTensorSliceDataset`,"### Impact 
 The [implementation of `SparseTensorSliceDataset`](https://github.com/tensorflow/tensorflow/blob/5100e359aef5c8021f2e71c7b986420b85ce7b3d/tensorflow/core/kernels/data/sparse_tensor_slice_dataset_op.cc#L227-L292) has an undefined behavior: under certain condition it can be made to dereference a `nullptr` value:
 
 ```python
@@ -2219,7 +2219,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Faysal Hossain Shezan from University of Virginia.",10
-124,CVE-2022-21740,high,Heap overflow in Tensorflow,"### Impact 
+124,CVE-2022-21740,"['CWE-120', 'CWE-787']",high,Heap overflow in Tensorflow,"### Impact 
 The [implementation of `SparseCountSparseOutput`](https://github.com/tensorflow/tensorflow/blob/5100e359aef5c8021f2e71c7b986420b85ce7b3d/tensorflow/core/kernels/count_ops.cc#L168-L273) is vulnerable to a heap overflow:
 
 ```python
@@ -2247,7 +2247,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Faysal Hossain Shezan from University of Virginia.",10
-125,CVE-2022-23558,high,Integer overflow in TFLite array creation,"### Impact 
+125,CVE-2022-23558,['CWE-190'],high,Integer overflow in TFLite array creation,"### Impact 
 An attacker can craft a TFLite model that would cause an integer overflow [in `TfLiteIntArrayCreate`](https://github.com/tensorflow/tensorflow/blob/ca6f96b62ad84207fbec580404eaa7dd7403a550/tensorflow/lite/c/common.c#L53-L60):
 
 ```cc
@@ -2286,7 +2286,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Wang Xuan of Qihoo 360 AIVul Team.",10
-126,CVE-2022-23559,high,Integer overflow in TFLite,"### Impact 
+126,CVE-2022-23559,['CWE-190'],high,Integer overflow in TFLite,"### Impact 
 An attacker can craft a TFLite model that would cause an integer overflow [in embedding lookup operations](https://github.com/tensorflow/tensorflow/blob/ca6f96b62ad84207fbec580404eaa7dd7403a550/tensorflow/lite/kernels/embedding_lookup_sparse.cc#L179-L189):
 
 ```cc
@@ -2318,7 +2318,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Wang Xuan of Qihoo 360 AIVul Team. ",10
-127,CVE-2022-23560,high,Read and Write outside of bounds in TensorFlow,"### Impact
+127,CVE-2022-23560,"['CWE-125', 'CWE-787']",high,Read and Write outside of bounds in TensorFlow,"### Impact
 An attacker can craft a TFLite model that would allow limited reads and writes outside of arrays in TFLite. This exploits missing validation in [the conversion from sparse tensors to dense tensors](https://github.com/tensorflow/tensorflow/blob/ca6f96b62ad84207fbec580404eaa7dd7403a550/tensorflow/lite/kernels/internal/utils/sparsity_format_converter.cc#L252-L293).
 
 ### Patches
@@ -2330,7 +2330,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Wang Xuan of Qihoo 360 AIVul Team.",10
-128,CVE-2022-23561,high,Out of bounds write in TFLite,"### Impact 
+128,CVE-2022-23561,['CWE-787'],high,Out of bounds write in TFLite,"### Impact 
 An attacker can craft a TFLite model that would cause a write outside of bounds of an array in TFLite. In fact, the attacker can override the linked list used by the memory allocator. This can be leveraged for an arbitrary write primitive under certain conditions.
 
 ### Patches
@@ -2343,7 +2343,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
   
 ### Attribution
 This vulnerability has been reported by Wang Xuan of Qihoo 360 AIVul Team.",10
-129,CVE-2022-23562,high,Integer overflow in Tensorflow,"### Impact
+129,CVE-2022-23562,['CWE-190'],high,Integer overflow in Tensorflow,"### Impact
 The implementation of `Range` suffers from integer overflows. These can trigger undefined behavior or, in some scenarios, extremely large allocations.
 
 ### Patches
@@ -2354,7 +2354,7 @@ The fix will be included in TensorFlow 2.8.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 ### Attribution
 This vulnerability has been reported externally via a [GitHub issue](https://github.com/tensorflow/tensorflow/issues/52676).",10
-130,CVE-2022-23563,high,Insecure temporary file in Tensorflow,"### Impact
+130,CVE-2022-23563,"['CWE-367', 'CWE-668']",high,Insecure temporary file in Tensorflow,"### Impact
 In multiple places, TensorFlow uses `tempfile.mktemp` to create temporary files. While this is acceptable in testing, in utilities and libraries it is dangerous as a different process can create the file between the check for the filename in `mktemp` and the actual creation of the file by a subsequent operation (a TOC/TOU type of weakness).
 
 In several instances, TensorFlow was supposed to actually create a temporary directory instead of a file. This logic bug is hidden away by the `mktemp` function usage.
@@ -2368,7 +2368,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported on huntr.dev for one scenario and discovered via variant analysis on other instances.",10
-131,CVE-2022-23566,high,Out of bounds write in Tensorflow,"### Impact
+131,CVE-2022-23566,['CWE-787'],high,Out of bounds write in Tensorflow,"### Impact
 TensorFlow is vulnerable to a heap OOB write in [Grappler](https://github.com/tensorflow/tensorflow/blob/a1320ec1eac186da1d03f033109191f715b2b130/tensorflow/core/grappler/costs/graph_properties.cc#L1132-L1141):
 
 ```cc
@@ -2399,7 +2399,7 @@ The fix will be included in TensorFlow 2.8.0. We will also cherrypick this commi
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",10
-132,CVE-2022-23573,high,Uninitialized variable access in Tensorflow,"### Impact
+132,CVE-2022-23573,['CWE-908'],high,Uninitialized variable access in Tensorflow,"### Impact
 The [implementation of `AssignOp`](https://github.com/tensorflow/tensorflow/blob/a1320ec1eac186da1d03f033109191f715b2b130/tensorflow/core/kernels/assign_op.h#L30-L143) can result in copying unitialized data to a new tensor. This later results in undefined behavior.
 
 The implementation has a check that the left hand side of the assignment is initialized (to minimize number of allocations), but does not check that the right hand side is also initialized.
@@ -2412,7 +2412,7 @@ The fix will be included in TensorFlow 2.8.0. We will also cherrypick this commi
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 ",10
-133,CVE-2022-23574,high,Out of bounds read and write in Tensorflow,"### Impact
+133,CVE-2022-23574,"['CWE-125', 'CWE-787']",high,Out of bounds read and write in Tensorflow,"### Impact
 There is a typo in TensorFlow's [`SpecializeType`](https://github.com/tensorflow/tensorflow/blob/a1320ec1eac186da1d03f033109191f715b2b130/tensorflow/core/framework/full_type_util.cc#L81-L102) which results in heap OOB read/write:
 
 ```cc
@@ -2434,7 +2434,7 @@ The fix will be included in TensorFlow 2.8.0. We will also cherrypick this commi
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",10
-134,CVE-2022-23584,high,Use after free in `DecodePng` kernel,"### Impact
+134,CVE-2022-23584,['CWE-416'],high,Use after free in `DecodePng` kernel,"### Impact
 A malicious user can cause a use after free behavior when [decoding PNG images](https://github.com/tensorflow/tensorflow/blob/a1320ec1eac186da1d03f033109191f715b2b130/tensorflow/core/kernels/image/decode_image_op.cc#L339-L346):
 ```cc
 if (/* ... error conditions ... */) {
@@ -2453,7 +2453,7 @@ The fix will be included in TensorFlow 2.8.0. We will also cherrypick this commi
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",10
-135,CVE-2022-23587,high,Integer overflow in TensorFlow,"### Impact
+135,CVE-2022-23587,['CWE-190'],high,Integer overflow in TensorFlow,"### Impact
 Under certain scenarios, Grappler component of TensorFlow is vulnerable to an integer overflow during [cost estimation for crop and resize](https://github.com/tensorflow/tensorflow/blob/a1320ec1eac186da1d03f033109191f715b2b130/tensorflow/core/grappler/costs/op_level_cost_estimator.cc#L2621-L2689). Since the cropping parameters are user controlled, a malicious person can trigger undefined behavior.
 
 ### Patches
@@ -2463,7 +2463,7 @@ The fix will be included in TensorFlow 2.8.0. We will also cherrypick this commi
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",10
-136,CVE-2022-23591,high,Stack overflow in TensorFlow,"### Impact
+136,CVE-2022-23591,"['CWE-400', 'CWE-674']",high,Stack overflow in TensorFlow,"### Impact
 The `GraphDef` format in TensorFlow does not allow self recursive functions. The runtime assumes that this invariant is satisfied. However, a `GraphDef` containing a fragment such as the following can be consumed when loading a `SavedModel`:
 
 ```
@@ -2494,7 +2494,7 @@ The fix will be included in TensorFlow 2.8.0. We will also cherrypick this commi
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",10
-137,CVE-2022-23594,high,Out of bounds read in Tensorflow,"### Impact
+137,CVE-2022-23594,['CWE-125'],high,Out of bounds read in Tensorflow,"### Impact
 The [TFG dialect of TensorFlow (MLIR)](https://github.com/tensorflow/tensorflow/tree/274df9b02330b790aa8de1cee164b70f72b9b244/tensorflow/core/ir/importexport) makes several assumptions about the incoming `GraphDef` before converting it to the MLIR-based dialect.
 
 If an attacker changes the `SavedModel` format on disk to invalidate these assumptions and the `GraphDef` is then converted to MLIR-based IR then they can cause a crash in the Python interpreter. Under certain scenarios, heap OOB read/writes are possible.
@@ -2506,8 +2506,8 @@ We have patched the issue in multiple GitHub commits and these will be included 
       
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",1
-138,CVE-2022-24439,high,GitPython vulnerable to Remote Code Execution due to improper user input validation,"All versions of package gitpython are vulnerable to Remote Code Execution (RCE) due to improper user input validation, which makes it possible to inject a maliciously crafted remote URL into the clone command. Exploiting this vulnerability is possible because the library makes external calls to git without sufficient sanitization of input arguments.",2
-139,CVE-2022-24758,high,Sensitive Auth & Cookie data stored in Jupyter server logs,"Anytime a 5xx error is triggered, the auth cookie and other header values are recorded in Jupyter server logs by default. Considering these logs do not require root access, an attacker can monitor these logs, steal sensitive auth/cookie information, and gain access to the Jupyter server.
+138,CVE-2022-24439,"['CWE-20', 'CWE-94']",high,GitPython vulnerable to Remote Code Execution due to improper user input validation,"All versions of package gitpython are vulnerable to Remote Code Execution (RCE) due to improper user input validation, which makes it possible to inject a maliciously crafted remote URL into the clone command. Exploiting this vulnerability is possible because the library makes external calls to git without sufficient sanitization of input arguments.",2
+139,CVE-2022-24758,['CWE-532'],high,Sensitive Auth & Cookie data stored in Jupyter server logs,"Anytime a 5xx error is triggered, the auth cookie and other header values are recorded in Jupyter server logs by default. Considering these logs do not require root access, an attacker can monitor these logs, steal sensitive auth/cookie information, and gain access to the Jupyter server.
 
 Upgrade to notebook version 6.4.10
 
@@ -2518,8 +2518,8 @@ If you have any questions or comments about this advisory, or vulnerabilities to
 Credit: @3coins for reporting. Thank you!
 
 ",3
-140,CVE-2022-25882,high,Directory Traversal in onnx,"Versions of the package onnx before 1.13.0 are vulnerable to Directory Traversal as the external_data field of the tensor proto can have a path to the file which is outside the model current directory or user-provided directory, for example ""../../../etc/passwd""",2
-141,CVE-2022-29208,high,Segfault and OOB write due to incomplete validation in `EditDistance` in TensorFlow,"### Impact
+140,CVE-2022-25882,['CWE-22'],high,Directory Traversal in onnx,"Versions of the package onnx before 1.13.0 are vulnerable to Directory Traversal as the external_data field of the tensor proto can have a path to the file which is outside the model current directory or user-provided directory, for example ""../../../etc/passwd""",2
+141,CVE-2022-29208,['CWE-787'],high,Segfault and OOB write due to incomplete validation in `EditDistance` in TensorFlow,"### Impact
 The implementation of [`tf.raw_ops.EditDistance`]() has incomplete validation. Users can pass negative values to cause a segmentation fault based denial of service:
 
 ```python
@@ -2572,7 +2572,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Neophytos Christou from Secure Systems Lab at Brown University.",11
-142,CVE-2022-29216,high,Code injection in `saved_model_cli` in TensorFlow,"### Impact
+142,CVE-2022-29216,['CWE-94'],high,Code injection in `saved_model_cli` in TensorFlow,"### Impact
 TensorFlow's `saved_model_cli` tool is vulnerable to a code injection:
 
 ```
@@ -2618,7 +2618,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Andey Robins from the Cybersecurity Education and Research Lab in the Department of Computer Science at the University of Wyoming.",11
-143,CVE-2022-35937,high,TensorFlow vulnerable to OOB read in `Gather_nd` in TF Lite,"### Impact
+143,CVE-2022-35937,['CWE-125'],high,TensorFlow vulnerable to OOB read in `Gather_nd` in TF Lite,"### Impact
 The [`GatherNd`](https://github.com/tensorflow/tensorflow/blob/f463040eb3997e42e60a2ffc6dc72de7ef11dbb4/tensorflow/lite/kernels/gather_nd.cc#L105-L111) function takes arguments that determine the sizes of inputs and outputs. If the inputs given are greater than or equal to the sizes of the outputs, an out-of-bounds memory read is triggered.
 
 ### Patches
@@ -2635,7 +2635,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by Hui Peng from Baidu Security.
 ",11
-144,CVE-2022-35939,high,TensorFlow vulnerable to OOB write in `scatter_nd` in TF Lite,"### Impact
+144,CVE-2022-35939,['CWE-787'],high,TensorFlow vulnerable to OOB write in `scatter_nd` in TF Lite,"### Impact
 The [`ScatterNd`](https://github.com/tensorflow/tensorflow/blob/266558ac4c1f361e9a178ee9d3f0ce2e648ae499/tensorflow/lite/kernels/internal/reference/reference_ops.h#L659-L698) function takes an input argument that determines the indices of of the output tensor. An input index greater than the output tensor or less than zero will either write content at the wrong index or trigger a crash.
 
 ### Patches
@@ -2650,7 +2650,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Hui Peng from Baidu Security.",11
-145,CVE-2022-39286,high,Execution with Unnecessary Privileges in JupyterApp,"### Impact
+145,CVE-2022-39286,"['CWE-250', 'CWE-269', 'CWE-427']",high,Execution with Unnecessary Privileges in JupyterApp,"### Impact
 _What kind of vulnerability is it? Who is impacted?_
 We’d like to disclose an arbitrary code execution vulnerability in `jupyter_core` that stems from `jupyter_core` executing untrusted files in the current working directory. This vulnerability allows one user to run code as another.
 
@@ -2668,11 +2668,11 @@ _Are there any links users can visit to find out more?_
 Similar advisory in [IPython](https://github.com/advisories/GHSA-pq7m-3gw7-gq5x)
 
 ",5
-146,CVE-2022-40023,high,mako is vulnerable to Regular Expression Denial of Service,Sqlalchemy mako before 1.2.2 is vulnerable to Regular expression Denial of Service when using the Lexer class to parse. This also affects babelplugin and linguaplugin.,3
-147,CVE-2022-40897,high,pypa/setuptools vulnerable to Regular Expression Denial of Service (ReDoS),Python Packaging Authority (PyPA)'s setuptools is a library designed to facilitate packaging Python projects. Setuptools version 65.5.0 and earlier could allow remote attackers to cause a denial of service by fetching malicious HTML from a PyPI package or custom PackageIndex page due to a vulnerable Regular Expression in `package_index`. This has been patched in version 65.5.1.,10
-148,CVE-2022-40898,high,pypa/wheel vulnerable to Regular Expression denial of service (ReDoS),Python Packaging Authority (PyPA) Wheel is a reference implementation of the Python wheel packaging standard. Wheel 0.37.1 and earlier are vulnerable to a Regular Expression denial of service via attacker controlled input to the wheel cli. The vulnerable regex is used to verify the validity of Wheel file names. This has been patched in version 0.38.1.,5
-149,CVE-2022-40899,high,Python Charmers Future denial of service vulnerability,An issue discovered in Python Charmers Future 0.18.2 and earlier allows remote attackers to cause a denial of service via crafted Set-Cookie header from malicious web server. This issue has been patched in version 0.18.3.,4
-150,CVE-2022-41894,high,Buffer overflow in `CONV_3D_TRANSPOSE` on TFLite,"### Impact
+146,CVE-2022-40023,['CWE-1333'],high,mako is vulnerable to Regular Expression Denial of Service,Sqlalchemy mako before 1.2.2 is vulnerable to Regular expression Denial of Service when using the Lexer class to parse. This also affects babelplugin and linguaplugin.,3
+147,CVE-2022-40897,['CWE-1333'],high,pypa/setuptools vulnerable to Regular Expression Denial of Service (ReDoS),Python Packaging Authority (PyPA)'s setuptools is a library designed to facilitate packaging Python projects. Setuptools version 65.5.0 and earlier could allow remote attackers to cause a denial of service by fetching malicious HTML from a PyPI package or custom PackageIndex page due to a vulnerable Regular Expression in `package_index`. This has been patched in version 65.5.1.,10
+148,CVE-2022-40898,['CWE-1333'],high,pypa/wheel vulnerable to Regular Expression denial of service (ReDoS),Python Packaging Authority (PyPA) Wheel is a reference implementation of the Python wheel packaging standard. Wheel 0.37.1 and earlier are vulnerable to a Regular Expression denial of service via attacker controlled input to the wheel cli. The vulnerable regex is used to verify the validity of Wheel file names. This has been patched in version 0.38.1.,5
+149,CVE-2022-40899,[],high,Python Charmers Future denial of service vulnerability,An issue discovered in Python Charmers Future 0.18.2 and earlier allows remote attackers to cause a denial of service via crafted Set-Cookie header from malicious web server. This issue has been patched in version 0.18.3.,4
+150,CVE-2022-41894,['CWE-120'],high,Buffer overflow in `CONV_3D_TRANSPOSE` on TFLite,"### Impact
 The reference kernel of the [`CONV_3D_TRANSPOSE`](https://github.com/tensorflow/tensorflow/blob/091e63f0ea33def7ecad661a5ac01dcafbafa90b/tensorflow/lite/kernels/internal/reference/conv3d_transpose.h#L121) TensorFlow Lite operator wrongly increments the data_ptr when adding the bias to the result.
 
 Instead of `data_ptr += num_channels;` it should be `data_ptr += output_num_channels;` as if the number of input channels is different than the number of output channels, the wrong result will be returned and a buffer overflow will occur if num_channels > output_num_channels.
@@ -2720,7 +2720,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by Thibaut Goetghebuer-Planchon, Arm Ltd.
 ",11
-151,CVE-2022-41900,high,FractionalMaxPool and FractionalAVGPool heap out-of-bounds acess,"### Impact
+151,CVE-2022-41900,"['CWE-125', 'CWE-787']",high,FractionalMaxPool and FractionalAVGPool heap out-of-bounds acess,"### Impact
 An input `pooling_ratio` that is smaller than 1 will trigger a heap OOB in [`tf.raw_ops.FractionalMaxPool`](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/kernels/fractional_max_pool_op.cc) and [`tf.raw_ops.FractionalAvgPool`](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/kernels/fractional_avg_pool_op.cc).
 
 ### Patches
@@ -2732,7 +2732,7 @@ The fix will be included in TensorFlow 2.11.0. We will also cherry pick this com
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 ",11
-152,CVE-2022-41902,high,Out of bounds write in grappler in Tensorflow,"### Impact
+152,CVE-2022-41902,"['CWE-125', 'CWE-787']",high,Out of bounds write in grappler in Tensorflow,"### Impact
 The function [MakeGrapplerFunctionItem](https://https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/grappler/utils/functions.cc#L221) takes arguments that determine the sizes of inputs and outputs. If the inputs given are greater than or equal to the sizes of the outputs, an out-of-bounds memory read or a crash is triggered.
 
 ### Patches
@@ -2744,17 +2744,17 @@ The fix will be included in TensorFlow 2.11.0. We will also cherrypick this comm
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 ",11
-153,CVE-2022-42969,high,ReDoS in py library when used with subversion ,"The py library through 1.11.0 for Python allows remote attackers to conduct a ReDoS (Regular expression Denial of Service) attack via a Subversion repository with crafted info data, because the InfoSvnCommand argument is mishandled.
+153,CVE-2022-42969,['CWE-1333'],high,ReDoS in py library when used with subversion ,"The py library through 1.11.0 for Python allows remote attackers to conduct a ReDoS (Regular expression Denial of Service) attack via a Subversion repository with crafted info data, because the InfoSvnCommand argument is mishandled.
 
 The particular codepath in question is the regular expression at `py._path.svnurl.InfoSvnCommand.lspattern` and is only relevant when dealing with subversion (svn) projects. Notably the codepath is not used in the popular pytest project. The developers of the pytest package have released version `7.2.0` which removes their dependency on `py`. Users of `pytest` seeing alerts relating to this advisory may update to version `7.2.0` of `pytest` to resolve this issue. See https://github.com/pytest-dev/py/issues/287#issuecomment-1290407715 for additional context.",13
-154,CVE-2022-45198,high,Pillow vulnerable to Data Amplification attack.,Pillow before 9.2.0 performs Improper Handling of Highly Compressed GIF Data (Data Amplification).,10
-155,CVE-2022-45199,high,Pillow subject to DoS via SAMPLESPERPIXEL tag,Pillow starting with 9.2.0 and prior to 9.3.0 allows denial of service via SAMPLESPERPIXEL. A large value in the SAMPLESPERPIXEL tag could lead to a memory and runtime DOS in TiffImagePlugin.py when setting up the context for image decoding. This issue has been patched in version 9.3.0.,4
-156,CVE-2023-0286,high,Vulnerable OpenSSL included in cryptography wheels,"pyca/cryptography's wheels include a statically linked copy of OpenSSL. The versions of OpenSSL included in cryptography 0.8.1-39.0.0  are vulnerable to a security issue. More details about the vulnerabilities themselves can be found in https://www.openssl.org/news/secadv/20221213.txt and https://www.openssl.org/news/secadv/20230207.txt.
+154,CVE-2022-45198,['CWE-409'],high,Pillow vulnerable to Data Amplification attack.,Pillow before 9.2.0 performs Improper Handling of Highly Compressed GIF Data (Data Amplification).,10
+155,CVE-2022-45199,['CWE-400'],high,Pillow subject to DoS via SAMPLESPERPIXEL tag,Pillow starting with 9.2.0 and prior to 9.3.0 allows denial of service via SAMPLESPERPIXEL. A large value in the SAMPLESPERPIXEL tag could lead to a memory and runtime DOS in TiffImagePlugin.py when setting up the context for image decoding. This issue has been patched in version 9.3.0.,4
+156,CVE-2023-0286,['CWE-843'],high,Vulnerable OpenSSL included in cryptography wheels,"pyca/cryptography's wheels include a statically linked copy of OpenSSL. The versions of OpenSSL included in cryptography 0.8.1-39.0.0  are vulnerable to a security issue. More details about the vulnerabilities themselves can be found in https://www.openssl.org/news/secadv/20221213.txt and https://www.openssl.org/news/secadv/20230207.txt.
 
 If you are building cryptography source (""sdist"") then you are responsible for upgrading your copy of OpenSSL. Only users installing from wheels built by the cryptography project (i.e., those distributed on PyPI) need to update their cryptography versions.
 
 ",7
-157,CVE-2023-1428,high,gRPC Reachable Assertion issue,"There exists an vulnerability causing an abort() to be called in gRPC. 
+157,CVE-2023-1428,['CWE-617'],high,gRPC Reachable Assertion issue,"There exists an vulnerability causing an abort() to be called in gRPC. 
 The following headers cause gRPC's C++ implementation to abort() when called via http2:
 
 te: x (x != trailers)
@@ -2764,10 +2764,10 @@ te: x (x != trailers)
 grpclb_client_stats: x (x == anything)
 
 On top of sending one of those headers, a later header must be sent that gets the total header size past 8KB. We recommend upgrading past git commit 2485fa94bd8a723e5c977d55a3ce10b301b437f8 or v1.53 and above.",3
-158,CVE-2023-25577,high,High resource usage when parsing multipart form data with many fields,"Werkzeug's multipart form data parser will parse an unlimited number of parts, including file parts. Parts can be a small amount of bytes, but each requires CPU time to parse and may use more memory as Python data. If a request can be made to an endpoint that accesses `request.data`, `request.form`, `request.files`, or `request.get_data(parse_form_data=False)`, it can cause unexpectedly high resource usage.
+158,CVE-2023-25577,"['CWE-400', 'CWE-770']",high,High resource usage when parsing multipart form data with many fields,"Werkzeug's multipart form data parser will parse an unlimited number of parts, including file parts. Parts can be a small amount of bytes, but each requires CPU time to parse and may use more memory as Python data. If a request can be made to an endpoint that accesses `request.data`, `request.form`, `request.files`, or `request.get_data(parse_form_data=False)`, it can cause unexpectedly high resource usage.
 
 This allows an attacker to cause a denial of service by sending crafted multipart data to an endpoint that will parse it. The amount of CPU time required can block worker processes from handling legitimate requests. The amount of RAM required can trigger an out of memory kill of the process. Unlimited file parts can use up memory and file handles. If many concurrent requests are sent continuously, this can exhaust or kill all available workers.",9
-159,CVE-2023-25658,high,TensorFlow vulnerable to Out-of-Bounds Read in GRUBlockCellGrad,"### Impact
+159,CVE-2023-25658,['CWE-125'],high,TensorFlow vulnerable to Out-of-Bounds Read in GRUBlockCellGrad,"### Impact
 Out of bounds read in GRUBlockCellGrad
 ```python
 func = tf.raw_ops.GRUBlockCellGrad
@@ -2797,7 +2797,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by r3pwnx.
 ",11
-160,CVE-2023-25659,high,TensorFlow vulnerable to Out-of-Bounds Read in DynamicStitch,"### Impact
+160,CVE-2023-25659,['CWE-125'],high,TensorFlow vulnerable to Out-of-Bounds Read in DynamicStitch,"### Impact
 If the parameter `indices` for `DynamicStitch` does not match the shape of the parameter `data`, it can trigger an stack OOB read.
 
 ```python
@@ -2819,7 +2819,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This has been reported via Google OSS VRP.",11
-161,CVE-2023-25660,high,TensorFlow vulnerable to seg fault in `tf.raw_ops.Print`,"### Impact
+161,CVE-2023-25660,['CWE-476'],high,TensorFlow vulnerable to seg fault in `tf.raw_ops.Print`,"### Impact
 When the parameter `summarize` of `tf.raw_ops.Print` is zero, the new method `SummarizeArray<bool>` will reference to a nullptr, leading to a seg fault.
 
 ```python
@@ -2845,7 +2845,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by Yu Tian of Qihoo 360 AIVul Team
 ",11
-162,CVE-2023-25662,high,TensorFlow vulnerable to integer overflow in EditDistance,"### Impact
+162,CVE-2023-25662,['CWE-190'],high,TensorFlow vulnerable to integer overflow in EditDistance,"### Impact
 TFversion 2.11.0 //tensorflow/core/ops/array_ops.cc:1067 const Tensor* hypothesis_shape_t = c->input_tensor(2); std::vector<DimensionHandle> dims(hypothesis_shape_t->NumElements() - 1); for (int i = 0; i < dims.size(); ++i) { dims[i] = c->MakeDim(std::max(h_values(i), t_values(i))); }
 
 if hypothesis_shape_t is empty, hypothesis_shape_t->NumElements() - 1 will be integer overflow, and the it will deadlock
@@ -2875,7 +2875,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by r3pwnx",11
-163,CVE-2023-25663,high,TensorFlow has Null Pointer Error in TensorArrayConcatV2,"### Impact
+163,CVE-2023-25663,['CWE-476'],high,TensorFlow has Null Pointer Error in TensorArrayConcatV2,"### Impact
 When ctx->step_containter() is a null ptr, the Lookup function will be executed with a null pointer.
 ```python
 import tensorflow as tf
@@ -2894,7 +2894,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Yu Tian",11
-164,CVE-2023-25664,high,TensorFlow has Heap-buffer-overflow in AvgPoolGrad ,"### Impact
+164,CVE-2023-25664,"['CWE-120', 'CWE-122']",high,TensorFlow has Heap-buffer-overflow in AvgPoolGrad ,"### Impact
 ```python
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
@@ -2930,7 +2930,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by <evn@google.com>
 ",11
-165,CVE-2023-25665,high,TensorFlow has Null Pointer Error in SparseSparseMaximum,"### Impact
+165,CVE-2023-25665,['CWE-476'],high,TensorFlow has Null Pointer Error in SparseSparseMaximum,"### Impact
 When `SparseSparseMaximum` is given invalid sparse tensors as inputs, it can give an NPE. 
 
 ```python
@@ -2957,7 +2957,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by Yu Tian of Qihoo 360 AIVul Team",11
-166,CVE-2023-25666,high,TensorFlow has Floating Point Exception in AudioSpectrogram ,"### Impact
+166,CVE-2023-25666,['CWE-697'],high,TensorFlow has Floating Point Exception in AudioSpectrogram ,"### Impact
 version:2.11.0 //core/ops/audio_ops.cc:70
 
 Status SpectrogramShapeFn(InferenceContext* c) { ShapeHandle input; TF_RETURN_IF_ERROR(c->WithRank(c->input(0), 2, &input)); int32_t window_size; TF_RETURN_IF_ERROR(c->GetAttr(""window_size"", &window_size)); int32_t stride; TF_RETURN_IF_ERROR(c->GetAttr(""stride"", &stride)); .....[1]
@@ -2994,7 +2994,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by r3pwnx
 ",11
-167,CVE-2023-25669,high,TensorFlow has Floating Point Exception in AvgPoolGrad with XLA,"### Impact
+167,CVE-2023-25669,['CWE-697'],high,TensorFlow has Floating Point Exception in AvgPoolGrad with XLA,"### Impact
 If the stride and window size are not positive for `tf.raw_ops.AvgPoolGrad`, it can give an FPE.
 
 ```python
@@ -3022,7 +3022,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by r3pwnx of 360 AIVul Team
 ",11
-168,CVE-2023-25670,high,TensorFlow has Null Pointer Error in QuantizedMatMulWithBiasAndDequantize,"### Impact
+168,CVE-2023-25670,['CWE-476'],high,TensorFlow has Null Pointer Error in QuantizedMatMulWithBiasAndDequantize,"### Impact
 NPE in QuantizedMatMulWithBiasAndDequantize with MKL enable 
 ```python
 import tensorflow as tf
@@ -3046,7 +3046,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by r3pwnx
 ",11
-169,CVE-2023-25671,high,TensorFlow has segmentation fault in tfg-translate ,"### Impact
+169,CVE-2023-25671,['CWE-787'],high,TensorFlow has segmentation fault in tfg-translate ,"### Impact
 Out-of-bounds access due to mismatched integer type sizes in ValueMap::Manager::GetValueOrCreatePlaceholder. Bug with tfg-translate call to InitMlir. The problem happens with generic functions, as it is already handled for non-generic functions. This is because they, unlike non-generic functions, are using the ""old importer"". A better long-term solution may be to have the ""new importer"" handle generic functions.
 
 ### Patches
@@ -3068,7 +3068,7 @@ This vulnerability has been reported by r3pwnx
 360 AIVul
 
 ",11
-170,CVE-2023-25672,high,TensorFlow has Null Pointer Error in LookupTableImportV2,"### Impact
+170,CVE-2023-25672,['CWE-476'],high,TensorFlow has Null Pointer Error in LookupTableImportV2,"### Impact
 The function `tf.raw_ops.LookupTableImportV2` cannot handle scalars in the `values` parameter and gives an NPE.
 
 ```python
@@ -3100,7 +3100,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by r3pwnx of 360 AIVul Team
 ",11
-171,CVE-2023-25673,high,TensorFlow has Floating Point Exception in TensorListSplit with XLA ,"### Impact
+171,CVE-2023-25673,['CWE-697'],high,TensorFlow has Floating Point Exception in TensorListSplit with XLA ,"### Impact
 FPE in TensorListSplit with XLA 
 ```python
 import tensorflow as tf
@@ -3128,7 +3128,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 
 ### Attribution
 This vulnerability has been reported by r3pwnx",11
-172,CVE-2023-25674,high,TensorFlow has Null Pointer Error in RandomShuffle with XLA enable ,"### Impact
+172,CVE-2023-25674,['CWE-476'],high,TensorFlow has Null Pointer Error in RandomShuffle with XLA enable ,"### Impact
 NPE in RandomShuffle with XLA enable 
 ```python
 import tensorflow as tf
@@ -3157,7 +3157,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by r3pwnx
 ",11
-173,CVE-2023-25675,high,TensorFlow has Segfault in Bincount with XLA,"### Impact
+173,CVE-2023-25675,['CWE-697'],high,TensorFlow has Segfault in Bincount with XLA,"### Impact
 When running with XLA, `tf.raw_ops.Bincount` segfaults when given a parameter `weights` that is neither the same shape as parameter `arr` nor a length-0 tensor.
 
 ```python
@@ -3187,7 +3187,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by r3pwnx of 360 AIVul Team
 ",11
-174,CVE-2023-25676,high,TensorFlow has null dereference on ParallelConcat with XLA,"### Impact
+174,CVE-2023-25676,['CWE-476'],high,TensorFlow has null dereference on ParallelConcat with XLA,"### Impact
 When running with XLA, `tf.raw_ops.ParallelConcat` segfaults with a nullptr dereference when given a parameter `shape` with rank that is not greater than zero.
 
 ```python
@@ -3217,7 +3217,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability has been reported by r3pwnx of 360 AIVul Team
 ",11
-175,CVE-2023-25801,high,TensorFlow has double free in Fractional(Max/Avg)Pool,"### Impact
+175,CVE-2023-25801,['CWE-415'],high,TensorFlow has double free in Fractional(Max/Avg)Pool,"### Impact
 `nn_ops.fractional_avg_pool_v2` and `nn_ops.fractional_max_pool_v2` require the first and fourth elements of their parameter `pooling_ratio` to be equal to 1.0, as pooling on batch and channel dimensions is not supported.
 
 ```python
@@ -3253,8 +3253,8 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability was reported by [dmc1778](https://github.com/dmc1778), of [nimashiri2012@gmail.com](mailto:nimashiri2012@gmail.com).
 ",11
-176,CVE-2023-27522,high,Apache HTTP Server via mod_proxy_uwsgi HTTP response smuggling,HTTP Response Smuggling vulnerability in Apache HTTP Server via mod_proxy_uwsgi. This issue affects Apache HTTP Server from 2.4.30 through 2.4.55 and the uWSGI PyPI package prior to version 2.0.22. Special characters in the origin response header can truncate/split the response forwarded to the client.,1
-177,CVE-2023-27579,high,TensorFlow has Floating Point Exception in TFLite in conv kernel,"### Impact
+176,CVE-2023-27522,['CWE-444'],high,Apache HTTP Server via mod_proxy_uwsgi HTTP response smuggling,HTTP Response Smuggling vulnerability in Apache HTTP Server via mod_proxy_uwsgi. This issue affects Apache HTTP Server from 2.4.30 through 2.4.55 and the uWSGI PyPI package prior to version 2.0.22. Special characters in the origin response header can truncate/split the response forwarded to the client.,1
+177,CVE-2023-27579,['CWE-697'],high,TensorFlow has Floating Point Exception in TFLite in conv kernel,"### Impact
 Constructing a tflite model with a paramater `filter_input_channel` of less than 1 gives a FPE.
 
 
@@ -3270,7 +3270,7 @@ Please consult [our security guide](https://github.com/tensorflow/tensorflow/blo
 ### Attribution
 This vulnerability was reported by Wang Xuan of Qihoo 360 AIVul Team.
 ",11
-178,CVE-2023-29005,high,Flask-AppBuilder Has No Rate Limiting on Login AUTH DB,"### Impact
+178,CVE-2023-29005,['CWE-307'],high,Flask-AppBuilder Has No Rate Limiting on Login AUTH DB,"### Impact
 Lack of rate limiting will allow an attacker to brute-force user credentials.
 
 ### Patches
@@ -3278,9 +3278,9 @@ Ability to enable rate limiting on Flask-AppBuilder >=  4.3.0. Use `AUTH_RATE_LI
 
 ### Workarounds
 Implement rate limiting using a reverse proxy or other strategies. ",1
-179,CVE-2023-30172,high,mflow vulnerable to directory traversal,A directory traversal vulnerability in the /get-artifact API method of the mlflow platform prior to v2.0.0 allows attackers to read arbitrary files on the server via the path parameter.,1
-180,CVE-2023-30798,high,Starlette allows an unauthenticated and remote attacker to specify any number of form fields or files,There MultipartParser usage in Encode's Starlette python framework before versions 0.25.0 allows an unauthenticated and remote attacker to specify any number of form fields or files which can cause excessive memory usage resulting in denial of service of the HTTP service.,2
-181,CVE-2023-30861,high,Flask vulnerable to possible disclosure of permanent session cookie due to missing Vary: Cookie header,"When all of the following conditions are met, a response containing data intended for one client may be cached and subsequently sent by a proxy to other clients. If the proxy also caches `Set-Cookie` headers, it may send one client's `session` cookie to other clients. The severity depends on the application's use of the session, and the proxy's behavior regarding cookies. The risk depends on _all_ these conditions being met.
+179,CVE-2023-30172,['CWE-22'],high,mflow vulnerable to directory traversal,A directory traversal vulnerability in the /get-artifact API method of the mlflow platform prior to v2.0.0 allows attackers to read arbitrary files on the server via the path parameter.,1
+180,CVE-2023-30798,['CWE-400'],high,Starlette allows an unauthenticated and remote attacker to specify any number of form fields or files,There MultipartParser usage in Encode's Starlette python framework before versions 0.25.0 allows an unauthenticated and remote attacker to specify any number of form fields or files which can cause excessive memory usage resulting in denial of service of the HTTP service.,2
+181,CVE-2023-30861,['CWE-539'],high,Flask vulnerable to possible disclosure of permanent session cookie due to missing Vary: Cookie header,"When all of the following conditions are met, a response containing data intended for one client may be cached and subsequently sent by a proxy to other clients. If the proxy also caches `Set-Cookie` headers, it may send one client's `session` cookie to other clients. The severity depends on the application's use of the session, and the proxy's behavior regarding cookies. The risk depends on _all_ these conditions being met.
 
 1. The application must be hosted behind a caching proxy that does not strip cookies or ignore responses with cookies.
 2. The application sets [`session.permanent = True`](https://flask.palletsprojects.com/en/2.3.x/api/#flask.session.permanent).
@@ -3289,23 +3289,23 @@ Implement rate limiting using a reverse proxy or other strategies. ",1
 5. The application does not set a `Cache-Control` header to indicate that a page is private or should not be cached.
 
 This happens because vulnerable versions of Flask only set the `Vary: Cookie` header when the session is accessed or modified, not when it is refreshed (re-sent to update the expiration) without being accessed or modified.",16
-182,CVE-2023-32731,high,Connection confusion in gRPC,"When gRPC HTTP2 stack raised a header size exceeded error, it skipped parsing the rest of the HPACK frame. This caused any HPACK table mutations to also be skipped, resulting in a desynchronization of HPACK tables between sender and receiver. If leveraged, say, between a proxy and a backend, this could lead to requests from the proxy being interpreted as containing headers from different proxy clients - leading to an information leak that can be used for privilege escalation or data exfiltration. We recommend upgrading beyond the commit contained in  https://github.com/grpc/grpc/pull/32309",3
-183,CVE-2023-37379,high,Apache Airflow denial of service vulnerability,"Apache Airflow, in versions prior to 2.7.0, contains a security vulnerability that can be exploited by an authenticated user possessing Connection edit privileges. This vulnerability allows the user to access connection information and exploit the test connection feature by sending many requests, leading to a denial of service (DoS) condition on the server. Furthermore, malicious actors can leverage this vulnerability to establish harmful connections with the server.
+182,CVE-2023-32731,['CWE-440'],high,Connection confusion in gRPC,"When gRPC HTTP2 stack raised a header size exceeded error, it skipped parsing the rest of the HPACK frame. This caused any HPACK table mutations to also be skipped, resulting in a desynchronization of HPACK tables between sender and receiver. If leveraged, say, between a proxy and a backend, this could lead to requests from the proxy being interpreted as containing headers from different proxy clients - leading to an information leak that can be used for privilege escalation or data exfiltration. We recommend upgrading beyond the commit contained in  https://github.com/grpc/grpc/pull/32309",3
+183,CVE-2023-37379,"['CWE-200', 'CWE-400', 'CWE-918']",high,Apache Airflow denial of service vulnerability,"Apache Airflow, in versions prior to 2.7.0, contains a security vulnerability that can be exploited by an authenticated user possessing Connection edit privileges. This vulnerability allows the user to access connection information and exploit the test connection feature by sending many requests, leading to a denial of service (DoS) condition on the server. Furthermore, malicious actors can leverage this vulnerability to establish harmful connections with the server.
 
 Users of Apache Airflow are strongly advised to upgrade to version 2.7.0 or newer to mitigate the risk associated with this vulnerability. Additionally, administrators are encouraged to review and adjust user permissions to restrict access to sensitive functionalities, reducing the attack surface.
 
 ",1
-184,CVE-2023-37920,high,Removal of e-Tugra root certificate,"Certifi 2023.07.22 removes root certificates from ""e-Tugra"" from the root store. These are in the process of being removed from Mozilla's trust store.
+184,CVE-2023-37920,['CWE-345'],high,Removal of e-Tugra root certificate,"Certifi 2023.07.22 removes root certificates from ""e-Tugra"" from the root store. These are in the process of being removed from Mozilla's trust store.
 
  e-Tugra's root certificates are being removed pursuant to an investigation prompted by reporting of security issues in their systems. Conclusions of Mozilla's investigation can be found [here](https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/C-HrP1SEq1A).",12
-185,CVE-2023-40273,high,Apache Airflow Session Fixation vulnerability,"The session fixation vulnerability allowed the authenticated user to continue accessing Airflow webserver even after the password of the user has been reset by the admin - up until the expiry of the session of the user. Other than manually cleaning the session database (for database session backend), or changing the secure_key and restarting the webserver, there were no mechanisms to force-logout the user (and all other users with that).
+185,CVE-2023-40273,['CWE-384'],high,Apache Airflow Session Fixation vulnerability,"The session fixation vulnerability allowed the authenticated user to continue accessing Airflow webserver even after the password of the user has been reset by the admin - up until the expiry of the session of the user. Other than manually cleaning the session database (for database session backend), or changing the secure_key and restarting the webserver, there were no mechanisms to force-logout the user (and all other users with that).
 
 With this fix implemented, when using the database session backend, the existing sessions of the user are invalidated when the password of the user is reset. When using the securecookie session backend, the sessions are NOT invalidated and still require changing the secure key and restarting the webserver (and logging out all other users), but the user resetting the password is informed about it with a flash message warning displayed in the UI. Documentation is also updated explaining this behaviour.
 
 Users of Apache Airflow are advised to upgrade to version 2.7.0 or newer to mitigate the risk associated with this vulnerability.
 ",1
-186,CVE-2023-4033,high,mlflow vulnerable to OS Command Injection,OS Command Injection in GitHub repository mlflow/mlflow prior to 2.6.0.,2
-187,CVE-2023-40590,high,GitPython untrusted search path on Windows systems leading to arbitrary code execution,"### Summary
+186,CVE-2023-4033,['CWE-78'],high,mlflow vulnerable to OS Command Injection,OS Command Injection in GitHub repository mlflow/mlflow prior to 2.6.0.,2
+187,CVE-2023-40590,['CWE-426'],high,GitPython untrusted search path on Windows systems leading to arbitrary code execution,"### Summary
 
 When resolving a program, Python/Windows look for the current working directory, and after that the PATH environment (see big warning in https://docs.python.org/3/library/subprocess.html#popen-constructor). GitPython defaults to use the `git` command, if a user runs GitPython from a repo has a `git.exe` or `git` executable, that program will be run instead of the one in the user's `PATH`.
 
@@ -3346,9 +3346,9 @@ An attacker can trick a user to download a repository with a malicious `git` exe
 
 > [!NOTE]
 > This vulnerability was reported via email, and it was decided to publish it here and make it public, so the community is aware of it, and a fix can be provided.",3
-188,CVE-2023-43472,high,Information exposure in MLflow,An issue in MLFlow versions 2.8.1 and before allows a remote attacker to obtain sensitive information via a crafted request to REST API.,4
-189,CVE-2023-44271,high,Pillow Denial of Service vulnerability,"An issue was discovered in Pillow before 10.0.0. It is a Denial of Service that uncontrollably allocates memory to process a given task, potentially causing a service to crash by having it run out of memory. This occurs for truetype in ImageFont when textlength in an ImageDraw instance operates on a long text argument.",14
-190,CVE-2023-45139,high,fonttools XML External Entity Injection (XXE) Vulnerability,"### Summary
+188,CVE-2023-43472,['CWE-200'],high,Information exposure in MLflow,An issue in MLFlow versions 2.8.1 and before allows a remote attacker to obtain sensitive information via a crafted request to REST API.,4
+189,CVE-2023-44271,"['CWE-400', 'CWE-770']",high,Pillow Denial of Service vulnerability,"An issue was discovered in Pillow before 10.0.0. It is a Denial of Service that uncontrollably allocates memory to process a given task, potentially causing a service to crash by having it run out of memory. This occurs for truetype in ImageFont when textlength in an ImageDraw instance operates on a long text argument.",14
+190,CVE-2023-45139,['CWE-611'],high,fonttools XML External Entity Injection (XXE) Vulnerability,"### Summary
 
 As of `fonttools>=4.28.2` the subsetting module has a XML External Entity Injection (XXE) vulnerability which allows an attacker to resolve arbitrary entities when a candidate font (OT-SVG fonts), which contains a SVG table, is parsed. 
 
@@ -3445,7 +3445,7 @@ There may be other ways to mitigate the issue, but some suggestions:
 3. Consider recursive regex matching
 
 ",3
-191,CVE-2023-46215,high,Apache Airflow Celery provider Insertion of Sensitive Information into Log File vulnerability,"Insertion of Sensitive Information into Log File vulnerability in Apache Airflow Celery provider, Apache Airflow.
+191,CVE-2023-46215,['CWE-532'],high,Apache Airflow Celery provider Insertion of Sensitive Information into Log File vulnerability,"Insertion of Sensitive Information into Log File vulnerability in Apache Airflow Celery provider, Apache Airflow.
 
 Sensitive information logged as clear text when rediss, amqp, rpc protocols are used as Celery result backend
 Note: the vulnerability is about the information exposed in the logs not about accessing the logs.
@@ -3455,9 +3455,9 @@ This issue affects Apache Airflow Celery provider: from 3.3.0 through 3.4.0; Apa
 Users are recommended to upgrade Airflow Celery provider to version 3.4.1 and Apache Airlfow to version 2.7.0 which fixes the issue.
 
 ",1
-192,CVE-2023-4785,high,Denial of Service Vulnerability in gRPC TCP Server (Posix-compatible platforms),"Lack of error handling in the TCP server in Google's gRPC starting version 1.23 on posix-compatible platforms (ex. Linux) allows an attacker to cause a denial of service by initiating a significant number of connections with the server. Note that gRPC C++ Python, and Ruby are affected, but gRPC Java, and Go are NOT affected. ",1
-193,CVE-2023-4863,high,libwebp: OOB write in BuildHuffmanTable,Heap buffer overflow in libwebp allow a remote attacker to perform an out of bounds memory write via a crafted HTML page. ,14
-194,CVE-2023-49081,high,aiohttp's ClientSession is vulnerable to CRLF injection via version,"### Summary
+192,CVE-2023-4785,['CWE-248'],high,Denial of Service Vulnerability in gRPC TCP Server (Posix-compatible platforms),"Lack of error handling in the TCP server in Google's gRPC starting version 1.23 on posix-compatible platforms (ex. Linux) allows an attacker to cause a denial of service by initiating a significant number of connections with the server. Note that gRPC C++ Python, and Ruby are affected, but gRPC Java, and Go are NOT affected. ",1
+193,CVE-2023-4863,['CWE-787'],high,libwebp: OOB write in BuildHuffmanTable,Heap buffer overflow in libwebp allow a remote attacker to perform an out of bounds memory write via a crafted HTML page. ,14
+194,CVE-2023-49081,['CWE-20'],high,aiohttp's ClientSession is vulnerable to CRLF injection via version,"### Summary
 Improper validation make it possible for an attacker to modify the HTTP request (e.g. to insert a new header) or even create a new HTTP request if the attacker controls the HTTP version.
 
 ### Details
@@ -3478,39 +3478,39 @@ CRLF injection leading to Request Smuggling.
 If these specific conditions are met and you are unable to upgrade, then validate the user input to the `version` parameter to ensure it is a `str`.
 
 Patch: https://github.com/aio-libs/aiohttp/pull/7835/files",6
-195,CVE-2023-50447,high,Arbitrary Code Execution in Pillow,"Pillow through 10.1.0 allows PIL.ImageMath.eval Arbitrary Code Execution via the environment parameter, a different vulnerability than CVE-2022-22817 (which was about the expression parameter).",16
-196,CVE-2023-50782,high,Python Cryptography package vulnerable to Bleichenbacher timing oracle attack,"A flaw was found in the python-cryptography package. This issue may allow a remote attacker to decrypt captured messages in TLS servers that use RSA key exchanges, which may lead to exposure of confidential or sensitive data.",8
-197,CVE-2023-50943,high,Apache Airflow: pickle deserialization vulnerability in XComs,"Apache Airflow, versions before 2.8.1, have a vulnerability that allows a potential attacker to poison the XCom data by bypassing the protection of ""enable_xcom_pickling=False"" configuration setting resulting in poisoned data after XCom deserialization. This vulnerability is considered low since it requires a DAG author to exploit it. Users are recommended to upgrade to version 2.8.1 or later, which fixes this issue.
+195,CVE-2023-50447,['CWE-94'],high,Arbitrary Code Execution in Pillow,"Pillow through 10.1.0 allows PIL.ImageMath.eval Arbitrary Code Execution via the environment parameter, a different vulnerability than CVE-2022-22817 (which was about the expression parameter).",16
+196,CVE-2023-50782,"['CWE-203', 'CWE-208']",high,Python Cryptography package vulnerable to Bleichenbacher timing oracle attack,"A flaw was found in the python-cryptography package. This issue may allow a remote attacker to decrypt captured messages in TLS servers that use RSA key exchanges, which may lead to exposure of confidential or sensitive data.",8
+197,CVE-2023-50943,['CWE-502'],high,Apache Airflow: pickle deserialization vulnerability in XComs,"Apache Airflow, versions before 2.8.1, have a vulnerability that allows a potential attacker to poison the XCom data by bypassing the protection of ""enable_xcom_pickling=False"" configuration setting resulting in poisoned data after XCom deserialization. This vulnerability is considered low since it requires a DAG author to exploit it. Users are recommended to upgrade to version 2.8.1 or later, which fixes this issue.
 ",1
-198,CVE-2023-51449,high,Gradio makes the `/file` secure against file traversal and server-side request forgery attacks,"Older versions of `gradio` contained a vulnerability in the `/file` route which made them susceptible to file traversal attacks in which an attacker could access arbitrary files on a machine running a Gradio app with a public URL (e.g. if the demo was created with `share=True`, or on Hugging Face Spaces) if they knew the path of files to look for. 
+198,CVE-2023-51449,['CWE-22'],high,Gradio makes the `/file` secure against file traversal and server-side request forgery attacks,"Older versions of `gradio` contained a vulnerability in the `/file` route which made them susceptible to file traversal attacks in which an attacker could access arbitrary files on a machine running a Gradio app with a public URL (e.g. if the demo was created with `share=True`, or on Hugging Face Spaces) if they knew the path of files to look for. 
 
 This was not possible through regular URLs passed into a browser, but it was possible through the use of programmatic tools such as `curl` with the `--pass-as-is` flag. 
 
 Furthermore,  the `/file` route in Gradio apps also contained a vulnerability that made it possible to use it for SSRF attacks.
 
 Both of these vulnerabilities have been fixed in `gradio==4.11.0`",4
-199,CVE-2023-6022,high,Cross-Site Request Forgery vulnerability in Prefect,"An attacker is able to steal secrets and potentially gain remote code execution via CSRF using a self-hosted, open source Prefect API.",2
-200,CVE-2023-6709,high,Jinja2 template injection in mlflow,Improper Neutralization of Special Elements Used in a Template Engine in GitHub repository mlflow/mlflow prior to 2.9.2.,4
-201,CVE-2023-6753,high,Path traversal in MLflow,Path Traversal in GitHub repository mlflow/mlflow prior to 2.9.2.,4
-202,CVE-2023-6909,high,MLflow Path Traversal Vulnerability,Path Traversal: '\..\filename' in GitHub repository mlflow/mlflow prior to 2.9.2.,4
-203,CVE-2023-6940,high,mlflow Command Injection vulnerability,"with only one user interaction(download a malicious config), attackers can gain full command execution on the victim system.",4
-204,CVE-2023-6976,high,MLflow Path Traversal Vulnerability,This vulnerability is capable of writing arbitrary files into arbitrary locations on the remote filesystem in the context of the server process.,4
-205,CVE-2023-6977,high,MLflow Local File Disclosure Vulnerability,This vulnerability enables malicious users to read sensitive files on the server.,4
-206,CVE-2023-7018,high,transformers has a Deserialization of Untrusted Data vulnerability,Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.,33
-207,CVE-2024-0964,high,Gradio Path Traversal vulnerability,A local file include could be remotely triggered in Gradio due to a vulnerable user-supplied JSON value in an API request.,4
-208,CVE-2024-1135,high,Request smuggling leading to endpoint restriction bypass in Gunicorn,"Gunicorn fails to properly validate Transfer-Encoding headers, leading to HTTP Request Smuggling (HRS) vulnerabilities. By crafting requests with conflicting Transfer-Encoding headers, attackers can bypass security restrictions and access restricted endpoints. This issue is due to Gunicorn's handling of Transfer-Encoding headers, where it incorrectly processes requests with multiple, conflicting Transfer-Encoding headers, treating them as chunked regardless of the final encoding specified. This vulnerability has been shown to allow access to endpoints restricted by gunicorn. This issue has been addressed in version 22.0.0.
+199,CVE-2023-6022,['CWE-352'],high,Cross-Site Request Forgery vulnerability in Prefect,"An attacker is able to steal secrets and potentially gain remote code execution via CSRF using a self-hosted, open source Prefect API.",2
+200,CVE-2023-6709,['CWE-1336'],high,Jinja2 template injection in mlflow,Improper Neutralization of Special Elements Used in a Template Engine in GitHub repository mlflow/mlflow prior to 2.9.2.,4
+201,CVE-2023-6753,['CWE-22'],high,Path traversal in MLflow,Path Traversal in GitHub repository mlflow/mlflow prior to 2.9.2.,4
+202,CVE-2023-6909,['CWE-29'],high,MLflow Path Traversal Vulnerability,Path Traversal: '\..\filename' in GitHub repository mlflow/mlflow prior to 2.9.2.,4
+203,CVE-2023-6940,['CWE-77'],high,mlflow Command Injection vulnerability,"with only one user interaction(download a malicious config), attackers can gain full command execution on the victim system.",4
+204,CVE-2023-6976,['CWE-434'],high,MLflow Path Traversal Vulnerability,This vulnerability is capable of writing arbitrary files into arbitrary locations on the remote filesystem in the context of the server process.,4
+205,CVE-2023-6977,['CWE-29'],high,MLflow Local File Disclosure Vulnerability,This vulnerability enables malicious users to read sensitive files on the server.,4
+206,CVE-2023-7018,['CWE-502'],high,transformers has a Deserialization of Untrusted Data vulnerability,Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.,33
+207,CVE-2024-0964,['CWE-22'],high,Gradio Path Traversal vulnerability,A local file include could be remotely triggered in Gradio due to a vulnerable user-supplied JSON value in an API request.,4
+208,CVE-2024-1135,['CWE-444'],high,Request smuggling leading to endpoint restriction bypass in Gunicorn,"Gunicorn fails to properly validate Transfer-Encoding headers, leading to HTTP Request Smuggling (HRS) vulnerabilities. By crafting requests with conflicting Transfer-Encoding headers, attackers can bypass security restrictions and access restricted endpoints. This issue is due to Gunicorn's handling of Transfer-Encoding headers, where it incorrectly processes requests with multiple, conflicting Transfer-Encoding headers, treating them as chunked regardless of the final encoding specified. This vulnerability has been shown to allow access to endpoints restricted by gunicorn. This issue has been addressed in version 22.0.0.
 
 To be affected users must have a network path which does not filter out invalid requests. These users are advised to block access to restricted endpoints via a firewall or other mechanism if they are unable to update.",5
-209,CVE-2024-1483,high,mlflow Path Traversal vulnerability,"A path traversal vulnerability exists in mlflow/mlflow version 2.9.2, allowing attackers to access arbitrary files on the server. By crafting a series of HTTP POST requests with specially crafted 'artifact_location' and 'source' parameters, using a local URI with '#' instead of '?', an attacker can traverse the server's directory structure. The issue occurs due to insufficient validation of user-supplied input in the server's handlers.",6
-210,CVE-2024-1558,high,mlflow vulnerable to Path Traversal,"A path traversal vulnerability exists in the `_create_model_version()` function within `server/handlers.py` of the mlflow/mlflow repository, due to improper validation of the `source` parameter. Attackers can exploit this vulnerability by crafting a `source` parameter that bypasses the `_validate_non_local_source_contains_relative_paths(source)` function's checks, allowing for arbitrary file read access on the server. The issue arises from the handling of unquoted URL characters and the subsequent misuse of the original `source` value for model version creation, leading to the exposure of sensitive files when interacting with the `/model-versions/get-artifact` handler.",6
-211,CVE-2024-1560,high,mlflow vulnerable to Path Traversal,"A path traversal vulnerability exists in the mlflow/mlflow repository, specifically within the artifact deletion functionality. Attackers can bypass path validation by exploiting the double decoding process in the `_delete_artifact_mlflow_artifacts` handler and `local_file_uri_to_path` function, allowing for the deletion of arbitrary directories on the server's filesystem. This vulnerability is due to an extra unquote operation in the `delete_artifacts` function of `local_artifact_repo.py`, which fails to properly sanitize user-supplied paths. The issue is present up to version 2.9.2, despite attempts to fix a similar issue in CVE-2023-6831.",6
-212,CVE-2024-1561,high,gradio vulnerable to Path Traversal,"An issue was discovered in gradio-app/gradio, where the `/component_server` endpoint improperly allows the invocation of any method on a `Component` class with attacker-controlled arguments. Specifically, by exploiting the `move_resource_to_block_cache()` method of the `Block` class, an attacker can copy any file on the filesystem to a temporary directory and subsequently retrieve it. This vulnerability enables unauthorized local file read access, posing a significant risk especially when the application is exposed to the internet via `launch(share=True)`, thereby allowing remote attackers to read files on the host machine. Furthermore, gradio apps hosted on `huggingface.co` are also affected, potentially leading to the exposure of sensitive information such as API keys and credentials stored in environment variables.",4
-213,CVE-2024-1593,high,mlflow vulnerable to Path Traversal,"A path traversal vulnerability exists in the mlflow/mlflow repository due to improper handling of URL parameters. By smuggling path traversal sequences using the ';' character in URLs, attackers can manipulate the 'params' portion of the URL to gain unauthorized access to files or directories. This vulnerability allows for arbitrary data smuggling into the 'params' part of the URL, enabling attacks similar to those described in previous reports but utilizing the ';' character for parameter smuggling. Successful exploitation could lead to unauthorized information disclosure or server compromise.",6
-214,CVE-2024-1594,high,mlflow vulnerable to Path Traversal,"A path traversal vulnerability exists in the mlflow/mlflow repository, specifically within the handling of the `artifact_location` parameter when creating an experiment. Attackers can exploit this vulnerability by using a fragment component `#` in the artifact location URI to read arbitrary files on the server in the context of the server's process. This issue is similar to CVE-2023-6909 but utilizes a different component of the URI to achieve the same effect. ",6
-215,CVE-2024-1728,high,Gradio Local File Inclusion vulnerability,"gradio-app/gradio is vulnerable to a local file inclusion vulnerability due to improper validation of user-supplied input in the UploadButton component. Attackers can exploit this vulnerability to read arbitrary files on the filesystem, such as private SSH keys, by manipulating the file path in the request to the `/queue/join` endpoint. This issue could potentially lead to remote code execution. The vulnerability is present in the handling of file upload paths, allowing attackers to redirect file uploads to unintended locations on the server.",4
-216,CVE-2024-2196,high,Aim Cross-Site Request Forgery vulnerability allows user to delete runs and perform other operations,"aimhubio/aim is vulnerable to Cross-Site Request Forgery (CSRF), allowing attackers to perform actions such as deleting runs, updating data, and stealing data like log records and notes without the user's consent. The vulnerability stems from the lack of CSRF and CORS protection in the aim dashboard. An attacker can exploit this by tricking a user into executing a malicious script that sends unauthorized requests to the aim server, leading to potential data loss and unauthorized data manipulation.",2
-217,CVE-2024-2206,high,gradio Server-Side Request Forgery vulnerability,"An SSRF vulnerability exists in the gradio-app/gradio due to insufficient validation of user-supplied URLs in the `/proxy` route. Attackers can exploit this vulnerability by manipulating the `self.replica_urls` set through the `X-Direct-Url` header in requests to the `/` and `/config` routes, allowing the addition of arbitrary URLs for proxying. This flaw enables unauthorized proxying of requests and potential access to internal endpoints within the Hugging Face space. The issue arises from the application's inadequate checking of safe URLs in the `build_proxy_request` function.",4
-218,CVE-2024-22190,high,Untrusted search path under some conditions on Windows allows arbitrary code execution,"### Summary
+209,CVE-2024-1483,['CWE-22'],high,mlflow Path Traversal vulnerability,"A path traversal vulnerability exists in mlflow/mlflow version 2.9.2, allowing attackers to access arbitrary files on the server. By crafting a series of HTTP POST requests with specially crafted 'artifact_location' and 'source' parameters, using a local URI with '#' instead of '?', an attacker can traverse the server's directory structure. The issue occurs due to insufficient validation of user-supplied input in the server's handlers.",6
+210,CVE-2024-1558,['CWE-22'],high,mlflow vulnerable to Path Traversal,"A path traversal vulnerability exists in the `_create_model_version()` function within `server/handlers.py` of the mlflow/mlflow repository, due to improper validation of the `source` parameter. Attackers can exploit this vulnerability by crafting a `source` parameter that bypasses the `_validate_non_local_source_contains_relative_paths(source)` function's checks, allowing for arbitrary file read access on the server. The issue arises from the handling of unquoted URL characters and the subsequent misuse of the original `source` value for model version creation, leading to the exposure of sensitive files when interacting with the `/model-versions/get-artifact` handler.",6
+211,CVE-2024-1560,['CWE-22'],high,mlflow vulnerable to Path Traversal,"A path traversal vulnerability exists in the mlflow/mlflow repository, specifically within the artifact deletion functionality. Attackers can bypass path validation by exploiting the double decoding process in the `_delete_artifact_mlflow_artifacts` handler and `local_file_uri_to_path` function, allowing for the deletion of arbitrary directories on the server's filesystem. This vulnerability is due to an extra unquote operation in the `delete_artifacts` function of `local_artifact_repo.py`, which fails to properly sanitize user-supplied paths. The issue is present up to version 2.9.2, despite attempts to fix a similar issue in CVE-2023-6831.",6
+212,CVE-2024-1561,['CWE-29'],high,gradio vulnerable to Path Traversal,"An issue was discovered in gradio-app/gradio, where the `/component_server` endpoint improperly allows the invocation of any method on a `Component` class with attacker-controlled arguments. Specifically, by exploiting the `move_resource_to_block_cache()` method of the `Block` class, an attacker can copy any file on the filesystem to a temporary directory and subsequently retrieve it. This vulnerability enables unauthorized local file read access, posing a significant risk especially when the application is exposed to the internet via `launch(share=True)`, thereby allowing remote attackers to read files on the host machine. Furthermore, gradio apps hosted on `huggingface.co` are also affected, potentially leading to the exposure of sensitive information such as API keys and credentials stored in environment variables.",4
+213,CVE-2024-1593,['CWE-22'],high,mlflow vulnerable to Path Traversal,"A path traversal vulnerability exists in the mlflow/mlflow repository due to improper handling of URL parameters. By smuggling path traversal sequences using the ';' character in URLs, attackers can manipulate the 'params' portion of the URL to gain unauthorized access to files or directories. This vulnerability allows for arbitrary data smuggling into the 'params' part of the URL, enabling attacks similar to those described in previous reports but utilizing the ';' character for parameter smuggling. Successful exploitation could lead to unauthorized information disclosure or server compromise.",6
+214,CVE-2024-1594,['CWE-22'],high,mlflow vulnerable to Path Traversal,"A path traversal vulnerability exists in the mlflow/mlflow repository, specifically within the handling of the `artifact_location` parameter when creating an experiment. Attackers can exploit this vulnerability by using a fragment component `#` in the artifact location URI to read arbitrary files on the server in the context of the server's process. This issue is similar to CVE-2023-6909 but utilizes a different component of the URI to achieve the same effect. ",6
+215,CVE-2024-1728,['CWE-22'],high,Gradio Local File Inclusion vulnerability,"gradio-app/gradio is vulnerable to a local file inclusion vulnerability due to improper validation of user-supplied input in the UploadButton component. Attackers can exploit this vulnerability to read arbitrary files on the filesystem, such as private SSH keys, by manipulating the file path in the request to the `/queue/join` endpoint. This issue could potentially lead to remote code execution. The vulnerability is present in the handling of file upload paths, allowing attackers to redirect file uploads to unintended locations on the server.",4
+216,CVE-2024-2196,['CWE-352'],high,Aim Cross-Site Request Forgery vulnerability allows user to delete runs and perform other operations,"aimhubio/aim is vulnerable to Cross-Site Request Forgery (CSRF), allowing attackers to perform actions such as deleting runs, updating data, and stealing data like log records and notes without the user's consent. The vulnerability stems from the lack of CSRF and CORS protection in the aim dashboard. An attacker can exploit this by tricking a user into executing a malicious script that sends unauthorized requests to the aim server, leading to potential data loss and unauthorized data manipulation.",2
+217,CVE-2024-2206,['CWE-918'],high,gradio Server-Side Request Forgery vulnerability,"An SSRF vulnerability exists in the gradio-app/gradio due to insufficient validation of user-supplied URLs in the `/proxy` route. Attackers can exploit this vulnerability by manipulating the `self.replica_urls` set through the `X-Direct-Url` header in requests to the `/` and `/config` routes, allowing the addition of arbitrary URLs for proxying. This flaw enables unauthorized proxying of requests and potential access to internal endpoints within the Hugging Face space. The issue arises from the application's inadequate checking of safe URLs in the `build_proxy_request` function.",4
+218,CVE-2024-22190,['CWE-426'],high,Untrusted search path under some conditions on Windows allows arbitrary code execution,"### Summary
 
 This issue exists because of an incomplete fix for CVE-2023-40590. On Windows, GitPython uses an untrusted search path if it uses a shell to run `git`, as well as when it runs `bash.exe` to interpret hooks. If either of those features are used on Windows, a malicious `git.exe` or `bash.exe` may be run from an untrusted repository.
 
@@ -3587,7 +3587,7 @@ A straightforward approach would be to address each bug directly:
 - Set `NoDefaultCurrentDirectoryInExePath` in the GitPython process environment during the `Popen` call made to run hooks with a `bash.exe` subprocess.
 
 These need only be done on Windows.",7
-219,CVE-2024-22421,high,JupyterLab vulnerable to potential authentication and CSRF tokens leak,"### Impact
+219,CVE-2024-22421,['CWE-200'],high,JupyterLab vulnerable to potential authentication and CSRF tokens leak,"### Impact
 Users of JupyterLab who click on a malicious link may get their `Authorization` and `XSRFToken` tokens exposed to a third party when running an older `jupyter-server` version.
 
 ### Patches
@@ -3600,8 +3600,8 @@ No workaround has been identified, however users should ensure to upgrade `jupyt
 
 Vulnerability reported by user @davwwwx via the [bug bounty program](https://app.intigriti.com/programs/jupyter/jupyter/detail) [sponsored by the European Commission](https://commission.europa.eu/news/european-commissions-open-source-programme-office-starts-bug-bounties-2022-01-19_en) and hosted on the [Intigriti platform](https://www.intigriti.com/).
 ",3
-220,CVE-2024-23342,high,Minerva timing attack on P-256 in python-ecdsa,"python-ecdsa has been found to be subject to a Minerva timing attack on the P-256 curve. Using the `ecdsa.SigningKey.sign_digest()` API function and timing signatures an attacker can leak the internal nonce which may allow for private key discovery. Both ECDSA signatures, key generation, and ECDH operations are affected. ECDSA signature verification is unaffected. The python-ecdsa project considers side channel attacks out of scope for the project and there is no planned fix.",1
-221,CVE-2024-24762,high,python-multipart vulnerable to Content-Type Header ReDoS,"### Summary
+220,CVE-2024-23342,"['CWE-203', 'CWE-208', 'CWE-385']",high,Minerva timing attack on P-256 in python-ecdsa,"python-ecdsa has been found to be subject to a Minerva timing attack on the P-256 curve. Using the `ecdsa.SigningKey.sign_digest()` API function and timing signatures an attacker can leak the internal nonce which may allow for private key discovery. Both ECDSA signatures, key generation, and ECDH operations are affected. ECDSA signature verification is unaffected. The python-ecdsa project considers side channel attacks out of scope for the project and there is no planned fix.",1
+221,CVE-2024-24762,['CWE-400'],high,python-multipart vulnerable to Content-Type Header ReDoS,"### Summary
 
 When using form data, `python-multipart` uses a Regular Expression to parse the HTTP `Content-Type` header, including options.
 
@@ -3727,7 +3727,7 @@ An attacker is able to cause a DoS on a FastApi server via a malicious Content-T
 [params.py L586](https://github.com/tiangolo/fastapi/blob/d74b3b25659b42233a669f032529880de8bd6c2d/fastapi/params.py#L586)
 
 </details>",15
-222,CVE-2024-26130,high,cryptography NULL pointer dereference with pkcs12.serialize_key_and_certificates when called with a non-matching certificate and private key and an hmac_hash override,"If `pkcs12.serialize_key_and_certificates` is called with both:
+222,CVE-2024-26130,['CWE-476'],high,cryptography NULL pointer dereference with pkcs12.serialize_key_and_certificates when called with a non-matching certificate and private key and an hmac_hash override,"If `pkcs12.serialize_key_and_certificates` is called with both:
 
 1. A certificate whose public key did not match the provided private key
 2. An `encryption_algorithm` with `hmac_hash` set (via `PrivateFormat.PKCS12.encryption_builder().hmac_hash(...)`
@@ -3737,18 +3737,19 @@ Then a NULL pointer dereference would occur, crashing the Python process.
 This has been resolved, and now a `ValueError` is properly raised.
 
 Patched in https://github.com/pyca/cryptography/pull/10423",6
-223,CVE-2024-27132,high,Cross-site Scripting in MLFlow,"Insufficient sanitization in MLflow leads to XSS when running an untrusted recipe.
+223,CVE-2024-27132,['CWE-79'],high,Cross-site Scripting in MLFlow,"Insufficient sanitization in MLflow leads to XSS when running an untrusted recipe.
 
 This issue leads to a client-side RCE when running an untrusted recipe in Jupyter Notebook.
 
 The vulnerability stems from lack of sanitization over template variables.
 
 ",6
-224,CVE-2024-27133,high,MLFlow Cross-site Scripting vulnerability leads to client-side Remote Code Execution,Insufficient sanitization in MLflow leads to XSS when running a recipe that uses an untrusted dataset. This issue leads to a client-side RCE when running the recipe in Jupyter Notebook. The vulnerability stems from lack of sanitization over dataset table fields.,6
-225,CVE-2024-27318,high,Onnx Directory Traversal vulnerability,"Versions of the package onnx before and including 1.15.0 are vulnerable to Directory Traversal as the external_data field of the tensor proto can have a path to the file which is outside the model current directory or user-provided directory. The vulnerability occurs as a bypass for the patch added for CVE-2022-25882.
+224,CVE-2024-27133,['CWE-79'],high,MLFlow Cross-site Scripting vulnerability leads to client-side Remote Code Execution,Insufficient sanitization in MLflow leads to XSS when running a recipe that uses an untrusted dataset. This issue leads to a client-side RCE when running the recipe in Jupyter Notebook. The vulnerability stems from lack of sanitization over dataset table fields.,6
+225,CVE-2024-27318,['CWE-22'],high,Onnx Directory Traversal vulnerability,"Versions of the package onnx before and including 1.15.0 are vulnerable to Directory Traversal as the external_data field of the tensor proto can have a path to the file which is outside the model current directory or user-provided directory. The vulnerability occurs as a bypass for the patch added for CVE-2022-25882.
 ",5
-226,CVE-2024-27454,high,orjson does not limit recursion for deeply nested JSON documents,orjson.loads in orjson before 3.9.15 does not limit recursion for deeply nested JSON documents.,2
-227,CVE-2024-30251,high,aiohttp vulnerable to Denial of Service when trying to parse malformed POST requests,"### Summary
+226,CVE-2024-27454,['CWE-674'],high,orjson does not limit recursion for deeply nested JSON documents,orjson.loads in orjson before 3.9.15 does not limit recursion for deeply nested JSON documents.,2
+227,CVE-2024-2928,['CWE-29'],high,Local File Inclusion in mlflow,"A Local File Inclusion (LFI) vulnerability was identified in mlflow/mlflow, specifically in version 2.9.2, which was fixed in version 2.11.3. This vulnerability arises from the application's failure to properly validate URI fragments for directory traversal sequences such as '../'. An attacker can exploit this flaw by manipulating the fragment part of the URI to read arbitrary files on the local file system, including sensitive files like '/etc/passwd'. The vulnerability is a bypass to a previous patch that only addressed similar manipulation within the URI's query string, highlighting the need for comprehensive validation of all parts of a URI to prevent LFI attacks.",6
+228,CVE-2024-30251,['CWE-835'],high,aiohttp vulnerable to Denial of Service when trying to parse malformed POST requests,"### Summary
 An attacker can send a specially crafted POST (multipart/form-data) request. When the aiohttp server processes it, the server will enter an infinite loop and be unable to process any further requests.
 
 ### Impact
@@ -3778,11 +3779,22 @@ This does however introduce some very minor issues with handling form data. So, 
 https://github.com/aio-libs/aiohttp/commit/cebe526b9c34dc3a3da9140409db63014bc4cf19
 https://github.com/aio-libs/aiohttp/commit/7eecdff163ccf029fbb1ddc9de4169d4aaeb6597
 https://github.com/aio-libs/aiohttp/commit/f21c6f2ca512a026ce7f0f6c6311f62d6a638866",7
-228,CVE-2024-33663,high,python-jose algorithm confusion with OpenSSH ECDSA keys,python-jose through 3.3.0 has algorithm confusion with OpenSSH ECDSA keys and other key formats. This is similar to CVE-2022-29217.,1
-229,CVE-2024-34069,high,Werkzeug debugger vulnerable to remote execution when interacting with attacker controlled domain,"The debugger in affected versions of Werkzeug can allow an attacker to execute code on a developer's machine under some circumstances. This requires the attacker to get the developer to interact with a domain and subdomain they control, and enter the debugger PIN, but if they are successful it allows access to the debugger even if it is only running on localhost. This also requires the attacker to guess a URL in the developer's application that will trigger the debugger.",20
-230,CVE-2024-3848,high,MLflow has a Local File Read/Path Traversal bypass,"A path traversal vulnerability exists in mlflow/mlflow version 2.11.0, identified as a bypass for the previously addressed CVE-2023-6909. The vulnerability arises from the application's handling of artifact URLs, where a '#' character can be used to insert a path into the fragment, effectively skipping validation. This allows an attacker to construct a URL that, when processed, ignores the protocol scheme and uses the provided path for filesystem access. As a result, an attacker can read arbitrary files, including sensitive information such as SSH and cloud keys, by exploiting the way the application converts the URL into a filesystem path. The issue stems from insufficient validation of the fragment portion of the URL, leading to arbitrary file read through path traversal.",2
-231,CVE-2024-4181,high,RunGptLLM class in LlamaIndex has a command injection,"A command injection vulnerability exists in the RunGptLLM class of the llama_index library, version 0.9.47, used by the RunGpt framework from JinaAI to connect to Language Learning Models (LLMs). The vulnerability arises from the improper use of the eval function, allowing a malicious or compromised LLM hosting provider to execute arbitrary commands on the client's machine. This issue was fixed in version 0.10.13. The exploitation of this vulnerability could lead to a hosting provider gaining full control over client machines.",1
-232,CVE-2024-4340,high,sqlparse parsing heavily nested list leads to Denial of Service,"### Summary
+229,CVE-2024-33663,['CWE-327'],high,python-jose algorithm confusion with OpenSSH ECDSA keys,python-jose through 3.3.0 has algorithm confusion with OpenSSH ECDSA keys and other key formats. This is similar to CVE-2022-29217.,1
+230,CVE-2024-34069,['CWE-352'],high,Werkzeug debugger vulnerable to remote execution when interacting with attacker controlled domain,"The debugger in affected versions of Werkzeug can allow an attacker to execute code on a developer's machine under some circumstances. This requires the attacker to get the developer to interact with a domain and subdomain they control, and enter the debugger PIN, but if they are successful it allows access to the debugger even if it is only running on localhost. This also requires the attacker to guess a URL in the developer's application that will trigger the debugger.",20
+231,CVE-2024-37052,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 1.1.0 or newer, enabling a maliciously uploaded scikit-learn model to run arbitrary code on an end user’s system when interacted with.",7
+232,CVE-2024-37053,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 1.1.0 or newer, enabling a maliciously uploaded scikit-learn model to run arbitrary code on an end user’s system when interacted with.",7
+233,CVE-2024-37054,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 0.9.0 or newer, enabling a maliciously uploaded PyFunc model to run arbitrary code on an end user’s system when interacted with.",7
+234,CVE-2024-37055,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 1.24.0 or newer, enabling a maliciously uploaded pmdarima model to run arbitrary code on an end user’s system when interacted with.",6
+235,CVE-2024-37056,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 1.23.0 or newer, enabling a maliciously uploaded LightGBM scikit-learn model to run arbitrary code on an end user’s system when interacted with.",6
+236,CVE-2024-37057,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 2.0.0rc0 or newer, enabling a maliciously uploaded Tensorflow model to run arbitrary code on an end user’s system when interacted with.",6
+237,CVE-2024-37058,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 2.5.0 or newer, enabling a maliciously uploaded Langchain AgentExecutor model to run arbitrary code on an end user’s system when interacted with.",5
+238,CVE-2024-37059,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 0.5.0 or newer, enabling a maliciously uploaded PyTorch model to run arbitrary code on an end user’s system when interacted with.",7
+239,CVE-2024-37060,['CWE-502'],high,MLFlow unsafe deserialization,"Deserialization of untrusted data can occur in versions of the MLflow platform running version 1.27.0 or newer, enabling a maliciously crafted Recipe to execute arbitrary code on an end user’s system when run.",6
+240,CVE-2024-37061,"['CWE-20', 'CWE-94']",high,MLFlow improper input validation,"Remote Code Execution can occur in versions of the MLflow platform running version 1.11.0 or newer, enabling a maliciously crafted MLproject to execute arbitrary code on an end user’s system when run due to unfiltered input.",7
+241,CVE-2024-3848,['CWE-29'],high,MLflow has a Local File Read/Path Traversal bypass,"A path traversal vulnerability exists in mlflow/mlflow version 2.11.0, identified as a bypass for the previously addressed CVE-2023-6909. The vulnerability arises from the application's handling of artifact URLs, where a '#' character can be used to insert a path into the fragment, effectively skipping validation. This allows an attacker to construct a URL that, when processed, ignores the protocol scheme and uses the provided path for filesystem access. As a result, an attacker can read arbitrary files, including sensitive information such as SSH and cloud keys, by exploiting the way the application converts the URL into a filesystem path. The issue stems from insufficient validation of the fragment portion of the URL, leading to arbitrary file read through path traversal.",2
+242,CVE-2024-4181,['CWE-94'],high,RunGptLLM class in LlamaIndex has a command injection,"A command injection vulnerability exists in the RunGptLLM class of the llama_index library, version 0.9.47, used by the RunGpt framework from JinaAI to connect to Language Learning Models (LLMs). The vulnerability arises from the improper use of the eval function, allowing a malicious or compromised LLM hosting provider to execute arbitrary commands on the client's machine. This issue was fixed in version 0.10.13. The exploitation of this vulnerability could lead to a hosting provider gaining full control over client machines.",1
+243,CVE-2024-4325,['CWE-918'],high,Server-Side Request Forgery in gradio,"A Server-Side Request Forgery (SSRF) vulnerability exists in the gradio-app/gradio and was discovered in version 4.21.0, specifically within the `/queue/join` endpoint and the `save_url_to_cache` function. The vulnerability arises when the `path` value, obtained from the user and expected to be a URL, is used to make an HTTP request without sufficient validation checks. This flaw allows an attacker to send crafted requests that could lead to unauthorized access to the local network or the AWS metadata endpoint, thereby compromising the security of internal servers.",4
+244,CVE-2024-4340,['CWE-674'],high,sqlparse parsing heavily nested list leads to Denial of Service,"### Summary
 Passing a heavily nested list to sqlparse.parse() leads to a Denial of Service due to RecursionError.
 
 ### Details + PoC
@@ -3849,3 +3861,4 @@ MAX_DEPTH = 100
 Denial of Service (the impact depends on the use).
 Anyone parsing a user input with sqlparse.parse() is affected.
 ",3
+245,CVE-2024-4941,"['CWE-20', 'CWE-22']",high,Local file inclusion in gradio,"A local file inclusion vulnerability exists in the JSON component of gradio-app/gradio and was discovered in version 4.25. The vulnerability arises from improper input validation in the `postprocess()` function within `gradio/components/json_component.py`, where a user-controlled string is parsed as JSON. If the parsed JSON object contains a `path` key, the specified file is moved to a temporary directory, making it possible to retrieve it later via the `/file=..` endpoint. This issue is due to the `processing_utils.move_files_to_cache()` function traversing any object passed to it, looking for a dictionary with a `path` key, and then copying the specified file to a temporary directory. The vulnerability can be exploited by an attacker to read files on the remote system, posing a significant security risk.",4
