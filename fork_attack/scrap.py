@@ -3,6 +3,7 @@ import glob
 import pandas as pd
 
 result = []
+result_all = []
 
 
 def get_definitions(cew_id):
@@ -14,12 +15,16 @@ def get_definitions(cew_id):
         df = df.rename(
             columns={'Submissions': 'nature', 'Submissions.1': 'type', 'Submissions.2': 'id',
                      'Unnamed: 3': 'description'})
+        # if df['id'].str.contains('876').any():
+        #     print(cew_id)
         df["type"] = df.type.apply(lambda x: 'category' if 'category - ' in x.lower() else x)
         df["type"] = df.type.apply(lambda x: 'view' if 'view - ' in x.lower() else x)
         df["type"] = df.type.apply(lambda x: 'class' if 'class - ' in x.lower() else x)
         df["type"] = df.type.apply(lambda x: 'base' if 'base - ' in x.lower() else x)
         df["type"] = df.type.apply(lambda x: 'pillar' if 'pillar - ' in x.lower() else x)
         df["type"] = df.type.apply(lambda x: 'variant' if 'variant - ' in x.lower() else x)
+        df["type"] = df.type.apply(lambda x: 'chain' if 'chain - ' in x.lower() else x)
+        df["type"] = df.type.apply(lambda x: 'composite' if 'composite - ' in x.lower() else x)
     except Exception as e:
         print(cew_id)
         return pd.DataFrame()
@@ -40,7 +45,7 @@ def process_row(row):
 
 
 patterns = {
-    # "cwe": "../data/code_analysis_cwe_*.csv",
+    "cwe": "../data/code_analysis_cwe_*.csv",
     "cve": "../data/dependabot_cve_*.csv"
 }
 
@@ -65,3 +70,15 @@ for key, value in patterns.items():
         ]
     ).sum().reset_index()
     df_result_agg.to_csv(f"../data/{key}_definitions_agg.csv")
+    result_all.append(df_result_agg)
+
+df_all = pd.concat(result_all)
+df_all_agg = df_all.groupby(
+    [
+        'nature',
+        'type',
+        'id',
+        "description"
+    ]
+).sum().reset_index()
+df_all_agg.to_csv("../data/all_definitions_agg.csv")
