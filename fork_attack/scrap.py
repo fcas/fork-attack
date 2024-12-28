@@ -71,6 +71,7 @@ for key, value in patterns.items():
     ).sum().reset_index()
     df_result_agg.to_csv(f"../data/{key}_definitions_agg.csv")
     result_all.append(df_result_agg)
+    result = []
 
 df_all = pd.concat(result_all)
 df_all_agg = df_all.groupby(

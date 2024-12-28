@@ -1343,8 +1343,6 @@ D
 ,data/2024-06-16/alibi_dependabot_alerts.json,f/9/f9ba2c0428955752eb612be34ee0abc7d6daf8f1
 Y
 )data/2024-06-16/altair_code_analysis.json,e/7/e7c0c2b91315a56f4edc800ec1dafae8cccffb07
-A
-fork_attack/tt.py,2/c/2c0869a55605722432d5fafd4eefdd1c30d9270f
 H
 data/cwe_definitions.csv,4/3/431c02525005bcb278d4de036924199a568a1aa9
 L
@@ -3901,3 +3899,5 @@ g
 -data/2024-06-17/spammy_dependabot_alerts.json,0/5/05f99d63a5373c0fb8aed327e4daea86ff3c6f07
 Y
 )data/2024-06-17/spammy_code_analysis.json,c/b/cbd4f2c14fd93d5be06f9d4f0b1aa34936efb0f6
+L
+data/all_definitions_agg.csv,0/4/04fc29f2d8acae8c44bf9b692e9bc3bd7dd6403a
