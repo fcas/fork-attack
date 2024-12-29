@@ -11,88 +11,30 @@ Patched by db4f9717c41bccc3ce10099ab61996b246099892 and released in all official
 
 ### For more information
 Please consult [`SECURITY.md`](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",1
-1,CVE-2020-15265,['CWE-125'],low,Segfault in `tf.quantization.quantize_and_dequantize`,"### Impact
-An attacker can pass an invalid `axis` value to `tf.quantization.quantize_and_dequantize`:
+1,CVE-2020-26215,['CWE-601'],low,Open redirect in Jupyter Notebook,"### Impact
+_What kind of vulnerability is it? Who is impacted?_
 
-```python
-tf.quantization.quantize_and_dequantize(
-    input=[2.5, 2.5], input_min=[0,0], input_max=[1,1], axis=10)
-```
+Open redirect vulnerability - a maliciously crafted link to a notebook server could redirect the browser to a different website.
 
-This results in accessing [a dimension outside the rank of the input tensor](https://github.com/tensorflow/tensorflow/blob/0225022b725993bfc19b87a02a2faaad9a53bc17/tensorflow/core/kernels/quantize_and_dequantize_op.cc#L74) in the C++ kernel implementation:
-```
-const int depth = (axis_ == -1) ? 1 : input.dim_size(axis_);
-```
-
-However, [`dim_size` only does a `DCHECK`](https://github.com/tensorflow/tensorflow/blob/0225022b725993bfc19b87a02a2faaad9a53bc17/tensorflow/core/framework/tensor_shape.cc#L292-L307) to validate the argument and then uses it to access the corresponding element of an array:
-```
-int64 TensorShapeBase<Shape>::dim_size(int d) const {
-  DCHECK_GE(d, 0);
-  DCHECK_LT(d, dims());
-  DoStuffWith(dims_[d]);
-}
-```
-
-Since in normal builds, `DCHECK`-like macros are no-ops, this results in segfault and access out of bounds of the array.
+All notebook servers are technically affected, however, these maliciously crafted links can only be reasonably made for known notebook server hosts. A link to your notebook server may *appear* safe, but ultimately redirect to a spoofed server on the public internet.
 
 ### Patches
 
-We have patched the issue in eccb7ec454e6617738554a255d77f08e60ee0808 and will release TensorFlow 2.4.0 containing the patch. TensorFlow nightly packages after this commit will also have the issue resolved.
+_Has the problem been patched? What versions should users upgrade to?_
+
+Patched in notebook 6.1.5
+
+
+### References
+
+[OWASP page on open redirects](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)
 
 ### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
-### Attribution
-This vulnerability has been reported in #42105",7
-2,CVE-2020-15266,['CWE-119'],low,Float cast overflow undefined behavior,"### Impact
-When the `boxes` argument of `tf.image.crop_and_resize` has a very large value, the CPU kernel implementation receives it as a C++ `nan` floating point value. Attempting to operate on this is undefined behavior which later produces a segmentation fault.
+If you have any questions or comments about this advisory, or vulnerabilities to report, please email our security list [security@ipython.org](mailto:security@ipython.org).
 
-### Patches
-
-We have patched the issue in c0319231333f0f16e1cc75ec83660b01fedd4182 and will release TensorFlow 2.4.0 containing the patch. TensorFlow nightly packages after this commit will also have the issue resolved.
-
-### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
-
-### Attribution
-This vulnerability has been reported in #42129",7
-3,CVE-2020-26266,['CWE-908'],low,Uninitialized memory access in TensorFlow,"### Impact
-Under certain cases, a saved model can trigger use of uninitialized values during code execution. This is caused by having tensor buffers be filled with the default value of the type but forgetting to [default initialize the quantized floating point types in Eigen](https://github.com/tensorflow/tensorflow/blob/f70160322a579144950dff1537dcbe3c7c09d6f5/third_party/eigen3/unsupported/Eigen/CXX11/src/FixedPoint/FixedPointTypes.h#L61-L104):
-
-```cc
-struct QUInt8 {
-  QUInt8() {}
-  // ...
-  uint8_t value;
-};
-
-struct QInt16 {
-  QInt16() {}
-  // ...
-  int16_t value;
-};
-
-struct QUInt16 {
-  QUInt16() {}
-  // ...
-  uint16_t value;
-};
-
-struct QInt32 {
-  QInt32() {}
-  // ...
-  int32_t value;
-};
-```
-
-### Patches
-We have patched the issue in GitHub commit [ace0c15a22f7f054abcc1f53eabbcb0a1239a9e2](https://github.com/tensorflow/tensorflow/commit/ace0c15a22f7f054abcc1f53eabbcb0a1239a9e2) and will release TensorFlow 2.4.0 containing the patch. TensorFlow nightly packages after this commit will also have the issue resolved.
-
-Since this issue also impacts TF versions before 2.4, we will patch all releases between 1.15 and 2.3 inclusive.
-
-### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",4
-4,CVE-2020-26267,['CWE-125'],low,Lack of validation in data format attributes in TensorFlow,"### Impact
+Credit: zhuonan li of Alibaba Application Security Team",2
+2,CVE-2020-26267,['CWE-125'],low,Lack of validation in data format attributes in TensorFlow,"### Impact
 The `tf.raw_ops.DataFormatVecPermute` API does not validate the `src_format` and `dst_format` attributes. [The code](https://github.com/tensorflow/tensorflow/blob/304b96815324e6a73d046df10df6626d63ac12ad/tensorflow/core/kernels/data_format_ops.cc) assumes that these two arguments define a permutation of `NHWC`.
 
 However, these assumptions are not checked and this can result in uninitialized memory accesses, read outside of bounds and even crashes.
@@ -162,64 +104,30 @@ Since this issue also impacts TF versions before 2.4, we will patch all releases
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
-5,CVE-2020-26268,['CWE-471'],low,Write to immutable memory region in TensorFlow,"### Impact
-The `tf.raw_ops.ImmutableConst` operation returns a constant tensor created from a memory mapped file which is assumed immutable. However, if the type of the tensor is not an integral type, the operation crashes the Python interpreter as it tries to write to the memory area:
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",3
+3,CVE-2020-5215,['CWE-754'],low,Segmentation faultin TensorFlow when converting a Python string to `tf.float16`,"### Impact
 
-```python
->>> import tensorflow as tf
->>> with open('/tmp/test.txt','w') as f: f.write('a'*128)
->>> tf.raw_ops.ImmutableConst(dtype=tf.string,shape=2,
-                              memory_region_name='/tmp/test.txt')
-```
+Converting a string (from Python) to a `tf.float16` value results in a segmentation fault in eager mode as the format checks for this use case are only in the graph mode.
 
-If the file is too small, TensorFlow properly returns an error as the memory area has fewer bytes than what is needed for the tensor it creates. However, as soon as there are enough bytes, the above snippet causes a segmentation fault.
+This issue can lead to denial of service in inference/training where a malicious attacker can send a data point which contains a string instead of a `tf.float16` value.
 
-This is because the alocator used to return the buffer data is not marked as returning an opaque handle since the [needed virtual method](https://github.com/tensorflow/tensorflow/blob/c1e1fc899ad5f8c725dcbb6470069890b5060bc7/tensorflow/core/framework/typed_allocator.h#L78-L85) is [not overriden](https://github.com/tensorflow/tensorflow/blob/acdf3c04fcfa767ae8d109b9e1f727ef050dba4d/tensorflow/core/kernels/immutable_constant_op.cc).
+Similar effects can be obtained by manipulating saved models and checkpoints whereby replacing a scalar `tf.float16` value with a scalar string will trigger this issue due to automatic conversions.
+
+This can be easily reproduced by `tf.constant(""hello"", tf.float16)`, if eager execution is enabled.
 
 ### Patches
-We have patched the issue in GitHub commit [c1e1fc899ad5f8c725dcbb6470069890b5060bc7](https://github.com/tensorflow/tensorflow/commit/c1e1fc899ad5f8c725dcbb6470069890b5060bc7) and will release TensorFlow 2.4.0 containing the patch. TensorFlow nightly packages after this commit will also have the issue resolved.
+We have patched the vulnerability in GitHub commit [5ac1b9](https://github.com/tensorflow/tensorflow/commit/5ac1b9e24ff6afc465756edf845d2e9660bd34bf).
 
-Since this issue also impacts TF versions before 2.4, we will patch all releases between 1.15 and 2.3 inclusive.
+We are additionally releasing TensorFlow 1.15.1 and 2.0.1 with this vulnerability patched.
 
-### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+TensorFlow 2.1.0 was released after we fixed the issue, thus it is not affected.
 
-### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
-6,CVE-2020-26270,['CWE-20'],low,CHECK-fail in LSTM with zero-length input in TensorFlow,"### Impact
-Running an LSTM/GRU model where the LSTM/GRU layer receives an input with zero-length results in a `CHECK` failure when using the CUDA backend.
-
-This can result in a query-of-death vulnerability, via denial of service, if users can control the input to the layer.
-
-### Patches
-We have patched the issue in GitHub commit [14755416e364f17fb1870882fa778c7fec7f16e3](https://github.com/tensorflow/tensorflow/commit/14755416e364f17fb1870882fa778c7fec7f16e3) and will release TensorFlow 2.4.0 containing the patch. TensorFlow nightly packages after this commit will also have the issue resolved.
-
-Since this issue also impacts TF versions before 2.4, we will patch all releases between 1.15 and 2.3 inclusive.
+We encourage users to switch to TensorFlow 1.15.1, 2.0.1 or 2.1.0.
 
 ### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",4
-7,CVE-2020-26271,"['CWE-125', 'CWE-908']",low,Heap out of bounds access in MakeEdge in TensorFlow,"### Impact
-Under certain cases, loading a saved model can result in accessing uninitialized memory while building the computation graph. The [`MakeEdge` function](https://github.com/tensorflow/tensorflow/blob/3616708cb866365301d8e67b43b32b46d94b08a0/tensorflow/core/common_runtime/graph_constructor.cc#L1426-L1438) creates an edge between one output tensor of the `src` node (given by `output_index`) and the input slot of the `dst` node (given by `input_index`). This is only possible if the types of the tensors on both sides coincide, so the function begins by obtaining the corresponding `DataType` values and comparing these for equality:
 
-```cc
-  DataType src_out = src->output_type(output_index);
-  DataType dst_in = dst->input_type(input_index);
-  //...
-```
-
-However, there is no check that the indices point to inside of the arrays they index into. Thus, this can result in accessing data out of bounds of the corresponding heap allocated arrays.
-
-In most scenarios, this can manifest as unitialized data access, but if the index points far away from the boundaries of the arrays this can be used to leak addresses from the library.
-
-### Patches
-We have patched the issue in GitHub commit [0cc38aaa4064fd9e79101994ce9872c6d91f816b](https://github.com/tensorflow/tensorflow/commit/0cc38aaa4064fd9e79101994ce9872c6d91f816b) and will release TensorFlow 2.4.0 containing the patch. TensorFlow nightly packages after this commit will also have the issue resolved.
-
-Since this issue also impacts TF versions before 2.4, we will patch all releases between 1.15 and 2.3 inclusive.
-
-### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",4
-8,CVE-2021-29513,['CWE-476'],low,Type confusion during tensor casts lead to dereferencing null pointers,"### Impact
+Please consult [`SECURITY.md`](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",1
+4,CVE-2021-29513,['CWE-476'],low,Type confusion during tensor casts lead to dereferencing null pointers,"### Impact
 Calling TF operations with tensors of non-numeric types when the operations expect numeric tensors result in null pointer dereferences.
 
 There are multiple ways to reproduce this, listing a few examples here:
@@ -306,8 +214,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360 as well as Ye Zhang and Yakun Zhang of Baidu X-Team.",6
-9,CVE-2021-29515,['CWE-476'],low,Reference binding to null pointer in `MatrixDiag*` ops,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360 as well as Ye Zhang and Yakun Zhang of Baidu X-Team.",4
+5,CVE-2021-29515,['CWE-476'],low,Reference binding to null pointer in `MatrixDiag*` ops,"### Impact
 The implementation of [`MatrixDiag*` operations](https://github.com/tensorflow/tensorflow/blob/4c4f420e68f1cfaf8f4b6e8e3eb857e9e4c3ff33/tensorflow/core/kernels/linalg/matrix_diag_op.cc#L195-L197) does not validate that the tensor arguments are non-empty:
 
 ```cc
@@ -337,8 +245,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ye Zhang and Yakun Zhang of Baidu X-Team.",6
-10,CVE-2021-29516,['CWE-476'],low,Null pointer dereference via invalid Ragged Tensors,"### Impact
+This vulnerability has been reported by Ye Zhang and Yakun Zhang of Baidu X-Team.",4
+6,CVE-2021-29516,['CWE-476'],low,Null pointer dereference via invalid Ragged Tensors,"### Impact
 Calling `tf.raw_ops.RaggedTensorToVariant` with arguments specifying an invalid ragged tensor results in a null pointer dereference:
 
 ```python
@@ -377,8 +285,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-11,CVE-2021-29517,['CWE-369'],low,Division by zero in `Conv3D`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+7,CVE-2021-29517,['CWE-369'],low,Division by zero in `Conv3D`,"### Impact
 A malicious user could trigger a division by 0 in `Conv3D` implementation:
 
 ```python
@@ -421,8 +329,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-12,CVE-2021-29518,['CWE-476'],low,Session operations in eager mode lead to null pointer dereferences,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+8,CVE-2021-29518,['CWE-476'],low,Session operations in eager mode lead to null pointer dereferences,"### Impact
 In eager mode (default in TF 2.0 and later), session operations are invalid. However, users could still call the raw ops associated with them and trigger a null pointer dereference:
 
 ```python
@@ -451,8 +359,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-13,CVE-2021-29519,['CWE-843'],low,CHECK-fail in SparseCross due to type confusion,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+9,CVE-2021-29519,['CWE-843'],low,CHECK-fail in SparseCross due to type confusion,"### Impact
 The API of `tf.raw_ops.SparseCross` allows combinations which would result in a `CHECK`-failure and denial of service:
 
 ```python
@@ -516,8 +424,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-14,CVE-2021-29520,"['CWE-120', 'CWE-787']",low,Heap buffer overflow in `Conv3DBackprop*`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+10,CVE-2021-29520,"['CWE-120', 'CWE-787']",low,Heap buffer overflow in `Conv3DBackprop*`,"### Impact
 Missing validation between arguments to `tf.raw_ops.Conv3DBackprop*` operations can result in heap buffer overflows:
 
 ```python
@@ -554,8 +462,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our securityguide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-15,CVE-2021-29522,['CWE-369'],low,Division by 0 in `Conv3DBackprop*`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+11,CVE-2021-29522,['CWE-369'],low,Division by 0 in `Conv3DBackprop*`,"### Impact
 The `tf.raw_ops.Conv3DBackprop*` operations fail to validate that the input tensors are not empty. In turn, this would result in a division by 0:
 
 ```python
@@ -602,8 +510,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-16,CVE-2021-29523,['CWE-190'],low,CHECK-fail in AddManySparseToTensorsMap,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+12,CVE-2021-29523,['CWE-190'],low,CHECK-fail in AddManySparseToTensorsMap,"### Impact
 An attacker can trigger a denial of service via a `CHECK`-fail in  `tf.raw_ops.AddManySparseToTensorsMap`:
 
 ```python
@@ -682,8 +590,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-17,CVE-2021-29524,['CWE-369'],low,Division by 0 in `Conv2DBackpropFilter`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+13,CVE-2021-29524,['CWE-369'],low,Division by 0 in `Conv2DBackpropFilter`,"### Impact
 An attacker can trigger a division by 0 in `tf.raw_ops.Conv2DBackpropFilter`:
 
 ```python
@@ -715,8 +623,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
   
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-18,CVE-2021-29525,['CWE-369'],low,Division by 0 in `Conv2DBackpropInput`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+14,CVE-2021-29525,['CWE-369'],low,Division by 0 in `Conv2DBackpropInput`,"### Impact
 An attacker can trigger a division by 0 in `tf.raw_ops.Conv2DBackpropInput`:
 
 ```python
@@ -755,8 +663,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-19,CVE-2021-29526,['CWE-369'],low,Division by 0 in `Conv2D`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+15,CVE-2021-29526,['CWE-369'],low,Division by 0 in `Conv2D`,"### Impact
 An attacker can trigger a division by 0 in `tf.raw_ops.Conv2D`:
 
 ```python
@@ -786,8 +694,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution 
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-20,CVE-2021-29527,['CWE-369'],low,Division by 0 in `QuantizedConv2D`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+16,CVE-2021-29527,['CWE-369'],low,Division by 0 in `QuantizedConv2D`,"### Impact
 An attacker can trigger a division by 0 in `tf.raw_ops.QuantizedConv2D`:
 
 ```python
@@ -821,8 +729,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-21,CVE-2021-29528,['CWE-369'],low,Division by 0 in `QuantizedMul`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+17,CVE-2021-29528,['CWE-369'],low,Division by 0 in `QuantizedMul`,"### Impact
 An attacker can trigger a division by 0 in `tf.raw_ops.QuantizedMul`:
 
 ```python
@@ -862,8 +770,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-22,CVE-2021-29529,"['CWE-131', 'CWE-193']",low,Heap buffer overflow caused by rounding,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+18,CVE-2021-29529,"['CWE-131', 'CWE-193']",low,Heap buffer overflow caused by rounding,"### Impact
 An attacker can trigger a heap buffer overflow in `tf.raw_ops.QuantizedResizeBilinear` by manipulating input values so that float rounding results in off-by-one error in accessing image elements:
 
 ```python
@@ -917,8 +825,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-23,CVE-2021-29530,['CWE-476'],low,Invalid validation in `SparseMatrixSparseCholesky`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+19,CVE-2021-29530,['CWE-476'],low,Invalid validation in `SparseMatrixSparseCholesky`,"### Impact
 An attacker can trigger a null pointer dereference by providing an invalid `permutation` to `tf.raw_ops.SparseMatrixSparseCholesky`:
 
 ```python
@@ -982,8 +890,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-24,CVE-2021-29531,['CWE-754'],low,CHECK-fail in tf.raw_ops.EncodePng,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+20,CVE-2021-29531,['CWE-754'],low,CHECK-fail in tf.raw_ops.EncodePng,"### Impact
 An attacker can trigger a `CHECK` fail in PNG encoding by providing an empty input tensor as the pixel data:
 
 ```python
@@ -1018,8 +926,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-25,CVE-2021-29532,['CWE-125'],low,Heap out of bounds read in `RaggedCross`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+21,CVE-2021-29532,['CWE-125'],low,Heap out of bounds read in `RaggedCross`,"### Impact
 An attacker can force accesses outside the bounds of heap allocated arrays by passing in invalid tensor values to `tf.raw_ops.RaggedCross`:
 
 ```python
@@ -1089,8 +997,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-26,CVE-2021-29533,['CWE-754'],low,CHECK-fail in DrawBoundingBoxes,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+22,CVE-2021-29533,['CWE-754'],low,CHECK-fail in DrawBoundingBoxes,"### Impact
 An attacker can trigger a denial of service via a `CHECK` failure by passing an empty image to `tf.raw_ops.DrawBoundingBoxes`:
 
 ```python
@@ -1122,8 +1030,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-27,CVE-2021-29534,['CWE-754'],low,CHECK-fail in SparseConcat,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+23,CVE-2021-29534,['CWE-754'],low,CHECK-fail in SparseConcat,"### Impact
 An attacker can trigger a denial of service via a `CHECK`-fail in `tf.raw_ops.SparseConcat`: 
 
 ```python
@@ -1206,8 +1114,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-28,CVE-2021-29535,"['CWE-131', 'CWE-787']",low,Heap buffer overflow in `QuantizedMul`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+24,CVE-2021-29535,"['CWE-131', 'CWE-787']",low,Heap buffer overflow in `QuantizedMul`,"### Impact
 An attacker can cause a heap buffer overflow in `QuantizedMul` by passing in invalid thresholds for the quantization:
 
 ```python
@@ -1243,8 +1151,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-29,CVE-2021-29536,['CWE-787'],low,Heap buffer overflow in `QuantizedReshape`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+25,CVE-2021-29536,['CWE-787'],low,Heap buffer overflow in `QuantizedReshape`,"### Impact
 An attacker can cause a heap buffer overflow in `QuantizedReshape` by passing in invalid thresholds for the quantization:
 
 ```python
@@ -1280,8 +1188,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-30,CVE-2021-29537,"['CWE-131', 'CWE-787']",low,Heap buffer overflow in `QuantizedResizeBilinear`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+26,CVE-2021-29537,"['CWE-131', 'CWE-787']",low,Heap buffer overflow in `QuantizedResizeBilinear`,"### Impact
 An attacker can cause a heap buffer overflow in `QuantizedResizeBilinear` by passing in invalid thresholds for the quantization:
 
 ```python
@@ -1313,8 +1221,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-31,CVE-2021-29538,['CWE-369'],low,Division by zero in `Conv2DBackpropFilter`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+27,CVE-2021-29538,['CWE-369'],low,Division by zero in `Conv2DBackpropFilter`,"### Impact
 An attacker can cause a division by zero to occur in `Conv2DBackpropFilter`:
 
 ```python
@@ -1358,8 +1266,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
   
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-32,CVE-2021-29539,['CWE-681'],low,Segfault in tf.raw_ops.ImmutableConst,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+28,CVE-2021-29539,['CWE-681'],low,Segfault in tf.raw_ops.ImmutableConst,"### Impact
 Calling [`tf.raw_ops.ImmutableConst`](https://www.tensorflow.org/api_docs/python/tf/raw_ops/ImmutableConst) with a `dtype` of `tf.resource` or `tf.variant` results in a segfault in the implementation as code assumes that the tensor contents are pure scalars.
 
 ```python
@@ -1376,8 +1284,8 @@ We have patched the issue in 4f663d4b8f0bec1b48da6fa091a7d29609980fa4 and will r
 If using `tf.raw_ops.ImmutableConst` in code, you can prevent the segfault by inserting a filter for the `dtype` argument.
 
 ### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",6
-33,CVE-2021-29540,"['CWE-120', 'CWE-787']",low,Heap buffer overflow in `Conv2DBackpropFilter`,"### Impact
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",4
+29,CVE-2021-29540,"['CWE-120', 'CWE-787']",low,Heap buffer overflow in `Conv2DBackpropFilter`,"### Impact
 An attacker can cause a heap buffer overflow to occur in `Conv2DBackpropFilter`:
 
 ```python
@@ -1435,8 +1343,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-34,CVE-2021-29541,['CWE-476'],low,Null pointer dereference in `StringNGrams`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+30,CVE-2021-29541,['CWE-476'],low,Null pointer dereference in `StringNGrams`,"### Impact
 An attacker can trigger a dereference of a null pointer in `tf.raw_ops.StringNGrams`:
 
 ```python
@@ -1467,8 +1375,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
   
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-35,CVE-2021-29542,"['CWE-131', 'CWE-787']",low,Heap buffer overflow in `StringNGrams`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+31,CVE-2021-29542,"['CWE-131', 'CWE-787']",low,Heap buffer overflow in `StringNGrams`,"### Impact
 An attacker can cause a heap buffer overflow by passing crafted inputs to `tf.raw_ops.StringNGrams`:
 
 ```python
@@ -1541,8 +1449,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-36,CVE-2021-29543,['CWE-617'],low,CHECK-fail in `CTCGreedyDecoder`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+32,CVE-2021-29543,['CWE-617'],low,CHECK-fail in `CTCGreedyDecoder`,"### Impact
 An attacker can trigger a denial of service via a `CHECK`-fail in `tf.raw_ops.CTCGreedyDecoder`:
 
 ```python
@@ -1566,8 +1474,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.        
                       
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-37,CVE-2021-29545,['CWE-131'],low,Heap buffer overflow in `SparseTensorToCSRSparseMatrix`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+33,CVE-2021-29545,['CWE-131'],low,Heap buffer overflow in `SparseTensorToCSRSparseMatrix`,"### Impact
 An attacker can trigger a denial of service via a `CHECK`-fail in converting sparse tensors to CSR Sparse matrices:
 
 ```python
@@ -1602,8 +1510,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-38,CVE-2021-29546,['CWE-369'],low,Division by 0 in `QuantizedBiasAdd`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+34,CVE-2021-29546,['CWE-369'],low,Division by 0 in `QuantizedBiasAdd`,"### Impact
 An attacker can trigger an integer division by zero undefined behavior in `tf.raw_ops.QuantizedBiasAdd`:
 
 ```python
@@ -1651,8 +1559,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-39,CVE-2021-29547,['CWE-125'],low,Heap out of bounds in `QuantizedBatchNormWithGlobalNormalization`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+35,CVE-2021-29547,['CWE-125'],low,Heap out of bounds in `QuantizedBatchNormWithGlobalNormalization`,"### Impact
 An attacker can cause a segfault and denial of service via accessing data outside of bounds in `tf.raw_ops.QuantizedBatchNormWithGlobalNormalization`:
 
 ```python
@@ -1712,8 +1620,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-40,CVE-2021-29548,['CWE-369'],low,Division by 0 in `QuantizedBatchNormWithGlobalNormalization`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+36,CVE-2021-29548,['CWE-369'],low,Division by 0 in `QuantizedBatchNormWithGlobalNormalization`,"### Impact
 An attacker can cause a runtime division by zero error and denial of service in `tf.raw_ops.QuantizedBatchNormWithGlobalNormalization`:
 
 ```python
@@ -1754,8 +1662,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team",6
-41,CVE-2021-29549,['CWE-369'],low,Division by 0 in `QuantizedAdd`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team",4
+37,CVE-2021-29549,['CWE-369'],low,Division by 0 in `QuantizedAdd`,"### Impact
 An attacker can cause a runtime division by zero error and denial of service in `tf.raw_ops.QuantizedAdd`:
 
 ```python
@@ -1798,8 +1706,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-42,CVE-2021-29550,['CWE-369'],low,Division by 0 in `FractionalAvgPool`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+38,CVE-2021-29550,['CWE-369'],low,Division by 0 in `FractionalAvgPool`,"### Impact
 An attacker can cause a runtime division by zero error and denial of service in `tf.raw_ops.FractionalAvgPool`:
 
 ```python
@@ -1854,8 +1762,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-43,CVE-2021-29551,['CWE-125'],low,OOB read in `MatrixTriangularSolve`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+39,CVE-2021-29551,['CWE-125'],low,OOB read in `MatrixTriangularSolve`,"### Impact
 The implementation of [`MatrixTriangularSolve`](https://github.com/tensorflow/tensorflow/blob/8cae746d8449c7dda5298327353d68613f16e798/tensorflow/core/kernels/linalg/matrix_triangular_solve_op_impl.h#L160-L240) fails to terminate kernel execution if one validation condition fails:
 
 ```cc
@@ -1906,8 +1814,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ye Zhang and Yakun Zhang of Baidu X-Team.",6
-44,CVE-2021-29552,['CWE-617'],low,CHECK-failure in `UnsortedSegmentJoin`,"### Impact
+This vulnerability has been reported by Ye Zhang and Yakun Zhang of Baidu X-Team.",4
+40,CVE-2021-29552,['CWE-617'],low,CHECK-failure in `UnsortedSegmentJoin`,"### Impact
 An attacker can cause a denial of service by controlling the values of `num_segments` tensor argument for `UnsortedSegmentJoin`:
 
 ```python
@@ -1941,8 +1849,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-45,CVE-2021-29553,['CWE-125'],low,Heap OOB in `QuantizeAndDequantizeV3`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+41,CVE-2021-29553,['CWE-125'],low,Heap OOB in `QuantizeAndDequantizeV3`,"### Impact
 An attacker can read data outside of bounds of heap allocated buffer in `tf.raw_ops.QuantizeAndDequantizeV3`:
 
 ```python
@@ -1968,8 +1876,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Aivul Team from Qihoo 360.",6
-46,CVE-2021-29555,['CWE-369'],low,Division by 0 in `FusedBatchNorm`,"### Impact
+This vulnerability has been reported by Aivul Team from Qihoo 360.",4
+42,CVE-2021-29555,['CWE-369'],low,Division by 0 in `FusedBatchNorm`,"### Impact
 An attacker can cause a denial of service via a FPE runtime error in `tf.raw_ops.FusedBatchNorm`:
 
 ```python
@@ -2010,8 +1918,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-47,CVE-2021-29556,['CWE-369'],low,Division by 0 in `Reverse`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+43,CVE-2021-29556,['CWE-369'],low,Division by 0 in `Reverse`,"### Impact
 An attacker can cause a denial of service via a FPE runtime error in `tf.raw_ops.Reverse`:
 
 ```python
@@ -2041,8 +1949,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-48,CVE-2021-29557,['CWE-369'],low,Division by 0 in `SparseMatMul`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+44,CVE-2021-29557,['CWE-369'],low,Division by 0 in `SparseMatMul`,"### Impact
 An attacker can cause a denial of service via a FPE runtime error in `tf.raw_ops.SparseMatMul`:
 
 ```python
@@ -2067,8 +1975,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-49,CVE-2021-29558,['CWE-787'],low,Heap buffer overflow in `SparseSplit`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+45,CVE-2021-29558,['CWE-787'],low,Heap buffer overflow in `SparseSplit`,"### Impact
 An attacker can cause a heap buffer overflow in `tf.raw_ops.SparseSplit`:
 
 ```python
@@ -2103,8 +2011,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-50,CVE-2021-29559,['CWE-125'],low,Heap OOB access in unicode ops,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+46,CVE-2021-29559,['CWE-125'],low,Heap OOB access in unicode ops,"### Impact
 An attacker can access data outside of bounds of heap allocated array in `tf.raw_ops.UnicodeEncode`:
 
 ```python
@@ -2131,8 +2039,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-51,CVE-2021-29560,"['CWE-125', 'CWE-787']",low,Heap buffer overflow in `RaggedTensorToTensor`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+47,CVE-2021-29560,"['CWE-125', 'CWE-787']",low,Heap buffer overflow in `RaggedTensorToTensor`,"### Impact
 An attacker can cause a heap buffer overflow in `tf.raw_ops.RaggedTensorToTensor`:
 
 ```python
@@ -2181,8 +2089,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-52,CVE-2021-29561,['CWE-617'],low,CHECK-fail in `LoadAndRemapMatrix`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+48,CVE-2021-29561,['CWE-617'],low,CHECK-fail in `LoadAndRemapMatrix`,"### Impact
 An attacker can cause a denial of service by exploiting a `CHECK`-failure coming from `tf.raw_ops.LoadAndRemapMatrix`:
     
 ```python
@@ -2217,8 +2125,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-53,CVE-2021-29562,['CWE-617'],low,CHECK-fail in `tf.raw_ops.IRFFT`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+49,CVE-2021-29562,['CWE-617'],low,CHECK-fail in `tf.raw_ops.IRFFT`,"### Impact
 An attacker can cause a denial of service by exploiting a `CHECK`-failure coming from the implementation of `tf.raw_ops.IRFFT`:
     
 ```python
@@ -2244,8 +2152,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team. ",6
-54,CVE-2021-29563,['CWE-617'],low,CHECK-fail in `tf.raw_ops.RFFT`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team. ",4
+50,CVE-2021-29563,['CWE-617'],low,CHECK-fail in `tf.raw_ops.RFFT`,"### Impact
 An attacker can cause a denial of service by exploiting a `CHECK`-failure coming from the implementation of `tf.raw_ops.RFFT`:
     
 ```python
@@ -2268,8 +2176,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions. 
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-55,CVE-2021-29564,['CWE-476'],low,Null pointer dereference in `EditDistance`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+51,CVE-2021-29564,['CWE-476'],low,Null pointer dereference in `EditDistance`,"### Impact
 An attacker can trigger a null pointer dereference in the implementation of `tf.raw_ops.EditDistance`: 
     
 ```python
@@ -2309,8 +2217,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-56,CVE-2021-29565,['CWE-476'],low,Null pointer dereference in `SparseFillEmptyRows`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+52,CVE-2021-29565,['CWE-476'],low,Null pointer dereference in `SparseFillEmptyRows`,"### Impact
 An attacker can trigger a null pointer dereference in the implementation of `tf.raw_ops.SparseFillEmptyRows`:
 
 ```python
@@ -2351,8 +2259,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-57,CVE-2021-29566,['CWE-787'],low,Heap OOB access in `Dilation2DBackpropInput`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+53,CVE-2021-29566,['CWE-787'],low,Heap OOB access in `Dilation2DBackpropInput`,"### Impact
 An attacker can write outside the bounds of heap allocated arrays by passing invalid arguments to `tf.raw_ops.Dilation2DBackpropInput`:
 
 ```python
@@ -2384,8 +2292,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-58,CVE-2021-29567,['CWE-617'],low,Lack of validation in `SparseDenseCwiseMul`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+54,CVE-2021-29567,['CWE-617'],low,Lack of validation in `SparseDenseCwiseMul`,"### Impact
 Due to lack of validation in `tf.raw_ops.SparseDenseCwiseMul`, an attacker can trigger denial of service via `CHECK`-fails or accesses to outside the bounds of heap allocated data:
 
 ```python
@@ -2411,8 +2319,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-59,CVE-2021-29568,"['CWE-476', 'CWE-824']",low,Reference binding to null in `ParameterizedTruncatedNormal`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+55,CVE-2021-29568,"['CWE-476', 'CWE-824']",low,Reference binding to null in `ParameterizedTruncatedNormal`,"### Impact
 An attacker can trigger undefined behavior by binding to null pointer in `tf.raw_ops.ParameterizedTruncatedNormal`:
 
 ```python
@@ -2445,8 +2353,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-60,CVE-2021-29569,['CWE-125'],low,Heap out of bounds read in `RequantizationRange`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+56,CVE-2021-29569,['CWE-125'],low,Heap out of bounds read in `RequantizationRange`,"### Impact
 The implementation of `tf.raw_ops.MaxPoolGradWithArgmax` can cause reads outside of bounds of heap allocated data if attacker supplies specially crafted inputs:
 
 ```python
@@ -2477,8 +2385,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-61,CVE-2021-29570,['CWE-125'],low,Heap out of bounds read in `MaxPoolGradWithArgmax`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+57,CVE-2021-29570,['CWE-125'],low,Heap out of bounds read in `MaxPoolGradWithArgmax`,"### Impact
 The implementation of `tf.raw_ops.MaxPoolGradWithArgmax` can cause reads outside of bounds of heap allocated data if attacker supplies specially crafted inputs:
 
 ```python
@@ -2506,8 +2414,47 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions. 
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-62,CVE-2021-29572,['CWE-476'],low,Reference binding to nullptr in `SdcaOptimizer`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+58,CVE-2021-29571,['CWE-787'],low,Memory corruption in `DrawBoundingBoxesV2`,"### Impact
+The implementation of `tf.raw_ops.MaxPoolGradWithArgmax` can cause reads outside of bounds of heap allocated data if attacker supplies specially crafted inputs:
+
+```python
+import tensorflow as tf
+
+images = tf.fill([10, 96, 0, 1], 0.)
+boxes = tf.fill([10, 53, 0], 0.)
+colors = tf.fill([0, 1], 0.)
+
+tf.raw_ops.DrawBoundingBoxesV2(images=images, boxes=boxes, colors=colors)
+```
+
+The [implementation](https://github.com/tensorflow/tensorflow/blob/31bd5026304677faa8a0b77602c6154171b9aec1/tensorflow/core/kernels/image/draw_bounding_box_op.cc#L116-L130) assumes that the last element of `boxes` input is 4, as required by [the op](https://www.tensorflow.org/api_docs/python/tf/raw_ops/DrawBoundingBoxesV2). Since this is not checked attackers passing values less than 4 can write outside of bounds of heap allocated objects and cause memory corruption:
+
+```cc 
+const auto tboxes = boxes.tensor<T, 3>();
+for (int64 bb = 0; bb < num_boxes; ++bb) {
+  ...
+  const int64 min_box_row = static_cast<float>(tboxes(b, bb, 0)) * (height - 1);
+  const int64 max_box_row = static_cast<float>(tboxes(b, bb, 2)) * (height - 1);
+  const int64 min_box_col = static_cast<float>(tboxes(b, bb, 1)) * (width - 1);
+  const int64 max_box_col = static_cast<float>(tboxes(b, bb, 3)) * (width - 1);
+  ...
+}
+``` 
+
+If the last dimension in `boxes` is less than 4, accesses similar to `tboxes(b, bb, 3)` will access data outside of bounds. Further during code execution there are also writes to these indices.
+
+### Patches
+We have patched the issue in GitHub commit [79865b542f9ffdc9caeb255631f7c56f1d4b6517](https://github.com/tensorflow/tensorflow/commit/79865b542f9ffdc9caeb255631f7c56f1d4b6517).
+
+The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commit on TensorFlow 2.4.2, TensorFlow 2.3.3, TensorFlow 2.2.3 and TensorFlow 2.1.4, as these are also affected and still in supported range.
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+59,CVE-2021-29572,['CWE-476'],low,Reference binding to nullptr in `SdcaOptimizer`,"### Impact
 The implementation of `tf.raw_ops.SdcaOptimizer` triggers undefined behavior due to dereferencing a null pointer:
 
 ```python
@@ -2550,8 +2497,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-63,CVE-2021-29573,['CWE-369'],low,Division by 0 in `MaxPoolGradWithArgmax`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+60,CVE-2021-29573,['CWE-369'],low,Division by 0 in `MaxPoolGradWithArgmax`,"### Impact
 The implementation of `tf.raw_ops.MaxPoolGradWithArgmax` is vulnerable to a division by 0:
 
 ```python
@@ -2579,8 +2526,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-64,CVE-2021-29574,['CWE-476'],low,Undefined behavior in `MaxPool3DGradGrad`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+61,CVE-2021-29574,['CWE-476'],low,Undefined behavior in `MaxPool3DGradGrad`,"### Impact
 The implementation of `tf.raw_ops.MaxPool3DGradGrad` exhibits undefined behavior by dereferencing null pointers backing attacker-supplied empty tensors:
 
 ```python
@@ -2609,8 +2556,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-65,CVE-2021-29575,"['CWE-119', 'CWE-120', 'CWE-787']",low,Overflow/denial of service in `tf.raw_ops.ReverseSequence`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+62,CVE-2021-29575,"['CWE-119', 'CWE-120', 'CWE-787']",low,Overflow/denial of service in `tf.raw_ops.ReverseSequence`,"### Impact
 The implementation of `tf.raw_ops.ReverseSequence` allows for stack overflow and/or `CHECK`-fail based denial of service.
 
 ```python
@@ -2636,8 +2583,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution 
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-66,CVE-2021-29576,"['CWE-119', 'CWE-787']",low,Heap buffer overflow in `MaxPool3DGradGrad`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+63,CVE-2021-29576,"['CWE-119', 'CWE-787']",low,Heap buffer overflow in `MaxPool3DGradGrad`,"### Impact
 The implementation of `tf.raw_ops.MaxPool3DGradGrad` is vulnerable to a heap buffer overflow: 
 
 ```python
@@ -2674,8 +2621,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-67,CVE-2021-29577,"['CWE-119', 'CWE-787']",low,Heap buffer overflow in `AvgPool3DGrad`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+64,CVE-2021-29577,"['CWE-119', 'CWE-787']",low,Heap buffer overflow in `AvgPool3DGrad`,"### Impact
 The implementation of `tf.raw_ops.AvgPool3DGrad` is vulnerable to a heap buffer overflow:
 
 ```python
@@ -2703,8 +2650,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-68,CVE-2021-29578,"['CWE-119', 'CWE-787']",low,Heap buffer overflow in `FractionalAvgPoolGrad`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+65,CVE-2021-29578,"['CWE-119', 'CWE-787']",low,Heap buffer overflow in `FractionalAvgPoolGrad`,"### Impact
 The implementation of `tf.raw_ops.FractionalAvgPoolGrad` is vulnerable to a heap buffer overflow:
   
 ```python
@@ -2733,8 +2680,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-69,CVE-2021-29579,"['CWE-119', 'CWE-787']",low,Heap buffer overflow in `MaxPoolGrad`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+66,CVE-2021-29579,"['CWE-119', 'CWE-787']",low,Heap buffer overflow in `MaxPoolGrad`,"### Impact
 The implementation of `tf.raw_ops.MaxPoolGrad` is vulnerable to a heap buffer overflow:
   
 ```python
@@ -2773,8 +2720,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-70,CVE-2021-29580,['CWE-908'],low,Undefined behavior and `CHECK`-fail in `FractionalMaxPoolGrad`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+67,CVE-2021-29580,['CWE-908'],low,Undefined behavior and `CHECK`-fail in `FractionalMaxPoolGrad`,"### Impact
 The implementation of `tf.raw_ops.FractionalMaxPoolGrad` triggers an undefined behavior if one of the input tensors is empty:
 
 ```python
@@ -2820,8 +2767,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-71,CVE-2021-29581,['CWE-908'],low,Segfault in `CTCBeamSearchDecoder`,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+68,CVE-2021-29581,['CWE-908'],low,Segfault in `CTCBeamSearchDecoder`,"### Impact
 Due to lack of validation in `tf.raw_ops.CTCBeamSearchDecoder`, an attacker can trigger denial of service via segmentation faults:
 
 ```python
@@ -2850,8 +2797,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-72,CVE-2021-29582,['CWE-125'],low,Heap OOB read in `tf.raw_ops.Dequantize`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+69,CVE-2021-29582,['CWE-125'],low,Heap OOB read in `tf.raw_ops.Dequantize`,"### Impact
 Due to lack of validation in `tf.raw_ops.Dequantize`, an attacker can trigger a read from outside of bounds of heap allocated data:
 
 ```python
@@ -2900,8 +2847,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-73,CVE-2021-29583,"['CWE-125', 'CWE-476', 'CWE-787']",low,Heap buffer overflow and undefined behavior in `FusedBatchNorm`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+70,CVE-2021-29583,"['CWE-125', 'CWE-476', 'CWE-787']",low,Heap buffer overflow and undefined behavior in `FusedBatchNorm`,"### Impact
 The implementation of `tf.raw_ops.FusedBatchNorm` is vulnerable to a heap buffer overflow:
       
 ```python
@@ -2958,8 +2905,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",6
-74,CVE-2021-29584,['CWE-190'],low,CHECK-fail due to integer overflow,"### Impact
+This vulnerability has been reported by Ying Wang and Yakun Zhang of Baidu X-Team.",4
+71,CVE-2021-29584,['CWE-190'],low,CHECK-fail due to integer overflow,"### Impact
 An attacker can trigger a denial of service via a `CHECK`-fail in  caused by an integer overflow in constructing a new tensor shape:
 
 ```python
@@ -3042,8 +2989,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by researchers from University of Virginia and University of California, Santa Barbara.",6
-75,CVE-2021-29585,['CWE-369'],low,Division by zero in padding computation in TFLite,"### Impact
+This vulnerability has been reported by researchers from University of Virginia and University of California, Santa Barbara.",4
+72,CVE-2021-29585,['CWE-369'],low,Division by zero in padding computation in TFLite,"### Impact
 The TFLite computation for size of output after padding, [`ComputeOutSize`](https://github.com/tensorflow/tensorflow/blob/0c9692ae7b1671c983569e5d3de5565843d500cf/tensorflow/lite/kernels/padding.h#L43-L55), does not check that the `stride` argument is not 0 before doing the division.
 
 ```cc
@@ -3072,8 +3019,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-76,CVE-2021-29586,['CWE-369'],low,Division by zero in optimized pooling implementations in TFLite,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+73,CVE-2021-29586,['CWE-369'],low,Division by zero in optimized pooling implementations in TFLite,"### Impact
 Optimized pooling implementations in TFLite fail to check that the stride arguments are not 0 before calling [`ComputePaddingHeightWidth`](https://github.com/tensorflow/tensorflow/blob/3f24ccd932546416ec906a02ddd183b48a1d2c83/tensorflow/lite/kernels/pooling.cc#L90).
 
 Since users can craft special models which will have `params->stride_{height,width}` be zero, this will result in a division by zero.
@@ -3087,8 +3034,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-77,CVE-2021-29587,['CWE-369'],low,Division by zero in TFLite's implementation of `SpaceToDepth`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+74,CVE-2021-29587,['CWE-369'],low,Division by zero in TFLite's implementation of `SpaceToDepth`,"### Impact
 The `Prepare` step of the `SpaceToDepth` TFLite operator [does not check for 0 before division](https://github.com/tensorflow/tensorflow/blob/5f7975d09eac0f10ed8a17dbb6f5964977725adc/tensorflow/lite/kernels/space_to_depth.cc#L63-L67).
 
 ```cc 
@@ -3110,8 +3057,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-78,CVE-2021-29588,['CWE-369'],low,Division by zero in TFLite's implementation of `TransposeConv`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+75,CVE-2021-29588,['CWE-369'],low,Division by zero in TFLite's implementation of `TransposeConv`,"### Impact
 The optimized implementation of the `TransposeConv` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/0d45ea1ca641b21b73bcf9c00e0179cda284e7e7/tensorflow/lite/kernels/internal/optimized/optimized_ops.h#L5221-L5222):
 
 ```cc 
@@ -3130,8 +3077,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-79,CVE-2021-29589,['CWE-369'],low,Division by zero in TFLite's implementation of `GatherNd`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+76,CVE-2021-29589,['CWE-369'],low,Division by zero in TFLite's implementation of `GatherNd`,"### Impact
 The reference implementation of the `GatherNd` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/0d45ea1ca641b21b73bcf9c00e0179cda284e7e7/tensorflow/lite/kernels/internal/reference/reference_ops.h#L966):
 
 ```cc 
@@ -3149,8 +3096,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions. 
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-80,CVE-2021-29590,['CWE-125'],low,Heap OOB read in TFLite's implementation of `Minimum` or `Maximum`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+77,CVE-2021-29590,['CWE-125'],low,Heap OOB read in TFLite's implementation of `Minimum` or `Maximum`,"### Impact
 The implementations of the `Minimum` and `Maximum` TFLite operators can be used to read data outside of bounds of heap allocated objects, if any of the two input tensor arguments are empty.
 
 This is because [the broadcasting implementation](https://github.com/tensorflow/tensorflow/blob/0d45ea1ca641b21b73bcf9c00e0179cda284e7e7/tensorflow/lite/kernels/internal/reference/maximum_minimum.h#L52-L56) indexes in both tensors with the same index but does not validate that the index is within bounds:
@@ -3172,8 +3119,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-81,CVE-2021-29593,['CWE-369'],low,Division by zero in TFLite's implementation of `BatchToSpaceNd`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+78,CVE-2021-29593,['CWE-369'],low,Division by zero in TFLite's implementation of `BatchToSpaceNd`,"### Impact
 The implementation of the `BatchToSpaceNd` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/b5ed552fe55895aee8bd8b191f744a069957d18d/tensorflow/lite/kernels/batch_to_space_nd.cc#L81-L82):
 
 ```cc
@@ -3192,8 +3139,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-82,CVE-2021-29594,['CWE-369'],low,Division by zero in TFLite's convolution code,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+79,CVE-2021-29594,['CWE-369'],low,Division by zero in TFLite's convolution code,"### Impact
 TFLite's [convolution code](https://github.com/tensorflow/tensorflow/blob/09c73bca7d648e961dd05898292d91a8322a9d45/tensorflow/lite/kernels/conv.cc) has multiple division where the divisor is controlled by the user and not checked to be non-zero. For example:
 
 ```cc 
@@ -3209,8 +3156,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360. ",6
-83,CVE-2021-29595,['CWE-369'],low,Division by zero in TFLite's implementation of `DepthToSpace`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360. ",4
+80,CVE-2021-29595,['CWE-369'],low,Division by zero in TFLite's implementation of `DepthToSpace`,"### Impact
 The implementation of the `DepthToSpace` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/0d45ea1ca641b21b73bcf9c00e0179cda284e7e7/tensorflow/lite/kernels/depth_to_space.cc#L63-L69):
 
 ```cc
@@ -3232,8 +3179,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution 
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-84,CVE-2021-29596,['CWE-369'],low,Division by zero in TFLite's implementation of `EmbeddingLookup`,"The implementation of the `EmbeddingLookup` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/e4b29809543b250bc9b19678ec4776299dd569ba/tensorflow/lite/kernels/embedding_lookup.cc#L73-L74):
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+81,CVE-2021-29596,['CWE-369'],low,Division by zero in TFLite's implementation of `EmbeddingLookup`,"The implementation of the `EmbeddingLookup` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/e4b29809543b250bc9b19678ec4776299dd569ba/tensorflow/lite/kernels/embedding_lookup.cc#L73-L74):
 
 ```cc
 const int row_size = SizeOfDimension(value, 0);
@@ -3251,8 +3198,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-85,CVE-2021-29597,['CWE-369'],low,Division by zero in TFLite's implementation of `SpaceToBatchNd`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+82,CVE-2021-29597,['CWE-369'],low,Division by zero in TFLite's implementation of `SpaceToBatchNd`,"### Impact
 The implementation of the `SpaceToBatchNd` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/412c7d9bb8f8a762c5b266c9e73bfa165f29aac8/tensorflow/lite/kernels/space_to_batch_nd.cc#L82-L83):
 
 ```cc
@@ -3271,8 +3218,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-86,CVE-2021-29598,['CWE-369'],low,Division by zero in TFLite's implementation of `SVDF`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+83,CVE-2021-29598,['CWE-369'],low,Division by zero in TFLite's implementation of `SVDF`,"### Impact
 The implementation of the `SVDF` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/7f283ff806b2031f407db64c4d3edcda8fb9f9f5/tensorflow/lite/kernels/svdf.cc#L99-L102):
 
 ```cc
@@ -3292,8 +3239,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-87,CVE-2021-29599,['CWE-369'],low,Division by zero in TFLite's implementation of Split,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+84,CVE-2021-29599,['CWE-369'],low,Division by zero in TFLite's implementation of Split,"### Impact
 The implementation of the `Split` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/e2752089ef7ce9bcf3db0ec618ebd23ea119d0c7/tensorflow/lite/kernels/split.cc#L63-L65):
 
 ```cc
@@ -3312,8 +3259,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360. ",6
-88,CVE-2021-29600,['CWE-369'],low,Division by zero in TFLite's implementation of `OneHot`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360. ",4
+85,CVE-2021-29600,['CWE-369'],low,Division by zero in TFLite's implementation of `OneHot`,"### Impact
 The implementation of the `OneHot` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/f61c57bd425878be108ec787f4d96390579fb83e/tensorflow/lite/kernels/one_hot.cc#L68-L72):
 
 ```cc
@@ -3335,8 +3282,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-89,CVE-2021-29602,['CWE-369'],low,Division by zero in TFLite's implementation of `DepthwiseConv`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+86,CVE-2021-29602,['CWE-369'],low,Division by zero in TFLite's implementation of `DepthwiseConv`,"### Impact
 The implementation of the `DepthwiseConv` TFLite operator is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/1a8e885b864c818198a5b2c0cbbeca5a1e833bc8/tensorflow/lite/kernels/depthwise_conv.cc#L287-L288):
 
 ```cc
@@ -3355,8 +3302,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-90,CVE-2021-29603,['CWE-787'],low,Heap OOB write in TFLite,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+87,CVE-2021-29603,['CWE-787'],low,Heap OOB write in TFLite,"### Impact
 A specially crafted TFLite model could trigger an OOB write on heap in the TFLite implementation of [`ArgMin`/`ArgMax`](https://github.com/tensorflow/tensorflow/blob/102b211d892f3abc14f845a72047809b39cc65ab/tensorflow/lite/kernels/arg_min_max.cc#L52-L59):
 
 ```cc
@@ -3381,8 +3328,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-91,CVE-2021-29604,['CWE-369'],low,Division by zero in TFLite's implementation of hashtable lookup,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+88,CVE-2021-29604,['CWE-369'],low,Division by zero in TFLite's implementation of hashtable lookup,"### Impact
 The TFLite implementation of hashtable lookup is [vulnerable to a division by zero error](https://github.com/tensorflow/tensorflow/blob/1a8e885b864c818198a5b2c0cbbeca5a1e833bc8/tensorflow/lite/kernels/hashtable_lookup.cc#L114-L115):
 
 ```cc
@@ -3401,8 +3348,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",6
-92,CVE-2021-29610,"['CWE-665', 'CWE-787']",low,Invalid validation in `QuantizeAndDequantizeV2`,"### Impact
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",4
+89,CVE-2021-29610,"['CWE-665', 'CWE-787']",low,Invalid validation in `QuantizeAndDequantizeV2`,"### Impact
 The validation in `tf.raw_ops.QuantizeAndDequantizeV2` allows invalid values for `axis` argument:
 
 ```python
@@ -3437,8 +3384,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",6
-93,CVE-2021-29612,"['CWE-120', 'CWE-787']",low,Heap buffer overflow in `BandedTriangularSolve`,"### Impact
+This vulnerability has been reported by Yakun Zhang and Ying Wang of Baidu X-Team.",4
+90,CVE-2021-29612,"['CWE-120', 'CWE-787']",low,Heap buffer overflow in `BandedTriangularSolve`,"### Impact
 An attacker can trigger a heap buffer overflow in Eigen implementation of `tf.raw_ops.BandedTriangularSolve`:
 
 ```python
@@ -3477,8 +3424,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported by Ye Zhang and Yakun Zhang of Baidu X-Team.",6
-94,CVE-2021-29615,['CWE-674'],low,Stack overflow in `ParseAttrValue` with nested tensors,"### Impact
+This vulnerability has been reported by Ye Zhang and Yakun Zhang of Baidu X-Team.",4
+91,CVE-2021-29615,['CWE-674'],low,Stack overflow in `ParseAttrValue` with nested tensors,"### Impact
 The implementation of [`ParseAttrValue`](https://github.com/tensorflow/tensorflow/blob/c22d88d6ff33031aa113e48aa3fc9aa74ed79595/tensorflow/core/framework/attr_value_util.cc#L397-L453) can be tricked into stack overflow due to recursion by giving in a specially crafted input.
 
 ### Patches
@@ -3487,8 +3434,8 @@ We have patched the issue in GitHub commit [e07e1c3d26492c06f078c7e5bf2d138043e1
 The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commit on TensorFlow 2.4.2, TensorFlow 2.3.3, TensorFlow 2.2.3 and TensorFlow 2.1.4, as these are also affected and still in supported range.
 
 ### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",6
-95,CVE-2021-29616,['CWE-476'],low,Null dereference in Grappler's `TrySimplify`,"### Impact
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",4
+92,CVE-2021-29616,['CWE-476'],low,Null dereference in Grappler's `TrySimplify`,"### Impact
 The implementation of [`TrySimplify`](https://github.com/tensorflow/tensorflow/blob/c22d88d6ff33031aa113e48aa3fc9aa74ed79595/tensorflow/core/grappler/optimizers/arithmetic_optimizer.cc#L390-L401) has undefined behavior due to dereferencing a null pointer in corner cases that
 result in optimizing a node with no inputs.
 
@@ -3498,8 +3445,8 @@ We have patched the issue in GitHub commit [e6340f0665d53716ef3197ada88936c2a5f7
 The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commit on TensorFlow 2.4.2, TensorFlow 2.3.3, TensorFlow 2.2.3 and TensorFlow 2.1.4, as these are also affected and still in supported range.
 
 ### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",6
-96,CVE-2021-29617,['CWE-755'],low,Crash in `tf.strings.substr` due to `CHECK`-fail,"### Impact
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",4
+93,CVE-2021-29617,['CWE-755'],low,Crash in `tf.strings.substr` due to `CHECK`-fail,"### Impact
 An attacker can cause a denial of service via `CHECK`-fail in  `tf.strings.substr` with invalid arguments:
 
 ```python 
@@ -3521,8 +3468,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported in [#46900](https://github.com/tensorflow/issues/46900) and fixed in [#46974](https://github.com/tensorflow/issues/46974).",6
-97,CVE-2021-29618,['CWE-755'],low,Crash in `tf.transpose` with complex inputs,"### Impact
+This vulnerability has been reported in [#46900](https://github.com/tensorflow/issues/46900) and fixed in [#46974](https://github.com/tensorflow/issues/46974).",4
+94,CVE-2021-29618,['CWE-755'],low,Crash in `tf.transpose` with complex inputs,"### Impact
 Passing a complex argument to `tf.transpose` at the same time as passing `conjugate=True` argument results in a crash:
 
 ```python 
@@ -3539,8 +3486,8 @@ The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commi
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
 
 ### Attribution
-This vulnerability has been reported in [#42105](https://github.com/tensorflow/issues/42105) and fixed in [#46973](https://github.com/tensorflow/issues/46973).",6
-98,CVE-2021-29619,['CWE-755'],low,Segfault in `tf.raw_ops.SparseCountSparseOutput`,"### Impact
+This vulnerability has been reported in [#42105](https://github.com/tensorflow/issues/42105) and fixed in [#46973](https://github.com/tensorflow/issues/46973).",4
+95,CVE-2021-29619,['CWE-755'],low,Segfault in `tf.raw_ops.SparseCountSparseOutput`,"### Impact
 Passing invalid arguments (e.g., discovered via fuzzing) to `tf.raw_ops.SparseCountSparseOutput` results in segfault.
 
 ### Patches
@@ -3549,8 +3496,8 @@ We have patched the issue in GitHub commit [82e6203221865de4008445b13c69b6826d2b
 The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commit on TensorFlow 2.4.2, TensorFlow 2.3.3, TensorFlow 2.2.3 and TensorFlow 2.1.4, as these are also affected and still in supported range.
 
 ### For more information
-Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",6
-99,CVE-2022-31177,"['CWE-200', 'CWE-916']",low,Flask-AppBuilder before v4.1.3 allows inference of sensitive information through query strings,"### Impact
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.",4
+96,CVE-2022-31177,"['CWE-200', 'CWE-916']",low,Flask-AppBuilder before v4.1.3 allows inference of sensitive information through query strings,"### Impact
 An authenticated Admin user could craft HTTP requests to filter users by their salted and hashed passwords strings. These filters could be made by using partial hashed password strings. The response would not include the hashed passwords, but an attacker could infer partial password hashes and their respective users.
 
 Only when using `AUTH_DB` database authentication option.
@@ -3563,7 +3510,7 @@ If you have any questions or comments about this advisory:
 * Open an issue in [example link to repo](http://example.com)
 * Email us at [example email address](mailto:example@example.com)
 ",1
-100,CVE-2022-36015,['CWE-190'],low,TensorFlow vulnerable to integer overflow in math ops,"### Impact
+97,CVE-2022-36015,['CWE-190'],low,TensorFlow vulnerable to integer overflow in math ops,"### Impact
 When [`RangeSize`](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/ops/math_ops.cc) receives values that do not fit into an `int64_t`, it crashes.
 ```cpp
   auto size = (std::is_integral<T>::value
@@ -3591,8 +3538,8 @@ The fix will be included in TensorFlow 2.10.0. We will also cherrypick this comm
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
-",11
-101,CVE-2022-36016,['CWE-617'],low,TensorFlow vulnerable to `CHECK`-fail in `tensorflow::full_type::SubstituteFromAttrs`,"### Impact
+",9
+98,CVE-2022-36016,['CWE-617'],low,TensorFlow vulnerable to `CHECK`-fail in `tensorflow::full_type::SubstituteFromAttrs`,"### Impact
 When [`tensorflow::full_type::SubstituteFromAttrs`](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/ops/math_ops.cc) receives a `FullTypeDef& t` that is not exactly three args, it triggers a `CHECK`-fail instead of returning a status.
 ```cpp
 Status SubstituteForEach(AttrMap& attrs, FullTypeDef& t) {
@@ -3610,95 +3557,16 @@ The fix will be included in TensorFlow 2.10.0. We will also cherrypick this comm
 
 ### For more information
 Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
-",11
-102,CVE-2023-1176,['CWE-36'],low,Remote file existence check vulnerability in `mlflow server` and `mlflow ui` CLIs,"### Impact
+",9
+99,CVE-2023-23934,['CWE-20'],low,Incorrect parsing of nameless cookies leads to __Host- cookies bypass,"Browsers may allow ""nameless"" cookies that look like `=value` instead of `key=value`. A vulnerable browser may allow a compromised application on an adjacent subdomain to exploit this to set a cookie like `=__Host-test=bad` for another subdomain.
 
-Users of the MLflow Open Source Project who are hosting the MLflow Model Registry using the `mlflow server` or `mlflow ui` commands using an MLflow version older than MLflow 2.2.1 may be vulnerable to a remote file existence check exploit if they are not limiting who can query their server (for example, by using a cloud VPC, an IP allowlist for inbound requests, or authentication / authorization middleware).
+Werkzeug <= 2.2.2 will parse the cookie `=__Host-test=bad` as `__Host-test=bad`. If a Werkzeug application is running next to a vulnerable or malicious subdomain which sets such a cookie using a vulnerable browser, the Werkzeug application will see the bad cookie value but the valid cookie key.",8
+100,CVE-2023-24816,"['CWE-20', 'CWE-78']",low,IPython vulnerable to command injection via set_term_title,"IPython provides an interactive Python shell and Jupyter kernel to use Python interactively. Versions prior to 8.10.0 are vulnerable to command injection in the `set_term_title` [function](https://github.com/ipython/ipython/blob/3f0bf05f072a91b2a3042d23ce250e5e906183fd/IPython/utils/terminal.py#L103-L117) under specific conditions. This has been patched in version 8.10.0.
 
-This issue only affects users and integrations that run the `mlflow server` and `mlflow ui` commands. Integrations that do not make use of `mlflow server` or `mlflow ui` are unaffected; for example, the Databricks Managed MLflow product and MLflow on Azure Machine Learning do not make use of these commands and are not impacted by these vulnerabilities in any way.
-
-The vulnerability detailed in https://nvd.nist.gov/vuln/detail/CVE-2023-1176 enables an actor to check the existence of arbitrary files unrelated to MLflow from the host server, including any files stored in remote locations to which the host server has access.
-
-### Patches
-This vulnerability has been patched in MLflow 2.2.1, which was released to PyPI on March 2nd, 2023. If you are using `mlflow server` or `mlflow ui` with the MLflow Model Registry, we recommend upgrading to MLflow 2.2.1 as soon as possible.
-
-### Workarounds
-If you are using the MLflow open source `mlflow server` or `mlflow ui` commands, we strongly recommend limiting who can access your MLflow Model Registry and MLflow Tracking servers using a cloud VPC, an IP allowlist for inbound requests, authentication / authorization middleware, or another access restriction mechanism of your choosing.
-
-If you are using the MLflow open source `mlflow server` or `mlflow ui` commands, we also strongly recommend limiting the remote files to which your MLflow Model Registry and MLflow Tracking servers have access. For example, if your MLflow Model Registry or MLflow Tracking server uses cloud-hosted blob storage for MLflow artifacts, make sure to restrict the scope of your server's cloud credentials such that it can only access files and directories related to MLflow.
-
-### References
-More information about the vulnerability is available at https://nvd.nist.gov/vuln/detail/CVE-2023-1176.",1
-103,CVE-2023-23934,['CWE-20'],low,Incorrect parsing of nameless cookies leads to __Host- cookies bypass,"Browsers may allow ""nameless"" cookies that look like `=value` instead of `key=value`. A vulnerable browser may allow a compromised application on an adjacent subdomain to exploit this to set a cookie like `=__Host-test=bad` for another subdomain.
-
-Werkzeug <= 2.2.2 will parse the cookie `=__Host-test=bad` as `__Host-test=bad`. If a Werkzeug application is running next to a vulnerable or malicious subdomain which sets such a cookie using a vulnerable browser, the Werkzeug application will see the bad cookie value but the valid cookie key.",9
-104,CVE-2023-26112,['CWE-1333'],low,configobj ReDoS exploitable by developer using values in a server-side configuration file,"All versions of the package configobj are vulnerable to Regular Expression Denial of Service (ReDoS) via the validate function, using (.+?)\((.*)\). **Note:** This is only exploitable in the case of a developer, putting the offending value in a server side configuration file.",1
-105,CVE-2023-28858,['CWE-193'],low,redis-py Race Condition vulnerability,"redis-py before 4.5.3, as used in ChatGPT and other products, leaves a connection open after canceling an async Redis command at an inopportune time (in the case of a pipeline operation), and can send response data to the client of an unrelated request in an off-by-one manner. The fixed versions for this CVE Record are 4.3.6, 4.4.3, and 4.5.3, but [are believed to be incomplete](https://github.com/redis/redis-py/issues/2665). CVE-2023-28859 has been assigned the issues caused by the incomplete fixes.",2
-106,CVE-2023-29159,['CWE-22'],low,Starlette has Path Traversal vulnerability in StaticFiles,"### Summary
-When using `StaticFiles`, if there's a file or directory that starts with the same name as the `StaticFiles` directory, that file or directory is also exposed via `StaticFiles` which is a path traversal vulnerability.
-
-### Details
-The root cause of this issue is the usage of `os.path.commonprefix()`:
-https://github.com/encode/starlette/blob/4bab981d9e870f6cee1bd4cd59b87ddaf355b2dc/starlette/staticfiles.py#L172-L174
-
-As stated in the Python documentation (https://docs.python.org/3/library/os.path.html#os.path.commonprefix) this function returns the longest prefix common to paths.
-
-When passing a path like `/static/../static1.txt`, `os.path.commonprefix([full_path, directory])` returns `./static` which is the common part of `./static1.txt` and `./static`, It refers to `/static/../static1.txt` because it is considered in the staticfiles directory. As a result, it becomes possible to view files that should not be open to the public.
-
-The solution is to use `os.path.commonpath` as the Python documentation explains that `os.path.commonprefix` works a character at a time, it does not treat the arguments as paths.
-
-### PoC
-In order to reproduce the issue, you need to create the following structure:
-
-```
-├── static
-│   ├── index.html
-├── static_disallow
-│   ├── index.html
-└── static1.txt
-```
-
-And run the `Starlette` app with:
-
-```py
-import uvicorn
-from starlette.applications import Starlette
-from starlette.routing import Mount
-from starlette.staticfiles import StaticFiles
-
-
-routes = [
-    Mount(""/static"", app=StaticFiles(directory=""static"", html=True), name=""static""),
-]
-
-app = Starlette(routes=routes)
-
-
-if __name__ == ""__main__"":
-    uvicorn.run(app, host=""0.0.0.0"", port=8000)
-```
-
-And running the commands:
-
-```shell
-curl --path-as-is 'localhost:8000/static/../static_disallow/'
-curl --path-as-is 'localhost:8000/static/../static1.txt'
-```
-The `static1.txt` and the directory `static_disallow` are exposed.
-
-### Impact
-Confidentiality is breached: An attacker may obtain files that should not be open to the public.
-
-### Credits
-Security researcher **Masashi Yamane of LAC Co., Ltd** reported this vulnerability to **JPCERT/CC Vulnerability Coordination Group** and they contacted us to coordinate a patch for the security issue.
-",2
-107,CVE-2023-34110,['CWE-209'],low,Flask-AppBuilder vulnerable to possible disclosure of sensitive information on user error,"### Impact
-An authenticated malicious actor with Admin privileges, could by adding a special character on the add, edit User forms trigger a database error, this error is surfaced back to this actor on the UI. On certain database engines this error can include the entire user row including the pbkdf2:sha256 hashed password.
- 
-### Patches
-Fixed on 4.3.2
-",1
-108,CVE-2024-0243,['CWE-918'],low,langchain Server-Side Request Forgery vulnerability,"With the following crawler configuration:
+### Impact 
+Users are only vulnerable when calling this function in Windows in a Python environment where [ctypes](https://docs.python.org/3/library/ctypes.html) is not available. The dependency on ctypes in `IPython.utils._process_win32` prevents the vulnerable code from ever being reached (making it effectively dead code). However, as a library that could be used by another tool, `set_term_title` could introduce a vulnerability for dependencies. Currently `set_term_title` is only called with (semi-)trusted input that contain the current working directory of the current IPython session. If an attacker can control directory names, and manage to get a user to `cd` into this directory, then the attacker can execute arbitrary commands contained in the folder names.",7
+101,CVE-2023-26112,['CWE-1333'],low,configobj ReDoS exploitable by developer using values in a server-side configuration file,"All versions of the package configobj are vulnerable to Regular Expression Denial of Service (ReDoS) via the validate function, using (.+?)\((.*)\). **Note:** This is only exploitable in the case of a developer, putting the offending value in a server side configuration file.",1
+102,CVE-2024-0243,['CWE-918'],low,langchain Server-Side Request Forgery vulnerability,"With the following crawler configuration:
 
 ```python
 from bs4 import BeautifulSoup as Soup
@@ -3715,8 +3583,17 @@ An attacker in control of the contents of `https://example.com` could place a ma
 https://github.com/langchain-ai/langchain/blob/bf0b3cc0b5ade1fb95a5b1b6fa260e99064c2e22/libs/community/langchain_community/document_loaders/recursive_url_loader.py#L51-L51
 
 Resolved in https://github.com/langchain-ai/langchain/pull/15559",1
-109,CVE-2024-28088,[],low,LangChain directory traversal vulnerability,"LangChain through 0.1.10 allows ../ directory traversal by an actor who is able to control the final part of the path parameter in a load_chain call. This bypasses the intended behavior of loading configurations only from the hwchase17/langchain-hub GitHub repository. The outcome can be disclosure of an API key for a large language model online service, or remote code execution.",1
-110,CVE-2024-34062,['CWE-74'],low,tqdm CLI arguments injection attack,"### Impact
+103,CVE-2024-25142,['CWE-525'],low,"Apache Airflow does not return the ""Cache-Control"" header for dynamic content","Use of Web Browser Cache Containing Sensitive Information vulnerability in Apache Airflow. 
+
+Airflow did not return ""Cache-Control"" header for dynamic content, which in case of some browsers could result in potentially storing sensitive data in local cache of the browser.
+
+This issue affects Apache Airflow: before 2.9.2.
+
+Users are recommended to upgrade to version 2.9.2, which fixes the issue.
+
+",1
+104,CVE-2024-28088,[],low,LangChain directory traversal vulnerability,"LangChain through 0.1.10 allows ../ directory traversal by an actor who is able to control the final part of the path parameter in a load_chain call. This bypasses the intended behavior of loading configurations only from the hwchase17/langchain-hub GitHub repository. The outcome can be disclosure of an API key for a large language model online service, or remote code execution.",1
+105,CVE-2024-34062,['CWE-74'],low,tqdm CLI arguments injection attack,"### Impact
 Any optional non-boolean CLI arguments (e.g. `--delim`, `--buf-size`, `--manpath`) are passed through python's `eval`, allowing arbitrary code execution. Example:
 
 ```sh
@@ -3730,5 +3607,67 @@ https://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316 rel
 None
 
 ### References
-- https://github.com/tqdm/tqdm/releases/tag/v4.66.3",18
-111,CVE-2024-3568,['CWE-502'],low,Transformers Deserialization of Untrusted Data vulnerability,"The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",41
+- https://github.com/tqdm/tqdm/releases/tag/v4.66.3",17
+106,CVE-2024-3568,['CWE-502'],low,Transformers Deserialization of Untrusted Data vulnerability,"The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",41
+107,CVE-2024-39689,['CWE-345'],low,Certifi removes GLOBALTRUST root certificate,"Certifi 2024.07.04 removes root certificates from ""GLOBALTRUST"" from the root store. These are in the process of being removed from Mozilla's trust store.
+
+GLOBALTRUST's root certificates are being removed pursuant to an investigation which identified ""long-running and unresolved compliance issues"". Conclusions of Mozilla's investigation can be found [here]( https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/XpknYMPO8dI).",32
+108,CVE-2024-40647,['CWE-200'],low,Sentry's Python SDK unintentionally exposes environment variables to subprocesses,"### Impact
+
+The bug in Sentry's Python SDK <2.8.0 results in the unintentional exposure of environment variables to subprocesses despite the `env={}` setting.
+
+### Details
+
+In Python's `subprocess` calls, all environment variables are passed to subprocesses by default. However, if you specifically do not want them to be passed to subprocesses, you may use `env` argument in `subprocess` calls, like in this example:
+
+```
+>>> subprocess.check_output([""env""], env={""TEST"":""1""})
+b'TEST=1\n'
+```
+
+If you'd want to not pass any variables, you can set an empty dict:
+
+```
+>>> subprocess.check_output([""env""], env={})
+b''
+```
+
+However, the bug in Sentry SDK <2.8.0 causes **all environment variables** to be passed to the subprocesses when `env={}` is set, unless the Sentry SDK's [Stdlib](https://docs.sentry.io/platforms/python/integrations/default-integrations/#stdlib) integration is disabled. The Stdlib integration is enabled by default.
+
+### Patches
+The issue has been patched in https://github.com/getsentry/sentry-python/pull/3251 and the fix released in [sentry-sdk==2.8.0](https://github.com/getsentry/sentry-python/releases/tag/2.8.0). The fix was also backported to [sentry-sdk==1.45.1](https://github.com/getsentry/sentry-python/releases/tag/1.45.1).
+
+### Workarounds
+
+We strongly recommend upgrading to the latest SDK version. However, if it's not possible, and if passing environment variables to child processes poses a security risk for you, there are two options:
+
+1. In your application, replace `env={}` with the minimal dict `env={""EMPTY_ENV"":""1""}` or similar.
+
+OR
+
+2. Disable Stdlib integration:
+```
+import sentry_sdk
+
+# Should go before sentry_sdk.init
+sentry_sdk.integrations._DEFAULT_INTEGRATIONS.remove(""sentry_sdk.integrations.stdlib.StdlibIntegration"")
+
+sentry_sdk.init(...)
+```
+
+### References
+* Sentry docs: [Default integrations](https://docs.sentry.io/platforms/python/integrations/default-integrations/)
+* Python docs: [subprocess module](https://docs.python.org/3/library/subprocess.html)
+* Patch https://github.com/getsentry/sentry-python/pull/3251 
+",4
+109,CVE-2024-47168,['CWE-670'],low,"In Gradio, the `enable_monitoring` flag set to `False` does not disable monitoring","### Impact
+What kind of vulnerability is it? Who is impacted?
+
+This vulnerability involves data exposure due to the enable_monitoring flag not properly disabling monitoring when set to False. Even when monitoring is supposedly disabled, an attacker or unauthorized user can still access the monitoring dashboard by directly requesting the /monitoring endpoint. This means that sensitive application analytics may still be exposed, particularly in environments where monitoring is expected to be disabled. Users who set enable_monitoring=False to prevent unauthorized access to monitoring data are impacted.
+
+### Patches
+Yes, please upgrade to gradio>=4.44 to address this issue.
+
+",4
+110,CVE-2024-50378,['CWE-201'],low,Apache Airflow vulnerable to Insertion of Sensitive Information Into Sent Data,"Airflow versions before 2.10.3 have a vulnerability that allows authenticated users with audit log access to see sensitive values in audit logs which they should not see. When sensitive variables were set via airflow CLI, values of those variables appeared in the audit log and were stored unencrypted in the Airflow database. While this risk is limited to users with audit log access, it is recommended to upgrade to Airflow 2.10.3 or a later version, which addresses this issue. Users who previously used the CLI to set secret variables should manually delete entries with those variables from the log table.",1
+111,CVE-2024-8309,"['CWE-74', 'CWE-89']",low,Langchain SQL Injection vulnerability,"A vulnerability in the GraphCypherQAChain class of langchain-ai/langchain version 0.2.5 allows for SQL injection through prompt injection. This vulnerability can lead to unauthorized data manipulation, data exfiltration, denial of service (DoS) by deleting all data, breaches in multi-tenant security environments, and data integrity issues. Attackers can create, update, or delete nodes and relationships without proper authorization, extract sensitive data, disrupt services, access data across different tenants, and compromise the integrity of the database.",2

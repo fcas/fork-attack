@@ -1,881 +1,921 @@
 ,nature,type,id,description,cwe_counts
-0,CanFollow,base,1257,Improper Access Control Applied to Mirrored or Aliased Memory Regions,54
-1,CanFollow,base,1260,Improper Handling of Overlap Between Protected Memory Ranges,54
-2,CanFollow,base,1265,Unintended Reentrant Invocation of Non-reentrant Code Via Nested Calls,24
-3,CanFollow,base,1272,Sensitive Information Uncleared Before Debug/Power State Transition,119
-4,CanFollow,base,128,Wrap-around Error,54
-5,CanFollow,base,1282,Assumed-Immutable Data is Stored in Writable Memory,4
-6,CanFollow,base,131,Incorrect Calculation of Buffer Size,54
-7,CanFollow,base,1322,"Use of Blocking Code in Single-threaded, Non-blocking Context",35
-8,CanFollow,base,1325,Improperly Controlled Sequential Memory Allocation,467
-9,CanFollow,base,1339,Insufficient Precision or Accuracy of a Real Number,54
-10,CanFollow,base,170,Improper Null Termination,143
-11,CanFollow,base,183,Permissive List of Allowed Inputs,15
-12,CanFollow,base,184,Incomplete List of Disallowed Inputs,162
-13,CanFollow,base,190,Integer Overflow or Wraparound,54
-14,CanFollow,base,193,Off-by-one Error,670
-15,CanFollow,base,208,Observable Timing Discrepancy,29
-16,CanFollow,base,252,Unchecked Return Value,467
-17,CanFollow,base,364,Signal Handler Race Condition,42
-18,CanFollow,base,390,Detection of Error Condition Without Action,20
-19,CanFollow,base,410,Insufficient Resource Pool,205
-20,CanFollow,base,425,Direct Request ('Forced Browsing'),4
-21,CanFollow,base,489,Active Debug Code,10
-22,CanFollow,base,609,Double-Checked Locking,14
-23,CanFollow,base,613,Insufficient Session Expiration,2
-24,CanFollow,base,681,Incorrect Conversion between Numeric Types,9
-25,CanFollow,base,73,External Control of File Name or Path,142
-26,CanFollow,base,756,Missing Custom Error Page,54
-27,CanFollow,base,822,Untrusted Pointer Dereference,810
-28,CanFollow,base,823,Use of Out-of-range Pointer Offset,810
-29,CanFollow,base,824,Access of Uninitialized Pointer,810
-30,CanFollow,base,825,Expired Pointer Dereference,810
-31,CanFollow,base,839,Numeric Range Comparison Without Minimum Check,63
-32,CanFollow,base,843,Access of Resource Using Incompatible Type ('Type Confusion'),54
-33,CanFollow,base,93,Improper Neutralization of CRLF Sequences ('CRLF Injection'),7
-34,CanFollow,class,116,Improper Encoding or Escaping of Output,30
-35,CanFollow,class,172,Encoding Error,127
-36,CanFollow,class,20,Improper Input Validation,246
-37,CanFollow,class,340,Generation of Predictable Numbers or Identifiers,1
-38,CanFollow,class,362,Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition'),491
-39,CanFollow,class,441,Unintended Proxy or Intermediary ('Confused Deputy'),14
-40,CanFollow,class,602,Client-Side Enforcement of Server-Side Security,4
-41,CanFollow,class,662,Improper Synchronization,6
-42,CanFollow,class,754,Improper Check for Unusual or Exceptional Conditions,24
-43,CanFollow,class,909,Missing Initialization of Resource,58
-44,CanFollow,variant,113,Improper Neutralization of CRLF Sequences in HTTP Headers ('HTTP Request/Response Splitting'),119
-45,CanFollow,variant,1275,Sensitive Cookie with Improper SameSite Attribute,28
-46,CanFollow,variant,129,Improper Validation of Array Index,54
-47,CanFollow,variant,1321,Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution'),4
-48,CanFollow,variant,195,Signed to Unsigned Conversion Error,54
-49,CanFollow,variant,231,Improper Handling of Extra Values,143
-50,CanFollow,variant,416,Use After Free,143
-51,CanFollow,variant,456,Missing Initialization of a Variable,154
-52,CanFollow,variant,481,Assigning instead of Comparing,82
-53,CanFollow,variant,498,Cloneable Class Containing Sensitive Information,119
-54,CanFollow,variant,499,Serializable Class Containing Sensitive Data,119
-55,CanFollow,variant,600,Uncaught Exception in Servlet,54
-56,CanFollow,variant,621,Variable Extraction Error,4
-57,CanFollow,variant,789,Memory Allocation with Excessive Size Value,467
-58,CanFollow,variant,942,Permissive Cross-domain Policy with Untrusted Domains,14
-59,CanFollow,variant,98,Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion'),50
-60,CanPrecede,base,117,Improper Output Neutralization for Logs,1
-61,CanPrecede,base,120,Buffer Copy without Checking Size of Input ('Classic Buffer Overflow'),24
-62,CanPrecede,base,123,Write-what-where Condition,172
-63,CanPrecede,base,125,Out-of-bounds Read,99
-64,CanPrecede,base,170,Improper Null Termination,17
-65,CanPrecede,base,182,Collapse of Data into Unsafe Value,2
-66,CanPrecede,base,215,Insertion of Sensitive Information Into Debugging Code,10
-67,CanPrecede,base,22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),683
-68,CanPrecede,base,289,Authentication Bypass by Alternate Name,6
-69,CanPrecede,base,385,Covert Timing Channel,9
-70,CanPrecede,base,41,Improper Resolution of Path Equivalence,683
-71,CanPrecede,base,434,Unrestricted Upload of File with Dangerous Type,38
-72,CanPrecede,base,471,Modification of Assumed-Immutable Data (MAID),3
-73,CanPrecede,base,476,NULL Pointer Dereference,14
-74,CanPrecede,base,494,Download of Code Without Integrity Check,119
-75,CanPrecede,base,59,Improper Link Resolution Before File Access ('Link Following'),38
-76,CanPrecede,base,617,Reachable Assertion,8
-77,CanPrecede,base,770,Allocation of Resources Without Limits or Throttling,645
-78,CanPrecede,base,787,Out-of-bounds Write,99
-79,CanPrecede,class,119,Improper Restriction of Operations within the Bounds of a Memory Buffer,1032
-80,CanPrecede,class,327,Use of a Broken or Risky Cryptographic Algorithm,9
-81,CanPrecede,class,362,Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition'),9
-82,CanPrecede,class,74,Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'),662
-83,CanPrecede,pillar,682,Incorrect Calculation,47
-84,CanPrecede,variant,187,Partial String Comparison,2
-85,CanPrecede,variant,416,Use After Free,81
-86,CanPrecede,variant,789,Memory Allocation with Excessive Size Value,66
-87,CanPrecede,variant,98,Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion'),41
-88,ChildOf,base,1341,Multiple Releases of Same Resource or Handle,18
-89,ChildOf,base,201,Insertion of Sensitive Information Into Sent Data,4
-90,ChildOf,base,203,Observable Discrepancy,9
-91,ChildOf,base,22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),246
-92,ChildOf,base,23,Relative Path Traversal,37
-93,ChildOf,base,288,Authentication Bypass Using an Alternate Path or Channel,3
-94,ChildOf,base,312,Cleartext Storage of Sensitive Information,19
-95,ChildOf,base,328,Use of Weak Hash,12
-96,ChildOf,base,538,Insertion of Sensitive Information into Externally-Accessible File or Directory,35
-97,ChildOf,base,552,Files or Directories Accessible to External Parties,16
-98,ChildOf,base,681,Incorrect Conversion between Numeric Types,9
-99,ChildOf,base,772,Missing Release of Resource after Effective Lifetime,20
-100,ChildOf,base,787,Out-of-bounds Write,29
-101,ChildOf,base,788,Access of Memory Location After End of Buffer,29
-102,ChildOf,base,79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),4
-103,ChildOf,base,825,Expired Pointer Dereference,42
-104,ChildOf,base,94,Improper Control of Generation of Code ('Code Injection'),5
-105,ChildOf,class,116,Improper Encoding or Escaping of Output,7
-106,ChildOf,class,1177,Use of Prohibited Code,18
-107,ChildOf,class,118,Incorrect Access of Indexable Resource ('Range Error'),54
-108,ChildOf,class,119,Improper Restriction of Operations within the Bounds of a Memory Buffer,4208
-109,ChildOf,class,1390,Weak Authentication,3
-110,ChildOf,class,172,Encoding Error,6
-111,ChildOf,class,185,Incorrect Regular Expression,2
-112,ChildOf,class,20,Improper Input Validation,629
-113,ChildOf,class,200,Exposure of Sensitive Information to an Unauthorized Actor,276
-114,ChildOf,class,228,Improper Handling of Syntactically Invalid Structure,6
-115,ChildOf,class,269,Improper Privilege Management,9
-116,ChildOf,class,285,Improper Authorization,5
-117,ChildOf,class,287,Improper Authentication,21
-118,ChildOf,class,311,Missing Encryption of Sensitive Data,100
-119,ChildOf,class,326,Inadequate Encryption Strength,11
-120,ChildOf,class,327,Use of a Broken or Risky Cryptographic Algorithm,23
-121,ChildOf,class,330,Use of Insufficiently Random Values,2
-122,ChildOf,class,345,Insufficient Verification of Data Authenticity,76
-123,ChildOf,class,362,Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition'),28
-124,ChildOf,class,400,Uncontrolled Resource Consumption,70
-125,ChildOf,class,404,Improper Resource Shutdown or Release,44
-126,ChildOf,class,405,Asymmetric Resource Consumption (Amplification),10
-127,ChildOf,class,407,Inefficient Algorithmic Complexity,186
-128,ChildOf,class,424,Improper Protection of Alternate Path,3
-129,ChildOf,class,436,Interpretation Conflict,28
-130,ChildOf,class,441,Unintended Proxy or Intermediary ('Confused Deputy'),22
-131,ChildOf,class,514,Covert Channel,3
-132,ChildOf,class,573,Improper Following of Specification by Caller,17
-133,ChildOf,class,610,Externally Controlled Reference to a Resource in Another Sphere,130
-134,ChildOf,class,642,External Control of Critical State Data,48
-135,ChildOf,class,657,Violation of Secure Design Principles,9
-136,ChildOf,class,662,Improper Synchronization,36
-137,ChildOf,class,665,Improper Initialization,151
-138,ChildOf,class,666,Operation on Resource in Wrong Phase of Lifetime,18
-139,ChildOf,class,668,Exposure of Resource to Wrong Sphere,332
-140,ChildOf,class,669,Incorrect Resource Transfer Between Spheres,30
-141,ChildOf,class,670,Always-Incorrect Control Flow Implementation,1232
-142,ChildOf,class,672,Operation on a Resource after Expiration or Release,126
-143,ChildOf,class,673,External Influence of Sphere Definition,10
-144,ChildOf,class,684,Incorrect Provision of Specified Functionality,6
-145,ChildOf,class,704,Incorrect Type Conversion or Cast,202
-146,ChildOf,class,705,Incorrect Control Flow Scoping,1
-147,ChildOf,class,706,Use of Incorrectly-Resolved Name or Reference,254
-148,ChildOf,class,732,Incorrect Permission Assignment for Critical Resource,6
-149,ChildOf,class,74,Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'),533
-150,ChildOf,class,754,Improper Check for Unusual or Exceptional Conditions,960
-151,ChildOf,class,755,Improper Handling of Exceptional Conditions,55
-152,ChildOf,class,77,Improper Neutralization of Special Elements used in a Command ('Command Injection'),84
-153,ChildOf,class,799,Improper Control of Interaction Frequency,1
-154,ChildOf,class,834,Excessive Iteration,97
-155,ChildOf,class,862,Missing Authorization,6
-156,ChildOf,class,913,Improper Control of Dynamically-Managed Code Resources,476
-157,ChildOf,class,922,Insecure Storage of Sensitive Information,50
-158,ChildOf,class,943,Improper Neutralization of Special Elements in Data Query Logic,11
-159,ChildOf,pillar,284,Improper Access Control,20
-160,ChildOf,pillar,664,Improper Control of a Resource Through its Lifetime,287
-161,ChildOf,pillar,682,Incorrect Calculation,2194
-162,ChildOf,pillar,691,Insufficient Control Flow Management,80
-163,ChildOf,pillar,693,Protection Mechanism Failure,64
-164,ChildOf,pillar,697,Incorrect Comparison,2
-165,ChildOf,pillar,703,Improper Check or Handling of Exceptional Conditions,95
-166,ChildOf,pillar,707,Improper Neutralization,692
-167,ChildOf,pillar,710,Improper Adherence to Coding Standards,477
-168,MemberOf,category,1001,SFP Secondary Cluster: Use of an Improper API,640
-169,MemberOf,category,1002,SFP Secondary Cluster: Unexpected Entry Points,10
-170,MemberOf,category,1005,7PK - Input Validation and Representation,869
-171,MemberOf,category,1006,Bad Coding Practices,10
-172,MemberOf,category,1009,Audit,42
-173,MemberOf,category,1010,Authenticate Actors,17
-174,MemberOf,category,1011,Authorize Actors,156
-175,MemberOf,category,1012,Cross Cutting,84
-176,MemberOf,category,1013,Encrypt Data,109
-177,MemberOf,category,1014,Identify Actors,45
-178,MemberOf,category,1015,Limit Access,105
-179,MemberOf,category,1018,Manage User Sessions,1
-180,MemberOf,category,1019,Validate Inputs,1254
-181,MemberOf,category,1020,Verify Message Integrity,28
-182,MemberOf,category,1027,OWASP Top Ten 2017 Category A1 - Injection,96
-183,MemberOf,category,1028,OWASP Top Ten 2017 Category A2 - Broken Authentication,5
-184,MemberOf,category,1029,OWASP Top Ten 2017 Category A3 - Sensitive Data Exposure,144
-185,MemberOf,category,1030,OWASP Top Ten 2017 Category A4 - XML External Entities (XXE),3
-186,MemberOf,category,1031,OWASP Top Ten 2017 Category A5 - Broken Access Control,140
-187,MemberOf,category,1032,OWASP Top Ten 2017 Category A6 - Security Misconfiguration,54
-188,MemberOf,category,1033,OWASP Top Ten 2017 Category A7 - Cross-Site Scripting (XSS),119
-189,MemberOf,category,1034,OWASP Top Ten 2017 Category A8 - Insecure Deserialization,212
-190,MemberOf,category,1129,CISQ Quality Measures (2016) - Reliability,200
-191,MemberOf,category,1131,CISQ Quality Measures (2016) - Security,610
-192,MemberOf,category,1134,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 00. Input Validation and Data Sanitization (IDS),67
-193,MemberOf,category,1135,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 01. Declarations and Initialization (DCL),32
-194,MemberOf,category,1136,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 02. Expressions (EXP),475
-195,MemberOf,category,1137,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 03. Numeric Types and Operations (NUM),656
-196,MemberOf,category,1140,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 06. Methods (MET),698
-197,MemberOf,category,1141,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 07. Exceptional Behavior (ERR),78
-198,MemberOf,category,1142,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 08. Visibility and Atomicity (VNA),24
-199,MemberOf,category,1143,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 09. Locking (LCK),9
-200,MemberOf,category,1147,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 13. Input Output (FIO),181
-201,MemberOf,category,1148,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 14. Serialization (SER),452
-202,MemberOf,category,1152,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 49. Miscellaneous (MSC),286
-203,MemberOf,category,1157,SEI CERT C Coding Standard - Guidelines 03. Expressions (EXP),1136
-204,MemberOf,category,1158,SEI CERT C Coding Standard - Guidelines 04. Integers (INT),758
-205,MemberOf,category,1159,SEI CERT C Coding Standard - Guidelines 05. Floating Point (FLP),59
-206,MemberOf,category,1160,SEI CERT C Coding Standard - Guidelines 06. Arrays (ARR),535
-207,MemberOf,category,1161,SEI CERT C Coding Standard - Guidelines 07. Characters and Strings (STR),747
-208,MemberOf,category,1162,SEI CERT C Coding Standard - Guidelines 08. Memory Management (MEM),389
-209,MemberOf,category,1163,SEI CERT C Coding Standard - Guidelines 09. Input Output (FIO),655
-210,MemberOf,category,1165,SEI CERT C Coding Standard - Guidelines 10. Environment (ENV),46
-211,MemberOf,category,1166,SEI CERT C Coding Standard - Guidelines 11. Signals (SIG),9
-212,MemberOf,category,1167,SEI CERT C Coding Standard - Guidelines 12. Error Handling (ERR),26
-213,MemberOf,category,1169,SEI CERT C Coding Standard - Guidelines 14. Concurrency (CON),81
-214,MemberOf,category,1170,SEI CERT C Coding Standard - Guidelines 48. Miscellaneous (MSC),45
-215,MemberOf,category,1171,SEI CERT C Coding Standard - Guidelines 50. POSIX (POS),19
-216,MemberOf,category,1179,SEI CERT Perl Coding Standard - Guidelines 01. Input Validation and Data Sanitization (IDS),207
-217,MemberOf,category,1181,SEI CERT Perl Coding Standard - Guidelines 03. Expressions (EXP),84
-218,MemberOf,category,1198,Privilege Separation and Access Control Issues,1
-219,MemberOf,category,1205,Security Primitives and Cryptography Issues,11
-220,MemberOf,category,1208,Cross-Cutting Problems,6
-221,MemberOf,category,1210,Audit / Logging Errors,7
-222,MemberOf,category,1211,Authentication Errors,10
-223,MemberOf,category,1212,Authorization Errors,3
-224,MemberOf,category,1213,Random Number Issues,1
-225,MemberOf,category,1214,Data Integrity Issues,10
-226,MemberOf,category,1215,Data Validation Issues,71
-227,MemberOf,category,1218,Memory Buffer Errors,1099
-228,MemberOf,category,1219,File Handling Issues,142
-229,MemberOf,category,1226,Complexity Issues,93
-230,MemberOf,category,1228,API / Function Errors,35
-231,MemberOf,category,1237,SFP Primary Cluster: Faulty Resource Release,18
-232,MemberOf,category,1238,SFP Primary Cluster: Failure to Release Memory,20
-233,MemberOf,category,1306,CISQ Quality Measures - Reliability,743
-234,MemberOf,category,1308,CISQ Quality Measures - Security,780
-235,MemberOf,category,133,String Errors,5
-236,MemberOf,category,1345,OWASP Top Ten 2021 Category A01:2021 - Broken Access Control,535
-237,MemberOf,category,1346,OWASP Top Ten 2021 Category A02:2021 - Cryptographic Failures,50
-238,MemberOf,category,1347,OWASP Top Ten 2021 Category A03:2021 - Injection,1009
-239,MemberOf,category,1348,OWASP Top Ten 2021 Category A04:2021 - Insecure Design,202
-240,MemberOf,category,1349,OWASP Top Ten 2021 Category A05:2021 - Security Misconfiguration,22
-241,MemberOf,category,1353,OWASP Top Ten 2021 Category A07:2021 - Identification and Authentication Failures,13
-242,MemberOf,category,1354,OWASP Top Ten 2021 Category A08:2021 - Software and Data Integrity Failures,262
-243,MemberOf,category,1355,OWASP Top Ten 2021 Category A09:2021 - Security Logging and Monitoring Failures,42
-244,MemberOf,category,1356,OWASP Top Ten 2021 Category A10:2021 - Server-Side Request Forgery (SSRF),22
-245,MemberOf,category,136,Type Errors,101
-246,MemberOf,category,1364,ICS Communications: Zone Boundary Failures,124
-247,MemberOf,category,1365,ICS Communications: Unreliability,17
-248,MemberOf,category,1366,ICS Communications: Frail Security in Protocols,959
-249,MemberOf,category,1368,ICS Dependencies (& Architecture): External Digital Systems,61
-250,MemberOf,category,1369,ICS Supply Chain: IT/OT Convergence/Expansion,9
-251,MemberOf,category,137,Data Neutralization Issues,216
-252,MemberOf,category,1370,ICS Supply Chain: Common Mode Frailties,2
-253,MemberOf,category,1371,ICS Supply Chain: Poorly Documented or Undocumented Features,10
-254,MemberOf,category,1372,ICS Supply Chain: OT Counterfeit and Malicious Corruption,9
-255,MemberOf,category,1373,ICS Engineering (Construction/Deployment): Trust Model Problems,9
-256,MemberOf,category,1376,ICS Engineering (Construction/Deployment): Security Gaps in Commissioning,7
-257,MemberOf,category,1382,ICS Operations (& Maintenance): Emerging Energy Technologies,684
-258,MemberOf,category,1396,Comprehensive Categorization: Access Control,103
-259,MemberOf,category,1397,Comprehensive Categorization: Comparison,86
-260,MemberOf,category,1398,Comprehensive Categorization: Component Interaction,14
-261,MemberOf,category,1399,Comprehensive Categorization: Memory Safety,1282
-262,MemberOf,category,1401,Comprehensive Categorization: Concurrency,29
-263,MemberOf,category,1402,Comprehensive Categorization: Encryption,118
-264,MemberOf,category,1403,Comprehensive Categorization: Exposed Resource,137
-265,MemberOf,category,1404,Comprehensive Categorization: File Handling,246
-266,MemberOf,category,1405,Comprehensive Categorization: Improper Check or Handling of Exceptional Conditions,101
-267,MemberOf,category,1406,Comprehensive Categorization: Improper Input Validation,716
-268,MemberOf,category,1407,Comprehensive Categorization: Improper Neutralization,36
-269,MemberOf,category,1408,Comprehensive Categorization: Incorrect Calculation,614
-270,MemberOf,category,1409,Comprehensive Categorization: Injection,346
-271,MemberOf,category,1410,Comprehensive Categorization: Insufficient Control Flow Management,744
-272,MemberOf,category,1411,Comprehensive Categorization: Insufficient Verification of Data Authenticity,76
-273,MemberOf,category,1412,Comprehensive Categorization: Poor Coding Practices,518
-274,MemberOf,category,1413,Comprehensive Categorization: Protection Mechanism Failure,2
-275,MemberOf,category,1414,Comprehensive Categorization: Randomness,1
-276,MemberOf,category,1415,Comprehensive Categorization: Resource Control,217
-277,MemberOf,category,1416,Comprehensive Categorization: Resource Lifecycle Management,590
-278,MemberOf,category,1417,Comprehensive Categorization: Sensitive Information Exposure,343
-279,MemberOf,category,1418,Comprehensive Categorization: Violation of Secure Design Principles,9
-280,MemberOf,category,189,Numeric Errors,652
-281,MemberOf,category,19,Data Processing Errors,52
-282,MemberOf,category,199,Information Management Errors,224
-283,MemberOf,category,227,7PK - API Abuse,18
-284,MemberOf,category,254,7PK - Security Features,60
-285,MemberOf,category,255,Credentials Management Errors,12
-286,MemberOf,category,265,Privilege Issues,9
-287,MemberOf,category,275,Permission Issues,5
-288,MemberOf,category,310,Cryptographic Issues,24
-289,MemberOf,category,361,7PK - Time and State,69
-290,MemberOf,category,389,"Error Conditions, Return Values, Status Codes",679
-291,MemberOf,category,398,7PK - Code Quality,546
-292,MemberOf,category,399,Resource Management Errors,345
-293,MemberOf,category,417,Communication Channel Errors,28
-294,MemberOf,category,429,Handler Errors,15
-295,MemberOf,category,438,Behavioral Problems,55
-296,MemberOf,category,452,Initialization and Cleanup Errors,2
-297,MemberOf,category,465,Pointer Issues,566
-298,MemberOf,category,485,7PK - Encapsulation,61
-299,MemberOf,category,557,Concurrency Issues,14
-300,MemberOf,category,712,OWASP Top Ten 2007 Category A1 - Cross Site Scripting (XSS),119
-301,MemberOf,category,713,OWASP Top Ten 2007 Category A2 - Injection Flaws,69
-302,MemberOf,category,714,OWASP Top Ten 2007 Category A3 - Malicious File Execution,44
-303,MemberOf,category,715,OWASP Top Ten 2007 Category A4 - Insecure Direct Object Reference,127
-304,MemberOf,category,716,OWASP Top Ten 2007 Category A5 - Cross Site Request Forgery (CSRF),28
-305,MemberOf,category,717,OWASP Top Ten 2007 Category A6 - Information Leakage and Improper Error Handling,194
-306,MemberOf,category,718,OWASP Top Ten 2007 Category A7 - Broken Authentication and Session Management,4
-307,MemberOf,category,721,OWASP Top Ten 2007 Category A10 - Failure to Restrict URL Access,4
-308,MemberOf,category,722,OWASP Top Ten 2004 Category A1 - Unvalidated Input,1009
-309,MemberOf,category,723,OWASP Top Ten 2004 Category A2 - Broken Access Control,178
-310,MemberOf,category,724,OWASP Top Ten 2004 Category A3 - Broken Authentication and Session Management,44
-311,MemberOf,category,725,OWASP Top Ten 2004 Category A4 - Cross-Site Scripting (XSS) Flaws,119
-312,MemberOf,category,726,OWASP Top Ten 2004 Category A5 - Buffer Overflows,202
-313,MemberOf,category,727,OWASP Top Ten 2004 Category A6 - Injection Flaws,134
-314,MemberOf,category,728,OWASP Top Ten 2004 Category A7 - Improper Error Handling,73
-315,MemberOf,category,729,OWASP Top Ten 2004 Category A8 - Insecure Storage,46
-316,MemberOf,category,730,OWASP Top Ten 2004 Category A9 - Denial of Service,1052
-317,MemberOf,category,731,OWASP Top Ten 2004 Category A10 - Insecure Configuration Management,118
-318,MemberOf,category,737,CERT C Secure Coding Standard (2008) Chapter 4 - Expressions (EXP),489
-319,MemberOf,category,738,CERT C Secure Coding Standard (2008) Chapter 5 - Integers (INT),1299
-320,MemberOf,category,739,CERT C Secure Coding Standard (2008) Chapter 6 - Floating Point (FLP),388
-321,MemberOf,category,740,CERT C Secure Coding Standard (2008) Chapter 7 - Arrays (ARR),86
-322,MemberOf,category,741,CERT C Secure Coding Standard (2008) Chapter 8 - Characters and Strings (STR),255
-323,MemberOf,category,742,CERT C Secure Coding Standard (2008) Chapter 9 - Memory Management (MEM),1648
-324,MemberOf,category,743,CERT C Secure Coding Standard (2008) Chapter 10 - Input Output (FIO),229
-325,MemberOf,category,744,CERT C Secure Coding Standard (2008) Chapter 11 - Environment (ENV),92
-326,MemberOf,category,745,CERT C Secure Coding Standard (2008) Chapter 12 - Signals (SIG),9
-327,MemberOf,category,746,CERT C Secure Coding Standard (2008) Chapter 13 - Error Handling (ERR),663
-328,MemberOf,category,747,CERT C Secure Coding Standard (2008) Chapter 14 - Miscellaneous (MSC),749
-329,MemberOf,category,748,CERT C Secure Coding Standard (2008) Appendix - POSIX (POS),11
-330,MemberOf,category,751,2009 Top 25 - Insecure Interaction Between Components,908
-331,MemberOf,category,752,2009 Top 25 - Risky Resource Management,193
-332,MemberOf,category,753,2009 Top 25 - Porous Defenses,36
-333,MemberOf,category,801,2010 Top 25 - Insecure Interaction Between Components,292
-334,MemberOf,category,802,2010 Top 25 - Risky Resource Management,705
-335,MemberOf,category,803,2010 Top 25 - Porous Defenses,29
-336,MemberOf,category,808,2010 Top 25 - Weaknesses On the Cusp,554
-337,MemberOf,category,810,OWASP Top Ten 2010 Category A1 - Injection,39
-338,MemberOf,category,811,OWASP Top Ten 2010 Category A2 - Cross-Site Scripting (XSS),119
-339,MemberOf,category,812,OWASP Top Ten 2010 Category A3 - Broken Authentication and Session Management,5
-340,MemberOf,category,813,OWASP Top Ten 2010 Category A4 - Insecure Direct Object References,184
-341,MemberOf,category,814,OWASP Top Ten 2010 Category A5 - Cross-Site Request Forgery(CSRF),28
-342,MemberOf,category,815,OWASP Top Ten 2010 Category A6 - Security Misconfiguration,63
-343,MemberOf,category,816,OWASP Top Ten 2010 Category A7 - Insecure Cryptographic Storage,76
-344,MemberOf,category,817,OWASP Top Ten 2010 Category A8 - Failure to Restrict URL Access,6
-345,MemberOf,category,819,OWASP Top Ten 2010 Category A10 - Unvalidated Redirects and Forwards,31
-346,MemberOf,category,840,Business Logic Errors,35
-347,MemberOf,category,845,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 2 - Input Validation and Data Sanitization (IDS),60
-348,MemberOf,category,846,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 3 - Declarations and Initialization (DCL),32
-349,MemberOf,category,847,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 4 - Expressions (EXP),8
-350,MemberOf,category,848,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 5 - Numeric Types and Operations (NUM),382
-351,MemberOf,category,850,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 7 - Methods (MET),616
-352,MemberOf,category,851,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 8 - Exceptional Behavior (ERR),106
-353,MemberOf,category,852,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 9 - Visibility and Atomicity (VNA),24
-354,MemberOf,category,853,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 10 - Locking (LCK),9
-355,MemberOf,category,857,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 14 - Input Output (FIO),181
-356,MemberOf,category,858,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 15 - Serialization (SER),461
-357,MemberOf,category,861,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 18 - Miscellaneous (MSC),260
-358,MemberOf,category,864,2011 Top 25 - Insecure Interaction Between Components,232
-359,MemberOf,category,865,2011 Top 25 - Risky Resource Management,618
-360,MemberOf,category,866,2011 Top 25 - Porous Defenses,43
-361,MemberOf,category,867,2011 Top 25 - Weaknesses On the Cusp,684
-362,MemberOf,category,871,CERT C++ Secure Coding Section 03 - Expressions (EXP),467
-363,MemberOf,category,872,CERT C++ Secure Coding Section 04 - Integers (INT),1299
-364,MemberOf,category,873,CERT C++ Secure Coding Section 05 - Floating Point Arithmetic (FLP),388
-365,MemberOf,category,874,CERT C++ Secure Coding Section 06 - Arrays and the STL (ARR),86
-366,MemberOf,category,875,CERT C++ Secure Coding Section 07 - Characters and Strings (STR),255
-367,MemberOf,category,876,CERT C++ Secure Coding Section 08 - Memory Management (MEM),1683
-368,MemberOf,category,877,CERT C++ Secure Coding Section 09 - Input Output (FIO),302
-369,MemberOf,category,878,CERT C++ Secure Coding Section 10 - Environment (ENV),92
-370,MemberOf,category,879,CERT C++ Secure Coding Section 11 - Signals (SIG),9
-371,MemberOf,category,880,CERT C++ Secure Coding Section 12 - Exceptions and Error Handling (ERR),198
-372,MemberOf,category,882,CERT C++ Secure Coding Section 14 - Concurrency (CON),6
-373,MemberOf,category,883,CERT C++ Secure Coding Section 49 - Miscellaneous (MSC),792
-374,MemberOf,category,901,SFP Primary Cluster: Privilege,18
-375,MemberOf,category,905,SFP Primary Cluster: Predictability,1
-376,MemberOf,category,929,OWASP Top Ten 2013 Category A1 - Injection,126
-377,MemberOf,category,930,OWASP Top Ten 2013 Category A2 - Broken Authentication and Session Management,5
-378,MemberOf,category,931,OWASP Top Ten 2013 Category A3 - Cross-Site Scripting (XSS),119
-379,MemberOf,category,932,OWASP Top Ten 2013 Category A4 - Insecure Direct Object References,164
-380,MemberOf,category,933,OWASP Top Ten 2013 Category A5 - Security Misconfiguration,64
-381,MemberOf,category,934,OWASP Top Ten 2013 Category A6 - Sensitive Data Exposure,87
-382,MemberOf,category,935,OWASP Top Ten 2013 Category A7 - Missing Function Level Access Control,1
-383,MemberOf,category,936,OWASP Top Ten 2013 Category A8 - Cross-Site Request Forgery (CSRF),28
-384,MemberOf,category,938,OWASP Top Ten 2013 Category A10 - Unvalidated Redirects and Forwards,31
-385,MemberOf,category,944,SFP Secondary Cluster: Access Management,9
-386,MemberOf,category,945,SFP Secondary Cluster: Insecure Resource Access,1
-387,MemberOf,category,946,SFP Secondary Cluster: Insecure Resource Permissions,5
-388,MemberOf,category,947,SFP Secondary Cluster: Authentication Bypass,2
-389,MemberOf,category,949,SFP Secondary Cluster: Faulty Endpoint Authentication,38
-390,MemberOf,category,952,SFP Secondary Cluster: Missing Authentication,2
-391,MemberOf,category,953,SFP Secondary Cluster: Missing Endpoint Authentication,3
-392,MemberOf,category,955,SFP Secondary Cluster: Unrestricted Authentication,1
-393,MemberOf,category,958,SFP Secondary Cluster: Broken Cryptography,37
-394,MemberOf,category,962,SFP Secondary Cluster: Unchecked Status Condition,134
-395,MemberOf,category,963,SFP Secondary Cluster: Exposed Data,381
-396,MemberOf,category,964,SFP Secondary Cluster: Exposure Temporary File,54
-397,MemberOf,category,967,SFP Secondary Cluster: State Disclosure,20
-398,MemberOf,category,968,SFP Secondary Cluster: Covert Channel,3
-399,MemberOf,category,969,SFP Secondary Cluster: Faulty Memory Release,18
-400,MemberOf,category,970,SFP Secondary Cluster: Faulty Buffer Access,707
-401,MemberOf,category,971,SFP Secondary Cluster: Faulty Pointer Use,467
-402,MemberOf,category,974,SFP Secondary Cluster: Incorrect Buffer Length Computation,80
-403,MemberOf,category,975,SFP Secondary Cluster: Architecture,52
-404,MemberOf,category,977,SFP Secondary Cluster: Design,174
-405,MemberOf,category,980,SFP Secondary Cluster: Link in Resource Name Resolution,1
-406,MemberOf,category,981,SFP Secondary Cluster: Path Traversal,284
-407,MemberOf,category,982,SFP Secondary Cluster: Failure to Release Resource,2
-408,MemberOf,category,983,SFP Secondary Cluster: Faulty Resource Use,24
-409,MemberOf,category,985,SFP Secondary Cluster: Unrestricted Consumption,267
-410,MemberOf,category,986,SFP Secondary Cluster: Missing Lock,18
-411,MemberOf,category,988,SFP Secondary Cluster: Race Condition Window,20
-412,MemberOf,category,990,SFP Secondary Cluster: Tainted Input to Command,349
-413,MemberOf,category,991,SFP Secondary Cluster: Tainted Input to Environment,59
-414,MemberOf,category,992,SFP Secondary Cluster: Faulty Input Transformation,23
-415,MemberOf,category,993,SFP Secondary Cluster: Incorrect Input Handling,16
-416,MemberOf,category,994,SFP Secondary Cluster: Tainted Input to Variable,857
-417,MemberOf,category,998,SFP Secondary Cluster: Glitch in Computation,686
-418,MemberOf,view,1000,Research Concepts,102
-419,MemberOf,view,1003,Weaknesses for Simplified Mapping of Published Vulnerabilities,1508
-420,MemberOf,view,1200,Weaknesses in the 2019 CWE Top 25 Most Dangerous Software Errors,3190
-421,MemberOf,view,1337,Weaknesses in the 2021 CWE Top 25 Most Dangerous Software Weaknesses,2995
-422,MemberOf,view,1340,CISQ Data Protection Measures,878
-423,MemberOf,view,1350,Weaknesses in the 2020 CWE Top 25 Most Dangerous Software Weaknesses,3179
-424,MemberOf,view,1387,Weaknesses in the 2022 CWE Top 25 Most Dangerous Software Weaknesses,3135
-425,MemberOf,view,1425,Weaknesses in the 2023 CWE Top 25 Most Dangerous Software Weaknesses,2939
-426,MemberOf,view,1430,Weaknesses in the 2024 CWE Top 25 Most Dangerous Software Weaknesses,3256
-427,MemberOf,view,635,Weaknesses Originally Used by NVD from 2008 to 2016,1194
-428,MemberOf,view,884,CWE Cross-section,3266
-429,ParentOf,base,1021,Improper Restriction of Rendered UI Layers or Frames,1
-430,ParentOf,base,1024,Comparison of Incompatible Types,82
-431,ParentOf,base,1025,Comparison Using Wrong Factors,82
-432,ParentOf,base,1058,Invokable Control Element in Multi-Thread Context with non-Final Static Storable or Member Element,27
-433,ParentOf,base,112,Missing XML Validation,650
-434,ParentOf,base,117,Improper Output Neutralization for Logs,662
-435,ParentOf,base,1173,Improper Use of Validation Framework,645
-436,ParentOf,base,1188,Initialization of a Resource with an Insecure Default,32
-437,ParentOf,base,1189,Improper Isolation of Shared Resources on System-on-a-Chip (SoC),14
-438,ParentOf,base,1190,DMA Device Enabled Too Early in Boot Phase,2
-439,ParentOf,base,1191,On-Chip Debug and Test Interface With Improper Access Control,9
-440,ParentOf,base,1193,Power-On of Untrusted Execution Core Before Enabling Fabric Access Control,2
-441,ParentOf,base,120,Buffer Copy without Checking Size of Input ('Classic Buffer Overflow'),861
-442,ParentOf,base,1220,Insufficient Granularity of Access Control,9
-443,ParentOf,base,1223,Race Condition for Write-Once Attributes,6
-444,ParentOf,base,1224,Improper Restriction of Write-Once Bit Fields,9
-445,ParentOf,base,123,Write-what-where Condition,437
-446,ParentOf,base,1230,Exposure of Sensitive Information Through Metadata,1
-447,ParentOf,base,1231,Improper Prevention of Lock Bit Modification,9
-448,ParentOf,base,1232,Improper Lock Behavior After Power State Transition,9
-449,ParentOf,base,1233,Security-Sensitive Hardware Controls with Missing Lock Bit Protection,18
-450,ParentOf,base,1234,Hardware Internal or Debug Modes Allow Override of Locks,9
-451,ParentOf,base,1235,Incorrect Use of Autoboxing and Unboxing for Performance Critical Operations,205
-452,ParentOf,base,1236,Improper Neutralization of Formula Elements in a CSV File,60
-453,ParentOf,base,124,Buffer Underwrite ('Buffer Underflow'),329
-454,ParentOf,base,1240,Use of a Cryptographic Primitive with a Risky Implementation,26
-455,ParentOf,base,1242,Inclusion of Undocumented Features or Chicken Bits,9
-456,ParentOf,base,1244,Internal Asset Exposed to Unsafe Debug Access Level or State,3
-457,ParentOf,base,1246,Improper Write Handling in Limited-write Non-Volatile Memories,205
-458,ParentOf,base,1248,Semiconductor Defects in Hardware Logic with Security-Sensitive Implications,2
-459,ParentOf,base,125,Out-of-bounds Read,216
-460,ParentOf,base,1252,CPU Hardware Not Configured to Support Exclusivity of Write and Execute Operations,9
-461,ParentOf,base,1253,Incorrect Selection of Fuse Values,2
-462,ParentOf,base,1254,Incorrect Comparison Logic Granularity,91
-463,ParentOf,base,1256,Improper Restriction of Software Interfaces to Hardware Features,1
-464,ParentOf,base,1257,Improper Access Control Applied to Mirrored or Aliased Memory Regions,9
-465,ParentOf,base,1258,Exposure of Sensitive System Information Due to Uncleared Debug Information,119
-466,ParentOf,base,1259,Improper Restriction of Security Token Assignment,9
-467,ParentOf,base,1260,Improper Handling of Overlap Between Protected Memory Ranges,9
-468,ParentOf,base,1262,Improper Access Control for Register Interface,9
-469,ParentOf,base,1267,Policy Uses Obsolete Encoding,9
-470,ParentOf,base,1268,Policy Privileges are not Assigned Consistently Between Control and Data Agents,9
-471,ParentOf,base,1269,Product Released in Non-Release Configuration,2
-472,ParentOf,base,1270,Generation of Incorrect Security Tokens,9
-473,ParentOf,base,1273,Device Unlock Credential Sharing,119
-474,ParentOf,base,1274,Improper Access Control for Volatile Memory Containing Boot Code,9
-475,ParentOf,base,1276,Hardware Child Block Incorrectly Connected to Parent System,9
-476,ParentOf,base,1278,Missing Protection Against Hardware Reverse Engineering Using Integrated Circuit (IC) Imaging Techniques,2
-477,ParentOf,base,1279,Cryptographic Operations are run Before Supporting Units are Ready,32
-478,ParentOf,base,128,Wrap-around Error,9
-479,ParentOf,base,1280,Access Control Check Implemented After Asset is Accessed,11
-480,ParentOf,base,1282,Assumed-Immutable Data is Stored in Writable Memory,14
-481,ParentOf,base,1283,Mutable Attestation or Measurement Reporting Data,9
-482,ParentOf,base,1284,Improper Validation of Specified Quantity in Input,1290
-483,ParentOf,base,1285,"Improper Validation of Specified Index, Position, or Offset in Input",645
-484,ParentOf,base,1286,Improper Validation of Syntactic Correctness of Input,645
-485,ParentOf,base,1287,Improper Validation of Specified Type of Input,645
-486,ParentOf,base,1288,Improper Validation of Consistency within Input,645
-487,ParentOf,base,1289,Improper Validation of Unsafe Equivalence in Input,645
-488,ParentOf,base,1290,Incorrect Decoding of Security Identifiers,9
-489,ParentOf,base,1291,Public Key Re-Use for Signing both Debug and Production Code,2
-490,ParentOf,base,1292,Incorrect Conversion of Security Identifiers,9
-491,ParentOf,base,1293,Missing Source Correlation of Multiple Independent Data,38
-492,ParentOf,base,1295,Debug Messages Revealing Unnecessary Information,119
-493,ParentOf,base,1296,Incorrect Chaining or Granularity of Debug Components,9
-494,ParentOf,base,1297,Unprotected Confidential Information on Device is Accessible by OSAT Vendors,1
-495,ParentOf,base,1298,Hardware Logic Contains Race Conditions,6
-496,ParentOf,base,130,Improper Handling of Length Parameter Inconsistency,108
-497,ParentOf,base,1300,Improper Protection of Physical Side Channels,22
-498,ParentOf,base,1303,Non-Transparent Sharing of Microarchitectural Resources,11
-499,ParentOf,base,1304,Improperly Preserved Integrity of Hardware Configuration State During a Power Save/Restore Operation,9
-500,ParentOf,base,131,Incorrect Calculation of Buffer Size,36
-501,ParentOf,base,1311,Improper Translation of Security Attributes by Fabric Bridge,9
-502,ParentOf,base,1312,Missing Protection for Mirrored Regions in On-Chip Fabric Firewall,9
-503,ParentOf,base,1313,Hardware Allows Activation of Test or Debug Logic at Runtime,9
-504,ParentOf,base,1314,Missing Write Protection for Parametric Data Values,2
-505,ParentOf,base,1315,Improper Setting of Bus Controlling Capability in Fabric End-point,9
-506,ParentOf,base,1316,Fabric-Address Map Allows Programming of Unwarranted Overlaps of Protected and Unprotected Ranges,9
-507,ParentOf,base,1317,Improper Access Control in Fabric Bridge,9
-508,ParentOf,base,1318,Missing Support for Security Features in On-chip Fabrics or Buses,2
-509,ParentOf,base,1319,Improper Protection against Electromagnetic Fault Injection (EM-FI),2
-510,ParentOf,base,1320,Improper Protection for Outbound Error Messages and Alert Signals,9
-511,ParentOf,base,1323,Improper Management of Sensitive Trace Data,9
-512,ParentOf,base,1325,Improperly Controlled Sequential Memory Allocation,35
-513,ParentOf,base,1326,Missing Immutable Root of Trust in Hardware,2
-514,ParentOf,base,1327,Binding to an Unrestricted IP Address,14
-515,ParentOf,base,1328,Security Version Number Mutable to Older Versions,1
-516,ParentOf,base,1331,Improper Isolation of Shared Resources in Network On Chip (NoC),14
-517,ParentOf,base,1334,Unauthorized Error Injection Can Degrade Hardware Redundancy,9
-518,ParentOf,base,1335,Incorrect Bitwise Shift of Integer,9
-519,ParentOf,base,1336,Improper Neutralization of Special Elements Used in a Template Engine,50
-520,ParentOf,base,1338,Improper Protections Against Hardware Overheating,2
-521,ParentOf,base,1339,Insufficient Precision or Accuracy of a Real Number,9
-522,ParentOf,base,134,Use of Externally-Controlled Format String,673
-523,ParentOf,base,135,Incorrect Calculation of Multi-Byte String Length,9
-524,ParentOf,base,1389,Incorrect Parsing of Numbers with Different Radices,22
-525,ParentOf,base,1427,Improper Neutralization of Input Used for LLM Prompting,57
-526,ParentOf,base,15,External Control of System or Configuration Setting,646
-527,ParentOf,base,170,Improper Null Termination,645
-528,ParentOf,base,179,Incorrect Behavior Order: Early Validation,647
-529,ParentOf,base,182,Collapse of Data into Unsafe Value,2
-530,ParentOf,base,183,Permissive List of Allowed Inputs,82
-531,ParentOf,base,184,Incomplete List of Disallowed Inputs,2
-532,ParentOf,base,186,Overly Restrictive Regular Expression,2
-533,ParentOf,base,190,Integer Overflow or Wraparound,663
-534,ParentOf,base,191,Integer Underflow (Wrap or Wraparound),18
-535,ParentOf,base,193,Off-by-one Error,18
-536,ParentOf,base,197,Numeric Truncation Error,141
-537,ParentOf,base,201,Insertion of Sensitive Information Into Sent Data,119
-538,ParentOf,base,203,Observable Discrepancy,238
-539,ParentOf,base,204,Observable Response Discrepancy,11
-540,ParentOf,base,205,Observable Behavioral Discrepancy,11
-541,ParentOf,base,208,Observable Timing Discrepancy,11
-542,ParentOf,base,209,Generation of Error Message Containing Sensitive Information,256
-543,ParentOf,base,210,Self-generated Error Message Containing Sensitive Information,54
-544,ParentOf,base,211,Externally-Generated Error Message Containing Sensitive Information,54
-545,ParentOf,base,213,Exposure of Sensitive Information Due to Incompatible Policies,119
-546,ParentOf,base,214,Invocation of Process Using Visible Sensitive Information,51
-547,ParentOf,base,215,Insertion of Sensitive Information Into Debugging Code,119
-548,ParentOf,base,22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),14
-549,ParentOf,base,226,Sensitive Information in Resource Not Removed Before Reuse,2
-550,ParentOf,base,23,Relative Path Traversal,381
-551,ParentOf,base,248,Uncaught Exception,18
-552,ParentOf,base,250,Execution with Unnecessary Privileges,9
-553,ParentOf,base,252,Unchecked Return Value,150
-554,ParentOf,base,253,Incorrect Check of Function Return Value,75
-555,ParentOf,base,256,Plaintext Storage of a Password,2
-556,ParentOf,base,257,Storing Passwords in a Recoverable Format,2
-557,ParentOf,base,260,Password in Configuration File,2
-558,ParentOf,base,261,Weak Encoding for Password,2
-559,ParentOf,base,266,Incorrect Privilege Assignment,9
-560,ParentOf,base,267,Privilege Defined With Unsafe Actions,9
-561,ParentOf,base,268,Privilege Chaining,9
-562,ParentOf,base,270,Privilege Context Switching Error,9
-563,ParentOf,base,273,Improper Check for Dropped Privileges,150
-564,ParentOf,base,274,Improper Handling of Insufficient Privileges,27
-565,ParentOf,base,280,Improper Handling of Insufficient Permissions or Privileges,18
-566,ParentOf,base,288,Authentication Bypass Using an Alternate Path or Channel,11
-567,ParentOf,base,290,Authentication Bypass by Spoofing,2
-568,ParentOf,base,294,Authentication Bypass by Capture-replay,2
-569,ParentOf,base,295,Improper Certificate Validation,4
-570,ParentOf,base,296,Improper Following of a Certificate's Chain of Trust,7
-571,ParentOf,base,299,Improper Check for Certificate Revocation,7
-572,ParentOf,base,306,Missing Authentication for Critical Function,4
-573,ParentOf,base,307,Improper Restriction of Excessive Authentication Attempts,2
-574,ParentOf,base,322,Key Exchange without Entity Authentication,2
-575,ParentOf,base,328,Use of Weak Hash,26
-576,ParentOf,base,347,Improper Verification of Cryptographic Signature,76
-577,ParentOf,base,348,Use of Less Trusted Source,38
-578,ParentOf,base,349,Acceptance of Extraneous Untrusted Data With Trusted Data,38
-579,ParentOf,base,351,Insufficient Type Distinction,38
-580,ParentOf,base,353,Missing Support for Integrity Check,38
-581,ParentOf,base,354,Improper Validation of Integrity Check Value,151
-582,ParentOf,base,357,Insufficient UI Warning of Dangerous Operations,2
-583,ParentOf,base,358,Improperly Implemented Security Check for Standard,2
-584,ParentOf,base,359,Exposure of Private Personal Information to an Unauthorized Actor,119
-585,ParentOf,base,36,Absolute Path Traversal,381
-586,ParentOf,base,360,Trust of System Event Data,38
-587,ParentOf,base,363,Race Condition Enabling Link Following,14
-588,ParentOf,base,364,Signal Handler Race Condition,6
-589,ParentOf,base,366,Race Condition within a Thread,24
-590,ParentOf,base,367,Time-of-check Time-of-use (TOCTOU) Race Condition,12
-591,ParentOf,base,368,Context Switching Race Condition,6
-592,ParentOf,base,369,Divide By Zero,36
-593,ParentOf,base,374,Passing Mutable Objects to an Untrusted Method,14
-594,ParentOf,base,375,Returning a Mutable Object to an Untrusted Caller,14
-595,ParentOf,base,378,Creation of Temporary File With Insecure Permissions,54
-596,ParentOf,base,379,Creation of Temporary File in Directory with Insecure Permissions,54
-597,ParentOf,base,390,Detection of Error Condition Without Action,18
-598,ParentOf,base,391,Unchecked Error Condition,75
-599,ParentOf,base,392,Missing Report of Error Condition,18
-600,ParentOf,base,394,Unexpected Status Code or Return Value,75
-601,ParentOf,base,395,Use of NullPointerException Catch to Detect NULL Pointer Dereference,18
-602,ParentOf,base,396,Declaration of Catch for Generic Exception,18
-603,ParentOf,base,408,Incorrect Behavior Order: Early Amplification,2
-604,ParentOf,base,412,Unrestricted Externally Accessible Lock,9
-605,ParentOf,base,413,Improper Resource Locking,9
-606,ParentOf,base,414,Missing Lock Check,9
-607,ParentOf,base,421,Race Condition During Access to Alternate Channel,6
-608,ParentOf,base,425,Direct Request ('Forced Browsing'),4
-609,ParentOf,base,426,Untrusted Search Path,14
-610,ParentOf,base,427,Uncontrolled Search Path Element,28
-611,ParentOf,base,428,Unquoted Search Path or Element,28
-612,ParentOf,base,455,Non-exit on Failed Initialization,32
-613,ParentOf,base,460,Improper Cleanup on Thrown Exception,20
-614,ParentOf,base,466,Return of Pointer Value Outside of Expected Range,699
-615,ParentOf,base,468,Incorrect Pointer Scaling,9
-616,ParentOf,base,469,Use of Pointer Subtraction to Determine Size,9
-617,ParentOf,base,470,Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection'),646
-618,ParentOf,base,472,External Control of Assumed-Immutable Web Parameter,4
-619,ParentOf,base,476,NULL Pointer Dereference,150
-620,ParentOf,base,480,Use of Incorrect Operator,63
-621,ParentOf,base,483,Incorrect Block Delimitation,63
-622,ParentOf,base,484,Omitted Break Statement in Switch,63
-623,ParentOf,base,488,Exposure of Data Element to Wrong Session,14
-624,ParentOf,base,494,Download of Code Without Integrity Check,38
-625,ParentOf,base,497,Exposure of Sensitive System Information to an Unauthorized Control Sphere,119
-626,ParentOf,base,521,Weak Password Requirements,2
-627,ParentOf,base,523,Unprotected Transport of Credentials,2
-628,ParentOf,base,524,Use of Cache Containing Sensitive Information,14
-629,ParentOf,base,532,Insertion of Sensitive Information into Log File,119
-630,ParentOf,base,538,Insertion of Sensitive Information into Externally-Accessible File or Directory,119
-631,ParentOf,base,544,Missing Standardized Error Handling Mechanism,18
-632,ParentOf,base,549,Missing Password Field Masking,2
-633,ParentOf,base,551,Incorrect Behavior Order: Authorization Before Parsing and Canonicalization,5
-634,ParentOf,base,552,Files or Directories Accessible to External Parties,29
-635,ParentOf,base,567,Unsynchronized Access to Shared Data in a Multithreaded Context,18
-636,ParentOf,base,601,URL Redirection to Untrusted Site ('Open Redirect'),2
-637,ParentOf,base,606,Unchecked Input for Loop Condition,66
-638,ParentOf,base,609,Double-Checked Locking,9
-639,ParentOf,base,611,Improper Restriction of XML External Entity Reference,2
-640,ParentOf,base,617,Reachable Assertion,126
-641,ParentOf,base,624,Executable Regular Expression Error,171
-642,ParentOf,base,625,Permissive Regular Expression,2
-643,ParentOf,base,639,Authorization Bypass Through User-Controlled Key,15
-644,ParentOf,base,640,Weak Password Recovery Mechanism for Forgotten Password,2
-645,ParentOf,base,641,Improper Restriction of Names for Files and Other Resources,37
-646,ParentOf,base,645,Overly Restrictive Account Lockout Mechanism,2
-647,ParentOf,base,648,Incorrect Use of Privileged APIs,9
-648,ParentOf,base,649,Reliance on Obfuscation or Encryption of Security-Relevant Inputs without Integrity Checking,38
-649,ParentOf,base,654,Reliance on a Single Factor in a Security Decision,2
-650,ParentOf,base,663,Use of a Non-reentrant Function in a Concurrent Context,9
-651,ParentOf,base,681,Incorrect Conversion between Numeric Types,44
-652,ParentOf,base,694,Use of Multiple Resources with Duplicate Identifier,37
-653,ParentOf,base,698,Execution After Redirect (EAR),63
-654,ParentOf,base,73,External Control of File Name or Path,646
-655,ParentOf,base,749,Exposed Dangerous Method or Function,9
-656,ParentOf,base,756,Missing Custom Error Page,18
-657,ParentOf,base,757,Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade'),2
-658,ParentOf,base,76,Improper Neutralization of Equivalent Special Elements,4
-659,ParentOf,base,764,Multiple Locks of a Critical Resource,27
-660,ParentOf,base,765,Multiple Unlocks of a Critical Resource,9
-661,ParentOf,base,767,Access to Critical Private Variable via Public Method,14
-662,ParentOf,base,770,Allocation of Resources Without Limits or Throttling,442
-663,ParentOf,base,771,Missing Reference to Active Allocated Resource,205
-664,ParentOf,base,776,Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion'),54
-665,ParentOf,base,778,Insufficient Logging,2
-666,ParentOf,base,779,Logging of Excessive Data,205
-667,ParentOf,base,78,Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection'),201
-668,ParentOf,base,783,Operator Precedence Logic Error,63
-669,ParentOf,base,786,Access of Memory Location Before Start of Buffer,162
-670,ParentOf,base,787,Out-of-bounds Write,216
-671,ParentOf,base,788,Access of Memory Location After End of Buffer,162
-672,ParentOf,base,79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),60
-673,ParentOf,base,798,Use of Hard-coded Credentials,2
-674,ParentOf,base,804,Guessable CAPTCHA,3
-675,ParentOf,base,805,Buffer Access with Incorrect Length Value,162
-676,ParentOf,base,807,Reliance on Untrusted Inputs in a Security Decision,2
-677,ParentOf,base,820,Missing Synchronization,27
-678,ParentOf,base,821,Incorrect Synchronization,27
-679,ParentOf,base,822,Untrusted Pointer Dereference,162
-680,ParentOf,base,823,Use of Out-of-range Pointer Offset,162
-681,ParentOf,base,824,Access of Uninitialized Pointer,216
-682,ParentOf,base,825,Expired Pointer Dereference,162
-683,ParentOf,base,832,Unlock of a Resource that is not Locked,9
-684,ParentOf,base,833,Deadlock,18
-685,ParentOf,base,838,Inappropriate Encoding for Output Context,34
-686,ParentOf,base,843,Access of Resource Using Incompatible Type ('Type Confusion'),44
-687,ParentOf,base,88,Improper Neutralization of Argument Delimiters in a Command ('Argument Injection'),201
-688,ParentOf,base,89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),30
-689,ParentOf,base,908,Use of Uninitialized Resource,64
-690,ParentOf,base,91,XML Injection (aka Blind XPath Injection),60
-691,ParentOf,base,914,Improper Control of Dynamically-Identified Variables,37
-692,ParentOf,base,916,Use of Password Hash With Insufficient Computational Effort,37
-693,ParentOf,base,917,Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection'),201
-694,ParentOf,base,918,Server-Side Request Forgery (SSRF),1
-695,ParentOf,base,920,Improper Restriction of Power Consumption,410
-696,ParentOf,base,924,Improper Enforcement of Message Integrity During Transmission in a Communication Channel,76
-697,ParentOf,base,93,Improper Neutralization of CRLF Sequences ('CRLF Injection'),30
-698,ParentOf,base,939,Improper Authorization in Handler for Custom URL Scheme,2
-699,ParentOf,base,94,Improper Control of Generation of Code ('Code Injection'),60
-700,ParentOf,base,96,Improper Neutralization of Directives in Statically Saved Code ('Static Code Injection'),50
-701,ParentOf,chain,680,Integer Overflow to Buffer Overflow,245
-702,ParentOf,chain,690,Unchecked Return Value to NULL Pointer Dereference,8
-703,ParentOf,class,1023,Incomplete Comparison with Missing Factors,82
-704,ParentOf,class,1039,Automated Recognition Mechanism with Inadequate Detection or Handling of Adversarial Input Perturbations,84
-705,ParentOf,class,114,Process Control,683
-706,ParentOf,class,119,Improper Restriction of Operations within the Bounds of a Memory Buffer,645
-707,ParentOf,class,1263,Improper Physical Access Control,9
-708,ParentOf,class,1294,Insecure Security Identifier Mechanism,9
-709,ParentOf,class,1390,Weak Authentication,2
-710,ParentOf,class,1419,Incorrect Initialization of Resource,32
-711,ParentOf,class,185,Incorrect Regular Expression,82
-712,ParentOf,class,200,Exposure of Sensitive Information to an Unauthorized Actor,14
-713,ParentOf,class,269,Improper Privilege Management,9
-714,ParentOf,class,271,Privilege Dropping / Lowering Errors,9
-715,ParentOf,class,282,Improper Ownership Management,9
-716,ParentOf,class,285,Improper Authorization,18
-717,ParentOf,class,286,Incorrect User Management,9
-718,ParentOf,class,287,Improper Authentication,18
-719,ParentOf,class,311,Missing Encryption of Sensitive Data,2
-720,ParentOf,class,326,Inadequate Encryption Strength,2
-721,ParentOf,class,327,Use of a Broken or Risky Cryptographic Algorithm,2
-722,ParentOf,class,330,Use of Insufficiently Random Values,2
-723,ParentOf,class,345,Insufficient Verification of Data Authenticity,2
-724,ParentOf,class,346,Origin Validation Error,85
-725,ParentOf,class,377,Insecure Temporary File,14
-726,ParentOf,class,402,Transmission of Private Resources into a New Sphere ('Resource Leak'),14
-727,ParentOf,class,405,Asymmetric Resource Consumption (Amplification),205
-728,ParentOf,class,424,Improper Protection of Alternate Path,2
-729,ParentOf,class,441,Unintended Proxy or Intermediary ('Confused Deputy'),1
-730,ParentOf,class,522,Insufficiently Protected Credentials,16
-731,ParentOf,class,602,Client-Side Enforcement of Server-Side Security,2
-732,ParentOf,class,636,Not Failing Securely ('Failing Open'),18
-733,ParentOf,class,638,Not Using Complete Mediation,2
-734,ParentOf,class,642,External Control of Critical State Data,14
-735,ParentOf,class,653,Improper Isolation or Compartmentalization,2
-736,ParentOf,class,655,Insufficient Psychological Acceptability,2
-737,ParentOf,class,656,Reliance on Security Through Obscurity,2
-738,ParentOf,class,667,Improper Locking,36
-739,ParentOf,class,732,Incorrect Permission Assignment for Critical Resource,15
-740,ParentOf,class,75,Failure to Sanitize Special Elements into a Different Plane (Special Element Injection),30
-741,ParentOf,class,77,Improper Neutralization of Special Elements used in a Command ('Command Injection'),60
-742,ParentOf,class,862,Missing Authorization,10
-743,ParentOf,class,863,Incorrect Authorization,10
-744,ParentOf,class,909,Missing Initialization of Resource,64
-745,ParentOf,class,923,Improper Restriction of Communication Channel to Intended Endpoints,9
-746,ParentOf,class,943,Improper Neutralization of Special Elements in Data Query Logic,30
-747,ParentOf,class,99,Improper Control of Resource Identifiers ('Resource Injection'),30
-748,ParentOf,composite,352,Cross-Site Request Forgery (CSRF),76
-749,ParentOf,composite,384,Session Fixation,2
-750,ParentOf,composite,689,Permission Race Condition During Resource Copy,6
-751,ParentOf,variant,102,Struts: Duplicate Validation Forms,645
-752,ParentOf,variant,103,Struts: Incomplete validate() Method Definition,645
-753,ParentOf,variant,104,Struts: Form Bean Does Not Extend Validation Class,645
-754,ParentOf,variant,105,Struts: Form Field Without Validator,645
-755,ParentOf,variant,106,Struts: Plug-in Framework not in Use,645
-756,ParentOf,variant,107,Struts: Unused Validation Form,645
-757,ParentOf,variant,1077,Floating Point Comparison with Incorrect Operator,82
-758,ParentOf,variant,108,Struts: Unvalidated Action Form,645
-759,ParentOf,variant,109,Struts: Validator Turned Off,645
-760,ParentOf,variant,1096,Singleton Class Instance Creation without Proper Locking or Synchronization,18
-761,ParentOf,variant,11,ASP.NET Misconfiguration: Creating Debug Binary,10
-762,ParentOf,variant,110,Struts: Validator Without Form Field,645
-763,ParentOf,variant,111,Direct Use of Unsafe JNI,645
-764,ParentOf,variant,113,Improper Neutralization of CRLF Sequences in HTTP Headers ('HTTP Request/Response Splitting'),646
-765,ParentOf,variant,121,Stack-based Buffer Overflow,329
-766,ParentOf,variant,122,Heap-based Buffer Overflow,329
-767,ParentOf,variant,126,Buffer Over-read,481
-768,ParentOf,variant,127,Buffer Under-read,481
-769,ParentOf,variant,129,Improper Validation of Array Index,645
-770,ParentOf,variant,1321,Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution'),2
-771,ParentOf,variant,192,Integer Coercion Error,47
-772,ParentOf,variant,194,Unexpected Sign Extension,141
-773,ParentOf,variant,195,Signed to Unsigned Conversion Error,141
-774,ParentOf,variant,196,Unsigned to Signed Conversion Error,141
-775,ParentOf,variant,234,Failure to Handle Missing Parameter,6
-776,ParentOf,variant,235,Improper Handling of Extra Parameters,6
-777,ParentOf,variant,236,Improper Handling of Undefined Parameters,6
-778,ParentOf,variant,24,Path Traversal: '../filedir',42
-779,ParentOf,variant,25,Path Traversal: '/../filedir',42
-780,ParentOf,variant,26,Path Traversal: '/dir/../filename',42
-781,ParentOf,variant,27,Path Traversal: 'dir/../../filename',42
-782,ParentOf,variant,28,Path Traversal: '..\filedir',42
-783,ParentOf,variant,29,Path Traversal: '\..\filename',42
-784,ParentOf,variant,291,Reliance on IP Address for Authentication,4
-785,ParentOf,variant,297,Improper Validation of Certificate with Host Mismatch,7
-786,ParentOf,variant,298,Improper Validation of Certificate Expiration,7
-787,ParentOf,variant,30,Path Traversal: '\dir\..\filename',42
-788,ParentOf,variant,31,Path Traversal: 'dir\..\..\filename',42
-789,ParentOf,variant,313,Cleartext Storage in a File or on Disk,50
-790,ParentOf,variant,314,Cleartext Storage in the Registry,50
-791,ParentOf,variant,315,Cleartext Storage of Sensitive Information in a Cookie,50
-792,ParentOf,variant,316,Cleartext Storage of Sensitive Information in Memory,50
-793,ParentOf,variant,317,Cleartext Storage of Sensitive Information in GUI,50
-794,ParentOf,variant,318,Cleartext Storage of Sensitive Information in Executable,50
-795,ParentOf,variant,32,Path Traversal: '...' (Triple Dot),42
-796,ParentOf,variant,33,Path Traversal: '....' (Multiple Dot),42
-797,ParentOf,variant,332,Insufficient Entropy in PRNG,1
-798,ParentOf,variant,333,Improper Handling of Insufficient Entropy in TRNG,19
-799,ParentOf,variant,34,Path Traversal: '....//',42
-800,ParentOf,variant,35,Path Traversal: '.../...//',42
-801,ParentOf,variant,37,Path Traversal: '/absolute/pathname/here',40
-802,ParentOf,variant,38,Path Traversal: '\absolute\pathname\here',40
-803,ParentOf,variant,39,Path Traversal: 'C:dirname',40
-804,ParentOf,variant,40,Path Traversal: '\\UNC\share\name\' (Windows UNC Share),40
-805,ParentOf,variant,456,Missing Initialization of a Variable,64
-806,ParentOf,variant,457,Use of Uninitialized Variable,122
-807,ParentOf,variant,467,Use of sizeof() on a Pointer Type,80
-808,ParentOf,variant,473,PHP External Variable Modification,4
-809,ParentOf,variant,491,Public cloneable() Method Without Final ('Object Hijack'),14
-810,ParentOf,variant,492,Use of Inner Class Containing Sensitive Data,14
-811,ParentOf,variant,493,Critical Public Variable Without Final Modifier,14
-812,ParentOf,variant,498,Cloneable Class Containing Sensitive Information,14
-813,ParentOf,variant,499,Serializable Class Containing Sensitive Data,14
-814,ParentOf,variant,526,Cleartext Storage of Sensitive Information in an Environment Variable,50
-815,ParentOf,variant,543,Use of Singleton Pattern Without Synchronization in a Multithreaded Context,18
-816,ParentOf,variant,548,Exposure of Information Through Directory Listing,51
-817,ParentOf,variant,550,Server-generated Error Message Containing Sensitive Information,54
-818,ParentOf,variant,564,SQL Injection: Hibernate,33
-819,ParentOf,variant,568,finalize() Method Without super.finalize(),2
-820,ParentOf,variant,581,Object Model Violation: Just One of Equals and Hashcode Defined,82
-821,ParentOf,variant,582,"Array Declared Public, Final, and Static",14
-822,ParentOf,variant,583,finalize() Method Declared Public,14
-823,ParentOf,variant,588,Attempt to Access Child of a Non-structure Pointer,22
-824,ParentOf,variant,599,Missing Validation of OpenSSL Certificate,7
-825,ParentOf,variant,600,Uncaught Exception in Servlet,1
-826,ParentOf,variant,607,Public Static Final Field References Mutable Object,4
-827,ParentOf,variant,608,Struts: Non-private Field in ActionForm Class,14
-828,ParentOf,variant,616,Incomplete Identification of Uploaded File Variables (PHP),38
-829,ParentOf,variant,622,Improper Validation of Function Hook Arguments,645
-830,ParentOf,variant,644,Improper Neutralization of HTTP Headers for Scripting Syntax,17
-831,ParentOf,variant,646,Reliance on File Name or Extension of Externally-Supplied File,38
-832,ParentOf,variant,647,Use of Non-Canonical URL Paths for Authorization Decisions,3
-833,ParentOf,variant,759,Use of a One-Way Hash without a Salt,12
-834,ParentOf,variant,760,Use of a One-Way Hash with a Predictable Salt,12
-835,ParentOf,variant,774,Allocation of File Descriptors or Handles Without Limits or Throttling,35
-836,ParentOf,variant,780,Use of RSA Algorithm without OAEP,26
-837,ParentOf,variant,785,Use of Path Manipulation Function without Maximum-sized Buffer,806
-838,ParentOf,variant,789,Memory Allocation with Excessive Size Value,35
-839,ParentOf,variant,8,J2EE Misconfiguration: Entity Bean Declared Remote,14
-840,ParentOf,variant,80,Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS),119
-841,ParentOf,variant,81,Improper Neutralization of Script in an Error Message Web Page,119
-842,ParentOf,variant,83,Improper Neutralization of Script in Attributes in a Web Page,119
-843,ParentOf,variant,84,Improper Neutralization of Encoded URI Schemes in a Web Page,119
-844,ParentOf,variant,85,Doubled Character XSS Manipulations,119
-845,ParentOf,variant,86,Improper Neutralization of Invalid Characters in Identifiers in Web Pages,119
-846,ParentOf,variant,87,Improper Neutralization of Alternate XSS Syntax,119
-847,ParentOf,variant,926,Improper Export of Android Application Components,1
-848,ParentOf,variant,927,Use of Implicit Intent for Sensitive Communication,15
-849,ParentOf,variant,942,Permissive Cross-domain Policy with Untrusted Domains,3
-850,ParentOf,variant,95,Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection'),50
-851,PeerOf,base,123,Write-what-where Condition,18
-852,PeerOf,base,128,Wrap-around Error,245
-853,PeerOf,base,1287,Improper Validation of Specified Type of Input,54
-854,PeerOf,base,1295,Debug Messages Revealing Unnecessary Information,54
-855,PeerOf,base,1304,Improperly Preserved Integrity of Hardware Configuration State During a Power Save/Restore Operation,38
-856,PeerOf,base,1339,Insufficient Precision or Accuracy of a Real Number,245
-857,PeerOf,base,273,Improper Check for Dropped Privileges,8
-858,PeerOf,base,301,Reflection Attack in an Authentication Protocol,26
-859,PeerOf,base,322,Key Exchange without Entity Authentication,7
-860,PeerOf,base,351,Insufficient Type Distinction,15
-861,PeerOf,base,353,Missing Support for Integrity Check,10
-862,PeerOf,base,386,Symbolic Name not Mapping to Correct Object,15
-863,PeerOf,base,426,Untrusted Search Path,5
-864,PeerOf,base,427,Uncontrolled Search Path Element,10
-865,PeerOf,base,428,Unquoted Search Path or Element,10
-866,PeerOf,base,430,Deployment of Wrong Handler,15
-867,PeerOf,base,502,Deserialization of Untrusted Data,2
-868,PeerOf,base,79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),28
-869,PeerOf,base,915,Improperly Controlled Modification of Dynamically-Determined Object Attributes,212
-870,PeerOf,base,917,Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection'),4
-871,PeerOf,class,20,Improper Input Validation,38
-872,PeerOf,class,311,Missing Encryption of Sensitive Data,26
-873,PeerOf,class,345,Insufficient Verification of Data Authenticity,645
-874,PeerOf,class,436,Interpretation Conflict,15
-875,PeerOf,class,441,Unintended Proxy or Intermediary ('Confused Deputy'),3
-876,PeerOf,class,706,Use of Incorrectly-Resolved Name or Reference,37
-877,PeerOf,composite,352,Cross-Site Request Forgery (CSRF),119
-878,PeerOf,variant,415,Double Free,24
-879,PeerOf,variant,416,Use After Free,18
+0,CanFollow,base,1257,Improper Access Control Applied to Mirrored or Aliased Memory Regions,37
+1,CanFollow,base,1260,Improper Handling of Overlap Between Protected Memory Ranges,37
+2,CanFollow,base,1265,Unintended Reentrant Invocation of Non-reentrant Code Via Nested Calls,87
+3,CanFollow,base,1272,Sensitive Information Uncleared Before Debug/Power State Transition,125
+4,CanFollow,base,128,Wrap-around Error,37
+5,CanFollow,base,1282,Assumed-Immutable Data is Stored in Writable Memory,3
+6,CanFollow,base,1284,Improper Validation of Specified Quantity in Input,4
+7,CanFollow,base,131,Incorrect Calculation of Buffer Size,37
+8,CanFollow,base,1322,"Use of Blocking Code in Single-threaded, Non-blocking Context",26
+9,CanFollow,base,1325,Improperly Controlled Sequential Memory Allocation,364
+10,CanFollow,base,1339,Insufficient Precision or Accuracy of a Real Number,37
+11,CanFollow,base,170,Improper Null Termination,109
+12,CanFollow,base,183,Permissive List of Allowed Inputs,16
+13,CanFollow,base,184,Incomplete List of Disallowed Inputs,171
+14,CanFollow,base,190,Integer Overflow or Wraparound,37
+15,CanFollow,base,193,Off-by-one Error,531
+16,CanFollow,base,208,Observable Timing Discrepancy,29
+17,CanFollow,base,212,Improper Removal of Sensitive Information Before Storage or Transfer,1
+18,CanFollow,base,226,Sensitive Information in Resource Not Removed Before Reuse,1
+19,CanFollow,base,252,Unchecked Return Value,364
+20,CanFollow,base,364,Signal Handler Race Condition,101
+21,CanFollow,base,390,Detection of Error Condition Without Action,16
+22,CanFollow,base,410,Insufficient Resource Pool,250
+23,CanFollow,base,425,Direct Request ('Forced Browsing'),3
+24,CanFollow,base,489,Active Debug Code,8
+25,CanFollow,base,609,Double-Checked Locking,12
+26,CanFollow,base,613,Insufficient Session Expiration,2
+27,CanFollow,base,681,Incorrect Conversion between Numeric Types,7
+28,CanFollow,base,73,External Control of File Name or Path,209
+29,CanFollow,base,756,Missing Custom Error Page,81
+30,CanFollow,base,79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),4
+31,CanFollow,base,822,Untrusted Pointer Dereference,612
+32,CanFollow,base,823,Use of Out-of-range Pointer Offset,612
+33,CanFollow,base,824,Access of Uninitialized Pointer,612
+34,CanFollow,base,825,Expired Pointer Dereference,612
+35,CanFollow,base,839,Numeric Range Comparison Without Minimum Check,44
+36,CanFollow,base,843,Access of Resource Using Incompatible Type ('Type Confusion'),37
+37,CanFollow,base,93,Improper Neutralization of CRLF Sequences ('CRLF Injection'),6
+38,CanFollow,class,116,Improper Encoding or Escaping of Output,30
+39,CanFollow,class,172,Encoding Error,193
+40,CanFollow,class,20,Improper Input Validation,334
+41,CanFollow,class,340,Generation of Predictable Numbers or Identifiers,1
+42,CanFollow,class,362,Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition'),451
+43,CanFollow,class,441,Unintended Proxy or Intermediary ('Confused Deputy'),14
+44,CanFollow,class,602,Client-Side Enforcement of Server-Side Security,3
+45,CanFollow,class,662,Improper Synchronization,10
+46,CanFollow,class,754,Improper Check for Unusual or Exceptional Conditions,87
+47,CanFollow,class,909,Missing Initialization of Resource,43
+48,CanFollow,variant,113,Improper Neutralization of CRLF Sequences in HTTP Headers ('HTTP Request/Response Splitting'),130
+49,CanFollow,variant,1275,Sensitive Cookie with Improper SameSite Attribute,27
+50,CanFollow,variant,129,Improper Validation of Array Index,41
+51,CanFollow,variant,1321,Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution'),3
+52,CanFollow,variant,195,Signed to Unsigned Conversion Error,37
+53,CanFollow,variant,231,Improper Handling of Extra Values,109
+54,CanFollow,variant,244,Improper Clearing of Heap Memory Before Release ('Heap Inspection'),35
+55,CanFollow,variant,416,Use After Free,109
+56,CanFollow,variant,456,Missing Initialization of a Variable,122
+57,CanFollow,variant,481,Assigning instead of Comparing,66
+58,CanFollow,variant,498,Cloneable Class Containing Sensitive Information,125
+59,CanFollow,variant,499,Serializable Class Containing Sensitive Data,125
+60,CanFollow,variant,600,Uncaught Exception in Servlet,81
+61,CanFollow,variant,621,Variable Extraction Error,3
+62,CanFollow,variant,789,Memory Allocation with Excessive Size Value,364
+63,CanFollow,variant,942,Permissive Cross-domain Policy with Untrusted Domains,14
+64,CanFollow,variant,98,Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion'),97
+65,CanPrecede,base,117,Improper Output Neutralization for Logs,1
+66,CanPrecede,base,120,Buffer Copy without Checking Size of Input ('Classic Buffer Overflow'),87
+67,CanPrecede,base,123,Write-what-where Condition,200
+68,CanPrecede,base,125,Out-of-bounds Read,71
+69,CanPrecede,base,170,Improper Null Termination,13
+70,CanPrecede,base,182,Collapse of Data into Unsafe Value,2
+71,CanPrecede,base,215,Insertion of Sensitive Information Into Debugging Code,8
+72,CanPrecede,base,22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),599
+73,CanPrecede,base,289,Authentication Bypass by Alternate Name,6
+74,CanPrecede,base,385,Covert Timing Channel,13
+75,CanPrecede,base,41,Improper Resolution of Path Equivalence,599
+76,CanPrecede,base,434,Unrestricted Upload of File with Dangerous Type,46
+77,CanPrecede,base,471,Modification of Assumed-Immutable Data (MAID),2
+78,CanPrecede,base,476,NULL Pointer Dereference,20
+79,CanPrecede,base,494,Download of Code Without Integrity Check,130
+80,CanPrecede,base,59,Improper Link Resolution Before File Access ('Link Following'),46
+81,CanPrecede,base,617,Reachable Assertion,6
+82,CanPrecede,base,770,Allocation of Resources Without Limits or Throttling,553
+83,CanPrecede,base,787,Out-of-bounds Write,71
+84,CanPrecede,class,119,Improper Restriction of Operations within the Bounds of a Memory Buffer,891
+85,CanPrecede,class,327,Use of a Broken or Risky Cryptographic Algorithm,13
+86,CanPrecede,class,362,Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition'),7
+87,CanPrecede,class,74,Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'),572
+88,CanPrecede,composite,352,Cross-Site Request Forgery (CSRF),10
+89,CanPrecede,pillar,682,Incorrect Calculation,33
+90,CanPrecede,variant,187,Partial String Comparison,2
+91,CanPrecede,variant,416,Use After Free,68
+92,CanPrecede,variant,789,Memory Allocation with Excessive Size Value,52
+93,CanPrecede,variant,98,Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion'),48
+94,ChildOf,base,1341,Multiple Releases of Same Resource or Handle,14
+95,ChildOf,base,190,Integer Overflow or Wraparound,16
+96,ChildOf,base,201,Insertion of Sensitive Information Into Sent Data,4
+97,ChildOf,base,203,Observable Discrepancy,14
+98,ChildOf,base,22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),294
+99,ChildOf,base,23,Relative Path Traversal,37
+100,ChildOf,base,288,Authentication Bypass Using an Alternate Path or Channel,2
+101,ChildOf,base,312,Cleartext Storage of Sensitive Information,19
+102,ChildOf,base,319,Cleartext Transmission of Sensitive Information,10
+103,ChildOf,base,328,Use of Weak Hash,13
+104,ChildOf,base,524,Use of Cache Containing Sensitive Information,2
+105,ChildOf,base,538,Insertion of Sensitive Information into Externally-Accessible File or Directory,144
+106,ChildOf,base,552,Files or Directories Accessible to External Parties,14
+107,ChildOf,base,59,Improper Link Resolution Before File Access ('Link Following'),10
+108,ChildOf,base,681,Incorrect Conversion between Numeric Types,6
+109,ChildOf,base,770,Allocation of Resources Without Limits or Throttling,4
+110,ChildOf,base,772,Missing Release of Resource after Effective Lifetime,16
+111,ChildOf,base,787,Out-of-bounds Write,92
+112,ChildOf,base,788,Access of Memory Location After End of Buffer,92
+113,ChildOf,base,79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),5
+114,ChildOf,base,825,Expired Pointer Dereference,101
+115,ChildOf,base,94,Improper Control of Generation of Code ('Code Injection'),21
+116,ChildOf,class,116,Improper Encoding or Escaping of Output,6
+117,ChildOf,class,1177,Use of Prohibited Code,16
+118,ChildOf,class,118,Incorrect Access of Indexable Resource ('Range Error'),37
+119,ChildOf,class,119,Improper Restriction of Operations within the Bounds of a Memory Buffer,3168
+120,ChildOf,class,138,Improper Neutralization of Special Elements,41
+121,ChildOf,class,1390,Weak Authentication,3
+122,ChildOf,class,172,Encoding Error,6
+123,ChildOf,class,185,Incorrect Regular Expression,2
+124,ChildOf,class,20,Improper Input Validation,538
+125,ChildOf,class,200,Exposure of Sensitive Information to an Unauthorized Actor,580
+126,ChildOf,class,228,Improper Handling of Syntactically Invalid Structure,5
+127,ChildOf,class,269,Improper Privilege Management,8
+128,ChildOf,class,285,Improper Authorization,7
+129,ChildOf,class,287,Improper Authentication,21
+130,ChildOf,class,311,Missing Encryption of Sensitive Data,314
+131,ChildOf,class,326,Inadequate Encryption Strength,12
+132,ChildOf,class,327,Use of a Broken or Risky Cryptographic Algorithm,25
+133,ChildOf,class,330,Use of Insufficiently Random Values,2
+134,ChildOf,class,345,Insufficient Verification of Data Authenticity,90
+135,ChildOf,class,362,Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition'),24
+136,ChildOf,class,400,Uncontrolled Resource Consumption,148
+137,ChildOf,class,404,Improper Resource Shutdown or Release,36
+138,ChildOf,class,405,Asymmetric Resource Consumption (Amplification),8
+139,ChildOf,class,407,Inefficient Algorithmic Complexity,210
+140,ChildOf,class,424,Improper Protection of Alternate Path,2
+141,ChildOf,class,436,Interpretation Conflict,52
+142,ChildOf,class,441,Unintended Proxy or Intermediary ('Confused Deputy'),34
+143,ChildOf,class,514,Covert Channel,2
+144,ChildOf,class,573,Improper Following of Specification by Caller,15
+145,ChildOf,class,610,Externally Controlled Reference to a Resource in Another Sphere,156
+146,ChildOf,class,642,External Control of Critical State Data,56
+147,ChildOf,class,657,Violation of Secure Design Principles,8
+148,ChildOf,class,662,Improper Synchronization,28
+149,ChildOf,class,665,Improper Initialization,160
+150,ChildOf,class,666,Operation on Resource in Wrong Phase of Lifetime,14
+151,ChildOf,class,668,Exposure of Resource to Wrong Sphere,399
+152,ChildOf,class,669,Incorrect Resource Transfer Between Spheres,40
+153,ChildOf,class,670,Always-Incorrect Control Flow Implementation,988
+154,ChildOf,class,672,Operation on a Resource after Expiration or Release,303
+155,ChildOf,class,673,External Influence of Sphere Definition,10
+156,ChildOf,class,684,Incorrect Provision of Specified Functionality,4
+157,ChildOf,class,704,Incorrect Type Conversion or Cast,154
+158,ChildOf,class,705,Incorrect Control Flow Scoping,1
+159,ChildOf,class,706,Use of Incorrectly-Resolved Name or Reference,386
+160,ChildOf,class,732,Incorrect Permission Assignment for Critical Resource,32
+161,ChildOf,class,74,Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'),694
+162,ChildOf,class,754,Improper Check for Unusual or Exceptional Conditions,748
+163,ChildOf,class,755,Improper Handling of Exceptional Conditions,82
+164,ChildOf,class,77,Improper Neutralization of Special Elements used in a Command ('Command Injection'),75
+165,ChildOf,class,799,Improper Control of Interaction Frequency,1
+166,ChildOf,class,834,Excessive Iteration,75
+167,ChildOf,class,862,Missing Authorization,4
+168,ChildOf,class,913,Improper Control of Dynamically-Managed Code Resources,531
+169,ChildOf,class,922,Insecure Storage of Sensitive Information,213
+170,ChildOf,class,923,Improper Restriction of Communication Channel to Intended Endpoints,21
+171,ChildOf,class,943,Improper Neutralization of Special Elements in Data Query Logic,13
+172,ChildOf,pillar,284,Improper Access Control,45
+173,ChildOf,pillar,664,Improper Control of a Resource Through its Lifetime,409
+174,ChildOf,pillar,682,Incorrect Calculation,1664
+175,ChildOf,pillar,691,Insufficient Control Flow Management,84
+176,ChildOf,pillar,693,Protection Mechanism Failure,100
+177,ChildOf,pillar,697,Incorrect Comparison,2
+178,ChildOf,pillar,703,Improper Check or Handling of Exceptional Conditions,72
+179,ChildOf,pillar,707,Improper Neutralization,602
+180,ChildOf,pillar,710,Improper Adherence to Coding Standards,372
+181,MemberOf,category,1001,SFP Secondary Cluster: Use of an Improper API,514
+182,MemberOf,category,1002,SFP Secondary Cluster: Unexpected Entry Points,8
+183,MemberOf,category,1005,7PK - Input Validation and Representation,805
+184,MemberOf,category,1006,Bad Coding Practices,8
+185,MemberOf,category,1009,Audit,150
+186,MemberOf,category,1010,Authenticate Actors,18
+187,MemberOf,category,1011,Authorize Actors,428
+188,MemberOf,category,1012,Cross Cutting,71
+189,MemberOf,category,1013,Encrypt Data,278
+190,MemberOf,category,1014,Identify Actors,84
+191,MemberOf,category,1015,Limit Access,141
+192,MemberOf,category,1018,Manage User Sessions,1
+193,MemberOf,category,1019,Validate Inputs,1320
+194,MemberOf,category,1020,Verify Message Integrity,24
+195,MemberOf,category,1027,OWASP Top Ten 2017 Category A1 - Injection,102
+196,MemberOf,category,1028,OWASP Top Ten 2017 Category A2 - Broken Authentication,5
+197,MemberOf,category,1029,OWASP Top Ten 2017 Category A3 - Sensitive Data Exposure,364
+198,MemberOf,category,1030,OWASP Top Ten 2017 Category A4 - XML External Entities (XXE),4
+199,MemberOf,category,1031,OWASP Top Ten 2017 Category A5 - Broken Access Control,221
+200,MemberOf,category,1032,OWASP Top Ten 2017 Category A6 - Security Misconfiguration,81
+201,MemberOf,category,1033,OWASP Top Ten 2017 Category A7 - Cross-Site Scripting (XSS),130
+202,MemberOf,category,1034,OWASP Top Ten 2017 Category A8 - Insecure Deserialization,216
+203,MemberOf,category,1129,CISQ Quality Measures (2016) - Reliability,156
+204,MemberOf,category,1131,CISQ Quality Measures (2016) - Security,638
+205,MemberOf,category,1134,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 00. Input Validation and Data Sanitization (IDS),103
+206,MemberOf,category,1135,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 01. Declarations and Initialization (DCL),23
+207,MemberOf,category,1136,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 02. Expressions (EXP),370
+208,MemberOf,category,1137,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 03. Numeric Types and Operations (NUM),517
+209,MemberOf,category,1140,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 06. Methods (MET),560
+210,MemberOf,category,1141,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 07. Exceptional Behavior (ERR),61
+211,MemberOf,category,1142,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 08. Visibility and Atomicity (VNA),24
+212,MemberOf,category,1143,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 09. Locking (LCK),7
+213,MemberOf,category,1147,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 13. Input Output (FIO),442
+214,MemberOf,category,1148,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 14. Serialization (SER),540
+215,MemberOf,category,1152,SEI CERT Oracle Secure Coding Standard for Java - Guidelines 49. Miscellaneous (MSC),371
+216,MemberOf,category,1157,SEI CERT C Coding Standard - Guidelines 03. Expressions (EXP),871
+217,MemberOf,category,1158,SEI CERT C Coding Standard - Guidelines 04. Integers (INT),611
+218,MemberOf,category,1159,SEI CERT C Coding Standard - Guidelines 05. Floating Point (FLP),42
+219,MemberOf,category,1160,SEI CERT C Coding Standard - Guidelines 06. Arrays (ARR),402
+220,MemberOf,category,1161,SEI CERT C Coding Standard - Guidelines 07. Characters and Strings (STR),637
+221,MemberOf,category,1162,SEI CERT C Coding Standard - Guidelines 08. Memory Management (MEM),427
+222,MemberOf,category,1163,SEI CERT C Coding Standard - Guidelines 09. Input Output (FIO),561
+223,MemberOf,category,1165,SEI CERT C Coding Standard - Guidelines 10. Environment (ENV),41
+224,MemberOf,category,1166,SEI CERT C Coding Standard - Guidelines 11. Signals (SIG),7
+225,MemberOf,category,1167,SEI CERT C Coding Standard - Guidelines 12. Error Handling (ERR),22
+226,MemberOf,category,1169,SEI CERT C Coding Standard - Guidelines 14. Concurrency (CON),76
+227,MemberOf,category,1170,SEI CERT C Coding Standard - Guidelines 48. Miscellaneous (MSC),44
+228,MemberOf,category,1171,SEI CERT C Coding Standard - Guidelines 50. POSIX (POS),15
+229,MemberOf,category,1179,SEI CERT Perl Coding Standard - Guidelines 01. Input Validation and Data Sanitization (IDS),301
+230,MemberOf,category,1181,SEI CERT Perl Coding Standard - Guidelines 03. Expressions (EXP),65
+231,MemberOf,category,1198,Privilege Separation and Access Control Issues,9
+232,MemberOf,category,1205,Security Primitives and Cryptography Issues,15
+233,MemberOf,category,1208,Cross-Cutting Problems,4
+234,MemberOf,category,1210,Audit / Logging Errors,6
+235,MemberOf,category,1211,Authentication Errors,10
+236,MemberOf,category,1212,Authorization Errors,2
+237,MemberOf,category,1213,Random Number Issues,1
+238,MemberOf,category,1214,Data Integrity Issues,20
+239,MemberOf,category,1215,Data Validation Issues,56
+240,MemberOf,category,1218,Memory Buffer Errors,833
+241,MemberOf,category,1219,File Handling Issues,207
+242,MemberOf,category,1226,Complexity Issues,105
+243,MemberOf,category,1228,API / Function Errors,32
+244,MemberOf,category,1237,SFP Primary Cluster: Faulty Resource Release,14
+245,MemberOf,category,1238,SFP Primary Cluster: Failure to Release Memory,16
+246,MemberOf,category,1306,CISQ Quality Measures - Reliability,566
+247,MemberOf,category,1308,CISQ Quality Measures - Security,828
+248,MemberOf,category,133,String Errors,4
+249,MemberOf,category,1345,OWASP Top Ten 2021 Category A01:2021 - Broken Access Control,843
+250,MemberOf,category,1346,OWASP Top Ten 2021 Category A02:2021 - Cryptographic Failures,53
+251,MemberOf,category,1347,OWASP Top Ten 2021 Category A03:2021 - Injection,1031
+252,MemberOf,category,1348,OWASP Top Ten 2021 Category A04:2021 - Insecure Design,359
+253,MemberOf,category,1349,OWASP Top Ten 2021 Category A05:2021 - Security Misconfiguration,43
+254,MemberOf,category,1353,OWASP Top Ten 2021 Category A07:2021 - Identification and Authentication Failures,32
+255,MemberOf,category,1354,OWASP Top Ten 2021 Category A08:2021 - Software and Data Integrity Failures,301
+256,MemberOf,category,1355,OWASP Top Ten 2021 Category A09:2021 - Security Logging and Monitoring Failures,150
+257,MemberOf,category,1356,OWASP Top Ten 2021 Category A10:2021 - Server-Side Request Forgery (SSRF),34
+258,MemberOf,category,136,Type Errors,77
+259,MemberOf,category,1364,ICS Communications: Zone Boundary Failures,149
+260,MemberOf,category,1365,ICS Communications: Unreliability,19
+261,MemberOf,category,1366,ICS Communications: Frail Security in Protocols,882
+262,MemberOf,category,1368,ICS Dependencies (& Architecture): External Digital Systems,166
+263,MemberOf,category,1369,ICS Supply Chain: IT/OT Convergence/Expansion,17
+264,MemberOf,category,137,Data Neutralization Issues,272
+265,MemberOf,category,1370,ICS Supply Chain: Common Mode Frailties,43
+266,MemberOf,category,1371,ICS Supply Chain: Poorly Documented or Undocumented Features,8
+267,MemberOf,category,1372,ICS Supply Chain: OT Counterfeit and Malicious Corruption,17
+268,MemberOf,category,1373,ICS Engineering (Construction/Deployment): Trust Model Problems,7
+269,MemberOf,category,1376,ICS Engineering (Construction/Deployment): Security Gaps in Commissioning,19
+270,MemberOf,category,1382,ICS Operations (& Maintenance): Emerging Energy Technologies,610
+271,MemberOf,category,1396,Comprehensive Categorization: Access Control,228
+272,MemberOf,category,1397,Comprehensive Categorization: Comparison,70
+273,MemberOf,category,1398,Comprehensive Categorization: Component Interaction,26
+274,MemberOf,category,1399,Comprehensive Categorization: Memory Safety,1122
+275,MemberOf,category,1401,Comprehensive Categorization: Concurrency,29
+276,MemberOf,category,1402,Comprehensive Categorization: Encryption,242
+277,MemberOf,category,1403,Comprehensive Categorization: Exposed Resource,143
+278,MemberOf,category,1404,Comprehensive Categorization: File Handling,338
+279,MemberOf,category,1405,Comprehensive Categorization: Improper Check or Handling of Exceptional Conditions,76
+280,MemberOf,category,1406,Comprehensive Categorization: Improper Input Validation,609
+281,MemberOf,category,1407,Comprehensive Categorization: Improper Neutralization,77
+282,MemberOf,category,1408,Comprehensive Categorization: Incorrect Calculation,488
+283,MemberOf,category,1409,Comprehensive Categorization: Injection,459
+284,MemberOf,category,1410,Comprehensive Categorization: Insufficient Control Flow Management,611
+285,MemberOf,category,1411,Comprehensive Categorization: Insufficient Verification of Data Authenticity,116
+286,MemberOf,category,1412,Comprehensive Categorization: Poor Coding Practices,407
+287,MemberOf,category,1413,Comprehensive Categorization: Protection Mechanism Failure,43
+288,MemberOf,category,1414,Comprehensive Categorization: Randomness,1
+289,MemberOf,category,1415,Comprehensive Categorization: Resource Control,220
+290,MemberOf,category,1416,Comprehensive Categorization: Resource Lifecycle Management,723
+291,MemberOf,category,1417,Comprehensive Categorization: Sensitive Information Exposure,627
+292,MemberOf,category,1418,Comprehensive Categorization: Violation of Secure Design Principles,8
+293,MemberOf,category,189,Numeric Errors,514
+294,MemberOf,category,19,Data Processing Errors,52
+295,MemberOf,category,199,Information Management Errors,552
+296,MemberOf,category,227,7PK - API Abuse,15
+297,MemberOf,category,254,7PK - Security Features,183
+298,MemberOf,category,255,Credentials Management Errors,13
+299,MemberOf,category,265,Privilege Issues,8
+300,MemberOf,category,275,Permission Issues,13
+301,MemberOf,category,310,Cryptographic Issues,26
+302,MemberOf,category,361,7PK - Time and State,66
+303,MemberOf,category,389,"Error Conditions, Return Values, Status Codes",582
+304,MemberOf,category,398,7PK - Code Quality,496
+305,MemberOf,category,399,Resource Management Errors,381
+306,MemberOf,category,417,Communication Channel Errors,46
+307,MemberOf,category,429,Handler Errors,16
+308,MemberOf,category,438,Behavioral Problems,56
+309,MemberOf,category,452,Initialization and Cleanup Errors,2
+310,MemberOf,category,465,Pointer Issues,435
+311,MemberOf,category,485,7PK - Encapsulation,86
+312,MemberOf,category,557,Concurrency Issues,12
+313,MemberOf,category,712,OWASP Top Ten 2007 Category A1 - Cross Site Scripting (XSS),130
+314,MemberOf,category,713,OWASP Top Ten 2007 Category A2 - Injection Flaws,78
+315,MemberOf,category,714,OWASP Top Ten 2007 Category A3 - Malicious File Execution,58
+316,MemberOf,category,715,OWASP Top Ten 2007 Category A4 - Insecure Direct Object Reference,193
+317,MemberOf,category,716,OWASP Top Ten 2007 Category A5 - Cross Site Request Forgery (CSRF),27
+318,MemberOf,category,717,OWASP Top Ten 2007 Category A6 - Information Leakage and Improper Error Handling,229
+319,MemberOf,category,718,OWASP Top Ten 2007 Category A7 - Broken Authentication and Session Management,4
+320,MemberOf,category,719,OWASP Top Ten 2007 Category A8 - Insecure Cryptographic Storage,4
+321,MemberOf,category,720,OWASP Top Ten 2007 Category A9 - Insecure Communications,4
+322,MemberOf,category,721,OWASP Top Ten 2007 Category A10 - Failure to Restrict URL Access,11
+323,MemberOf,category,722,OWASP Top Ten 2004 Category A1 - Unvalidated Input,904
+324,MemberOf,category,723,OWASP Top Ten 2004 Category A2 - Broken Access Control,269
+325,MemberOf,category,724,OWASP Top Ten 2004 Category A3 - Broken Authentication and Session Management,77
+326,MemberOf,category,725,OWASP Top Ten 2004 Category A4 - Cross-Site Scripting (XSS) Flaws,130
+327,MemberOf,category,726,OWASP Top Ten 2004 Category A5 - Buffer Overflows,150
+328,MemberOf,category,727,OWASP Top Ten 2004 Category A6 - Injection Flaws,155
+329,MemberOf,category,728,OWASP Top Ten 2004 Category A7 - Improper Error Handling,102
+330,MemberOf,category,729,OWASP Top Ten 2004 Category A8 - Insecure Storage,49
+331,MemberOf,category,730,OWASP Top Ten 2004 Category A9 - Denial of Service,885
+332,MemberOf,category,731,OWASP Top Ten 2004 Category A10 - Insecure Configuration Management,250
+333,MemberOf,category,737,CERT C Secure Coding Standard (2008) Chapter 4 - Expressions (EXP),382
+334,MemberOf,category,738,CERT C Secure Coding Standard (2008) Chapter 5 - Integers (INT),1070
+335,MemberOf,category,739,CERT C Secure Coding Standard (2008) Chapter 6 - Floating Point (FLP),271
+336,MemberOf,category,740,CERT C Secure Coding Standard (2008) Chapter 7 - Arrays (ARR),60
+337,MemberOf,category,741,CERT C Secure Coding Standard (2008) Chapter 8 - Characters and Strings (STR),195
+338,MemberOf,category,742,CERT C Secure Coding Standard (2008) Chapter 9 - Memory Management (MEM),1430
+339,MemberOf,category,743,CERT C Secure Coding Standard (2008) Chapter 10 - Input Output (FIO),284
+340,MemberOf,category,744,CERT C Secure Coding Standard (2008) Chapter 11 - Environment (ENV),72
+341,MemberOf,category,745,CERT C Secure Coding Standard (2008) Chapter 12 - Signals (SIG),7
+342,MemberOf,category,746,CERT C Secure Coding Standard (2008) Chapter 13 - Error Handling (ERR),569
+343,MemberOf,category,747,CERT C Secure Coding Standard (2008) Chapter 14 - Miscellaneous (MSC),637
+344,MemberOf,category,748,CERT C Secure Coding Standard (2008) Appendix - POSIX (POS),9
+345,MemberOf,category,751,2009 Top 25 - Insecure Interaction Between Components,858
+346,MemberOf,category,752,2009 Top 25 - Risky Resource Management,224
+347,MemberOf,category,753,2009 Top 25 - Porous Defenses,44
+348,MemberOf,category,801,2010 Top 25 - Insecure Interaction Between Components,335
+349,MemberOf,category,802,2010 Top 25 - Risky Resource Management,726
+350,MemberOf,category,803,2010 Top 25 - Porous Defenses,42
+351,MemberOf,category,808,2010 Top 25 - Weaknesses On the Cusp,500
+352,MemberOf,category,810,OWASP Top Ten 2010 Category A1 - Injection,38
+353,MemberOf,category,811,OWASP Top Ten 2010 Category A2 - Cross-Site Scripting (XSS),130
+354,MemberOf,category,812,OWASP Top Ten 2010 Category A3 - Broken Authentication and Session Management,5
+355,MemberOf,category,813,OWASP Top Ten 2010 Category A4 - Insecure Direct Object References,261
+356,MemberOf,category,814,OWASP Top Ten 2010 Category A5 - Cross-Site Request Forgery(CSRF),27
+357,MemberOf,category,815,OWASP Top Ten 2010 Category A6 - Security Misconfiguration,89
+358,MemberOf,category,816,OWASP Top Ten 2010 Category A7 - Insecure Cryptographic Storage,188
+359,MemberOf,category,817,OWASP Top Ten 2010 Category A8 - Failure to Restrict URL Access,16
+360,MemberOf,category,818,OWASP Top Ten 2010 Category A9 - Insufficient Transport Layer Protection,4
+361,MemberOf,category,819,OWASP Top Ten 2010 Category A10 - Unvalidated Redirects and Forwards,33
+362,MemberOf,category,840,Business Logic Errors,74
+363,MemberOf,category,845,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 2 - Input Validation and Data Sanitization (IDS),97
+364,MemberOf,category,846,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 3 - Declarations and Initialization (DCL),23
+365,MemberOf,category,847,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 4 - Expressions (EXP),6
+366,MemberOf,category,848,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 5 - Numeric Types and Operations (NUM),266
+367,MemberOf,category,850,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 7 - Methods (MET),494
+368,MemberOf,category,851,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 8 - Exceptional Behavior (ERR),160
+369,MemberOf,category,852,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 9 - Visibility and Atomicity (VNA),24
+370,MemberOf,category,853,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 10 - Locking (LCK),7
+371,MemberOf,category,857,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 14 - Input Output (FIO),442
+372,MemberOf,category,858,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 15 - Serialization (SER),548
+373,MemberOf,category,859,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 16 - Platform Security (SEC),15
+374,MemberOf,category,861,The CERT Oracle Secure Coding Standard for Java (2011) Chapter 18 - Miscellaneous (MSC),344
+375,MemberOf,category,864,2011 Top 25 - Insecure Interaction Between Components,244
+376,MemberOf,category,865,2011 Top 25 - Risky Resource Management,614
+377,MemberOf,category,866,2011 Top 25 - Porous Defenses,49
+378,MemberOf,category,867,2011 Top 25 - Weaknesses On the Cusp,620
+379,MemberOf,category,871,CERT C++ Secure Coding Section 03 - Expressions (EXP),364
+380,MemberOf,category,872,CERT C++ Secure Coding Section 04 - Integers (INT),1070
+381,MemberOf,category,873,CERT C++ Secure Coding Section 05 - Floating Point Arithmetic (FLP),271
+382,MemberOf,category,874,CERT C++ Secure Coding Section 06 - Arrays and the STL (ARR),60
+383,MemberOf,category,875,CERT C++ Secure Coding Section 07 - Characters and Strings (STR),195
+384,MemberOf,category,876,CERT C++ Secure Coding Section 08 - Memory Management (MEM),1504
+385,MemberOf,category,877,CERT C++ Secure Coding Section 09 - Input Output (FIO),404
+386,MemberOf,category,878,CERT C++ Secure Coding Section 10 - Environment (ENV),72
+387,MemberOf,category,879,CERT C++ Secure Coding Section 11 - Signals (SIG),7
+388,MemberOf,category,880,CERT C++ Secure Coding Section 12 - Exceptions and Error Handling (ERR),229
+389,MemberOf,category,882,CERT C++ Secure Coding Section 14 - Concurrency (CON),10
+390,MemberOf,category,883,CERT C++ Secure Coding Section 49 - Miscellaneous (MSC),683
+391,MemberOf,category,901,SFP Primary Cluster: Privilege,15
+392,MemberOf,category,905,SFP Primary Cluster: Predictability,1
+393,MemberOf,category,929,OWASP Top Ten 2013 Category A1 - Injection,132
+394,MemberOf,category,930,OWASP Top Ten 2013 Category A2 - Broken Authentication and Session Management,9
+395,MemberOf,category,931,OWASP Top Ten 2013 Category A3 - Cross-Site Scripting (XSS),130
+396,MemberOf,category,932,OWASP Top Ten 2013 Category A4 - Insecure Direct Object References,238
+397,MemberOf,category,933,OWASP Top Ten 2013 Category A5 - Security Misconfiguration,89
+398,MemberOf,category,934,OWASP Top Ten 2013 Category A6 - Sensitive Data Exposure,200
+399,MemberOf,category,935,OWASP Top Ten 2013 Category A7 - Missing Function Level Access Control,9
+400,MemberOf,category,936,OWASP Top Ten 2013 Category A8 - Cross-Site Request Forgery (CSRF),27
+401,MemberOf,category,938,OWASP Top Ten 2013 Category A10 - Unvalidated Redirects and Forwards,33
+402,MemberOf,category,944,SFP Secondary Cluster: Access Management,17
+403,MemberOf,category,945,SFP Secondary Cluster: Insecure Resource Access,9
+404,MemberOf,category,946,SFP Secondary Cluster: Insecure Resource Permissions,13
+405,MemberOf,category,947,SFP Secondary Cluster: Authentication Bypass,2
+406,MemberOf,category,949,SFP Secondary Cluster: Faulty Endpoint Authentication,77
+407,MemberOf,category,952,SFP Secondary Cluster: Missing Authentication,2
+408,MemberOf,category,953,SFP Secondary Cluster: Missing Endpoint Authentication,2
+409,MemberOf,category,955,SFP Secondary Cluster: Unrestricted Authentication,1
+410,MemberOf,category,956,SFP Secondary Cluster: Channel Attack,11
+411,MemberOf,category,958,SFP Secondary Cluster: Broken Cryptography,39
+412,MemberOf,category,962,SFP Secondary Cluster: Unchecked Status Condition,100
+413,MemberOf,category,963,SFP Secondary Cluster: Exposed Data,692
+414,MemberOf,category,964,SFP Secondary Cluster: Exposure Temporary File,53
+415,MemberOf,category,966,SFP Secondary Cluster: Other Exposures,12
+416,MemberOf,category,967,SFP Secondary Cluster: State Disclosure,29
+417,MemberOf,category,968,SFP Secondary Cluster: Covert Channel,2
+418,MemberOf,category,969,SFP Secondary Cluster: Faulty Memory Release,14
+419,MemberOf,category,970,SFP Secondary Cluster: Faulty Buffer Access,603
+420,MemberOf,category,971,SFP Secondary Cluster: Faulty Pointer Use,364
+421,MemberOf,category,974,SFP Secondary Cluster: Incorrect Buffer Length Computation,60
+422,MemberOf,category,975,SFP Secondary Cluster: Architecture,201
+423,MemberOf,category,977,SFP Secondary Cluster: Design,154
+424,MemberOf,category,980,SFP Secondary Cluster: Link in Resource Name Resolution,1
+425,MemberOf,category,981,SFP Secondary Cluster: Path Traversal,374
+426,MemberOf,category,982,SFP Secondary Cluster: Failure to Release Resource,2
+427,MemberOf,category,983,SFP Secondary Cluster: Faulty Resource Use,87
+428,MemberOf,category,985,SFP Secondary Cluster: Unrestricted Consumption,347
+429,MemberOf,category,986,SFP Secondary Cluster: Missing Lock,14
+430,MemberOf,category,988,SFP Secondary Cluster: Race Condition Window,22
+431,MemberOf,category,990,SFP Secondary Cluster: Tainted Input to Command,470
+432,MemberOf,category,991,SFP Secondary Cluster: Tainted Input to Environment,108
+433,MemberOf,category,992,SFP Secondary Cluster: Faulty Input Transformation,25
+434,MemberOf,category,993,SFP Secondary Cluster: Incorrect Input Handling,13
+435,MemberOf,category,994,SFP Secondary Cluster: Tainted Input to Variable,769
+436,MemberOf,category,998,SFP Secondary Cluster: Glitch in Computation,543
+437,MemberOf,view,1000,Research Concepts,133
+438,MemberOf,view,1003,Weaknesses for Simplified Mapping of Published Vulnerabilities,1527
+439,MemberOf,view,1200,Weaknesses in the 2019 CWE Top 25 Most Dangerous Software Errors,3003
+440,MemberOf,view,1337,Weaknesses in the 2021 CWE Top 25 Most Dangerous Software Weaknesses,2747
+441,MemberOf,view,1340,CISQ Data Protection Measures,1033
+442,MemberOf,view,1350,Weaknesses in the 2020 CWE Top 25 Most Dangerous Software Weaknesses,2994
+443,MemberOf,view,1387,Weaknesses in the 2022 CWE Top 25 Most Dangerous Software Weaknesses,2977
+444,MemberOf,view,1425,Weaknesses in the 2023 CWE Top 25 Most Dangerous Software Weaknesses,2733
+445,MemberOf,view,1430,Weaknesses in the 2024 CWE Top 25 Most Dangerous Software Weaknesses,3089
+446,MemberOf,view,635,Weaknesses Originally Used by NVD from 2008 to 2016,1216
+447,MemberOf,view,884,CWE Cross-section,3242
+448,ParentOf,base,1021,Improper Restriction of Rendered UI Layers or Frames,1
+449,ParentOf,base,1024,Comparison of Incompatible Types,66
+450,ParentOf,base,1025,Comparison Using Wrong Factors,66
+451,ParentOf,base,1058,Invokable Control Element in Multi-Thread Context with non-Final Static Storable or Member Element,21
+452,ParentOf,base,112,Missing XML Validation,557
+453,ParentOf,base,117,Improper Output Neutralization for Logs,572
+454,ParentOf,base,1173,Improper Use of Validation Framework,553
+455,ParentOf,base,1188,Initialization of a Resource with an Insecure Default,23
+456,ParentOf,base,1189,Improper Isolation of Shared Resources on System-on-a-Chip (SoC),14
+457,ParentOf,base,1190,DMA Device Enabled Too Early in Boot Phase,2
+458,ParentOf,base,1191,On-Chip Debug and Test Interface With Improper Access Control,17
+459,ParentOf,base,1193,Power-On of Untrusted Execution Core Before Enabling Fabric Access Control,2
+460,ParentOf,base,120,Buffer Copy without Checking Size of Input ('Classic Buffer Overflow'),701
+461,ParentOf,base,1220,Insufficient Granularity of Access Control,17
+462,ParentOf,base,1223,Race Condition for Write-Once Attributes,10
+463,ParentOf,base,1224,Improper Restriction of Write-Once Bit Fields,17
+464,ParentOf,base,123,Write-what-where Condition,321
+465,ParentOf,base,1230,Exposure of Sensitive Information Through Metadata,9
+466,ParentOf,base,1231,Improper Prevention of Lock Bit Modification,17
+467,ParentOf,base,1232,Improper Lock Behavior After Power State Transition,7
+468,ParentOf,base,1233,Security-Sensitive Hardware Controls with Missing Lock Bit Protection,24
+469,ParentOf,base,1234,Hardware Internal or Debug Modes Allow Override of Locks,7
+470,ParentOf,base,1235,Incorrect Use of Autoboxing and Unboxing for Performance Critical Operations,250
+471,ParentOf,base,1236,Improper Neutralization of Formula Elements in a CSV File,60
+472,ParentOf,base,124,Buffer Underwrite ('Buffer Underflow'),247
+473,ParentOf,base,1240,Use of a Cryptographic Primitive with a Risky Implementation,27
+474,ParentOf,base,1242,Inclusion of Undocumented Features or Chicken Bits,17
+475,ParentOf,base,1244,Internal Asset Exposed to Unsafe Debug Access Level or State,3
+476,ParentOf,base,1246,Improper Write Handling in Limited-write Non-Volatile Memories,250
+477,ParentOf,base,1248,Semiconductor Defects in Hardware Logic with Security-Sensitive Implications,43
+478,ParentOf,base,125,Out-of-bounds Read,148
+479,ParentOf,base,1252,CPU Hardware Not Configured to Support Exclusivity of Write and Execute Operations,17
+480,ParentOf,base,1253,Incorrect Selection of Fuse Values,43
+481,ParentOf,base,1254,Incorrect Comparison Logic Granularity,79
+482,ParentOf,base,1256,Improper Restriction of Software Interfaces to Hardware Features,9
+483,ParentOf,base,1257,Improper Access Control Applied to Mirrored or Aliased Memory Regions,17
+484,ParentOf,base,1258,Exposure of Sensitive System Information Due to Uncleared Debug Information,125
+485,ParentOf,base,1259,Improper Restriction of Security Token Assignment,17
+486,ParentOf,base,1260,Improper Handling of Overlap Between Protected Memory Ranges,17
+487,ParentOf,base,1262,Improper Access Control for Register Interface,17
+488,ParentOf,base,1267,Policy Uses Obsolete Encoding,17
+489,ParentOf,base,1268,Policy Privileges are not Assigned Consistently Between Control and Data Agents,17
+490,ParentOf,base,1269,Product Released in Non-Release Configuration,43
+491,ParentOf,base,1270,Generation of Incorrect Security Tokens,17
+492,ParentOf,base,1273,Device Unlock Credential Sharing,125
+493,ParentOf,base,1274,Improper Access Control for Volatile Memory Containing Boot Code,17
+494,ParentOf,base,1276,Hardware Child Block Incorrectly Connected to Parent System,17
+495,ParentOf,base,1278,Missing Protection Against Hardware Reverse Engineering Using Integrated Circuit (IC) Imaging Techniques,43
+496,ParentOf,base,1279,Cryptographic Operations are run Before Supporting Units are Ready,23
+497,ParentOf,base,128,Wrap-around Error,7
+498,ParentOf,base,1280,Access Control Check Implemented After Asset is Accessed,19
+499,ParentOf,base,1282,Assumed-Immutable Data is Stored in Writable Memory,14
+500,ParentOf,base,1283,Mutable Attestation or Measurement Reporting Data,17
+501,ParentOf,base,1284,Improper Validation of Specified Quantity in Input,1106
+502,ParentOf,base,1285,"Improper Validation of Specified Index, Position, or Offset in Input",553
+503,ParentOf,base,1286,Improper Validation of Syntactic Correctness of Input,553
+504,ParentOf,base,1287,Improper Validation of Specified Type of Input,553
+505,ParentOf,base,1288,Improper Validation of Consistency within Input,553
+506,ParentOf,base,1289,Improper Validation of Unsafe Equivalence in Input,553
+507,ParentOf,base,1290,Incorrect Decoding of Security Identifiers,17
+508,ParentOf,base,1291,Public Key Re-Use for Signing both Debug and Production Code,43
+509,ParentOf,base,1292,Incorrect Conversion of Security Identifiers,17
+510,ParentOf,base,1293,Missing Source Correlation of Multiple Independent Data,69
+511,ParentOf,base,1295,Debug Messages Revealing Unnecessary Information,125
+512,ParentOf,base,1296,Incorrect Chaining or Granularity of Debug Components,17
+513,ParentOf,base,1297,Unprotected Confidential Information on Device is Accessible by OSAT Vendors,9
+514,ParentOf,base,1298,Hardware Logic Contains Race Conditions,10
+515,ParentOf,base,130,Improper Handling of Length Parameter Inconsistency,74
+516,ParentOf,base,1300,Improper Protection of Physical Side Channels,30
+517,ParentOf,base,1303,Non-Transparent Sharing of Microarchitectural Resources,15
+518,ParentOf,base,1304,Improperly Preserved Integrity of Hardware Configuration State During a Power Save/Restore Operation,17
+519,ParentOf,base,131,Incorrect Calculation of Buffer Size,28
+520,ParentOf,base,1311,Improper Translation of Security Attributes by Fabric Bridge,17
+521,ParentOf,base,1312,Missing Protection for Mirrored Regions in On-Chip Fabric Firewall,17
+522,ParentOf,base,1313,Hardware Allows Activation of Test or Debug Logic at Runtime,17
+523,ParentOf,base,1314,Missing Write Protection for Parametric Data Values,4
+524,ParentOf,base,1315,Improper Setting of Bus Controlling Capability in Fabric End-point,17
+525,ParentOf,base,1316,Fabric-Address Map Allows Programming of Unwarranted Overlaps of Protected and Unprotected Ranges,17
+526,ParentOf,base,1317,Improper Access Control in Fabric Bridge,17
+527,ParentOf,base,1318,Missing Support for Security Features in On-chip Fabrics or Buses,43
+528,ParentOf,base,1319,Improper Protection against Electromagnetic Fault Injection (EM-FI),43
+529,ParentOf,base,1320,Improper Protection for Outbound Error Messages and Alert Signals,17
+530,ParentOf,base,1323,Improper Management of Sensitive Trace Data,17
+531,ParentOf,base,1325,Improperly Controlled Sequential Memory Allocation,74
+532,ParentOf,base,1326,Missing Immutable Root of Trust in Hardware,43
+533,ParentOf,base,1327,Binding to an Unrestricted IP Address,14
+534,ParentOf,base,1328,Security Version Number Mutable to Older Versions,9
+535,ParentOf,base,1331,Improper Isolation of Shared Resources in Network On Chip (NoC),14
+536,ParentOf,base,1334,Unauthorized Error Injection Can Degrade Hardware Redundancy,17
+537,ParentOf,base,1335,Incorrect Bitwise Shift of Integer,7
+538,ParentOf,base,1336,Improper Neutralization of Special Elements Used in a Template Engine,97
+539,ParentOf,base,1338,Improper Protections Against Hardware Overheating,43
+540,ParentOf,base,1339,Insufficient Precision or Accuracy of a Real Number,7
+541,ParentOf,base,134,Use of Externally-Controlled Format String,581
+542,ParentOf,base,135,Incorrect Calculation of Multi-Byte String Length,7
+543,ParentOf,base,1389,Incorrect Parsing of Numbers with Different Radices,18
+544,ParentOf,base,1420,Exposure of Sensitive Information during Transient Execution,35
+545,ParentOf,base,1427,Improper Neutralization of Input Used for LLM Prompting,64
+546,ParentOf,base,15,External Control of System or Configuration Setting,554
+547,ParentOf,base,170,Improper Null Termination,553
+548,ParentOf,base,179,Incorrect Behavior Order: Early Validation,555
+549,ParentOf,base,182,Collapse of Data into Unsafe Value,43
+550,ParentOf,base,183,Permissive List of Allowed Inputs,66
+551,ParentOf,base,184,Incomplete List of Disallowed Inputs,43
+552,ParentOf,base,186,Overly Restrictive Regular Expression,2
+553,ParentOf,base,190,Integer Overflow or Wraparound,567
+554,ParentOf,base,191,Integer Underflow (Wrap or Wraparound),14
+555,ParentOf,base,193,Off-by-one Error,14
+556,ParentOf,base,197,Numeric Truncation Error,99
+557,ParentOf,base,201,Insertion of Sensitive Information Into Sent Data,125
+558,ParentOf,base,203,Observable Discrepancy,250
+559,ParentOf,base,204,Observable Response Discrepancy,15
+560,ParentOf,base,205,Observable Behavioral Discrepancy,15
+561,ParentOf,base,208,Observable Timing Discrepancy,15
+562,ParentOf,base,209,Generation of Error Message Containing Sensitive Information,262
+563,ParentOf,base,210,Self-generated Error Message Containing Sensitive Information,81
+564,ParentOf,base,211,Externally-Generated Error Message Containing Sensitive Information,81
+565,ParentOf,base,212,Improper Removal of Sensitive Information Before Storage or Transfer,70
+566,ParentOf,base,213,Exposure of Sensitive Information Due to Incompatible Policies,125
+567,ParentOf,base,214,Invocation of Process Using Visible Sensitive Information,78
+568,ParentOf,base,215,Insertion of Sensitive Information Into Debugging Code,125
+569,ParentOf,base,22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),14
+570,ParentOf,base,226,Sensitive Information in Resource Not Removed Before Reuse,2
+571,ParentOf,base,23,Relative Path Traversal,579
+572,ParentOf,base,248,Uncaught Exception,12
+573,ParentOf,base,250,Execution with Unnecessary Privileges,7
+574,ParentOf,base,252,Unchecked Return Value,116
+575,ParentOf,base,253,Incorrect Check of Function Return Value,58
+576,ParentOf,base,256,Plaintext Storage of a Password,2
+577,ParentOf,base,257,Storing Passwords in a Recoverable Format,2
+578,ParentOf,base,260,Password in Configuration File,2
+579,ParentOf,base,261,Weak Encoding for Password,2
+580,ParentOf,base,266,Incorrect Privilege Assignment,7
+581,ParentOf,base,267,Privilege Defined With Unsafe Actions,7
+582,ParentOf,base,268,Privilege Chaining,7
+583,ParentOf,base,270,Privilege Context Switching Error,7
+584,ParentOf,base,273,Improper Check for Dropped Privileges,116
+585,ParentOf,base,274,Improper Handling of Insufficient Privileges,19
+586,ParentOf,base,280,Improper Handling of Insufficient Permissions or Privileges,12
+587,ParentOf,base,288,Authentication Bypass Using an Alternate Path or Channel,19
+588,ParentOf,base,290,Authentication Bypass by Spoofing,2
+589,ParentOf,base,294,Authentication Bypass by Capture-replay,2
+590,ParentOf,base,295,Improper Certificate Validation,4
+591,ParentOf,base,296,Improper Following of a Certificate's Chain of Trust,7
+592,ParentOf,base,299,Improper Check for Certificate Revocation,7
+593,ParentOf,base,306,Missing Authentication for Critical Function,4
+594,ParentOf,base,307,Improper Restriction of Excessive Authentication Attempts,2
+595,ParentOf,base,312,Cleartext Storage of Sensitive Information,64
+596,ParentOf,base,319,Cleartext Transmission of Sensitive Information,8
+597,ParentOf,base,322,Key Exchange without Entity Authentication,2
+598,ParentOf,base,328,Use of Weak Hash,27
+599,ParentOf,base,347,Improper Verification of Cryptographic Signature,138
+600,ParentOf,base,348,Use of Less Trusted Source,69
+601,ParentOf,base,349,Acceptance of Extraneous Untrusted Data With Trusted Data,69
+602,ParentOf,base,351,Insufficient Type Distinction,69
+603,ParentOf,base,353,Missing Support for Integrity Check,69
+604,ParentOf,base,354,Improper Validation of Integrity Check Value,196
+605,ParentOf,base,357,Insufficient UI Warning of Dangerous Operations,43
+606,ParentOf,base,358,Improperly Implemented Security Check for Standard,43
+607,ParentOf,base,359,Exposure of Private Personal Information to an Unauthorized Actor,125
+608,ParentOf,base,36,Absolute Path Traversal,579
+609,ParentOf,base,360,Trust of System Event Data,69
+610,ParentOf,base,363,Race Condition Enabling Link Following,12
+611,ParentOf,base,364,Signal Handler Race Condition,10
+612,ParentOf,base,366,Race Condition within a Thread,24
+613,ParentOf,base,367,Time-of-check Time-of-use (TOCTOU) Race Condition,20
+614,ParentOf,base,368,Context Switching Race Condition,10
+615,ParentOf,base,369,Divide By Zero,28
+616,ParentOf,base,374,Passing Mutable Objects to an Untrusted Method,14
+617,ParentOf,base,375,Returning a Mutable Object to an Untrusted Caller,14
+618,ParentOf,base,378,Creation of Temporary File With Insecure Permissions,53
+619,ParentOf,base,379,Creation of Temporary File in Directory with Insecure Permissions,53
+620,ParentOf,base,390,Detection of Error Condition Without Action,12
+621,ParentOf,base,391,Unchecked Error Condition,58
+622,ParentOf,base,392,Missing Report of Error Condition,12
+623,ParentOf,base,394,Unexpected Status Code or Return Value,58
+624,ParentOf,base,395,Use of NullPointerException Catch to Detect NULL Pointer Dereference,12
+625,ParentOf,base,396,Declaration of Catch for Generic Exception,12
+626,ParentOf,base,408,Incorrect Behavior Order: Early Amplification,2
+627,ParentOf,base,412,Unrestricted Externally Accessible Lock,7
+628,ParentOf,base,413,Improper Resource Locking,7
+629,ParentOf,base,414,Missing Lock Check,7
+630,ParentOf,base,421,Race Condition During Access to Alternate Channel,10
+631,ParentOf,base,425,Direct Request ('Forced Browsing'),8
+632,ParentOf,base,426,Untrusted Search Path,14
+633,ParentOf,base,427,Uncontrolled Search Path Element,28
+634,ParentOf,base,428,Unquoted Search Path or Element,28
+635,ParentOf,base,434,Unrestricted Upload of File with Dangerous Type,70
+636,ParentOf,base,455,Non-exit on Failed Initialization,23
+637,ParentOf,base,460,Improper Cleanup on Thrown Exception,14
+638,ParentOf,base,466,Return of Pointer Value Outside of Expected Range,590
+639,ParentOf,base,468,Incorrect Pointer Scaling,7
+640,ParentOf,base,469,Use of Pointer Subtraction to Determine Size,7
+641,ParentOf,base,470,Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection'),558
+642,ParentOf,base,472,External Control of Assumed-Immutable Web Parameter,3
+643,ParentOf,base,476,NULL Pointer Dereference,116
+644,ParentOf,base,480,Use of Incorrect Operator,65
+645,ParentOf,base,483,Incorrect Block Delimitation,65
+646,ParentOf,base,484,Omitted Break Statement in Switch,65
+647,ParentOf,base,488,Exposure of Data Element to Wrong Session,14
+648,ParentOf,base,494,Download of Code Without Integrity Check,139
+649,ParentOf,base,497,Exposure of Sensitive System Information to an Unauthorized Control Sphere,125
+650,ParentOf,base,502,Deserialization of Untrusted Data,4
+651,ParentOf,base,521,Weak Password Requirements,2
+652,ParentOf,base,523,Unprotected Transport of Credentials,2
+653,ParentOf,base,524,Use of Cache Containing Sensitive Information,14
+654,ParentOf,base,532,Insertion of Sensitive Information into Log File,125
+655,ParentOf,base,538,Insertion of Sensitive Information into Externally-Accessible File or Directory,125
+656,ParentOf,base,544,Missing Standardized Error Handling Mechanism,12
+657,ParentOf,base,549,Missing Password Field Masking,2
+658,ParentOf,base,551,Incorrect Behavior Order: Authorization Before Parsing and Canonicalization,5
+659,ParentOf,base,552,Files or Directories Accessible to External Parties,37
+660,ParentOf,base,565,Reliance on Cookies without Validation and Integrity Checking,35
+661,ParentOf,base,567,Unsynchronized Access to Shared Data in a Multithreaded Context,14
+662,ParentOf,base,601,URL Redirection to Untrusted Site ('Open Redirect'),2
+663,ParentOf,base,606,Unchecked Input for Loop Condition,52
+664,ParentOf,base,609,Double-Checked Locking,7
+665,ParentOf,base,611,Improper Restriction of XML External Entity Reference,2
+666,ParentOf,base,617,Reachable Assertion,130
+667,ParentOf,base,624,Executable Regular Expression Error,192
+668,ParentOf,base,625,Permissive Regular Expression,2
+669,ParentOf,base,639,Authorization Bypass Through User-Controlled Key,23
+670,ParentOf,base,640,Weak Password Recovery Mechanism for Forgotten Password,2
+671,ParentOf,base,641,Improper Restriction of Names for Files and Other Resources,45
+672,ParentOf,base,645,Overly Restrictive Account Lockout Mechanism,2
+673,ParentOf,base,648,Incorrect Use of Privileged APIs,7
+674,ParentOf,base,649,Reliance on Obfuscation or Encryption of Security-Relevant Inputs without Integrity Checking,69
+675,ParentOf,base,654,Reliance on a Single Factor in a Security Decision,43
+676,ParentOf,base,663,Use of a Non-reentrant Function in a Concurrent Context,7
+677,ParentOf,base,681,Incorrect Conversion between Numeric Types,36
+678,ParentOf,base,694,Use of Multiple Resources with Duplicate Identifier,45
+679,ParentOf,base,698,Execution After Redirect (EAR),65
+680,ParentOf,base,73,External Control of File Name or Path,554
+681,ParentOf,base,749,Exposed Dangerous Method or Function,17
+682,ParentOf,base,756,Missing Custom Error Page,12
+683,ParentOf,base,757,Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade'),43
+684,ParentOf,base,76,Improper Neutralization of Equivalent Special Elements,28
+685,ParentOf,base,764,Multiple Locks of a Critical Resource,21
+686,ParentOf,base,765,Multiple Unlocks of a Critical Resource,7
+687,ParentOf,base,767,Access to Critical Private Variable via Public Method,14
+688,ParentOf,base,770,Allocation of Resources Without Limits or Throttling,523
+689,ParentOf,base,771,Missing Reference to Active Allocated Resource,250
+690,ParentOf,base,776,Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion'),46
+691,ParentOf,base,778,Insufficient Logging,43
+692,ParentOf,base,779,Logging of Excessive Data,250
+693,ParentOf,base,78,Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection'),222
+694,ParentOf,base,783,Operator Precedence Logic Error,65
+695,ParentOf,base,786,Access of Memory Location Before Start of Buffer,111
+696,ParentOf,base,787,Out-of-bounds Write,148
+697,ParentOf,base,788,Access of Memory Location After End of Buffer,111
+698,ParentOf,base,79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),60
+699,ParentOf,base,798,Use of Hard-coded Credentials,2
+700,ParentOf,base,804,Guessable CAPTCHA,3
+701,ParentOf,base,805,Buffer Access with Incorrect Length Value,111
+702,ParentOf,base,807,Reliance on Untrusted Inputs in a Security Decision,43
+703,ParentOf,base,820,Missing Synchronization,21
+704,ParentOf,base,821,Incorrect Synchronization,21
+705,ParentOf,base,822,Untrusted Pointer Dereference,111
+706,ParentOf,base,823,Use of Out-of-range Pointer Offset,111
+707,ParentOf,base,824,Access of Uninitialized Pointer,148
+708,ParentOf,base,825,Expired Pointer Dereference,111
+709,ParentOf,base,829,Inclusion of Functionality from Untrusted Control Sphere,70
+710,ParentOf,base,832,Unlock of a Resource that is not Locked,7
+711,ParentOf,base,833,Deadlock,14
+712,ParentOf,base,838,Inappropriate Encoding for Output Context,38
+713,ParentOf,base,843,Access of Resource Using Incompatible Type ('Type Confusion'),36
+714,ParentOf,base,88,Improper Neutralization of Argument Delimiters in a Command ('Argument Injection'),222
+715,ParentOf,base,89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),30
+716,ParentOf,base,908,Use of Uninitialized Resource,46
+717,ParentOf,base,91,XML Injection (aka Blind XPath Injection),60
+718,ParentOf,base,914,Improper Control of Dynamically-Identified Variables,47
+719,ParentOf,base,915,Improperly Controlled Modification of Dynamically-Determined Object Attributes,2
+720,ParentOf,base,916,Use of Password Hash With Insufficient Computational Effort,39
+721,ParentOf,base,917,Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection'),222
+722,ParentOf,base,918,Server-Side Request Forgery (SSRF),1
+723,ParentOf,base,920,Improper Restriction of Power Consumption,500
+724,ParentOf,base,921,Storage of Sensitive Data in a Mechanism without Access Control,56
+725,ParentOf,base,924,Improper Enforcement of Message Integrity During Transmission in a Communication Channel,138
+726,ParentOf,base,93,Improper Neutralization of CRLF Sequences ('CRLF Injection'),30
+727,ParentOf,base,939,Improper Authorization in Handler for Custom URL Scheme,4
+728,ParentOf,base,94,Improper Control of Generation of Code ('Code Injection'),62
+729,ParentOf,base,940,Improper Verification of Source of a Communication Channel,8
+730,ParentOf,base,96,Improper Neutralization of Directives in Statically Saved Code ('Static Code Injection'),97
+731,ParentOf,chain,680,Integer Overflow to Buffer Overflow,228
+732,ParentOf,chain,690,Unchecked Return Value to NULL Pointer Dereference,6
+733,ParentOf,class,1023,Incomplete Comparison with Missing Factors,66
+734,ParentOf,class,1039,Automated Recognition Mechanism with Inadequate Detection or Handling of Adversarial Input Perturbations,109
+735,ParentOf,class,114,Process Control,599
+736,ParentOf,class,119,Improper Restriction of Operations within the Bounds of a Memory Buffer,553
+737,ParentOf,class,1263,Improper Physical Access Control,17
+738,ParentOf,class,1294,Insecure Security Identifier Mechanism,17
+739,ParentOf,class,1390,Weak Authentication,2
+740,ParentOf,class,1419,Incorrect Initialization of Resource,23
+741,ParentOf,class,185,Incorrect Regular Expression,66
+742,ParentOf,class,200,Exposure of Sensitive Information to an Unauthorized Actor,14
+743,ParentOf,class,269,Improper Privilege Management,17
+744,ParentOf,class,271,Privilege Dropping / Lowering Errors,7
+745,ParentOf,class,282,Improper Ownership Management,17
+746,ParentOf,class,285,Improper Authorization,34
+747,ParentOf,class,286,Incorrect User Management,17
+748,ParentOf,class,287,Improper Authentication,34
+749,ParentOf,class,311,Missing Encryption of Sensitive Data,43
+750,ParentOf,class,326,Inadequate Encryption Strength,43
+751,ParentOf,class,327,Use of a Broken or Risky Cryptographic Algorithm,43
+752,ParentOf,class,330,Use of Insufficiently Random Values,43
+753,ParentOf,class,345,Insufficient Verification of Data Authenticity,43
+754,ParentOf,class,346,Origin Validation Error,155
+755,ParentOf,class,377,Insecure Temporary File,14
+756,ParentOf,class,402,Transmission of Private Resources into a New Sphere ('Resource Leak'),14
+757,ParentOf,class,405,Asymmetric Resource Consumption (Amplification),250
+758,ParentOf,class,424,Improper Protection of Alternate Path,43
+759,ParentOf,class,441,Unintended Proxy or Intermediary ('Confused Deputy'),1
+760,ParentOf,class,522,Insufficiently Protected Credentials,16
+761,ParentOf,class,602,Client-Side Enforcement of Server-Side Security,43
+762,ParentOf,class,636,Not Failing Securely ('Failing Open'),12
+763,ParentOf,class,638,Not Using Complete Mediation,4
+764,ParentOf,class,642,External Control of Critical State Data,14
+765,ParentOf,class,653,Improper Isolation or Compartmentalization,43
+766,ParentOf,class,655,Insufficient Psychological Acceptability,43
+767,ParentOf,class,656,Reliance on Security Through Obscurity,43
+768,ParentOf,class,667,Improper Locking,28
+769,ParentOf,class,732,Incorrect Permission Assignment for Critical Resource,23
+770,ParentOf,class,75,Failure to Sanitize Special Elements into a Different Plane (Special Element Injection),30
+771,ParentOf,class,77,Improper Neutralization of Special Elements used in a Command ('Command Injection'),60
+772,ParentOf,class,862,Missing Authorization,26
+773,ParentOf,class,863,Incorrect Authorization,26
+774,ParentOf,class,909,Missing Initialization of Resource,46
+775,ParentOf,class,923,Improper Restriction of Communication Channel to Intended Endpoints,17
+776,ParentOf,class,943,Improper Neutralization of Special Elements in Data Query Logic,30
+777,ParentOf,class,99,Improper Control of Resource Identifiers ('Resource Injection'),30
+778,ParentOf,composite,352,Cross-Site Request Forgery (CSRF),138
+779,ParentOf,composite,384,Session Fixation,2
+780,ParentOf,composite,689,Permission Race Condition During Resource Copy,10
+781,ParentOf,variant,102,Struts: Duplicate Validation Forms,553
+782,ParentOf,variant,103,Struts: Incomplete validate() Method Definition,553
+783,ParentOf,variant,104,Struts: Form Bean Does Not Extend Validation Class,553
+784,ParentOf,variant,105,Struts: Form Field Without Validator,553
+785,ParentOf,variant,106,Struts: Plug-in Framework not in Use,553
+786,ParentOf,variant,107,Struts: Unused Validation Form,553
+787,ParentOf,variant,1077,Floating Point Comparison with Incorrect Operator,66
+788,ParentOf,variant,108,Struts: Unvalidated Action Form,553
+789,ParentOf,variant,109,Struts: Validator Turned Off,553
+790,ParentOf,variant,1096,Singleton Class Instance Creation without Proper Locking or Synchronization,14
+791,ParentOf,variant,11,ASP.NET Misconfiguration: Creating Debug Binary,8
+792,ParentOf,variant,110,Struts: Validator Without Form Field,553
+793,ParentOf,variant,111,Direct Use of Unsafe JNI,553
+794,ParentOf,variant,113,Improper Neutralization of CRLF Sequences in HTTP Headers ('HTTP Request/Response Splitting'),554
+795,ParentOf,variant,121,Stack-based Buffer Overflow,247
+796,ParentOf,variant,122,Heap-based Buffer Overflow,247
+797,ParentOf,variant,126,Buffer Over-read,365
+798,ParentOf,variant,127,Buffer Under-read,365
+799,ParentOf,variant,129,Improper Validation of Array Index,553
+800,ParentOf,variant,1321,Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution'),4
+801,ParentOf,variant,1385,Missing Origin Validation in WebSockets,8
+802,ParentOf,variant,192,Integer Coercion Error,33
+803,ParentOf,variant,194,Unexpected Sign Extension,99
+804,ParentOf,variant,195,Signed to Unsigned Conversion Error,99
+805,ParentOf,variant,196,Unsigned to Signed Conversion Error,99
+806,ParentOf,variant,234,Failure to Handle Missing Parameter,5
+807,ParentOf,variant,235,Improper Handling of Extra Parameters,5
+808,ParentOf,variant,236,Improper Handling of Undefined Parameters,5
+809,ParentOf,variant,24,Path Traversal: '../filedir',50
+810,ParentOf,variant,243,Creation of chroot Jail Without Changing Working Directory,35
+811,ParentOf,variant,25,Path Traversal: '/../filedir',50
+812,ParentOf,variant,26,Path Traversal: '/dir/../filename',50
+813,ParentOf,variant,27,Path Traversal: 'dir/../../filename',50
+814,ParentOf,variant,28,Path Traversal: '..\filedir',50
+815,ParentOf,variant,29,Path Traversal: '\..\filename',50
+816,ParentOf,variant,291,Reliance on IP Address for Authentication,3
+817,ParentOf,variant,297,Improper Validation of Certificate with Host Mismatch,7
+818,ParentOf,variant,298,Improper Validation of Certificate Expiration,7
+819,ParentOf,variant,30,Path Traversal: '\dir\..\filename',50
+820,ParentOf,variant,31,Path Traversal: 'dir\..\..\filename',50
+821,ParentOf,variant,313,Cleartext Storage in a File or on Disk,157
+822,ParentOf,variant,314,Cleartext Storage in the Registry,157
+823,ParentOf,variant,315,Cleartext Storage of Sensitive Information in a Cookie,157
+824,ParentOf,variant,316,Cleartext Storage of Sensitive Information in Memory,157
+825,ParentOf,variant,317,Cleartext Storage of Sensitive Information in GUI,157
+826,ParentOf,variant,318,Cleartext Storage of Sensitive Information in Executable,157
+827,ParentOf,variant,32,Path Traversal: '...' (Triple Dot),50
+828,ParentOf,variant,33,Path Traversal: '....' (Multiple Dot),50
+829,ParentOf,variant,332,Insufficient Entropy in PRNG,1
+830,ParentOf,variant,333,Improper Handling of Insufficient Entropy in TRNG,13
+831,ParentOf,variant,34,Path Traversal: '....//',50
+832,ParentOf,variant,35,Path Traversal: '.../...//',50
+833,ParentOf,variant,37,Path Traversal: '/absolute/pathname/here',48
+834,ParentOf,variant,38,Path Traversal: '\absolute\pathname\here',48
+835,ParentOf,variant,39,Path Traversal: 'C:dirname',48
+836,ParentOf,variant,40,Path Traversal: '\\UNC\share\name\' (Windows UNC Share),48
+837,ParentOf,variant,456,Missing Initialization of a Variable,46
+838,ParentOf,variant,457,Use of Uninitialized Variable,89
+839,ParentOf,variant,467,Use of sizeof() on a Pointer Type,60
+840,ParentOf,variant,473,PHP External Variable Modification,3
+841,ParentOf,variant,491,Public cloneable() Method Without Final ('Object Hijack'),14
+842,ParentOf,variant,492,Use of Inner Class Containing Sensitive Data,14
+843,ParentOf,variant,493,Critical Public Variable Without Final Modifier,14
+844,ParentOf,variant,498,Cloneable Class Containing Sensitive Information,14
+845,ParentOf,variant,499,Serializable Class Containing Sensitive Data,14
+846,ParentOf,variant,526,Cleartext Storage of Sensitive Information in an Environment Variable,157
+847,ParentOf,variant,543,Use of Singleton Pattern Without Synchronization in a Multithreaded Context,14
+848,ParentOf,variant,548,Exposure of Information Through Directory Listing,78
+849,ParentOf,variant,550,Server-generated Error Message Containing Sensitive Information,81
+850,ParentOf,variant,564,SQL Injection: Hibernate,39
+851,ParentOf,variant,568,finalize() Method Without super.finalize(),2
+852,ParentOf,variant,581,Object Model Violation: Just One of Equals and Hashcode Defined,66
+853,ParentOf,variant,582,"Array Declared Public, Final, and Static",14
+854,ParentOf,variant,583,finalize() Method Declared Public,14
+855,ParentOf,variant,588,Attempt to Access Child of a Non-structure Pointer,18
+856,ParentOf,variant,598,Use of GET Request Method With Sensitive Query Strings,1
+857,ParentOf,variant,599,Missing Validation of OpenSSL Certificate,7
+858,ParentOf,variant,600,Uncaught Exception in Servlet,1
+859,ParentOf,variant,607,Public Static Final Field References Mutable Object,3
+860,ParentOf,variant,608,Struts: Non-private Field in ActionForm Class,14
+861,ParentOf,variant,616,Incomplete Identification of Uploaded File Variables (PHP),69
+862,ParentOf,variant,618,Exposed Unsafe ActiveX Method,1
+863,ParentOf,variant,622,Improper Validation of Function Hook Arguments,553
+864,ParentOf,variant,644,Improper Neutralization of HTTP Headers for Scripting Syntax,19
+865,ParentOf,variant,646,Reliance on File Name or Extension of Externally-Supplied File,69
+866,ParentOf,variant,647,Use of Non-Canonical URL Paths for Authorization Decisions,3
+867,ParentOf,variant,759,Use of a One-Way Hash without a Salt,13
+868,ParentOf,variant,760,Use of a One-Way Hash with a Predictable Salt,13
+869,ParentOf,variant,774,Allocation of File Descriptors or Handles Without Limits or Throttling,74
+870,ParentOf,variant,780,Use of RSA Algorithm without OAEP,27
+871,ParentOf,variant,782,Exposed IOCTL with Insufficient Access Control,1
+872,ParentOf,variant,785,Use of Path Manipulation Function without Maximum-sized Buffer,678
+873,ParentOf,variant,789,Memory Allocation with Excessive Size Value,74
+874,ParentOf,variant,8,J2EE Misconfiguration: Entity Bean Declared Remote,14
+875,ParentOf,variant,80,Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS),130
+876,ParentOf,variant,81,Improper Neutralization of Script in an Error Message Web Page,130
+877,ParentOf,variant,83,Improper Neutralization of Script in Attributes in a Web Page,130
+878,ParentOf,variant,84,Improper Neutralization of Encoded URI Schemes in a Web Page,130
+879,ParentOf,variant,85,Doubled Character XSS Manipulations,130
+880,ParentOf,variant,86,Improper Neutralization of Invalid Characters in Identifiers in Web Pages,130
+881,ParentOf,variant,87,Improper Neutralization of Alternate XSS Syntax,130
+882,ParentOf,variant,926,Improper Export of Android Application Components,9
+883,ParentOf,variant,927,Use of Implicit Intent for Sensitive Communication,23
+884,ParentOf,variant,942,Permissive Cross-domain Policy with Untrusted Domains,3
+885,ParentOf,variant,95,Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection'),97
+886,PeerOf,base,123,Write-what-where Condition,14
+887,PeerOf,base,128,Wrap-around Error,228
+888,PeerOf,base,1287,Improper Validation of Specified Type of Input,44
+889,PeerOf,base,1295,Debug Messages Revealing Unnecessary Information,81
+890,PeerOf,base,1304,Improperly Preserved Integrity of Hardware Configuration State During a Power Save/Restore Operation,69
+891,PeerOf,base,1325,Improperly Controlled Sequential Memory Allocation,4
+892,PeerOf,base,1339,Insufficient Precision or Accuracy of a Real Number,228
+893,PeerOf,base,273,Improper Check for Dropped Privileges,6
+894,PeerOf,base,301,Reflection Attack in an Authentication Protocol,27
+895,PeerOf,base,322,Key Exchange without Entity Authentication,7
+896,PeerOf,base,351,Insufficient Type Distinction,16
+897,PeerOf,base,353,Missing Support for Integrity Check,8
+898,PeerOf,base,386,Symbolic Name not Mapping to Correct Object,13
+899,PeerOf,base,426,Untrusted Search Path,4
+900,PeerOf,base,427,Uncontrolled Search Path Element,10
+901,PeerOf,base,428,Unquoted Search Path or Element,10
+902,PeerOf,base,430,Deployment of Wrong Handler,16
+903,PeerOf,base,502,Deserialization of Untrusted Data,2
+904,PeerOf,base,603,Use of Client-Side Authentication,11
+905,PeerOf,base,79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),27
+906,PeerOf,base,915,Improperly Controlled Modification of Dynamically-Determined Object Attributes,216
+907,PeerOf,base,917,Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection'),4
+908,PeerOf,class,20,Improper Input Validation,69
+909,PeerOf,class,311,Missing Encryption of Sensitive Data,27
+910,PeerOf,class,327,Use of a Broken or Risky Cryptographic Algorithm,4
+911,PeerOf,class,345,Insufficient Verification of Data Authenticity,553
+912,PeerOf,class,436,Interpretation Conflict,16
+913,PeerOf,class,441,Unintended Proxy or Intermediary ('Confused Deputy'),4
+914,PeerOf,class,451,User Interface (UI) Misrepresentation of Critical Information,8
+915,PeerOf,class,602,Client-Side Enforcement of Server-Side Security,11
+916,PeerOf,class,706,Use of Incorrectly-Resolved Name or Reference,45
+917,PeerOf,composite,352,Cross-Site Request Forgery (CSRF),130
+918,PeerOf,variant,415,Double Free,87
+919,PeerOf,variant,416,Use After Free,14
