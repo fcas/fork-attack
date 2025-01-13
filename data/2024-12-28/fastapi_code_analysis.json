@@ -1,0 +1,216 @@
+[
+    {
+        "number": 4,
+        "created_at": "2024-09-02T12:59:41Z",
+        "updated_at": "2024-09-02T12:59:43Z",
+        "url": "https://api.github.com/repos/fcas/fastapi/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/fastapi/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-cookie",
+            "severity": "warning",
+            "description": "Failure to use secure cookies",
+            "name": "py/insecure-cookie",
+            "tags": [
+                "external/cwe/cwe-1004",
+                "external/cwe/cwe-1275",
+                "external/cwe/cwe-614",
+                "security"
+            ],
+            "full_description": "Insecure cookies may be sent in cleartext, which makes them vulnerable to interception.",
+            "help": "# Failure to use secure cookies\nCookies without the `Secure` flag set may be transmittd using HTTP instead of HTTPS, which leaves it vulnerable to being read by a third party.\n\nCookies without the `HttpOnly` flag set are accessible to JavaScript running in the same origin. In case of a Cross-Site Scripting (XSS) vulnerability, the cookie can be stolen by a malicious script.\n\nCookies with the `SameSite` attribute set to `'None'` will be sent with cross-origin requests, which can be controlled by third-party JavaScript code and allow for Cross-Site Request Forgery (CSRF) attacks.\n\n\n## Recommendation\nAlways set `secure` to `True` or add \"; Secure;\" to the cookie's raw value.\n\nAlways set `httponly` to `True` or add \"; HttpOnly;\" to the cookie's raw value.\n\nAlways set `samesite` to `Lax` or `Strict`, or add \"; SameSite=Lax;\", or \"; Samesite=Strict;\" to the cookie's raw header value.\n\n\n## Example\nIn the following examples, the cases marked GOOD show secure cookie attributes being set; whereas in the cases marked BAD they are not set.\n\n\n```python\nfrom flask import Flask, request, make_response, Response\n\n\n@app.route(\"/good1\")\ndef good1():\n    resp = make_response()\n    resp.set_cookie(\"name\", value=\"value\", secure=True, httponly=True, samesite='Strict') # GOOD: Attributes are securely set\n    return resp\n\n\n@app.route(\"/good2\")\ndef good2():\n    resp = make_response()\n    resp.headers['Set-Cookie'] = \"name=value; Secure; HttpOnly; SameSite=Strict\" # GOOD: Attributes are securely set \n    return resp\n\n@app.route(\"/bad1\")\n    resp = make_response()\n    resp.set_cookie(\"name\", value=\"value\", samesite='None') # BAD: the SameSite attribute is set to 'None' and the 'Secure' and 'HttpOnly' attributes are set to False by default.\n    return resp\n```\n\n## References\n* Detectify: [Cookie lack Secure flag](https://support.detectify.com/support/solutions/articles/48001048982-cookie-lack-secure-flag).\n* PortSwigger: [TLS cookie without secure flag set](https://portswigger.net/kb/issues/00500200_tls-cookie-without-secure-flag-set).\n* Common Weakness Enumeration: [CWE-614](https://cwe.mitre.org/data/definitions/614.html).\n* Common Weakness Enumeration: [CWE-1004](https://cwe.mitre.org/data/definitions/1004.html).\n* Common Weakness Enumeration: [CWE-1275](https://cwe.mitre.org/data/definitions/1275.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "562becce0fbe92d2a93a21b0083f51db3eb804f1",
+            "message": {
+                "text": "Cookie is added without the Secure and HttpOnly attributes properly set."
+            },
+            "location": {
+                "path": "docs_src/response_cookies/tutorial002.py",
+                "start_line": 8,
+                "end_line": 8,
+                "start_column": 5,
+                "end_column": 78
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/fastapi/code-scanning/alerts/4/instances"
+    },
+    {
+        "number": 3,
+        "created_at": "2024-09-02T12:59:41Z",
+        "updated_at": "2024-09-02T12:59:43Z",
+        "url": "https://api.github.com/repos/fcas/fastapi/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/fastapi/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-cookie",
+            "severity": "warning",
+            "description": "Failure to use secure cookies",
+            "name": "py/insecure-cookie",
+            "tags": [
+                "external/cwe/cwe-1004",
+                "external/cwe/cwe-1275",
+                "external/cwe/cwe-614",
+                "security"
+            ],
+            "full_description": "Insecure cookies may be sent in cleartext, which makes them vulnerable to interception.",
+            "help": "# Failure to use secure cookies\nCookies without the `Secure` flag set may be transmittd using HTTP instead of HTTPS, which leaves it vulnerable to being read by a third party.\n\nCookies without the `HttpOnly` flag set are accessible to JavaScript running in the same origin. In case of a Cross-Site Scripting (XSS) vulnerability, the cookie can be stolen by a malicious script.\n\nCookies with the `SameSite` attribute set to `'None'` will be sent with cross-origin requests, which can be controlled by third-party JavaScript code and allow for Cross-Site Request Forgery (CSRF) attacks.\n\n\n## Recommendation\nAlways set `secure` to `True` or add \"; Secure;\" to the cookie's raw value.\n\nAlways set `httponly` to `True` or add \"; HttpOnly;\" to the cookie's raw value.\n\nAlways set `samesite` to `Lax` or `Strict`, or add \"; SameSite=Lax;\", or \"; Samesite=Strict;\" to the cookie's raw header value.\n\n\n## Example\nIn the following examples, the cases marked GOOD show secure cookie attributes being set; whereas in the cases marked BAD they are not set.\n\n\n```python\nfrom flask import Flask, request, make_response, Response\n\n\n@app.route(\"/good1\")\ndef good1():\n    resp = make_response()\n    resp.set_cookie(\"name\", value=\"value\", secure=True, httponly=True, samesite='Strict') # GOOD: Attributes are securely set\n    return resp\n\n\n@app.route(\"/good2\")\ndef good2():\n    resp = make_response()\n    resp.headers['Set-Cookie'] = \"name=value; Secure; HttpOnly; SameSite=Strict\" # GOOD: Attributes are securely set \n    return resp\n\n@app.route(\"/bad1\")\n    resp = make_response()\n    resp.set_cookie(\"name\", value=\"value\", samesite='None') # BAD: the SameSite attribute is set to 'None' and the 'Secure' and 'HttpOnly' attributes are set to False by default.\n    return resp\n```\n\n## References\n* Detectify: [Cookie lack Secure flag](https://support.detectify.com/support/solutions/articles/48001048982-cookie-lack-secure-flag).\n* PortSwigger: [TLS cookie without secure flag set](https://portswigger.net/kb/issues/00500200_tls-cookie-without-secure-flag-set).\n* Common Weakness Enumeration: [CWE-614](https://cwe.mitre.org/data/definitions/614.html).\n* Common Weakness Enumeration: [CWE-1004](https://cwe.mitre.org/data/definitions/1004.html).\n* Common Weakness Enumeration: [CWE-1275](https://cwe.mitre.org/data/definitions/1275.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "562becce0fbe92d2a93a21b0083f51db3eb804f1",
+            "message": {
+                "text": "Cookie is added without the Secure and HttpOnly attributes properly set."
+            },
+            "location": {
+                "path": "docs_src/response_cookies/tutorial001.py",
+                "start_line": 11,
+                "end_line": 11,
+                "start_column": 5,
+                "end_column": 78
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/fastapi/code-scanning/alerts/3/instances"
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-17T13:30:27Z",
+        "updated_at": "2024-05-17T13:30:27Z",
+        "url": "https://api.github.com/repos/fcas/fastapi/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/fastapi/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-20",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "562becce0fbe92d2a93a21b0083f51db3eb804f1",
+            "message": {
+                "text": "The string fonts.googleapis.com may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "tests/test_local_docs.py",
+                "start_line": 63,
+                "end_line": 63,
+                "start_column": 12,
+                "end_column": 60
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/fastapi/code-scanning/alerts/2/instances"
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-17T13:28:55Z",
+        "updated_at": "2024-05-17T13:28:57Z",
+        "url": "https://api.github.com/repos/fcas/fastapi/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/fastapi/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/xss-through-dom",
+            "severity": "warning",
+            "description": "DOM text reinterpreted as HTML",
+            "name": "js/xss-through-dom",
+            "tags": [
+                "external/cwe/cwe-079",
+                "external/cwe/cwe-116",
+                "security"
+            ],
+            "full_description": "Reinterpreting text from the DOM as HTML can lead to a cross-site scripting vulnerability.",
+            "help": "# DOM text reinterpreted as HTML\nExtracting text from a DOM node and interpreting it as HTML can lead to a cross-site scripting vulnerability.\n\nA webpage with this vulnerability reads text from the DOM, and afterwards adds the text as HTML to the DOM. Using text from the DOM as HTML effectively unescapes the text, and thereby invalidates any escaping done on the text. If an attacker is able to control the safe sanitized text, then this vulnerability can be exploited to perform a cross-site scripting attack.\n\n\n## Recommendation\nTo guard against cross-site scripting, consider using contextual output encoding/escaping before writing text to the page, or one of the other solutions that are mentioned in the References section below.\n\n\n## Example\nThe following example shows a webpage using a `data-target` attribute to select and manipulate a DOM element using the JQuery library. In the example, the `data-target` attribute is read into the `target` variable, and the `$` function is then supposed to use the `target` variable as a CSS selector to determine which element should be manipulated.\n\n\n```javascript\n$(\"button\").click(function () {\n    var target = $(this).attr(\"data-target\");\n    $(target).hide();\n});\n\n```\nHowever, if an attacker can control the `data-target` attribute, then the value of `target` can be used to cause the `$` function to execute arbitrary JavaScript.\n\nThe above vulnerability can be fixed by using `$.find` instead of `$`. The `$.find` function will only interpret `target` as a CSS selector and never as HTML, thereby preventing an XSS attack.\n\n\n```javascript\n$(\"button\").click(function () {\n    var target = $(this).attr(\"data-target\");\n\t$.find(target).hide();\n});\n\n```\n\n## References\n* OWASP: [DOM based XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html).\n* OWASP: [XSS (Cross Site Scripting) Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html).\n* OWASP [DOM Based XSS](https://owasp.org/www-community/attacks/DOM_Based_XSS).\n* OWASP [Types of Cross-Site Scripting](https://owasp.org/www-community/Types_of_Cross-Site_Scripting).\n* Wikipedia: [Cross-site scripting](http://en.wikipedia.org/wiki/Cross-site_scripting).\n* Common Weakness Enumeration: [CWE-79](https://cwe.mitre.org/data/definitions/79.html).\n* Common Weakness Enumeration: [CWE-116](https://cwe.mitre.org/data/definitions/116.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"javascript-typescript\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "562becce0fbe92d2a93a21b0083f51db3eb804f1",
+            "message": {
+                "text": "DOM text is reinterpreted as HTML without escaping meta-characters."
+            },
+            "location": {
+                "path": "docs/en/docs/js/termynal.js",
+                "start_line": 226,
+                "end_line": 226,
+                "start_column": 29,
+                "end_column": 89
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/fastapi/code-scanning/alerts/1/instances"
+    }
+]

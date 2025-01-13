@@ -1,0 +1,54 @@
+[
+    {
+        "number": 1,
+        "created_at": "2024-12-28T23:14:30Z",
+        "updated_at": "2024-12-28T23:14:32Z",
+        "url": "https://api.github.com/repos/fcas/pytensor/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/pytensor/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "py/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```python\n\nimport re\ndef is_valid_hex_color(color):\n    return re.match(r'^#[0-9a-fA-f]{6}$', color) is not None\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```python\n\nimport re\ndef is_valid_hex_color(color):\n    return re.match(r'^#[0-9a-fA-F]{6}$', color) is not None\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "cb1e3f5146bd346bacc35174261f5872dcfb4a00",
+            "message": {
+                "text": "Suspicious character range that overlaps with 0-9 in the same character class, and overlaps with A-Z in the same character class, and is equivalent to \\[\"#$%&'()*+,\\\\-.\\\\/0-9:;<=>?@A-Z\\\\\\[\\\\\\\\\\\\\\]^_\\]."
+            },
+            "location": {
+                "path": "pytensor/link/c/cmodule.py",
+                "start_line": 2661,
+                "end_line": 2661,
+                "start_column": 52,
+                "end_column": 55
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pytensor/code-scanning/alerts/1/instances"
+    }
+]

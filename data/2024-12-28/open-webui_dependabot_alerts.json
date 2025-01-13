@@ -1,0 +1,492 @@
+[
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-jose"
+            },
+            "manifest_path": "pyproject.toml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cjwg-qfpm-7377",
+            "cve_id": "CVE-2024-33664",
+            "summary": "python-jose denial of service via compressed JWE content",
+            "description": "python-jose through 3.3.0 allows attackers to cause a denial of service (resource consumption) during a decode via a crafted JSON Web Encryption (JWE) token with a high compression ratio, aka a \"JWT bomb.\" This is similar to CVE-2024-21319.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cjwg-qfpm-7377",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-33664",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-33664"
+                },
+                {
+                    "url": "https://github.com/mpdavis/python-jose/issues/344"
+                },
+                {
+                    "url": "https://github.com/mpdavis/python-jose/pull/345"
+                },
+                {
+                    "url": "https://www.vicarius.io/vsociety/posts/jwt-bomb-in-python-jose-cve-2024-33664"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cjwg-qfpm-7377"
+                }
+            ],
+            "published_at": "2024-04-26T00:30:35Z",
+            "updated_at": "2024-09-05T18:37:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "python-jose"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.3.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-jose"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.3.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/open-webui/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/open-webui/security/dependabot/5",
+        "created_at": "2024-12-28T23:09:52Z",
+        "updated_at": "2024-12-28T23:09:52Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-jose"
+            },
+            "manifest_path": "pyproject.toml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6c5p-j8vq-pqhj",
+            "cve_id": "CVE-2024-33663",
+            "summary": "python-jose algorithm confusion with OpenSSH ECDSA keys",
+            "description": "python-jose through 3.3.0 has algorithm confusion with OpenSSH ECDSA keys and other key formats. This is similar to CVE-2022-29217.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-6c5p-j8vq-pqhj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-33663",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-33663"
+                },
+                {
+                    "url": "https://github.com/mpdavis/python-jose/issues/346"
+                },
+                {
+                    "url": "https://www.vicarius.io/vsociety/posts/algorithm-confusion-in-python-jose-cve-2024-33663"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6c5p-j8vq-pqhj"
+                }
+            ],
+            "published_at": "2024-04-26T00:30:35Z",
+            "updated_at": "2024-11-18T16:26:40Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "python-jose"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 3.3.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+                "score": 7.4
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+                    "score": 7.4
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 9.3
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-327",
+                    "name": "Use of a Broken or Risky Cryptographic Algorithm"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-jose"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 3.3.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/open-webui/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/open-webui/security/dependabot/4",
+        "created_at": "2024-12-28T23:09:51Z",
+        "updated_at": "2024-12-28T23:09:51Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cookie"
+            },
+            "manifest_path": "package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-pxg6-pf52-xh8x",
+            "cve_id": "CVE-2024-47764",
+            "summary": "cookie accepts cookie name, path, and domain with out of bounds characters",
+            "description": "### Impact\n\nThe cookie name could be used to set other fields of the cookie, resulting in an unexpected cookie value. For example, `serialize(\"userName=<script>alert('XSS3')</script>; Max-Age=2592000; a\", value)` would result in `\"userName=<script>alert('XSS3')</script>; Max-Age=2592000; a=test\"`, setting `userName` cookie to `<script>` and ignoring `value`.\n\nA similar escape can be used for `path` and `domain`, which could be abused to alter other fields of the cookie.\n\n### Patches\n\nUpgrade to 0.7.0, which updates the validation for `name`, `path`, and `domain`.\n\n### Workarounds\n\nAvoid passing untrusted or arbitrary values for these fields, ensure they are set by the application instead of user input.\n\n### References\n\n* https://github.com/jshttp/cookie/pull/167",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-pxg6-pf52-xh8x",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-47764",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/jshttp/cookie/security/advisories/GHSA-pxg6-pf52-xh8x"
+                },
+                {
+                    "url": "https://github.com/jshttp/cookie/pull/167"
+                },
+                {
+                    "url": "https://github.com/jshttp/cookie/commit/e10042845354fea83bd8f34af72475eed1dadf5c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-pxg6-pf52-xh8x"
+                }
+            ],
+            "published_at": "2024-10-04T20:31:00Z",
+            "updated_at": "2024-10-04T20:31:01Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cookie"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 0.7.0",
+                    "first_patched_version": {
+                        "identifier": "0.7.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cookie"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 0.7.0",
+            "first_patched_version": {
+                "identifier": "0.7.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/open-webui/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/open-webui/security/dependabot/3",
+        "created_at": "2024-12-28T23:09:51Z",
+        "updated_at": "2024-12-28T23:09:51Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-jose"
+            },
+            "manifest_path": "backend/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cjwg-qfpm-7377",
+            "cve_id": "CVE-2024-33664",
+            "summary": "python-jose denial of service via compressed JWE content",
+            "description": "python-jose through 3.3.0 allows attackers to cause a denial of service (resource consumption) during a decode via a crafted JSON Web Encryption (JWE) token with a high compression ratio, aka a \"JWT bomb.\" This is similar to CVE-2024-21319.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cjwg-qfpm-7377",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-33664",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-33664"
+                },
+                {
+                    "url": "https://github.com/mpdavis/python-jose/issues/344"
+                },
+                {
+                    "url": "https://github.com/mpdavis/python-jose/pull/345"
+                },
+                {
+                    "url": "https://www.vicarius.io/vsociety/posts/jwt-bomb-in-python-jose-cve-2024-33664"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cjwg-qfpm-7377"
+                }
+            ],
+            "published_at": "2024-04-26T00:30:35Z",
+            "updated_at": "2024-09-05T18:37:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "python-jose"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.3.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-jose"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.3.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/open-webui/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/open-webui/security/dependabot/2",
+        "created_at": "2024-12-28T23:09:51Z",
+        "updated_at": "2024-12-28T23:09:51Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-jose"
+            },
+            "manifest_path": "backend/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6c5p-j8vq-pqhj",
+            "cve_id": "CVE-2024-33663",
+            "summary": "python-jose algorithm confusion with OpenSSH ECDSA keys",
+            "description": "python-jose through 3.3.0 has algorithm confusion with OpenSSH ECDSA keys and other key formats. This is similar to CVE-2022-29217.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-6c5p-j8vq-pqhj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-33663",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-33663"
+                },
+                {
+                    "url": "https://github.com/mpdavis/python-jose/issues/346"
+                },
+                {
+                    "url": "https://www.vicarius.io/vsociety/posts/algorithm-confusion-in-python-jose-cve-2024-33663"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6c5p-j8vq-pqhj"
+                }
+            ],
+            "published_at": "2024-04-26T00:30:35Z",
+            "updated_at": "2024-11-18T16:26:40Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "python-jose"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 3.3.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+                "score": 7.4
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+                    "score": 7.4
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 9.3
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-327",
+                    "name": "Use of a Broken or Risky Cryptographic Algorithm"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-jose"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 3.3.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/open-webui/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/open-webui/security/dependabot/1",
+        "created_at": "2024-12-28T23:09:51Z",
+        "updated_at": "2024-12-28T23:09:51Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

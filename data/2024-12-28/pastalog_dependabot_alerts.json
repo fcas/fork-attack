@@ -1,0 +1,435 @@
+[
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "socket.io"
+            },
+            "manifest_path": "package.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-25hc-qcg6-38wj",
+            "cve_id": "CVE-2024-38355",
+            "summary": "socket.io has an unhandled 'error' event",
+            "description": "### Impact\n\nA specially crafted Socket.IO packet can trigger an uncaught exception on the Socket.IO server, thus killing the Node.js process.\n\n```\nnode:events:502\n    throw err; // Unhandled 'error' event\n    ^\n\nError [ERR_UNHANDLED_ERROR]: Unhandled error. (undefined)\n    at new NodeError (node:internal/errors:405:5)\n    at Socket.emit (node:events:500:17)\n    at /myapp/node_modules/socket.io/lib/socket.js:531:14\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11) {\n  code: 'ERR_UNHANDLED_ERROR',\n  context: undefined\n}\n```\n\n### Affected versions\n\n| Version range    | Needs minor update?                            |\n|------------------|------------------------------------------------|\n| `4.6.2...latest` | Nothing to do               |\n| `3.0.0...4.6.1`  | Please upgrade to `socket.io@4.6.2` (at least) |\n| `2.3.0...2.5.0`  | Please upgrade to `socket.io@2.5.1`            |\n\n### Patches\n\nThis issue is fixed by https://github.com/socketio/socket.io/commit/15af22fc22bc6030fcead322c106f07640336115, included in `socket.io@4.6.2` (released in May 2023).\n\nThe fix was backported in the 2.x branch today: https://github.com/socketio/socket.io/commit/d30630ba10562bf987f4d2b42440fc41a828119c\n\n### Workarounds\n\nAs a workaround for the affected versions of the `socket.io` package, you can attach a listener for the \"error\" event:\n\n```js\nio.on(\"connection\", (socket) => {\n  socket.on(\"error\", () => {\n    // ...\n  });\n});\n```\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n\n- Open a discussion [here](https://github.com/socketio/socket.io/discussions)\n\nThanks a lot to [Paul Taylor](https://github.com/Y0ursTruly) for the responsible disclosure.\n\n### References\n\n- https://github.com/socketio/socket.io/commit/15af22fc22bc6030fcead322c106f07640336115\n- https://github.com/socketio/socket.io/commit/d30630ba10562bf987f4d2b42440fc41a828119c\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-25hc-qcg6-38wj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-38355",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/socketio/socket.io/security/advisories/GHSA-25hc-qcg6-38wj"
+                },
+                {
+                    "url": "https://github.com/socketio/socket.io/commit/15af22fc22bc6030fcead322c106f07640336115"
+                },
+                {
+                    "url": "https://github.com/socketio/socket.io/commit/d30630ba10562bf987f4d2b42440fc41a828119c"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-38355"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-25hc-qcg6-38wj"
+                }
+            ],
+            "published_at": "2024-06-19T15:04:41Z",
+            "updated_at": "2024-11-18T16:26:46Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "socket.io"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.5.0",
+                    "first_patched_version": {
+                        "identifier": "2.5.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "socket.io"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.0.0, < 4.6.2",
+                    "first_patched_version": {
+                        "identifier": "4.6.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+                "score": 7.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+                    "score": 7.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N",
+                    "score": 6.9
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-754",
+                    "name": "Improper Check for Unusual or Exceptional Conditions"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "socket.io"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.5.0",
+            "first_patched_version": {
+                "identifier": "2.5.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pastalog/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/pastalog/security/dependabot/4",
+        "created_at": "2024-06-19T22:20:39Z",
+        "updated_at": "2024-06-19T22:20:39Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "node-sass"
+            },
+            "manifest_path": "package.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-r8f7-9pfq-mjmv",
+            "cve_id": "CVE-2020-24025",
+            "summary": "Improper Certificate Validation in node-sass",
+            "description": "Certificate validation in node-sass 2.0.0 to 6.0.1 is disabled when requesting binaries even if the user is not specifying an alternative download path.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-r8f7-9pfq-mjmv",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-24025",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-24025"
+                },
+                {
+                    "url": "https://github.com/sass/node-sass/pull/567#issuecomment-656609236"
+                },
+                {
+                    "url": "https://github.com/sass/node-sass/issues/3067"
+                },
+                {
+                    "url": "https://github.com/sass/node-sass/pull/3149"
+                },
+                {
+                    "url": "https://github.com/sass/node-sass/releases/tag/v7.0.0"
+                },
+                {
+                    "url": "https://github.com/sass/node-sass/commit/0a21792803639851b480fbd8cbcb5540ef974387"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-r8f7-9pfq-mjmv"
+                }
+            ],
+            "published_at": "2022-02-09T22:22:24Z",
+            "updated_at": "2023-04-30T05:00:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "node-sass"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.0.0, < 7.0.0",
+                    "first_patched_version": {
+                        "identifier": "7.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-295",
+                    "name": "Improper Certificate Validation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "node-sass"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 2.0.0, < 7.0.0",
+            "first_patched_version": {
+                "identifier": "7.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pastalog/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/pastalog/security/dependabot/3",
+        "created_at": "2024-05-24T01:34:17Z",
+        "updated_at": "2024-05-24T01:34:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "socket.io"
+            },
+            "manifest_path": "package.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fxwf-4rqh-v8g3",
+            "cve_id": "CVE-2020-28481",
+            "summary": "CORS misconfiguration in socket.io",
+            "description": "The package socket.io before 2.4.0 are vulnerable to Insecure Defaults due to CORS Misconfiguration. All domains are whitelisted by default.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fxwf-4rqh-v8g3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-28481",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-28481"
+                },
+                {
+                    "url": "https://github.com/socketio/socket.io/issues/3671"
+                },
+                {
+                    "url": "https://github.com/socketio/socket.io/commit/f78a575f66ab693c3ea96ea88429ddb1a44c86c7"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-1056358"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-1056357"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JS-SOCKETIO-1024859"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fxwf-4rqh-v8g3"
+                }
+            ],
+            "published_at": "2021-01-20T21:22:37Z",
+            "updated_at": "2023-09-11T22:46:44Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "socket.io"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.4.0",
+                    "first_patched_version": {
+                        "identifier": "2.4.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+                "score": 4.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+                    "score": 4.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-346",
+                    "name": "Origin Validation Error"
+                },
+                {
+                    "cwe_id": "CWE-453",
+                    "name": "Insecure Default Variable Initialization"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "socket.io"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.4.0",
+            "first_patched_version": {
+                "identifier": "2.4.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pastalog/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/pastalog/security/dependabot/2",
+        "created_at": "2024-05-24T01:34:17Z",
+        "updated_at": "2024-05-24T01:34:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "auto_dismissed",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "node-sass"
+            },
+            "manifest_path": "package.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9v62-24cr-58cx",
+            "cve_id": null,
+            "summary": "Denial of Service in node-sass",
+            "description": "Affected versions of `node-sass` are vulnerable to Denial of Service (DoS). Crafted objects passed to the `renderSync` function may trigger C++ assertions in `CustomImporterBridge::get_importer_entry` and `CustomImporterBridge::post_process_return_value` that crash the Node process. This may allow attackers to crash the system's running Node process and lead to Denial of Service.\n\n\n## Recommendation\n\nUpgrade to version 4.13.1 or later",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9v62-24cr-58cx",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://www.npmjs.com/advisories/961"
+                },
+                {
+                    "url": "https://github.com/sass/node-sass/commit/338fd7a14d3b8bd374a382336df16f9c6792b884"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9v62-24cr-58cx"
+                }
+            ],
+            "published_at": "2020-09-11T21:12:39Z",
+            "updated_at": "2023-01-09T05:03:38Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "node-sass"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.3.0, < 4.13.1",
+                    "first_patched_version": {
+                        "identifier": "4.13.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 5.9
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "node-sass"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 3.3.0, < 4.13.1",
+            "first_patched_version": {
+                "identifier": "4.13.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pastalog/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/pastalog/security/dependabot/1",
+        "created_at": "2024-05-24T01:34:17Z",
+        "updated_at": "2024-05-24T01:34:17Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": "2024-05-24T01:34:17Z"
+    }
+]

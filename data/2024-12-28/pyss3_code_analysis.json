@@ -1,0 +1,53 @@
+[
+    {
+        "number": 1,
+        "created_at": "2024-05-19T01:25:18Z",
+        "updated_at": "2024-05-19T01:25:21Z",
+        "url": "https://api.github.com/repos/fcas/pyss3/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/pyss3/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/bind-socket-all-network-interfaces",
+            "severity": "error",
+            "description": "Binding a socket to all network interfaces",
+            "name": "py/bind-socket-all-network-interfaces",
+            "tags": [
+                "external/cwe/cwe-200",
+                "security"
+            ],
+            "full_description": "Binding a socket to all interfaces opens it up to traffic from any IPv4 address and is therefore associated with security risks.",
+            "help": "# Binding a socket to all network interfaces\nSockets can be used to communicate with other machines on a network. You can use the (IP address, port) pair to define the access restrictions for the socket you create. When using the built-in Python `socket` module (for instance, when building a message sender service or an FTP server data transmitter), one has to bind the port to some interface. When you bind the port to all interfaces using `0.0.0.0` as the IP address, you essentially allow it to accept connections from any IPv4 address provided that it can get to the socket via routing. Binding to all interfaces is therefore associated with security risks.\n\n\n## Recommendation\nBind your service incoming traffic only to a dedicated interface. If you need to bind more than one interface using the built-in `socket` module, create multiple sockets (instead of binding to one socket to all interfaces).\n\n\n## Example\nIn this example, two sockets are insecure because they are bound to all interfaces; one through the `0.0.0.0` notation and another one through an empty string `''`.\n\n\n```python\nimport socket\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('0.0.0.0', 31137))\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('', 4040))\n\n# binds only to a dedicated interface, secure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('84.68.10.12', 8080))\n\n```\n\n## References\n* Python reference: [ Socket families](https://docs.python.org/3/library/socket.html#socket-families).\n* Python reference: [ Socket Programming HOWTO](https://docs.python.org/3.7/howto/sockets.html).\n* Common Vulnerabilities and Exposures: [ CVE-2018-1281 Detail](https://nvd.nist.gov/vuln/detail/CVE-2018-1281).\n* Common Weakness Enumeration: [CWE-200](https://cwe.mitre.org/data/definitions/200.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9a0f0c5f070ed072dbae64cf519872be9f215e32",
+            "message": {
+                "text": "'0.0.0.0' binds a socket to all interfaces."
+            },
+            "location": {
+                "path": "pyss3/server.py",
+                "start_line": 540,
+                "end_line": 540,
+                "start_column": 9,
+                "end_column": 46
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pyss3/code-scanning/alerts/1/instances"
+    }
+]

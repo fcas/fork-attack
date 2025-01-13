@@ -1,0 +1,363 @@
+[
+    {
+        "number": 7,
+        "created_at": "2024-05-20T13:23:23Z",
+        "updated_at": "2024-05-20T13:23:24Z",
+        "url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/7",
+        "html_url": "https://github.com/fcas/BentoML/security/code-scanning/7",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/bind-socket-all-network-interfaces",
+            "severity": "error",
+            "description": "Binding a socket to all network interfaces",
+            "name": "py/bind-socket-all-network-interfaces",
+            "tags": [
+                "external/cwe/cwe-200",
+                "security"
+            ],
+            "full_description": "Binding a socket to all interfaces opens it up to traffic from any IPv4 address and is therefore associated with security risks.",
+            "help": "# Binding a socket to all network interfaces\nSockets can be used to communicate with other machines on a network. You can use the (IP address, port) pair to define the access restrictions for the socket you create. When using the built-in Python `socket` module (for instance, when building a message sender service or an FTP server data transmitter), one has to bind the port to some interface. When you bind the port to all interfaces using `0.0.0.0` as the IP address, you essentially allow it to accept connections from any IPv4 address provided that it can get to the socket via routing. Binding to all interfaces is therefore associated with security risks.\n\n\n## Recommendation\nBind your service incoming traffic only to a dedicated interface. If you need to bind more than one interface using the built-in `socket` module, create multiple sockets (instead of binding to one socket to all interfaces).\n\n\n## Example\nIn this example, two sockets are insecure because they are bound to all interfaces; one through the `0.0.0.0` notation and another one through an empty string `''`.\n\n\n```python\nimport socket\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('0.0.0.0', 31137))\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('', 4040))\n\n# binds only to a dedicated interface, secure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('84.68.10.12', 8080))\n\n```\n\n## References\n* Python reference: [ Socket families](https://docs.python.org/3/library/socket.html#socket-families).\n* Python reference: [ Socket Programming HOWTO](https://docs.python.org/3.7/howto/sockets.html).\n* Common Vulnerabilities and Exposures: [ CVE-2018-1281 Detail](https://nvd.nist.gov/vuln/detail/CVE-2018-1281).\n* Common Weakness Enumeration: [CWE-200](https://cwe.mitre.org/data/definitions/200.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.1"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "93036e5f63126860ba7be73c749533a297f7df24",
+            "message": {
+                "text": "'0.0.0.0' binds a socket to all interfaces."
+            },
+            "location": {
+                "path": "src/bentoml/_internal/utils/__init__.py",
+                "start_line": 248,
+                "end_line": 248,
+                "start_column": 13,
+                "end_column": 33
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/7/instances"
+    },
+    {
+        "number": 6,
+        "created_at": "2024-05-20T13:23:23Z",
+        "updated_at": "2024-05-20T13:23:24Z",
+        "url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/BentoML/security/code-scanning/6",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/bind-socket-all-network-interfaces",
+            "severity": "error",
+            "description": "Binding a socket to all network interfaces",
+            "name": "py/bind-socket-all-network-interfaces",
+            "tags": [
+                "external/cwe/cwe-200",
+                "security"
+            ],
+            "full_description": "Binding a socket to all interfaces opens it up to traffic from any IPv4 address and is therefore associated with security risks.",
+            "help": "# Binding a socket to all network interfaces\nSockets can be used to communicate with other machines on a network. You can use the (IP address, port) pair to define the access restrictions for the socket you create. When using the built-in Python `socket` module (for instance, when building a message sender service or an FTP server data transmitter), one has to bind the port to some interface. When you bind the port to all interfaces using `0.0.0.0` as the IP address, you essentially allow it to accept connections from any IPv4 address provided that it can get to the socket via routing. Binding to all interfaces is therefore associated with security risks.\n\n\n## Recommendation\nBind your service incoming traffic only to a dedicated interface. If you need to bind more than one interface using the built-in `socket` module, create multiple sockets (instead of binding to one socket to all interfaces).\n\n\n## Example\nIn this example, two sockets are insecure because they are bound to all interfaces; one through the `0.0.0.0` notation and another one through an empty string `''`.\n\n\n```python\nimport socket\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('0.0.0.0', 31137))\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('', 4040))\n\n# binds only to a dedicated interface, secure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('84.68.10.12', 8080))\n\n```\n\n## References\n* Python reference: [ Socket families](https://docs.python.org/3/library/socket.html#socket-families).\n* Python reference: [ Socket Programming HOWTO](https://docs.python.org/3.7/howto/sockets.html).\n* Common Vulnerabilities and Exposures: [ CVE-2018-1281 Detail](https://nvd.nist.gov/vuln/detail/CVE-2018-1281).\n* Common Weakness Enumeration: [CWE-200](https://cwe.mitre.org/data/definitions/200.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.1"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "93036e5f63126860ba7be73c749533a297f7df24",
+            "message": {
+                "text": "'0.0.0.0' binds a socket to all interfaces."
+            },
+            "location": {
+                "path": "src/bentoml/_internal/utils/__init__.py",
+                "start_line": 246,
+                "end_line": 246,
+                "start_column": 13,
+                "end_column": 36
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/6/instances"
+    },
+    {
+        "number": 5,
+        "created_at": "2024-05-20T13:23:23Z",
+        "updated_at": "2024-05-20T13:23:24Z",
+        "url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/BentoML/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/bind-socket-all-network-interfaces",
+            "severity": "error",
+            "description": "Binding a socket to all network interfaces",
+            "name": "py/bind-socket-all-network-interfaces",
+            "tags": [
+                "external/cwe/cwe-200",
+                "security"
+            ],
+            "full_description": "Binding a socket to all interfaces opens it up to traffic from any IPv4 address and is therefore associated with security risks.",
+            "help": "# Binding a socket to all network interfaces\nSockets can be used to communicate with other machines on a network. You can use the (IP address, port) pair to define the access restrictions for the socket you create. When using the built-in Python `socket` module (for instance, when building a message sender service or an FTP server data transmitter), one has to bind the port to some interface. When you bind the port to all interfaces using `0.0.0.0` as the IP address, you essentially allow it to accept connections from any IPv4 address provided that it can get to the socket via routing. Binding to all interfaces is therefore associated with security risks.\n\n\n## Recommendation\nBind your service incoming traffic only to a dedicated interface. If you need to bind more than one interface using the built-in `socket` module, create multiple sockets (instead of binding to one socket to all interfaces).\n\n\n## Example\nIn this example, two sockets are insecure because they are bound to all interfaces; one through the `0.0.0.0` notation and another one through an empty string `''`.\n\n\n```python\nimport socket\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('0.0.0.0', 31137))\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('', 4040))\n\n# binds only to a dedicated interface, secure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('84.68.10.12', 8080))\n\n```\n\n## References\n* Python reference: [ Socket families](https://docs.python.org/3/library/socket.html#socket-families).\n* Python reference: [ Socket Programming HOWTO](https://docs.python.org/3.7/howto/sockets.html).\n* Common Vulnerabilities and Exposures: [ CVE-2018-1281 Detail](https://nvd.nist.gov/vuln/detail/CVE-2018-1281).\n* Common Weakness Enumeration: [CWE-200](https://cwe.mitre.org/data/definitions/200.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.1"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "93036e5f63126860ba7be73c749533a297f7df24",
+            "message": {
+                "text": "'0.0.0.0' binds a socket to all interfaces."
+            },
+            "location": {
+                "path": "src/bentoml/_internal/utils/__init__.py",
+                "start_line": 236,
+                "end_line": 236,
+                "start_column": 17,
+                "end_column": 40
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/5/instances"
+    },
+    {
+        "number": 4,
+        "created_at": "2024-05-20T13:22:37Z",
+        "updated_at": "2024-05-20T13:22:39Z",
+        "url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/BentoML/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "js/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9a-fA-f]{6}$/i.test(color);\n}\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9A-F]{6}$/i.test(color);\n}\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.1"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"javascript-typescript\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "93036e5f63126860ba7be73c749533a297f7df24",
+            "message": {
+                "text": "Suspicious character range that is equivalent to \\[A-Z\\\\\\[\\\\\\\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "src/bentoml/_internal/server/static_content/swagger-ui-bundle.js",
+                "start_line": 2,
+                "end_line": 2,
+                "start_column": 116652,
+                "end_column": 116655
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/4/instances"
+    },
+    {
+        "number": 3,
+        "created_at": "2024-05-20T13:22:37Z",
+        "updated_at": "2024-05-20T13:22:39Z",
+        "url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/BentoML/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "js/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9a-fA-f]{6}$/i.test(color);\n}\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9A-F]{6}$/i.test(color);\n}\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.1"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"javascript-typescript\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "93036e5f63126860ba7be73c749533a297f7df24",
+            "message": {
+                "text": "Suspicious character range that is equivalent to \\[A-Z\\\\\\[\\\\\\\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "src/bentoml/_internal/server/static_content/swagger-ui-bundle.js",
+                "start_line": 2,
+                "end_line": 2,
+                "start_column": 116639,
+                "end_column": 116642
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/3/instances"
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-20T13:22:37Z",
+        "updated_at": "2024-05-20T13:22:39Z",
+        "url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/BentoML/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "js/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9a-fA-f]{6}$/i.test(color);\n}\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9A-F]{6}$/i.test(color);\n}\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.1"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"javascript-typescript\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "93036e5f63126860ba7be73c749533a297f7df24",
+            "message": {
+                "text": "Suspicious character range that is equivalent to \\[A-Z\\\\\\[\\\\\\\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "src/bentoml/_internal/server/static_content/swagger-ui-bundle.js",
+                "start_line": 2,
+                "end_line": 2,
+                "start_column": 115479,
+                "end_column": 115482
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/2/instances"
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-20T13:22:37Z",
+        "updated_at": "2024-05-20T13:22:39Z",
+        "url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/BentoML/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "js/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9a-fA-f]{6}$/i.test(color);\n}\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9A-F]{6}$/i.test(color);\n}\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.1"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"javascript-typescript\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "93036e5f63126860ba7be73c749533a297f7df24",
+            "message": {
+                "text": "Suspicious character range that is equivalent to \\[A-Z\\\\\\[\\\\\\\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "src/bentoml/_internal/server/static_content/swagger-ui-bundle.js",
+                "start_line": 2,
+                "end_line": 2,
+                "start_column": 112905,
+                "end_column": 112908
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/BentoML/code-scanning/alerts/1/instances"
+    }
+]

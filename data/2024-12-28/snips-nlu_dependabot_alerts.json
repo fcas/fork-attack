@@ -1,0 +1,318 @@
+[
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "manifest_path": "setup.py",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jw8x-6495-233v",
+            "cve_id": "CVE-2024-5206",
+            "summary": "scikit-learn sensitive data leakage vulnerability",
+            "description": "A sensitive data leakage vulnerability was identified in scikit-learn's TfidfVectorizer, specifically in versions up to and including 1.4.1.post1, which was fixed in version 1.5.0. The vulnerability arises from the unexpected storage of all tokens present in the training data within the `stop_words_` attribute, rather than only storing the subset of tokens required for the TF-IDF technique to function. This behavior leads to the potential leakage of sensitive information, as the `stop_words_` attribute could contain tokens that were meant to be discarded and not stored, such as passwords or keys. The impact of this vulnerability varies based on the nature of the data being processed by the vectorizer.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jw8x-6495-233v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-5206",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-5206"
+                },
+                {
+                    "url": "https://github.com/scikit-learn/scikit-learn/commit/70ca21f106b603b611da73012c9ade7cd8e438b8"
+                },
+                {
+                    "url": "https://huntr.com/bounties/14bc0917-a85b-4106-a170-d09d5191517c"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/scikit-learn/PYSEC-2024-110.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jw8x-6495-233v"
+                }
+            ],
+            "published_at": "2024-06-06T21:30:37Z",
+            "updated_at": "2024-10-25T16:47:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "scikit-learn"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.5.0",
+                    "first_patched_version": {
+                        "identifier": "1.5.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-921",
+                    "name": "Storage of Sensitive Data in a Mechanism without Access Control"
+                },
+                {
+                    "cwe_id": "CWE-922",
+                    "name": "Insecure Storage of Sensitive Information"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.5.0",
+            "first_patched_version": {
+                "identifier": "1.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/snips-nlu/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/snips-nlu/security/dependabot/3",
+        "created_at": "2024-06-18T01:14:11Z",
+        "updated_at": "2024-06-18T01:14:11Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "manifest_path": "setup.py",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jjw5-xxj6-pcv5",
+            "cve_id": "CVE-2020-13092",
+            "summary": "scikit-learn Deserialization of Untrusted Data",
+            "description": "scikit-learn (aka sklearn) through 0.23.0 can unserialize and execute commands from an untrusted file that is passed to the `joblib.load()` function, if `__reduce__` makes an `os.system call`.\nNOTE: third parties dispute this issue because the joblib.load() function is documented as unsafe and it is the user's responsibility to use the function in a secure manner.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-jjw5-xxj6-pcv5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-13092",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-13092"
+                },
+                {
+                    "url": "https://github.com/0FuzzingQ/vuln/blob/master/sklearn%20unserialize.md"
+                },
+                {
+                    "url": "https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/scikit-learn/PYSEC-2020-107.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jjw5-xxj6-pcv5"
+                }
+            ],
+            "published_at": "2022-05-24T17:17:59Z",
+            "updated_at": "2024-10-22T17:21:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "scikit-learn"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 0.23.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 9.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 0.23.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/snips-nlu/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/snips-nlu/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:41Z",
+        "updated_at": "2024-05-24T01:33:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "future"
+            },
+            "manifest_path": "setup.py",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v3c5-jqr6-7qm8",
+            "cve_id": "CVE-2022-40899",
+            "summary": "Python Charmers Future denial of service vulnerability",
+            "description": "An issue discovered in Python Charmers Future 0.18.2 and earlier allows remote attackers to cause a denial of service via crafted Set-Cookie header from malicious web server. This issue has been patched in version 0.18.3.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v3c5-jqr6-7qm8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-40899",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-40899"
+                },
+                {
+                    "url": "https://github.com/python/cpython/pull/17157"
+                },
+                {
+                    "url": "https://github.com/PythonCharmers/python-future/blob/master/src/future/backports/http/cookiejar.py#L215"
+                },
+                {
+                    "url": "https://github.com/PythonCharmers/python-future/commit/c91d70b34ef0402aef3e9d04364ba98509dca76f"
+                },
+                {
+                    "url": "https://github.com/PythonCharmers/python-future/pull/610"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/future/PYSEC-2022-42991.yaml"
+                },
+                {
+                    "url": "https://pypi.org/project/future"
+                },
+                {
+                    "url": "https://pyup.io/posts/pyup-discovers-redos-vulnerabilities-in-top-python-packages"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v3c5-jqr6-7qm8"
+                }
+            ],
+            "published_at": "2022-12-23T00:30:23Z",
+            "updated_at": "2024-09-20T20:10:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "future"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 0.18.2",
+                    "first_patched_version": {
+                        "identifier": "0.18.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "future"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 0.18.2",
+            "first_patched_version": {
+                "identifier": "0.18.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/snips-nlu/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/snips-nlu/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:41Z",
+        "updated_at": "2024-05-24T01:33:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

@@ -1,0 +1,58 @@
+[
+    {
+        "number": 1,
+        "created_at": "2024-05-20T13:41:08Z",
+        "updated_at": "2024-05-20T13:41:10Z",
+        "url": "https://api.github.com/repos/fcas/bqplot/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/bqplot/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/prototype-polluting-assignment",
+            "severity": "warning",
+            "description": "Prototype-polluting assignment",
+            "name": "js/prototype-polluting-assignment",
+            "tags": [
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-079",
+                "external/cwe/cwe-094",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-471",
+                "external/cwe/cwe-915",
+                "security"
+            ],
+            "full_description": "Modifying an object obtained via a user-controlled property name may lead to accidental mutation of the built-in Object prototype, and possibly escalate to remote code execution or cross-site scripting.",
+            "help": "# Prototype-polluting assignment\nMost JavaScript objects inherit the properties of the built-in `Object.prototype` object. Prototype pollution is a type of vulnerability in which an attacker is able to modify `Object.prototype`. Since most objects inherit from the compromised `Object.prototype` object, the attacker can use this to tamper with the application logic, and often escalate to remote code execution or cross-site scripting.\n\nOne way to cause prototype pollution is by modifying an object obtained via a user-controlled property name. Most objects have a special `__proto__` property that refers to `Object.prototype`. An attacker can abuse this special property to trick the application into performing unintended modifications of `Object.prototype`.\n\n\n## Recommendation\nUse an associative data structure that is resilient to untrusted key values, such as a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map). In some cases, a prototype-less object created with [Object.create(null)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create) may be preferable.\n\nAlternatively, restrict the computed property name so it can't clash with a built-in property, either by prefixing it with a constant string, or by rejecting inputs that don't conform to the expected format.\n\n\n## Example\nIn the example below, the untrusted value `req.params.id` is used as the property name `req.session.todos[id]`. If a malicious user passes in the ID value `__proto__`, the variable `items` will then refer to `Object.prototype`. Finally, the modification of `items` then allows the attacker to inject arbitrary properties onto `Object.prototype`.\n\n\n```javascript\nlet express = require('express');\nlet app = express()\n\napp.put('/todos/:id', (req, res) => {\n    let id = req.params.id;\n    let items = req.session.todos[id];\n    if (!items) {\n        items = req.session.todos[id] = {};\n    }\n    items[req.query.name] = req.query.text;\n    res.end(200);\n});\n\n```\nOne way to fix this is to use [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) objects to associate key/value pairs instead of regular objects, as shown below:\n\n\n```javascript\nlet express = require('express');\nlet app = express()\n\napp.put('/todos/:id', (req, res) => {\n    let id = req.params.id;\n    let items = req.session.todos.get(id);\n    if (!items) {\n        items = new Map();\n        req.sessions.todos.set(id, items);\n    }\n    items.set(req.query.name, req.query.text);\n    res.end(200);\n});\n\n```\nAnother way to fix it is to prevent the `__proto__` property from being used as a key, as shown below:\n\n\n```javascript\nlet express = require('express');\nlet app = express()\n\napp.put('/todos/:id', (req, res) => {\n    let id = req.params.id;\n    if (id === '__proto__' || id === 'constructor' || id === 'prototype') {\n        res.end(403);\n        return;\n    }\n    let items = req.session.todos[id];\n    if (!items) {\n        items = req.session.todos[id] = {};\n    }\n    items[req.query.name] = req.query.text;\n    res.end(200);\n});\n\n```\n\n## References\n* MDN: [Object.prototype.__proto__](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/proto)\n* MDN: [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-79](https://cwe.mitre.org/data/definitions/79.html).\n* Common Weakness Enumeration: [CWE-94](https://cwe.mitre.org/data/definitions/94.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n* Common Weakness Enumeration: [CWE-471](https://cwe.mitre.org/data/definitions/471.html).\n* Common Weakness Enumeration: [CWE-915](https://cwe.mitre.org/data/definitions/915.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"javascript-typescript\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "f0a9e18deb9a69c6258f37dbef9962027e20ccdf",
+            "message": {
+                "text": "This assignment may alter Object.prototype if a malicious '__proto__' string is injected from library input."
+            },
+            "location": {
+                "path": "js/src/Figure.ts",
+                "start_line": 756,
+                "end_line": 756,
+                "start_column": 5,
+                "end_column": 19
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/bqplot/code-scanning/alerts/1/instances"
+    }
+]

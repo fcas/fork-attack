@@ -1,0 +1,3779 @@
+[
+    {
+        "number": 32,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q2x7-8rv6-6q7h",
+            "cve_id": "CVE-2024-56326",
+            "summary": "Jinja has a sandbox breakout through indirect reference to format method",
+            "description": "An oversight in how the Jinja sandboxed environment detects calls to `str.format` allows an attacker that controls the content of a template to execute arbitrary Python code.\n\nTo exploit the vulnerability, an attacker needs to control the content of a template. Whether that is the case depends on the type of application using Jinja. This vulnerability impacts users of applications which execute untrusted templates.\n\nJinja's sandbox does catch calls to `str.format` and ensures they don't escape the sandbox. However, it's possible to store a reference to a malicious string's `format` method, then pass that to a filter that calls it. No such filters are built-in to Jinja, but could be present through custom filters in an application. After the fix, such indirect calls are also handled by the sandbox.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-q2x7-8rv6-6q7h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-56326",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-q2x7-8rv6-6q7h"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-56326"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q2x7-8rv6-6q7h"
+                }
+            ],
+            "published_at": "2024-12-23T17:56:08Z",
+            "updated_at": "2024-12-27T19:10:38Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 5.4
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-693",
+                    "name": "Protection Mechanism Failure"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/32",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/32",
+        "created_at": "2024-12-28T23:11:39Z",
+        "updated_at": "2024-12-28T23:11:39Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 31,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gmj6-6f8f-6699",
+            "cve_id": "CVE-2024-56201",
+            "summary": "Jinja has a sandbox breakout through malicious filenames",
+            "description": "A bug in the Jinja compiler allows an attacker that controls both the content and filename of a template to execute arbitrary Python code, regardless of if Jinja's sandbox is used.\n\nTo exploit the vulnerability, an attacker needs to control both the filename and the contents of a template. Whether that is the case depends on the type of application using Jinja. This vulnerability impacts users of applications which execute untrusted templates where the template author can also choose the template filename.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-gmj6-6f8f-6699",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-56201",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-gmj6-6f8f-6699"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-56201"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/issues/1792"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gmj6-6f8f-6699"
+                }
+            ],
+            "published_at": "2024-12-23T17:54:12Z",
+            "updated_at": "2024-12-26T20:09:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 5.4
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-150",
+                    "name": "Improper Neutralization of Escape, Meta, or Control Sequences"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/31",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/31",
+        "created_at": "2024-12-28T23:11:39Z",
+        "updated_at": "2024-12-28T23:11:39Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 30,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8495-4g3g-x7pr",
+            "cve_id": "CVE-2024-52304",
+            "summary": "aiohttp allows request smuggling due to incorrect parsing of chunk extensions",
+            "description": "### Summary\nThe Python parser parses newlines in chunk extensions incorrectly which can lead to request smuggling vulnerabilities under certain conditions.\n\n### Impact\nIf a pure Python version of aiohttp is installed (i.e. without the usual C extensions) or `AIOHTTP_NO_EXTENSIONS` is enabled, then an attacker may be able to execute a request smuggling attack to bypass certain firewalls or proxy protections.\n\n-----\n\nPatch: https://github.com/aio-libs/aiohttp/commit/259edc369075de63e6f3a4eaade058c62af0df71",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-8495-4g3g-x7pr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-52304",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-8495-4g3g-x7pr"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/259edc369075de63e6f3a4eaade058c62af0df71"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-52304"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8495-4g3g-x7pr"
+                }
+            ],
+            "published_at": "2024-11-18T21:02:32Z",
+            "updated_at": "2024-11-19T20:49:41Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.10.10",
+                    "first_patched_version": {
+                        "identifier": "3.10.11"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                    "score": 6.3
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.10.10",
+            "first_patched_version": {
+                "identifier": "3.10.11"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/30",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/30",
+        "created_at": "2024-12-28T23:11:39Z",
+        "updated_at": "2024-12-28T23:11:39Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 29,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "starlette"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f96h-pmfr-66vw",
+            "cve_id": "CVE-2024-47874",
+            "summary": "Starlette Denial of service (DoS) via multipart/form-data",
+            "description": "### Summary\nStarlette treats `multipart/form-data` parts without a `filename` as text form fields and buffers those in byte strings with no size limit. This allows an attacker to upload arbitrary large form fields and cause Starlette to both slow down significantly due to excessive memory allocations and copy operations, and also consume more and more memory until the server starts swapping and grinds to a halt, or the OS terminates the server process with an OOM error. Uploading multiple such requests in parallel may be enough to render a service practically unusable, even if reasonable request size limits are enforced by a reverse proxy in front of Starlette.\n\n### PoC\n\n```python\nfrom starlette.applications import Starlette\nfrom starlette.routing import Route\n\nasync def poc(request):\n    async with request.form():\n        pass\n\napp = Starlette(routes=[\n    Route('/', poc, methods=[\"POST\"]),\n])\n```\n\n```sh\ncurl http://localhost:8000 -F 'big=</dev/urandom'\n```\n\n### Impact\nThis Denial of service (DoS) vulnerability affects all applications built with Starlette (or FastAPI) accepting form requests.\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-f96h-pmfr-66vw",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-47874",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/encode/starlette/security/advisories/GHSA-f96h-pmfr-66vw"
+                },
+                {
+                    "url": "https://github.com/encode/starlette/commit/fd038f3070c302bff17ef7d173dbb0b007617733"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47874"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f96h-pmfr-66vw"
+                }
+            ],
+            "published_at": "2024-10-15T18:12:57Z",
+            "updated_at": "2024-10-15T19:56:07Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "starlette"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.40.0",
+                    "first_patched_version": {
+                        "identifier": "0.40.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N",
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N",
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "starlette"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.40.0",
+            "first_patched_version": {
+                "identifier": "0.40.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/29",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/29",
+        "created_at": "2024-12-28T23:11:39Z",
+        "updated_at": "2024-12-28T23:11:39Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 28,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                    "score": 5.6
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/28",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/28",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 27,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "manifest_path": "poetry.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fj7x-q9j7-g6q6",
+            "cve_id": "CVE-2024-21503",
+            "summary": "Black vulnerable to Regular Expression Denial of Service (ReDoS)",
+            "description": "Versions of the package black before 24.3.0 are vulnerable to Regular Expression Denial of Service (ReDoS) via the lines_with_leading_tabs_expanded function in the strings.py file. An attacker could exploit this vulnerability by crafting a malicious input that causes a denial of service.\n\nExploiting this vulnerability is possible when running Black on untrusted input, or if you habitually put thousands of leading tab characters in your docstrings.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fj7x-q9j7-g6q6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21503",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21503"
+                },
+                {
+                    "url": "https://github.com/psf/black/commit/f00093672628d212b8965a8993cee8bedf5fe9b8"
+                },
+                {
+                    "url": "https://github.com/psf/black/releases/tag/24.3.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-PYTHON-BLACK-6256273"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/black/PYSEC-2024-48.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fj7x-q9j7-g6q6"
+                }
+            ],
+            "published_at": "2024-03-19T06:30:52Z",
+            "updated_at": "2024-07-03T21:24:52Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "black"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0, < 24.3.0",
+                    "first_patched_version": {
+                        "identifier": "24.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-75",
+                    "name": "Failure to Sanitize Special Elements into a Different Plane (Special Element Injection)"
+                },
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0, < 24.3.0",
+            "first_patched_version": {
+                "identifier": "24.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/27",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/27",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 26,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cross-spawn"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3xgq-45jj-v275",
+            "cve_id": "CVE-2024-21538",
+            "summary": "Regular Expression Denial of Service (ReDoS) in cross-spawn",
+            "description": "Versions of the package cross-spawn before 7.0.5 are vulnerable to Regular Expression Denial of Service (ReDoS) due to improper input sanitization. An attacker can increase the CPU usage and crash the program by crafting a very large and well crafted string.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3xgq-45jj-v275",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21538",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21538"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/pull/160"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/5ff3a07d9add449021d806e45c4168203aa833ff"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/640d391fde65388548601d95abedccc12943374f"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-CROSSSPAWN-8303230"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/issues/165"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/d35c865b877d2f9ded7c1ed87521c2fdb689c8dd"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-8366349"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3xgq-45jj-v275"
+                }
+            ],
+            "published_at": "2024-11-08T06:30:47Z",
+            "updated_at": "2024-11-19T16:19:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cross-spawn"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.0.5",
+                    "first_patched_version": {
+                        "identifier": "7.0.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cross-spawn"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 6.0.6",
+                    "first_patched_version": {
+                        "identifier": "6.0.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cross-spawn"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 6.0.6",
+            "first_patched_version": {
+                "identifier": "6.0.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/26",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/26",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 25,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cross-spawn"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3xgq-45jj-v275",
+            "cve_id": "CVE-2024-21538",
+            "summary": "Regular Expression Denial of Service (ReDoS) in cross-spawn",
+            "description": "Versions of the package cross-spawn before 7.0.5 are vulnerable to Regular Expression Denial of Service (ReDoS) due to improper input sanitization. An attacker can increase the CPU usage and crash the program by crafting a very large and well crafted string.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3xgq-45jj-v275",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21538",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21538"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/pull/160"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/5ff3a07d9add449021d806e45c4168203aa833ff"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/640d391fde65388548601d95abedccc12943374f"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-CROSSSPAWN-8303230"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/issues/165"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/d35c865b877d2f9ded7c1ed87521c2fdb689c8dd"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-8366349"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3xgq-45jj-v275"
+                }
+            ],
+            "published_at": "2024-11-08T06:30:47Z",
+            "updated_at": "2024-11-19T16:19:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cross-spawn"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.0.5",
+                    "first_patched_version": {
+                        "identifier": "7.0.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cross-spawn"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 6.0.6",
+                    "first_patched_version": {
+                        "identifier": "6.0.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cross-spawn"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 7.0.0, < 7.0.5",
+            "first_patched_version": {
+                "identifier": "7.0.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/25",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/25",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 24,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "micromatch"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-952p-6rrq-rcjv",
+            "cve_id": "CVE-2024-4067",
+            "summary": "Regular Expression Denial of Service (ReDoS) in micromatch",
+            "description": "The NPM package `micromatch` prior to version 4.0.8 is vulnerable to Regular Expression Denial of Service (ReDoS). The vulnerability occurs in `micromatch.braces()` in `index.js` because the pattern `.*` will greedily match anything. By passing a malicious payload, the pattern matching will keep backtracking to the input while it doesn't find the closing bracket. As the input size increases, the consumption time will also increase until it causes the application to hang or slow down. There was a merged fix but further testing shows the issue persisted prior to https://github.com/micromatch/micromatch/pull/266. This issue should be mitigated by using a safe pattern that won't start backtracking the regular expression due to greedy matching.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-952p-6rrq-rcjv",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-4067",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-4067"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/issues/243"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/pull/247"
+                },
+                {
+                    "url": "https://devhub.checkmarx.com/cve-details/CVE-2024-4067"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/blob/2c56a8604b68c1099e7bc0f807ce0865a339747a/index.js#L448"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/commit/500d5d6f42f0e8dfa1cb5464c6cb420b1b6aaaa0"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/pull/266"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/commit/03aa8052171e878897eee5d7bb2ae0ae83ec2ade"
+                },
+                {
+                    "url": "https://advisory.checkmarx.net/advisory/CVE-2024-4067"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/releases/tag/4.0.8"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-952p-6rrq-rcjv"
+                }
+            ],
+            "published_at": "2024-05-14T18:30:54Z",
+            "updated_at": "2024-08-28T13:12:27Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "micromatch"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.0.8",
+                    "first_patched_version": {
+                        "identifier": "4.0.8"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "micromatch"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.0.8",
+            "first_patched_version": {
+                "identifier": "4.0.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/24",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/24",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 23,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "braces"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-grv7-fg5c-xmjg",
+            "cve_id": "CVE-2024-4068",
+            "summary": "Uncontrolled resource consumption in braces",
+            "description": "The NPM package `braces` fails to limit the number of characters it can handle, which could lead to Memory Exhaustion. In `lib/parse.js,` if a malicious user sends \"imbalanced braces\" as input, the parsing will enter a loop, which will cause the program to start allocating heap memory without freeing it at any moment of the loop. Eventually, the JavaScript heap limit is reached, and the program will crash.\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-grv7-fg5c-xmjg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-4068",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-4068"
+                },
+                {
+                    "url": "https://github.com/micromatch/braces/issues/35"
+                },
+                {
+                    "url": "https://devhub.checkmarx.com/cve-details/CVE-2024-4068"
+                },
+                {
+                    "url": "https://github.com/micromatch/braces/blob/98414f9f1fabe021736e26836d8306d5de747e0d/lib/parse.js#L308"
+                },
+                {
+                    "url": "https://github.com/micromatch/braces/pull/37"
+                },
+                {
+                    "url": "https://github.com/micromatch/braces/pull/40"
+                },
+                {
+                    "url": "https://github.com/micromatch/braces/commit/415d660c3002d1ab7e63dbf490c9851da80596ff"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-grv7-fg5c-xmjg"
+                }
+            ],
+            "published_at": "2024-05-14T18:30:54Z",
+            "updated_at": "2024-07-05T21:25:08Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "braces"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.0.3",
+                    "first_patched_version": {
+                        "identifier": "3.0.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-1050",
+                    "name": "Excessive Platform Resource Consumption within a Loop"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "braces"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.0.3",
+            "first_patched_version": {
+                "identifier": "3.0.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/23",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/23",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 22,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "immer"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-33f9-j839-rf8h",
+            "cve_id": "CVE-2021-23436",
+            "summary": "Prototype Pollution in immer",
+            "description": "This affects the package immer before 9.0.6. A type confusion vulnerability can lead to a bypass of CVE-2020-28477 when the user-provided keys used in the path parameter are arrays. In particular, this bypass is possible because the condition `(p === \"__proto__\" || p === \"constructor\")` in `applyPatches_` returns false if `p` is `['__proto__']` (or `['constructor']`). The `===` operator (strict equality operator) returns false if the operands have different type.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-33f9-j839-rf8h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-23436",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-23436"
+                },
+                {
+                    "url": "https://github.com/immerjs/immer/commit/fa671e55ee9bd42ae08cc239102b665a23958237"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JS-IMMER-1540542"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-1579266"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-33f9-j839-rf8h"
+                }
+            ],
+            "published_at": "2021-09-02T17:17:37Z",
+            "updated_at": "2024-04-30T20:26:07Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "immer"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": ">= 7.0.0, < 9.0.6",
+                    "first_patched_version": {
+                        "identifier": "9.0.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 9.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-843",
+                    "name": "Access of Resource Using Incompatible Type ('Type Confusion')"
+                },
+                {
+                    "cwe_id": "CWE-1321",
+                    "name": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "immer"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": ">= 7.0.0, < 9.0.6",
+            "first_patched_version": {
+                "identifier": "9.0.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/22",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/22",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 21,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "immer"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-c36v-fmgq-m8hx",
+            "cve_id": "CVE-2021-3757",
+            "summary": "Prototype Pollution in immer",
+            "description": "immer is vulnerable to Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution').",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-c36v-fmgq-m8hx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-3757",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-3757"
+                },
+                {
+                    "url": "https://github.com/immerjs/immer/commit/fa671e55ee9bd42ae08cc239102b665a23958237"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/23d38099-71cd-42ed-a77a-71e68094adfa"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-c36v-fmgq-m8hx"
+                }
+            ],
+            "published_at": "2021-09-07T22:57:14Z",
+            "updated_at": "2024-04-25T22:09:14Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "immer"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 9.0.6",
+                    "first_patched_version": {
+                        "identifier": "9.0.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-915",
+                    "name": "Improperly Controlled Modification of Dynamically-Determined Object Attributes"
+                },
+                {
+                    "cwe_id": "CWE-1321",
+                    "name": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "immer"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 7.0.0, < 9.0.6",
+            "first_patched_version": {
+                "identifier": "9.0.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/21",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/21",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 20,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "lodash.template"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-35jh-r3h4-6jhm",
+            "cve_id": "CVE-2021-23337",
+            "summary": "Command Injection in lodash",
+            "description": "`lodash` versions prior to 4.17.21 are vulnerable to Command Injection via the template function.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-35jh-r3h4-6jhm",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-23337",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-23337"
+                },
+                {
+                    "url": "https://github.com/lodash/lodash/commit/3469357cff396a26c363f8c1b5a91dde28ba4b1c"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JS-LODASH-1040724"
+                },
+                {
+                    "url": "https://github.com/lodash/lodash/blob/ddfd9b11a0126db2302cb70ec9973b66baec0975/lodash.js#L14851"
+                },
+                {
+                    "url": "https://github.com/lodash/lodash/blob/ddfd9b11a0126db2302cb70ec9973b66baec0975/lodash.js%23L14851"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGFUJIONWEBJARS-1074932"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARS-1074930"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-1074928"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWERGITHUBLODASH-1074931"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-1074929"
+                },
+                {
+                    "url": "https://www.oracle.com//security-alerts/cpujul2021.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpuoct2021.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujan2022.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-637483.pdf"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20210312-0006"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-35jh-r3h4-6jhm"
+                }
+            ],
+            "published_at": "2021-05-06T16:05:51Z",
+            "updated_at": "2024-04-17T18:39:19Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "lodash"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.17.21",
+                    "first_patched_version": {
+                        "identifier": "4.17.21"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "lodash-es"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.17.21",
+                    "first_patched_version": {
+                        "identifier": "4.17.21"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "lodash.template"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 4.5.0",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "lodash-template"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.0.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+                "score": 7.2
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 7.2
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                },
+                {
+                    "cwe_id": "CWE-94",
+                    "name": "Improper Control of Generation of Code ('Code Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "lodash.template"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 4.5.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/20",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/20",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 19,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "axios"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-wf5p-g6vw-rhxx",
+            "cve_id": "CVE-2023-45857",
+            "summary": "Axios Cross-Site Request Forgery Vulnerability",
+            "description": "An issue discovered in Axios 0.8.1 through 1.5.1 inadvertently reveals the confidential XSRF-TOKEN stored in cookies by including it in the HTTP header X-XSRF-TOKEN for every request made to any host allowing attackers to view sensitive information.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-wf5p-g6vw-rhxx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-45857",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-45857"
+                },
+                {
+                    "url": "https://github.com/axios/axios/issues/6006"
+                },
+                {
+                    "url": "https://github.com/axios/axios/issues/6022"
+                },
+                {
+                    "url": "https://github.com/axios/axios/pull/6028"
+                },
+                {
+                    "url": "https://github.com/axios/axios/commit/96ee232bd3ee4de2e657333d4d2191cd389e14d0"
+                },
+                {
+                    "url": "https://github.com/axios/axios/releases/tag/v1.6.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-AXIOS-6032459"
+                },
+                {
+                    "url": "https://github.com/axios/axios/pull/6091"
+                },
+                {
+                    "url": "https://github.com/axios/axios/commit/2755df562b9c194fba6d8b609a383443f6a6e967"
+                },
+                {
+                    "url": "https://github.com/axios/axios/releases/tag/v0.28.0"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240621-0006"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx"
+                }
+            ],
+            "published_at": "2023-11-08T21:30:37Z",
+            "updated_at": "2024-06-21T21:33:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "axios"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.0.0, < 1.6.0",
+                    "first_patched_version": {
+                        "identifier": "1.6.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "axios"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0.8.1, < 0.28.0",
+                    "first_patched_version": {
+                        "identifier": "0.28.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 6.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                    "score": 6.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-352",
+                    "name": "Cross-Site Request Forgery (CSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "axios"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0.8.1, < 0.28.0",
+            "first_patched_version": {
+                "identifier": "0.28.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/19",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/19",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 18,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "sharp"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-54xq-cgqr-rpm3",
+            "cve_id": null,
+            "summary": "sharp vulnerability in libwebp dependency CVE-2023-4863",
+            "description": "## Overview\n\nsharp uses libwebp to decode WebP images and versions prior to the latest 0.32.6 are vulnerable to the high severity https://github.com/advisories/GHSA-j7hp-h8jx-5ppr.\n\n## Who does this affect?\n\nAlmost anyone processing untrusted input with versions of sharp prior to 0.32.6.\n\n## How to resolve this?\n\n### Using prebuilt binaries provided by sharp?\n\nMost people rely on the prebuilt binaries provided by sharp.\n\nPlease upgrade sharp to the latest 0.32.6, which provides libwebp 1.3.2.\n\n### Using a globally-installed libvips?\n\nPlease ensure you are using the latest libwebp 1.3.2.\n\n## Possible workaround\n\nAdd the following to your code to prevent sharp from decoding WebP images.\n```js\nsharp.block({ operation: [\"VipsForeignLoadWebp\"] });\n```",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-54xq-cgqr-rpm3",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/lovell/sharp/security/advisories/GHSA-54xq-cgqr-rpm3"
+                },
+                {
+                    "url": "https://github.com/lovell/sharp/commit/dbce6fab795ca4250bda9b1ef502c1fdb7d4a30c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-54xq-cgqr-rpm3"
+                }
+            ],
+            "published_at": "2023-11-16T17:14:15Z",
+            "updated_at": "2023-11-16T17:14:17Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "sharp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.32.6",
+                    "first_patched_version": {
+                        "identifier": "0.32.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "sharp"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.32.6",
+            "first_patched_version": {
+                "identifier": "0.32.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/18",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/18",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 17,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7fh5-64p2-3v2j",
+            "cve_id": "CVE-2023-44270",
+            "summary": "PostCSS line return parsing error",
+            "description": "An issue was discovered in PostCSS before 8.4.31. It affects linters using PostCSS to parse external Cascading Style Sheets (CSS). There may be `\\r` discrepancies, as demonstrated by `@font-face{ font:(\\r/*);}` in a rule.\n\nThis vulnerability affects linters using PostCSS to parse external untrusted CSS. An attacker can prepare CSS in such a way that it will contains parts parsed by PostCSS as a CSS comment. After processing by PostCSS, it will be included in the PostCSS output in CSS nodes (rules, properties) despite being originally included in a comment.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-7fh5-64p2-3v2j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-44270",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-44270"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/commit/58cc860b4c1707510c9cd1bc1fa30b423a9ad6c5"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/blob/main/lib/tokenize.js#L25"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/releases/tag/8.4.31"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/issues/2820"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7fh5-64p2-3v2j"
+                }
+            ],
+            "published_at": "2023-09-30T00:31:10Z",
+            "updated_at": "2023-11-05T05:05:37Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "postcss"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 8.4.31",
+                    "first_patched_version": {
+                        "identifier": "8.4.31"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                },
+                {
+                    "cwe_id": "CWE-144",
+                    "name": "Improper Neutralization of Line Delimiters"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 8.4.31",
+            "first_patched_version": {
+                "identifier": "8.4.31"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/17",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/17",
+        "created_at": "2024-12-28T23:11:38Z",
+        "updated_at": "2024-12-28T23:11:38Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 16,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "tough-cookie"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-72xf-g2v4-qvf3",
+            "cve_id": "CVE-2023-26136",
+            "summary": "tough-cookie Prototype Pollution vulnerability",
+            "description": "Versions of the package tough-cookie before 4.1.3 are vulnerable to Prototype Pollution due to improper handling of Cookies when using CookieJar in `rejectPublicSuffixes=false` mode. This issue arises from the manner in which the objects are initialized.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-72xf-g2v4-qvf3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-26136",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-26136"
+                },
+                {
+                    "url": "https://github.com/salesforce/tough-cookie/issues/282"
+                },
+                {
+                    "url": "https://github.com/salesforce/tough-cookie/commit/12d474791bb856004e858fdb1c47b7608d09cf6e"
+                },
+                {
+                    "url": "https://github.com/salesforce/tough-cookie/releases/tag/v4.1.3"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-TOUGHCOOKIE-5672873"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/07/msg00010.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3HUE6ZR5SL73KHL7XUPAOEL6SB7HUDT2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6PVVPNSAGSDS63HQ74PJ7MZ3MU5IYNVZ"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240621-0006"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-72xf-g2v4-qvf3"
+                }
+            ],
+            "published_at": "2023-07-01T06:30:16Z",
+            "updated_at": "2024-06-21T21:33:53Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "tough-cookie"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.1.3",
+                    "first_patched_version": {
+                        "identifier": "4.1.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                "score": 6.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                    "score": 6.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1321",
+                    "name": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "tough-cookie"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.1.3",
+            "first_patched_version": {
+                "identifier": "4.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/16",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/16",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "request"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p8p7-x288-28g6",
+            "cve_id": "CVE-2023-28155",
+            "summary": "Server-Side Request Forgery in Request",
+            "description": "The `request` package through 2.88.2 for Node.js and the `@cypress/request` package prior to 3.0.0 allow a bypass of SSRF mitigations via an attacker-controller server that does a cross-protocol redirect (HTTP to HTTPS, or HTTPS to HTTP).\n\nNOTE: The `request` package is no longer supported by the maintainer.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-p8p7-x288-28g6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-28155",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28155"
+                },
+                {
+                    "url": "https://github.com/request/request/issues/3442"
+                },
+                {
+                    "url": "https://github.com/request/request/pull/3444"
+                },
+                {
+                    "url": "https://doyensec.com/resources/Doyensec_Advisory_RequestSSRF_Q12023.pdf"
+                },
+                {
+                    "url": "https://github.com/github/advisory-database/pull/2500"
+                },
+                {
+                    "url": "https://github.com/cypress-io/request/blob/master/lib/redirect.js#L116"
+                },
+                {
+                    "url": "https://github.com/request/request/blob/master/lib/redirect.js#L111"
+                },
+                {
+                    "url": "https://github.com/cypress-io/request/pull/28"
+                },
+                {
+                    "url": "https://github.com/cypress-io/request/commit/c5bcf21d40fb61feaff21a0e5a2b3934a440024f"
+                },
+                {
+                    "url": "https://github.com/cypress-io/request/releases/tag/v3.0.0"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230413-0007"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p8p7-x288-28g6"
+                }
+            ],
+            "published_at": "2023-03-16T15:30:19Z",
+            "updated_at": "2024-03-21T17:47:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "request"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 2.88.2",
+                    "first_patched_version": null
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "@cypress/request"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 2.88.12",
+                    "first_patched_version": {
+                        "identifier": "3.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                    "score": 6.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-918",
+                    "name": "Server-Side Request Forgery (SSRF)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "request"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 2.88.2",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/15",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "http-cache-semantics"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rc47-6667-2j5j",
+            "cve_id": "CVE-2022-25881",
+            "summary": "http-cache-semantics vulnerable to Regular Expression Denial of Service",
+            "description": "http-cache semantics contains an Inefficient Regular Expression Complexity , leading to Denial of Service. This affects versions of the package http-cache-semantics before 4.1.1. The issue can be exploited via malicious request header values sent to a server, when that server reads the cache policy from the request using this library.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-rc47-6667-2j5j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-25881",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-25881"
+                },
+                {
+                    "url": "https://github.com/kornelski/http-cache-semantics/blob/master/index.js%23L83"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-3253332"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-HTTPCACHESEMANTICS-3248783"
+                },
+                {
+                    "url": "https://github.com/kornelski/http-cache-semantics/commit/560b2d8ef452bbba20ffed69dc155d63ac757b74"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230622-0008/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rc47-6667-2j5j"
+                }
+            ],
+            "published_at": "2023-01-31T06:30:26Z",
+            "updated_at": "2023-06-22T17:26:15Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "http-cache-semantics"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.1.1",
+                    "first_patched_version": {
+                        "identifier": "4.1.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.webjars.npm:http-cache-semantics"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.1.1",
+                    "first_patched_version": {
+                        "identifier": "4.1.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "http-cache-semantics"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.1.1",
+            "first_patched_version": {
+                "identifier": "4.1.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/14",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "loader-utils"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3rfm-jhwj-7488",
+            "cve_id": "CVE-2022-37603",
+            "summary": "loader-utils is vulnerable to Regular Expression Denial of Service (ReDoS) via url variable",
+            "description": "A Regular expression denial of service (ReDoS) flaw was found in Function interpolateName in interpolateName.js in webpack loader-utils 2.0.0 via the url variable in interpolateName.js. A badly or maliciously formed string could be used to send crafted requests that cause a system to crash or take a disproportional amount of time to process. This issue has been patched in versions 1.4.2, 2.0.4 and 3.2.1.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3rfm-jhwj-7488",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-37603",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-37603"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/issues/213"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/blob/d9f4e23cf411d8556f8bac2d3bf05a6e0103b568/lib/interpolateName.js#L107"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/blob/d9f4e23cf411d8556f8bac2d3bf05a6e0103b568/lib/interpolateName.js#L38"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/issues/216"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/17cbf8fa8989c1cb45bdd2997aa524729475f1fa"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/ac09944dfacd7c4497ef692894b09e63e09a5eeb"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/d2d752d59629daee38f34b24307221349c490eb1"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ERN6YE3DS7NBW7UH44SCJBMNC2NWQ7SM/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KAC5KQ2SEWAMQ6UZAUBZ5KXKEOESH375/"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VNV2GNZXOTEDAJRFH3ZYWRUBGIVL7BSU/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3rfm-jhwj-7488"
+                }
+            ],
+            "published_at": "2022-10-14T19:00:38Z",
+            "updated_at": "2023-11-29T20:49:23Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "loader-utils"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.0.0, < 1.4.2",
+                    "first_patched_version": {
+                        "identifier": "1.4.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "loader-utils"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.0.4",
+                    "first_patched_version": {
+                        "identifier": "2.0.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "loader-utils"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.0.0, < 3.2.1",
+                    "first_patched_version": {
+                        "identifier": "3.2.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "loader-utils"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 2.0.0, < 2.0.4",
+            "first_patched_version": {
+                "identifier": "2.0.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/13",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "loader-utils"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hhq3-ff78-jv3g",
+            "cve_id": "CVE-2022-37599",
+            "summary": "loader-utils is vulnerable to Regular Expression Denial of Service (ReDoS)",
+            "description": "A regular expression denial of service (ReDoS) flaw was found in Function interpolateName in interpolateName.js in webpack loader-utils via the resourcePath variable in interpolateName.js. A badly or maliciously formed string could be used to send crafted requests that cause a system to crash or take a disproportional amount of time to process. This issue has been patched in versions 1.4.2, 2.0.4 and 3.2.1.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-hhq3-ff78-jv3g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-37599",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-37599"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/issues/211"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/blob/d9f4e23cf411d8556f8bac2d3bf05a6e0103b568/lib/interpolateName.js#L38"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/blob/d9f4e23cf411d8556f8bac2d3bf05a6e0103b568/lib/interpolateName.js#L83"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/issues/216"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/17cbf8fa8989c1cb45bdd2997aa524729475f1fa"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/ac09944dfacd7c4497ef692894b09e63e09a5eeb"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/d2d752d59629daee38f34b24307221349c490eb1"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/3HUE6ZR5SL73KHL7XUPAOEL6SB7HUDT2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/6PVVPNSAGSDS63HQ74PJ7MZ3MU5IYNVZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hhq3-ff78-jv3g"
+                }
+            ],
+            "published_at": "2022-10-12T12:00:27Z",
+            "updated_at": "2024-04-22T19:46:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "loader-utils"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.0.0, < 1.4.2",
+                    "first_patched_version": {
+                        "identifier": "1.4.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "loader-utils"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.0.4",
+                    "first_patched_version": {
+                        "identifier": "2.0.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "loader-utils"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.0.0, < 3.2.1",
+                    "first_patched_version": {
+                        "identifier": "3.2.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "loader-utils"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 2.0.0, < 2.0.4",
+            "first_patched_version": {
+                "identifier": "2.0.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/12",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "loader-utils"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-76p3-8jx3-jpfq",
+            "cve_id": "CVE-2022-37601",
+            "summary": "Prototype pollution in webpack loader-utils",
+            "description": "Prototype pollution vulnerability in function parseQuery in parseQuery.js in webpack loader-utils prior to version 2.0.3 via the name variable in parseQuery.js.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-76p3-8jx3-jpfq",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-37601",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-37601"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/issues/212"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/releases/tag/v2.0.3"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/pull/217"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/pull/220"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/releases/tag/v1.4.1"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/issues/212#issuecomment-1319192884"
+                },
+                {
+                    "url": "https://github.com/xmldom/xmldom/issues/436#issuecomment-1319412826"
+                },
+                {
+                    "url": "https://dl.acm.org/doi/abs/10.1145/3488932.3497769"
+                },
+                {
+                    "url": "https://dl.acm.org/doi/pdf/10.1145/3488932.3497769"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/12/msg00044.html"
+                },
+                {
+                    "url": "http://users.encs.concordia.ca/~mmannan/publications/JS-vulnerability-aisaccs2022.pdf"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/f4e48a232fae900237c3e5ff7b57ce9e1c734de1"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/4504e34c4796a5836ef70458327351675aed48a5"
+                },
+                {
+                    "url": "https://github.com/webpack/loader-utils/commit/a93cf6f4702012030f6b5ee8340d5c95ec1c7d4c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-76p3-8jx3-jpfq"
+                }
+            ],
+            "published_at": "2022-10-13T12:00:28Z",
+            "updated_at": "2023-09-21T22:15:51Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "loader-utils"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.0.3",
+                    "first_patched_version": {
+                        "identifier": "2.0.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "loader-utils"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 1.4.1",
+                    "first_patched_version": {
+                        "identifier": "1.4.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 9.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1321",
+                    "name": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "loader-utils"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": ">= 2.0.0, < 2.0.3",
+            "first_patched_version": {
+                "identifier": "2.0.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/11",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "minimatch"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f8q6-p94x-37v3",
+            "cve_id": "CVE-2022-3517",
+            "summary": "minimatch ReDoS vulnerability",
+            "description": "A vulnerability was found in the minimatch package. This flaw allows a Regular Expression Denial of Service (ReDoS) when calling the braceExpand function with specific arguments, resulting in a Denial of Service.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-f8q6-p94x-37v3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-3517",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-3517"
+                },
+                {
+                    "url": "https://github.com/grafana/grafana-image-renderer/issues/329"
+                },
+                {
+                    "url": "https://github.com/isaacs/minimatch/commit/a8763f4388e51956be62dc6025cec1126beeb5e6"
+                },
+                {
+                    "url": "https://github.com/nodejs/node/issues/42510"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/01/msg00011.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/MTEUUTNIEBHGKUKKLNUZSV7IEP6IP3Q3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UM6XJ73Q3NAM5KSGCOKJ2ZIA6GUWUJLK"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f8q6-p94x-37v3"
+                }
+            ],
+            "published_at": "2022-10-18T12:00:32Z",
+            "updated_at": "2024-02-14T18:15:17Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "minimatch"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.0.5",
+                    "first_patched_version": {
+                        "identifier": "3.0.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "minimatch"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.0.5",
+            "first_patched_version": {
+                "identifier": "3.0.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/10",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "shell-quote"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-g4rg-993r-mgx7",
+            "cve_id": "CVE-2021-42740",
+            "summary": "Improper Neutralization of Special Elements used in a Command in Shell-quote",
+            "description": "The shell-quote package before 1.7.3 for Node.js allows command injection. An attacker can inject unescaped shell metacharacters through a regex designed to support Windows drive letters. If the output of this package is passed to a real shell as a quoted argument to a command with `exec()`, an attacker can inject arbitrary commands. This is because the Windows drive letter regex character class is `[A-z]` instead of the correct `[A-Za-z]`. Several shell metacharacters exist in the space between capital letter Z and lower case letter a, such as the backtick character.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-g4rg-993r-mgx7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-42740",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-42740"
+                },
+                {
+                    "url": "https://www.npmjs.com/package/shell-quote"
+                },
+                {
+                    "url": "https://github.com/ljharb/shell-quote/commit/5799416ed454aa4ec9afafc895b4e31760ea1abe"
+                },
+                {
+                    "url": "https://github.com/ljharb/shell-quote/blob/master/CHANGELOG.md#173"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-g4rg-993r-mgx7"
+                }
+            ],
+            "published_at": "2022-05-24T19:18:27Z",
+            "updated_at": "2024-02-02T20:50:03Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "shell-quote"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 1.7.2",
+                    "first_patched_version": {
+                        "identifier": "1.7.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 9.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "shell-quote"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 1.7.2",
+            "first_patched_version": {
+                "identifier": "1.7.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/9",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "got"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-pfrx-2q88-qq97",
+            "cve_id": "CVE-2022-33987",
+            "summary": "Got allows a redirect to a UNIX socket",
+            "description": "The got package before 11.8.5 and 12.1.0 for Node.js allows a redirect to a UNIX socket.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-pfrx-2q88-qq97",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-33987",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-33987"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/got/pull/2047"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/got/compare/v12.0.3...v12.1.0"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/got/commit/861ccd9ac2237df762a9e2beed7edd88c60782dc"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/got/releases/tag/v11.8.5"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/got/releases/tag/v12.1.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-pfrx-2q88-qq97"
+                }
+            ],
+            "published_at": "2022-06-19T00:00:21Z",
+            "updated_at": "2023-01-27T05:05:01Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "got"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 12.0.0, < 12.1.0",
+                    "first_patched_version": {
+                        "identifier": "12.1.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "got"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 11.8.5",
+                    "first_patched_version": {
+                        "identifier": "11.8.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": []
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "got"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 11.8.5",
+            "first_patched_version": {
+                "identifier": "11.8.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/8",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "semver-regex"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4x5v-gmq8-25ch",
+            "cve_id": "CVE-2021-43307",
+            "summary": "Regular expression denial of service in semver-regex",
+            "description": "An exponential ReDoS (Regular Expression Denial of Service) can be triggered in the semver-regex npm package, when an attacker is able to supply arbitrary input to the test() method",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-4x5v-gmq8-25ch",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-43307",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-43307"
+                },
+                {
+                    "url": "https://research.jfrog.com/vulnerabilities/semver-regex-redos-xray-211349/"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/semver-regex/commit/d8ba39a528c1027c43ab23f12eec28ca4d40dd0c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4x5v-gmq8-25ch"
+                }
+            ],
+            "published_at": "2022-06-03T00:01:00Z",
+            "updated_at": "2023-07-19T19:58:14Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "semver-regex"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "semver-regex"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 4.0.0, < 4.0.3",
+                    "first_patched_version": {
+                        "identifier": "4.0.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "semver-regex"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/7",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nth-check"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rp65-9cf3-cjxr",
+            "cve_id": "CVE-2021-3803",
+            "summary": "Inefficient Regular Expression Complexity in nth-check",
+            "description": "There is a Regular Expression Denial of Service (ReDoS) vulnerability in nth-check that causes a denial of service when parsing crafted invalid CSS nth-checks.\n\nThe ReDoS vulnerabilities of the regex are mainly due to the sub-pattern `\\s*(?:([+-]?)\\s*(\\d+))?` with quantified overlapping adjacency and can be exploited with the following code.\n\n**Proof of Concept**\n```js\n// PoC.js\nvar nthCheck = require(\"nth-check\")\nfor(var i = 1; i <= 50000; i++) {\n    var time = Date.now();\n    var attack_str = '2n' + ' '.repeat(i*10000)+\"!\";\n    try {\n        nthCheck.parse(attack_str) \n    }\n    catch(err) {\n        var time_cost = Date.now() - time;\n        console.log(\"attack_str.length: \" + attack_str.length + \": \" + time_cost+\" ms\")\n    }\n}\n```\n\n**The Output**\n```\nattack_str.length: 10003: 174 ms\nattack_str.length: 20003: 1427 ms\nattack_str.length: 30003: 2602 ms\nattack_str.length: 40003: 4378 ms\nattack_str.length: 50003: 7473 ms\n```",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-rp65-9cf3-cjxr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-3803",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-3803"
+                },
+                {
+                    "url": "https://github.com/fb55/nth-check/commit/9894c1d2010870c351f66c6f6efcf656e26bb726"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/8cf8cc06-d2cf-4b4e-b42c-99fafb0b04d0"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/05/msg00023.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rp65-9cf3-cjxr"
+                }
+            ],
+            "published_at": "2021-09-20T20:47:31Z",
+            "updated_at": "2023-11-29T22:11:25Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "nth-check"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 2.0.1",
+                    "first_patched_version": {
+                        "identifier": "2.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nth-check"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 2.0.1",
+            "first_patched_version": {
+                "identifier": "2.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/6",
+        "created_at": "2024-12-28T23:11:37Z",
+        "updated_at": "2024-12-28T23:11:37Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "semver-regex"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-44c6-4v22-4mhx",
+            "cve_id": "CVE-2021-3795",
+            "summary": "semver-regex Regular Expression Denial of Service (ReDOS)",
+            "description": "npm `semver-regex` is vulnerable to Inefficient Regular Expression Complexity",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-44c6-4v22-4mhx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-3795",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-3795"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/semver-regex/commit/11c66245f4e1976dccc52977ed183696a21a3fd7"
+                },
+                {
+                    "url": "https://huntr.dev/bounties/006624e3-35ac-448f-aab9-7b5183f30e28"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-44c6-4v22-4mhx"
+                }
+            ],
+            "published_at": "2021-09-20T20:42:25Z",
+            "updated_at": "2023-07-11T13:37:52Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "semver-regex"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.1.3",
+                    "first_patched_version": {
+                        "identifier": "3.1.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "semver-regex"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "= 4.0.0",
+                    "first_patched_version": {
+                        "identifier": "4.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "semver-regex"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.1.3",
+            "first_patched_version": {
+                "identifier": "3.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/5",
+        "created_at": "2024-12-28T23:11:36Z",
+        "updated_at": "2024-12-28T23:11:36Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "trim-newlines"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7p7h-4mm5-852v",
+            "cve_id": "CVE-2021-33623",
+            "summary": "Uncontrolled Resource Consumption in trim-newlines",
+            "description": "@rkesters/gnuplot is an easy to use node module to draw charts using gnuplot and ps2pdf. The trim-newlines package before 3.0.1 and 4.x before 4.0.1 for Node.js has an issue related to regular expression denial-of-service (ReDoS) for the `.end()` method.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-7p7h-4mm5-852v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-33623",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-33623"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/trim-newlines/commit/25246c6ce5eea1c82d448998733a6302a4350d91"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/trim-newlines/releases/tag/v4.0.1"
+                },
+                {
+                    "url": "https://www.npmjs.com/package/trim-newlines"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20210702-0007/"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2022/12/msg00033.html"
+                },
+                {
+                    "url": "https://github.com/sindresorhus/trim-newlines/commit/b10d5f4afef832b16bc56d49fc52c68cbd403869"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7p7h-4mm5-852v"
+                }
+            ],
+            "published_at": "2021-06-07T22:10:39Z",
+            "updated_at": "2023-11-29T22:33:19Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "trim-newlines"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.0.1",
+                    "first_patched_version": {
+                        "identifier": "3.0.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "trim-newlines"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "= 4.0.0",
+                    "first_patched_version": {
+                        "identifier": "4.0.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "trim-newlines"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.0.1",
+            "first_patched_version": {
+                "identifier": "3.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/4",
+        "created_at": "2024-12-28T23:11:36Z",
+        "updated_at": "2024-12-28T23:11:36Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "browserslist"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-w8qv-6jwh-64r5",
+            "cve_id": "CVE-2021-23364",
+            "summary": "Regular Expression Denial of Service in browserslist",
+            "description": "The package browserslist from 4.0.0 and before 4.16.5 are vulnerable to Regular Expression Denial of Service (ReDoS) during parsing of queries.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-w8qv-6jwh-64r5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-23364",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-23364"
+                },
+                {
+                    "url": "https://github.com/browserslist/browserslist/pull/593"
+                },
+                {
+                    "url": "https://github.com/browserslist/browserslist/commit/c091916910dfe0b5fd61caad96083c6709b02d98"
+                },
+                {
+                    "url": "https://github.com/browserslist/browserslist/blob/e82f32d1d4100d6bc79ea0b6b6a2d281a561e33c/index.js%23L472-L474"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-1277182"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JS-BROWSERSLIST-1090194"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-w8qv-6jwh-64r5"
+                }
+            ],
+            "published_at": "2021-05-24T19:52:40Z",
+            "updated_at": "2023-08-17T05:02:30Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "browserslist"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 4.0.0, < 4.16.5",
+                    "first_patched_version": {
+                        "identifier": "4.16.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "browserslist"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 4.0.0, < 4.16.5",
+            "first_patched_version": {
+                "identifier": "4.16.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/3",
+        "created_at": "2024-12-28T23:11:36Z",
+        "updated_at": "2024-12-28T23:11:36Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "trim"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-w5p7-h5w8-2hfq",
+            "cve_id": "CVE-2020-7753",
+            "summary": "Regular Expression Denial of Service in trim",
+            "description": "All versions of package trim lower than 0.0.3 are vulnerable to Regular Expression Denial of Service (ReDoS) via trim().",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-w5p7-h5w8-2hfq",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2020-7753",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-7753"
+                },
+                {
+                    "url": "https://github.com/component/trim/pull/8"
+                },
+                {
+                    "url": "https://github.com/component/trim/blob/master/index.js"
+                },
+                {
+                    "url": "https://github.com/component/trim/blob/master/index.js%23L6"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-1022132"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-JS-TRIM-1017038"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r10faad1ef9166d37a1a5c9142b1af7099b8ecdc5ad05c51b8ea993d9@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r51ff3c2a4c7b8402f321eae7e624672cc2295c7bc8c12c8b871f6b0b@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r75b8d0b88833d7d96afcdce3ead65e212572ead4e7a9f34d21040196@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb8462df3b6484e778905c09cd49a8912e1a302659860017ebe36da03@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rcc7c2865a52b544a8e49386c6880e9b9ab29bfce1052b5569d09ee4a@%3Ccommits.airflow.apache.org%3E"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-w5p7-h5w8-2hfq"
+                }
+            ],
+            "published_at": "2021-05-10T18:44:22Z",
+            "updated_at": "2023-02-01T05:05:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "trim"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.0.3",
+                    "first_patched_version": {
+                        "identifier": "0.0.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "trim"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.0.3",
+            "first_patched_version": {
+                "identifier": "0.0.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/2",
+        "created_at": "2024-12-28T23:11:36Z",
+        "updated_at": "2024-12-28T23:11:36Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "highlight.js"
+            },
+            "manifest_path": "docs/my-website/package-lock.json",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7wwv-vh3v-89cq",
+            "cve_id": null,
+            "summary": "ReDOS vulnerabities: multiple grammars",
+            "description": "### Impact: Potential ReDOS vulnerabilities (exponential and polynomial RegEx backtracking)\n\n[oswasp](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS): \n\n> The Regular expression Denial of Service (ReDoS) is a Denial of Service attack, that exploits the fact that most Regular Expression implementations may reach extreme situations that cause them to work very slowly (exponentially related to input size). An attacker can then cause a program using a Regular Expression to enter these extreme situations and then hang for a very long time.\n\nIf are you are using Highlight.js to highlight user-provided data you are possibly vulnerable.  On the client-side (in a browser or Electron environment) risks could include lengthy freezes or crashes... On the server-side infinite freezes could occur... effectively preventing users from accessing your app or service (ie, Denial of Service).\n\nThis is an issue with grammars shipped with the parser (and potentially 3rd party grammars also), not the parser itself. If you are using Highlight.js with any of the following grammars you are vulnerable.  If you are using `highlightAuto` to detect the language (and have any of these grammars registered) you are vulnerable. Exponential grammars (C, Perl, JavaScript) are auto-registered when using the common grammar subset/library `require('highlight.js/lib/common')` as of 10.4.0 - see https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.4.0/build/highlight.js\n\nAll versions prior to 10.4.1 are vulnerable, including version 9.18.5. \n\n**Grammars with exponential backtracking issues:**\n\n  - c-like (c, cpp, arduino)\n  - handlebars (htmlbars)\n  - gams\n  - perl\n  - jboss-cli\n  - r\n  - erlang-repl\n  - powershell\n  - routeros\n  - livescript (10.4.0 and 9.18.5 included this fix)\n  - javascript & typescript (10.4.0 included partial fixes)\n\nAnd of course any aliases of those languages have the same issue. ie: `hpp` is no safer than `cpp`.\n\n**Grammars with polynomial backtracking issues:**\n\n- kotlin\n- gcode\n- d\n- aspectj\n- moonscript\n- coffeescript/livescript\n- csharp\n- scilab\n- crystal\n- elixir\n- basic\n- ebnf\n- ruby\n- fortran/irpf90\n- livecodeserver\n- yaml\n- x86asm\n- dsconfig\n- markdown\n- ruleslanguage\n- xquery\n- sqf\n\nAnd again: any aliases of those languages have the same issue. ie: `ruby` and `rb` share the same ruby issues.\n\n\n### Patches\n\n- Version 10.4.1 resolves these vulnerabilities.  Please upgrade.\n\n### Workarounds / Mitigations\n\n- Discontinue use the affected grammars. (or perhaps use only those with poly vs exponential issues)\n- Attempt cherry-picking the grammar fixes into older versions...\n- Attempt using newer CDN versions of any affected languages.  (ie using an older CDN version of the library with newer CDN grammars).  Your mileage may vary.\n\n### References\n\n- https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n* Open an issue: https://github.com/highlightjs/highlight.js/issues\n* Email us at [security@highlightjs.com](mailto:security@highlightjs.com)",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-7wwv-vh3v-89cq",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/highlightjs/highlight.js/security/advisories/GHSA-7wwv-vh3v-89cq"
+                },
+                {
+                    "url": "https://github.com/highlightjs/highlight.js/commit/373b9d862401162e832ce77305e49b859e110f9c"
+                },
+                {
+                    "url": "https://www.npmjs.com/package/@highlightjs/cdn-assets"
+                },
+                {
+                    "url": "https://www.npmjs.com/package/highlight.js"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7wwv-vh3v-89cq"
+                }
+            ],
+            "published_at": "2020-12-04T16:47:20Z",
+            "updated_at": "2023-01-09T05:04:08Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "highlight.js"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 9.0.0, < 10.4.1",
+                    "first_patched_version": {
+                        "identifier": "10.4.1"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "@highlightjs/cdn-assets"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 10.4.1",
+                    "first_patched_version": {
+                        "identifier": "10.4.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "highlight.js"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 9.0.0, < 10.4.1",
+            "first_patched_version": {
+                "identifier": "10.4.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/litellm/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/litellm/security/dependabot/1",
+        "created_at": "2024-12-28T23:11:36Z",
+        "updated_at": "2024-12-28T23:11:36Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

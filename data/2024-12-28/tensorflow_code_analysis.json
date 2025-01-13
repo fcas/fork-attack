@@ -1,0 +1,325 @@
+[
+    {
+        "number": 6,
+        "created_at": "2024-05-17T21:06:15Z",
+        "updated_at": "2024-05-17T21:06:16Z",
+        "url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/tensorflow/security/code-scanning/6",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-temporary-file",
+            "severity": "error",
+            "description": "Insecure temporary file",
+            "name": "py/insecure-temporary-file",
+            "tags": [
+                "external/cwe/cwe-377",
+                "security"
+            ],
+            "full_description": "Creating a temporary file using this method may be insecure.",
+            "help": "# Insecure temporary file\nFunctions that create temporary file names (such as `tempfile.mktemp` and `os.tempnam`) are fundamentally insecure, as they do not ensure exclusive access to a file with the temporary name they return. The file name returned by these functions is guaranteed to be unique on creation but the file must be opened in a separate operation. There is no guarantee that the creation and open operations will happen atomically. This provides an opportunity for an attacker to interfere with the file before it is opened.\n\nNote that `mktemp` has been deprecated since Python 2.3.\n\n\n## Recommendation\nReplace the use of `mktemp` with some of the more secure functions in the `tempfile` module, such as `TemporaryFile`. If the file is intended to be accessed from other processes, consider using the `NamedTemporaryFile` function.\n\n\n## Example\nThe following piece of code opens a temporary file and writes a set of results to it. Because the file name is created using `mktemp`, another process may access this file before it is opened using `open`.\n\n\n```python\nfrom tempfile import mktemp\n\ndef write_results(results):\n    filename = mktemp()\n    with open(filename, \"w+\") as f:\n        f.write(results)\n    print(\"Results written to\", filename)\n\n```\nBy changing the code to use `NamedTemporaryFile` instead, the file is opened immediately.\n\n\n```python\nfrom tempfile import NamedTemporaryFile\n\ndef write_results(results):\n    with NamedTemporaryFile(mode=\"w+\", delete=False) as f:\n        f.write(results)\n    print(\"Results written to\", f.name)\n\n```\n\n## References\n* Python Standard Library: [tempfile.mktemp](https://docs.python.org/3/library/tempfile.html#tempfile.mktemp).\n* Common Weakness Enumeration: [CWE-377](https://cwe.mitre.org/data/definitions/377.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "5a6d53ebbabe92defa222323ae85f216b295c981",
+            "message": {
+                "text": "Call to deprecated function tempfile.mktemp may be insecure."
+            },
+            "location": {
+                "path": "tensorflow/compiler/mlir/tensorflow/tests/tf_saved_model/common_v1.py",
+                "start_line": 91,
+                "end_line": 91,
+                "start_column": 25,
+                "end_column": 63
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/6/instances"
+    },
+    {
+        "number": 5,
+        "created_at": "2024-05-17T20:58:05Z",
+        "updated_at": "2024-05-17T20:58:06Z",
+        "url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/tensorflow/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "java/implicit-cast-in-compound-assignment",
+            "severity": "warning",
+            "description": "Implicit narrowing conversion in compound assignment",
+            "name": "java/implicit-cast-in-compound-assignment",
+            "tags": [
+                "external/cwe/cwe-190",
+                "external/cwe/cwe-192",
+                "external/cwe/cwe-197",
+                "external/cwe/cwe-681",
+                "reliability",
+                "security"
+            ],
+            "full_description": "Compound assignment statements (for example 'intvar += longvar') that implicitly cast a value of a wider type to a narrower type may result in information loss and numeric errors such as overflows.",
+            "help": "# Implicit narrowing conversion in compound assignment\nCompound assignment statements of the form `x += y` or `x *= y` perform an implicit narrowing conversion if the type of `x` is narrower than the type of `y`. For example, `x += y` is equivalent to `x = (T)(x + y)`, where `T` is the type of `x`. This can result in information loss and numeric errors such as overflows.\n\n\n## Recommendation\nEnsure that the type of the left-hand side of the compound assignment statement is at least as wide as the type of the right-hand side.\n\n\n## Example\nIf `x` is of type `short` and `y` is of type `int`, the expression `x + y` is of type `int`. However, the expression `x += y` is equivalent to `x = (short) (x + y)`. The expression `x + y` is cast to the type of the left-hand side of the assignment: `short`, possibly leading to information loss.\n\nTo avoid implicitly narrowing the type of `x + y`, change the type of `x` to `int`. Then the types of `x` and `x + y` are both `int` and there is no need for an implicit cast.\n\n\n## References\n* J. Bloch and N. Gafter, *Java Puzzlers: Traps, Pitfalls, and Corner Cases*, Puzzle 9. Addison-Wesley, 2005.\n* Java Language Specification: [Compound Assignment Operators](https://docs.oracle.com/javase/specs/jls/se11/html/jls-15.html#jls-15.26.2), [Narrowing Primitive Conversion](https://docs.oracle.com/javase/specs/jls/se11/html/jls-5.html#jls-5.1.3).\n* SEI CERT Oracle Coding Standard for Java: [NUM00-J. Detect or prevent integer overflow](https://wiki.sei.cmu.edu/confluence/display/java/NUM00-J.+Detect+or+prevent+integer+overflow).\n* Common Weakness Enumeration: [CWE-190](https://cwe.mitre.org/data/definitions/190.html).\n* Common Weakness Enumeration: [CWE-192](https://cwe.mitre.org/data/definitions/192.html).\n* Common Weakness Enumeration: [CWE-197](https://cwe.mitre.org/data/definitions/197.html).\n* Common Weakness Enumeration: [CWE-681](https://cwe.mitre.org/data/definitions/681.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"java-kotlin\"}",
+            "category": "/language:java-kotlin",
+            "state": "open",
+            "commit_sha": "efd69e0d11e4263b8c8c83f0844754ba45fad045",
+            "message": {
+                "text": "Implicit cast of source type float to narrower destination type int."
+            },
+            "location": {
+                "path": "tensorflow/tools/android/test/src/org/tensorflow/demo/RecognitionScoreView.java",
+                "start_line": 65,
+                "end_line": 65,
+                "start_column": 9,
+                "end_column": 42
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/5/instances"
+    },
+    {
+        "number": 4,
+        "created_at": "2024-05-17T20:58:05Z",
+        "updated_at": "2024-05-17T20:58:06Z",
+        "url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/tensorflow/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "java/android/debuggable-attribute-enabled",
+            "severity": "warning",
+            "description": "Android debuggable attribute enabled",
+            "name": "java/android/debuggable-attribute-enabled",
+            "tags": [
+                "external/cwe/cwe-489",
+                "security"
+            ],
+            "full_description": "An enabled debugger can allow for entry points in the application or reveal sensitive information.",
+            "help": "# Android debuggable attribute enabled\nThe Android manifest file defines configuration settings for Android applications. In this file, the `android:debuggable` attribute of the `application` element can be used to define whether or not the application can be debugged. When set to `true`, this attribute will allow the application to be debugged even when running on a device in user mode.\n\nWhen a debugger is enabled, it could allow for entry points in the application or reveal sensitive information. As a result, `android:debuggable` should only be enabled during development and should be disabled in production builds.\n\n\n## Recommendation\nIn Android applications, either set the `android:debuggable` attribute to `false`, or do not include it in the manifest. The default value, when not included, is `false`.\n\n\n## Example\nIn the example below, the `android:debuggable` attribute is set to `true`.\n\n\n```xml\n<manifest ... >\n    <!-- BAD: 'android:debuggable' set to 'true' -->\n    <application\n        android:debuggable=\"true\">\n        <activity ... >\n        </activity>\n    </application>\n</manifest>\n\n```\nThe corrected version sets the `android:debuggable` attribute to `false`.\n\n\n```xml\n<manifest ... >\n    <!-- GOOD: 'android:debuggable' set to 'false' -->\n    <application\n        android:debuggable=\"false\">\n        <activity ... >\n        </activity>\n    </application>\n</manifest>\n\n```\n\n## References\n* Android Developers: [App Manifest Overview](https://developer.android.com/guide/topics/manifest/manifest-intro).\n* Android Developers: [The android:debuggable attribute](https://developer.android.com/guide/topics/manifest/application-element#debug).\n* Android Developers: [Enable debugging](https://developer.android.com/studio/debug#enable-debug).\n* Common Weakness Enumeration: [CWE-489](https://cwe.mitre.org/data/definitions/489.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"java-kotlin\"}",
+            "category": "/language:java-kotlin",
+            "state": "open",
+            "commit_sha": "efd69e0d11e4263b8c8c83f0844754ba45fad045",
+            "message": {
+                "text": "The 'android:debuggable' attribute is enabled."
+            },
+            "location": {
+                "path": "tensorflow/tools/android/test/bin/AndroidManifest.xml",
+                "start_line": 30,
+                "end_line": 34,
+                "start_column": 5,
+                "end_column": 47
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/4/instances"
+    },
+    {
+        "number": 3,
+        "created_at": "2024-05-17T20:58:05Z",
+        "updated_at": "2024-05-17T20:58:06Z",
+        "url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/tensorflow/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "java/android/debuggable-attribute-enabled",
+            "severity": "warning",
+            "description": "Android debuggable attribute enabled",
+            "name": "java/android/debuggable-attribute-enabled",
+            "tags": [
+                "external/cwe/cwe-489",
+                "security"
+            ],
+            "full_description": "An enabled debugger can allow for entry points in the application or reveal sensitive information.",
+            "help": "# Android debuggable attribute enabled\nThe Android manifest file defines configuration settings for Android applications. In this file, the `android:debuggable` attribute of the `application` element can be used to define whether or not the application can be debugged. When set to `true`, this attribute will allow the application to be debugged even when running on a device in user mode.\n\nWhen a debugger is enabled, it could allow for entry points in the application or reveal sensitive information. As a result, `android:debuggable` should only be enabled during development and should be disabled in production builds.\n\n\n## Recommendation\nIn Android applications, either set the `android:debuggable` attribute to `false`, or do not include it in the manifest. The default value, when not included, is `false`.\n\n\n## Example\nIn the example below, the `android:debuggable` attribute is set to `true`.\n\n\n```xml\n<manifest ... >\n    <!-- BAD: 'android:debuggable' set to 'true' -->\n    <application\n        android:debuggable=\"true\">\n        <activity ... >\n        </activity>\n    </application>\n</manifest>\n\n```\nThe corrected version sets the `android:debuggable` attribute to `false`.\n\n\n```xml\n<manifest ... >\n    <!-- GOOD: 'android:debuggable' set to 'false' -->\n    <application\n        android:debuggable=\"false\">\n        <activity ... >\n        </activity>\n    </application>\n</manifest>\n\n```\n\n## References\n* Android Developers: [App Manifest Overview](https://developer.android.com/guide/topics/manifest/manifest-intro).\n* Android Developers: [The android:debuggable attribute](https://developer.android.com/guide/topics/manifest/application-element#debug).\n* Android Developers: [Enable debugging](https://developer.android.com/studio/debug#enable-debug).\n* Common Weakness Enumeration: [CWE-489](https://cwe.mitre.org/data/definitions/489.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"java-kotlin\"}",
+            "category": "/language:java-kotlin",
+            "state": "open",
+            "commit_sha": "efd69e0d11e4263b8c8c83f0844754ba45fad045",
+            "message": {
+                "text": "The 'android:debuggable' attribute is enabled."
+            },
+            "location": {
+                "path": "tensorflow/lite/tools/benchmark/experimental/delegate_performance/android/AndroidManifest.xml",
+                "start_line": 33,
+                "end_line": 33,
+                "start_column": 5,
+                "end_column": 45
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/3/instances"
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-17T20:58:05Z",
+        "updated_at": "2024-05-17T20:58:06Z",
+        "url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/tensorflow/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "java/android/debuggable-attribute-enabled",
+            "severity": "warning",
+            "description": "Android debuggable attribute enabled",
+            "name": "java/android/debuggable-attribute-enabled",
+            "tags": [
+                "external/cwe/cwe-489",
+                "security"
+            ],
+            "full_description": "An enabled debugger can allow for entry points in the application or reveal sensitive information.",
+            "help": "# Android debuggable attribute enabled\nThe Android manifest file defines configuration settings for Android applications. In this file, the `android:debuggable` attribute of the `application` element can be used to define whether or not the application can be debugged. When set to `true`, this attribute will allow the application to be debugged even when running on a device in user mode.\n\nWhen a debugger is enabled, it could allow for entry points in the application or reveal sensitive information. As a result, `android:debuggable` should only be enabled during development and should be disabled in production builds.\n\n\n## Recommendation\nIn Android applications, either set the `android:debuggable` attribute to `false`, or do not include it in the manifest. The default value, when not included, is `false`.\n\n\n## Example\nIn the example below, the `android:debuggable` attribute is set to `true`.\n\n\n```xml\n<manifest ... >\n    <!-- BAD: 'android:debuggable' set to 'true' -->\n    <application\n        android:debuggable=\"true\">\n        <activity ... >\n        </activity>\n    </application>\n</manifest>\n\n```\nThe corrected version sets the `android:debuggable` attribute to `false`.\n\n\n```xml\n<manifest ... >\n    <!-- GOOD: 'android:debuggable' set to 'false' -->\n    <application\n        android:debuggable=\"false\">\n        <activity ... >\n        </activity>\n    </application>\n</manifest>\n\n```\n\n## References\n* Android Developers: [App Manifest Overview](https://developer.android.com/guide/topics/manifest/manifest-intro).\n* Android Developers: [The android:debuggable attribute](https://developer.android.com/guide/topics/manifest/application-element#debug).\n* Android Developers: [Enable debugging](https://developer.android.com/studio/debug#enable-debug).\n* Common Weakness Enumeration: [CWE-489](https://cwe.mitre.org/data/definitions/489.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"java-kotlin\"}",
+            "category": "/language:java-kotlin",
+            "state": "open",
+            "commit_sha": "efd69e0d11e4263b8c8c83f0844754ba45fad045",
+            "message": {
+                "text": "The 'android:debuggable' attribute is enabled."
+            },
+            "location": {
+                "path": "tensorflow/lite/tools/benchmark/android/AndroidManifest.xml",
+                "start_line": 28,
+                "end_line": 29,
+                "start_column": 5,
+                "end_column": 36
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/2/instances"
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-17T20:58:05Z",
+        "updated_at": "2024-05-17T20:58:06Z",
+        "url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/tensorflow/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "java/android/unsafe-content-uri-resolution",
+            "severity": "warning",
+            "description": "Uncontrolled data used in content resolution",
+            "name": "java/android/unsafe-content-uri-resolution",
+            "tags": [
+                "external/cwe/cwe-441",
+                "external/cwe/cwe-610",
+                "security"
+            ],
+            "full_description": "Resolving externally-provided content URIs without validation can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in content resolution\nWhen an Android application wants to access data in a content provider, it uses the `ContentResolver` object. `ContentResolver`s communicate with an instance of a class that implements the `ContentProvider` interface via URIs with the `content://` scheme. The authority part (the first path segment) of the URI, passed as parameter to the `ContentResolver`, determines which content provider is contacted for the operation. Specific operations that act on files also support the `file://` scheme, in which case the local filesystem is queried instead. If an external component, like a malicious or compromised application, controls the URI for a `ContentResolver` operation, it can trick the vulnerable application into accessing its own private files or non-exported content providers. The attacking application might be able to get access to the file by forcing it to be copied to a public directory, like external storage, or tamper with the contents by making the application overwrite the file with unexpected data.\n\n\n## Recommendation\nIf possible, avoid using externally-provided data to determine the URI for a `ContentResolver` to use. If that is not an option, validate that the incoming URI can only reference trusted components, like an allow list of content providers and/or applications, or alternatively make sure that the URI does not reference private directories like `/data/`.\n\n\n## Example\nThis example shows three ways of opening a file using a `ContentResolver`. In the first case, externally-provided data from an intent is used directly in the file-reading operation. This allows an attacker to provide a URI of the form `/data/data/(vulnerable app package)/(private file)` to trick the application into reading it and copying it to the external storage. In the second case, an insufficient check is performed on the externally-provided URI, still leaving room for exploitation. In the third case, the URI is correctly validated before being used, making sure it does not reference any internal application files.\n\n\n```java\nimport android.content.ContentResolver;\nimport android.net.Uri;\n\npublic class Example extends Activity {\n    public void onCreate() {\n        // BAD: Externally-provided URI directly used in content resolution\n        {\n            ContentResolver contentResolver = getContentResolver();\n            Uri uri = (Uri) getIntent().getParcelableExtra(\"URI_EXTRA\");\n            InputStream is = contentResolver.openInputStream(uri);\n            copyToExternalCache(is);\n        }\n        // BAD: input URI is not normalized, and check can be bypassed with \"..\" characters\n        {\n            ContentResolver contentResolver = getContentResolver();\n            Uri uri = (Uri) getIntent().getParcelableExtra(\"URI_EXTRA\");\n            String path = uri.getPath();\n            if (path.startsWith(\"/data\"))\n                throw new SecurityException();\n            InputStream is = contentResolver.openInputStream(uri);\n            copyToExternalCache(is);\n        }\n        // GOOD: URI is properly validated to block access to internal files\n        {\n            ContentResolver contentResolver = getContentResolver();\n            Uri uri = (Uri) getIntent().getParcelableExtra(\"URI_EXTRA\");\n            String path = uri.getPath();\n            java.nio.file.Path normalized =\n                    java.nio.file.FileSystems.getDefault().getPath(path).normalize();\n            if (normalized.startsWith(\"/data\"))\n                throw new SecurityException();\n            InputStream is = contentResolver.openInputStream(uri);\n            copyToExternalCache(is);\n        }\n    }\n\n    private void copyToExternalCache(InputStream is) {\n        // Reads the contents of is and writes a file in the app's external\n        // cache directory, which can be read publicly by applications in the same device.\n    }\n}\n\n```\n\n## References\n* Android developers: [Content provider basics](https://developer.android.com/guide/topics/providers/content-provider-basics)\n* [The ContentResolver class](https://developer.android.com/reference/android/content/ContentResolver)\n* Common Weakness Enumeration: [CWE-441](https://cwe.mitre.org/data/definitions/441.html).\n* Common Weakness Enumeration: [CWE-610](https://cwe.mitre.org/data/definitions/610.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.17.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"java-kotlin\"}",
+            "category": "/language:java-kotlin",
+            "state": "open",
+            "commit_sha": "efd69e0d11e4263b8c8c83f0844754ba45fad045",
+            "message": {
+                "text": "This ContentResolver method that resolves a URI depends on a user-provided value."
+            },
+            "location": {
+                "path": "tensorflow/lite/tools/benchmark/experimental/firebase/android/src/org/tensorflow/lite/benchmark/firebase/BenchmarkModelActivity.java",
+                "start_line": 55,
+                "end_line": 55,
+                "start_column": 58,
+                "end_column": 68
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tensorflow/code-scanning/alerts/1/instances"
+    }
+]

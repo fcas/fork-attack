@@ -1,0 +1,1635 @@
+[
+    {
+        "number": 31,
+        "created_at": "2024-12-28T23:11:15Z",
+        "updated_at": "2024-12-28T23:11:17Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/31",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/31",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/bad-tag-filter",
+            "severity": "warning",
+            "description": "Bad HTML filtering regexp",
+            "name": "js/bad-tag-filter",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "external/cwe/cwe-080",
+                "external/cwe/cwe-116",
+                "external/cwe/cwe-184",
+                "external/cwe/cwe-185",
+                "external/cwe/cwe-186",
+                "security"
+            ],
+            "full_description": "Matching HTML tags using regular expressions is hard to do right, and can easily lead to security issues.",
+            "help": "# Bad HTML filtering regexp\nIt is possible to match some single HTML tags using regular expressions (parsing general HTML using regular expressions is impossible). However, if the regular expression is not written well it might be possible to circumvent it, which can lead to cross-site scripting or other security issues.\n\nSome of these mistakes are caused by browsers having very forgiving HTML parsers, and will often render invalid HTML containing syntax errors. Regular expressions that attempt to match HTML should also recognize tags containing such syntax errors.\n\n\n## Recommendation\nUse a well-tested sanitization or parser library if at all possible. These libraries are much more likely to handle corner cases correctly than a custom implementation.\n\n\n## Example\nThe following example attempts to filters out all `<script>` tags.\n\n\n```javascript\nfunction filterScript(html) {\n    var scriptRegex = /<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi;\n    var match;\n    while ((match = scriptRegex.exec(html)) !== null) {\n        html = html.replace(match[0], match[1]);\n    }\n    return html;\n}\n\n```\nThe above sanitizer does not filter out all `<script>` tags. Browsers will not only accept `</script>` as script end tags, but also tags such as `</script foo=\"bar\">` even though it is a parser error. This means that an attack string such as `<script>alert(1)</script foo=\"bar\">` will not be filtered by the function, and `alert(1)` will be executed by a browser if the string is rendered as HTML.\n\nOther corner cases include that HTML comments can end with `--!>`, and that HTML tag names can contain upper case characters.\n\n\n## References\n* Securitum: [The Curious Case of Copy &amp; Paste](https://research.securitum.com/the-curious-case-of-copy-paste/).\n* stackoverflow.com: [You can't parse \\[X\\]HTML with regex](https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags#answer-1732454).\n* HTML Standard: [Comment end bang state](https://html.spec.whatwg.org/multipage/parsing.html#comment-end-bang-state).\n* stackoverflow.com: [Why aren't browsers strict about HTML?](https://stackoverflow.com/questions/25559999/why-arent-browsers-strict-about-html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n* Common Weakness Enumeration: [CWE-80](https://cwe.mitre.org/data/definitions/80.html).\n* Common Weakness Enumeration: [CWE-116](https://cwe.mitre.org/data/definitions/116.html).\n* Common Weakness Enumeration: [CWE-184](https://cwe.mitre.org/data/definitions/184.html).\n* Common Weakness Enumeration: [CWE-185](https://cwe.mitre.org/data/definitions/185.html).\n* Common Weakness Enumeration: [CWE-186](https://cwe.mitre.org/data/definitions/186.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:javascript-typescript\",\"language\":\"javascript-typescript\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This regular expression only parses --> and not --!> as a HTML comment end tag."
+            },
+            "location": {
+                "path": "backend/open_webui/static/swagger-ui/swagger-ui-bundle.js",
+                "start_line": 5591,
+                "end_line": 5591,
+                "start_column": 28,
+                "end_column": 31
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/31/instances"
+    },
+    {
+        "number": 30,
+        "created_at": "2024-12-28T23:11:15Z",
+        "updated_at": "2024-12-28T23:11:17Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/30",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/30",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "js/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9a-fA-f]{6}$/i.test(color);\n}\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9A-F]{6}$/i.test(color);\n}\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:javascript-typescript\",\"language\":\"javascript-typescript\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Suspicious character range that is equivalent to \\[A-Z\\\\\\[\\\\\\\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "backend/open_webui/static/swagger-ui/swagger-ui-bundle.js",
+                "start_line": 5354,
+                "end_line": 5354,
+                "start_column": 77,
+                "end_column": 80
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/30/instances"
+    },
+    {
+        "number": 29,
+        "created_at": "2024-12-28T23:11:15Z",
+        "updated_at": "2024-12-28T23:11:17Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/29",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/29",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "js/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9a-fA-f]{6}$/i.test(color);\n}\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9A-F]{6}$/i.test(color);\n}\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:javascript-typescript\",\"language\":\"javascript-typescript\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Suspicious character range that is equivalent to \\[A-Z\\\\\\[\\\\\\\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "backend/open_webui/static/swagger-ui/swagger-ui-bundle.js",
+                "start_line": 5354,
+                "end_line": 5354,
+                "start_column": 62,
+                "end_column": 65
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/29/instances"
+    },
+    {
+        "number": 28,
+        "created_at": "2024-12-28T23:11:15Z",
+        "updated_at": "2024-12-28T23:11:17Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/28",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/28",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "js/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9a-fA-f]{6}$/i.test(color);\n}\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9A-F]{6}$/i.test(color);\n}\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:javascript-typescript\",\"language\":\"javascript-typescript\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Suspicious character range that is equivalent to \\[A-Z\\\\\\[\\\\\\\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "backend/open_webui/static/swagger-ui/swagger-ui-bundle.js",
+                "start_line": 5333,
+                "end_line": 5333,
+                "start_column": 23,
+                "end_column": 26
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/28/instances"
+    },
+    {
+        "number": 27,
+        "created_at": "2024-12-28T23:11:15Z",
+        "updated_at": "2024-12-28T23:11:17Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/27",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/27",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "js/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "js/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9a-fA-f]{6}$/i.test(color);\n}\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```javascript\n\nfunction isValidHexColor(color) {\n    return /^#[0-9A-F]{6}$/i.test(color);\n}\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:javascript-typescript\",\"language\":\"javascript-typescript\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:javascript-typescript",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Suspicious character range that is equivalent to \\[A-Z\\\\\\[\\\\\\\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "backend/open_webui/static/swagger-ui/swagger-ui-bundle.js",
+                "start_line": 5186,
+                "end_line": 5186,
+                "start_column": 25,
+                "end_column": 28
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/27/instances"
+    },
+    {
+        "number": 26,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/26",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/26",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings starting with '_:' and with many repetitions of ' '.\nThis regular expression that depends on a user-provided value may run slow on strings starting with '_:' and with many repetitions of ' '.\nThis regular expression that depends on a user-provided value may run slow on strings starting with '_:' and with many repetitions of ' '.\nThis regular expression that depends on a user-provided value may run slow on strings starting with '_:' and with many repetitions of ' '."
+            },
+            "location": {
+                "path": "backend/open_webui/utils/plugin.py",
+                "start_line": 42,
+                "end_line": 42,
+                "start_column": 51,
+                "end_column": 55
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/26/instances"
+    },
+    {
+        "number": 25,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/25",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/25",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings with many repetitions of '?'.\nThis regular expression that depends on a user-provided value may run slow on strings with many repetitions of '?'."
+            },
+            "location": {
+                "path": "backend/open_webui/utils/misc.py",
+                "start_line": 208,
+                "end_line": 208,
+                "start_column": 49,
+                "end_column": 54
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/25/instances"
+    },
+    {
+        "number": 24,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/24",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/24",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/code-injection",
+            "severity": "error",
+            "description": "Code injection",
+            "name": "py/code-injection",
+            "tags": [
+                "external/cwe/cwe-094",
+                "external/cwe/cwe-095",
+                "external/cwe/cwe-116",
+                "security"
+            ],
+            "full_description": "Interpreting unsanitized user input as code allows a malicious user to perform arbitrary code execution.",
+            "help": "# Code injection\nDirectly evaluating user input (for example, an HTTP request parameter) as code without properly sanitizing the input first allows an attacker arbitrary code execution. This can occur when user input is passed to code that interprets it as an expression to be evaluated, such as `eval` or `exec`.\n\n\n## Recommendation\nAvoid including user input in any expression that may be dynamically evaluated. If user input must be included, use context-specific escaping before including it. It is important that the correct escaping is used for the type of evaluation that will occur.\n\n\n## Example\nThe following example shows two functions setting a name from a request. The first function uses `exec` to execute the `setname` function. This is dangerous as it can allow a malicious user to execute arbitrary code on the server. For example, the user could supply the value `\"' + subprocess.call('rm -rf') + '\"` to destroy the server's file system. The second function calls the `setname` function directly and is thus safe.\n\n\n```python\n\nurlpatterns = [\n    # Route to code_execution\n    url(r'^code-ex1$', code_execution_bad, name='code-execution-bad'),\n    url(r'^code-ex2$', code_execution_good, name='code-execution-good')\n]\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #BAD -- Allow user to define code to be run.\n        exec(\"setname('%s')\" % first_name)\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #GOOD --Call code directly\n        setname(first_name)\n\n```\n\n## References\n* OWASP: [Code Injection](https://www.owasp.org/index.php/Code_Injection).\n* Wikipedia: [Code Injection](https://en.wikipedia.org/wiki/Code_injection).\n* Common Weakness Enumeration: [CWE-94](https://cwe.mitre.org/data/definitions/94.html).\n* Common Weakness Enumeration: [CWE-95](https://cwe.mitre.org/data/definitions/95.html).\n* Common Weakness Enumeration: [CWE-116](https://cwe.mitre.org/data/definitions/116.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This code execution depends on a user-provided value.\nThis code execution depends on a user-provided value."
+            },
+            "location": {
+                "path": "backend/open_webui/utils/plugin.py",
+                "start_line": 145,
+                "end_line": 145,
+                "start_column": 14,
+                "end_column": 21
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/24/instances"
+    },
+    {
+        "number": 23,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/23",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/23",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/code-injection",
+            "severity": "error",
+            "description": "Code injection",
+            "name": "py/code-injection",
+            "tags": [
+                "external/cwe/cwe-094",
+                "external/cwe/cwe-095",
+                "external/cwe/cwe-116",
+                "security"
+            ],
+            "full_description": "Interpreting unsanitized user input as code allows a malicious user to perform arbitrary code execution.",
+            "help": "# Code injection\nDirectly evaluating user input (for example, an HTTP request parameter) as code without properly sanitizing the input first allows an attacker arbitrary code execution. This can occur when user input is passed to code that interprets it as an expression to be evaluated, such as `eval` or `exec`.\n\n\n## Recommendation\nAvoid including user input in any expression that may be dynamically evaluated. If user input must be included, use context-specific escaping before including it. It is important that the correct escaping is used for the type of evaluation that will occur.\n\n\n## Example\nThe following example shows two functions setting a name from a request. The first function uses `exec` to execute the `setname` function. This is dangerous as it can allow a malicious user to execute arbitrary code on the server. For example, the user could supply the value `\"' + subprocess.call('rm -rf') + '\"` to destroy the server's file system. The second function calls the `setname` function directly and is thus safe.\n\n\n```python\n\nurlpatterns = [\n    # Route to code_execution\n    url(r'^code-ex1$', code_execution_bad, name='code-execution-bad'),\n    url(r'^code-ex2$', code_execution_good, name='code-execution-good')\n]\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #BAD -- Allow user to define code to be run.\n        exec(\"setname('%s')\" % first_name)\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #GOOD --Call code directly\n        setname(first_name)\n\n```\n\n## References\n* OWASP: [Code Injection](https://www.owasp.org/index.php/Code_Injection).\n* Wikipedia: [Code Injection](https://en.wikipedia.org/wiki/Code_injection).\n* Common Weakness Enumeration: [CWE-94](https://cwe.mitre.org/data/definitions/94.html).\n* Common Weakness Enumeration: [CWE-95](https://cwe.mitre.org/data/definitions/95.html).\n* Common Weakness Enumeration: [CWE-116](https://cwe.mitre.org/data/definitions/116.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This code execution depends on a user-provided value.\nThis code execution depends on a user-provided value."
+            },
+            "location": {
+                "path": "backend/open_webui/utils/plugin.py",
+                "start_line": 101,
+                "end_line": 101,
+                "start_column": 14,
+                "end_column": 21
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/23/instances"
+    },
+    {
+        "number": 22,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/22",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/22",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate user input before using it to construct a file path, either using an off-the-shelf library function like `werkzeug.utils.secure_filename`, or by performing custom validation.\n\nIdeally, follow these rules:\n\n* Do not allow more than a single \".\" character.\n* Do not allow directory separators such as \"/\" or \"\\\\\" (depending on the file system).\n* Do not rely on simply replacing problematic sequences such as \"../\". For example, after applying this filter to \".../...//\", the resulting string would still be \"../\".\n* Use an allowlist of known good patterns.\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This path depends on a user-provided value.\nThis path depends on a user-provided value."
+            },
+            "location": {
+                "path": "backend/open_webui/retrieval/utils.py",
+                "start_line": 388,
+                "end_line": 388,
+                "start_column": 24,
+                "end_column": 29
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/22/instances"
+    },
+    {
+        "number": 21,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/21",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/21",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate user input before using it to construct a file path, either using an off-the-shelf library function like `werkzeug.utils.secure_filename`, or by performing custom validation.\n\nIdeally, follow these rules:\n\n* Do not allow more than a single \".\" character.\n* Do not allow directory separators such as \"/\" or \"\\\\\" (depending on the file system).\n* Do not rely on simply replacing problematic sequences such as \"../\". For example, after applying this filter to \".../...//\", the resulting string would still be \"../\".\n* Use an allowlist of known good patterns.\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tools.py",
+                "start_line": 104,
+                "end_line": 104,
+                "start_column": 13,
+                "end_column": 27
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/21/instances"
+    },
+    {
+        "number": 20,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/20",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/20",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate user input before using it to construct a file path, either using an off-the-shelf library function like `werkzeug.utils.secure_filename`, or by performing custom validation.\n\nIdeally, follow these rules:\n\n* Do not allow more than a single \".\" character.\n* Do not allow directory separators such as \"/\" or \"\\\\\" (depending on the file system).\n* Do not rely on simply replacing problematic sequences such as \"../\". For example, after applying this filter to \".../...//\", the resulting string would still be \"../\".\n* Use an allowlist of known good patterns.\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/functions.py",
+                "start_line": 72,
+                "end_line": 72,
+                "start_column": 13,
+                "end_column": 31
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/20/instances"
+    },
+    {
+        "number": 19,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/19",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/19",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 514,
+                "end_line": 514,
+                "start_column": 21,
+                "end_column": 39
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/19/instances"
+    },
+    {
+        "number": 18,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/18",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/18",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 510,
+                "end_line": 510,
+                "start_column": 16,
+                "end_column": 85
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/18/instances"
+    },
+    {
+        "number": 17,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/17",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/17",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 461,
+                "end_line": 461,
+                "start_column": 21,
+                "end_column": 39
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/17/instances"
+    },
+    {
+        "number": 16,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/16",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/16",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 457,
+                "end_line": 457,
+                "start_column": 16,
+                "end_column": 85
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/16/instances"
+    },
+    {
+        "number": 15,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/15",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/15",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 396,
+                "end_line": 396,
+                "start_column": 16,
+                "end_column": 85
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/15/instances"
+    },
+    {
+        "number": 14,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/14",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/14",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 325,
+                "end_line": 325,
+                "start_column": 21,
+                "end_column": 39
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/14/instances"
+    },
+    {
+        "number": 13,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/13",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/13",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 321,
+                "end_line": 321,
+                "start_column": 16,
+                "end_column": 85
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/13/instances"
+    },
+    {
+        "number": 12,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/12",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/12",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 250,
+                "end_line": 250,
+                "start_column": 16,
+                "end_column": 85
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/12/instances"
+    },
+    {
+        "number": 11,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/11",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/11",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/tasks.py",
+                "start_line": 187,
+                "end_line": 187,
+                "start_column": 16,
+                "end_column": 85
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/11/instances"
+    },
+    {
+        "number": 10,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/10",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/10",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/ollama.py",
+                "start_line": 1442,
+                "end_line": 1442,
+                "start_column": 30,
+                "end_column": 51
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/10/instances"
+    },
+    {
+        "number": 9,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/9",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/9",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/stack-trace-exposure",
+            "severity": "error",
+            "description": "Information exposure through an exception",
+            "name": "py/stack-trace-exposure",
+            "tags": [
+                "external/cwe/cwe-209",
+                "external/cwe/cwe-497",
+                "security"
+            ],
+            "full_description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+            "help": "# Information exposure through an exception\nSoftware developers often add stack traces to error messages, as a debugging aid. Whenever that error message occurs for an end user, the developer can use the stack trace to help identify how to fix the problem. In particular, stack traces can tell the developer more about the sequence of events that led to a failure, as opposed to merely the final state of the software when the error occurred.\n\nUnfortunately, the same information can be useful to an attacker. The sequence of class names in a stack trace can reveal the structure of the application as well as any internal components it relies on. Furthermore, the error message at the top of a stack trace can include information such as server-side file names and SQL code that the application relies on, allowing an attacker to fine-tune a subsequent injection attack.\n\n\n## Recommendation\nSend the user a more generic error message that reveals less information. Either suppress the stack trace entirely, or log it only on the server.\n\n\n## Example\nIn the following example, an exception is handled in two different ways. In the first version, labeled BAD, the exception is sent back to the remote user by returning it from the function. As such, the user is able to see a detailed stack trace, which may contain sensitive information. In the second version, the error message is logged only on the server, and a generic error message is displayed to the user. That way, the developers can still access and use the error log, but remote users will not see the information.\n\n\n```python\nfrom flask import Flask\napp = Flask(__name__)\n\n\nimport traceback\n\ndef do_computation():\n    raise Exception(\"Secret info\")\n\n# BAD\n@app.route('/bad')\ndef server_bad():\n    try:\n        do_computation()\n    except Exception as e:\n        return traceback.format_exc()\n\n# GOOD\n@app.route('/good')\ndef server_good():\n    try:\n        do_computation()\n    except Exception as e:\n        log(traceback.format_exc())\n        return \"An internal error has occurred!\"\n\n```\n\n## References\n* OWASP: [Improper Error Handling](https://owasp.org/www-community/Improper_Error_Handling).\n* Common Weakness Enumeration: [CWE-209](https://cwe.mitre.org/data/definitions/209.html).\n* Common Weakness Enumeration: [CWE-497](https://cwe.mitre.org/data/definitions/497.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Stack trace information flows to this location and may be exposed to an external user.\nStack trace information flows to this location and may be exposed to an external user."
+            },
+            "location": {
+                "path": "backend/open_webui/main.py",
+                "start_line": 883,
+                "end_line": 885,
+                "start_column": 16,
+                "end_column": 10
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/9/instances"
+    },
+    {
+        "number": 8,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/8",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/8",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-logging-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text logging of sensitive information",
+            "name": "py/clear-text-logging-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-359",
+                "external/cwe/cwe-532",
+                "security"
+            ],
+            "full_description": "Logging sensitive information without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text logging of sensitive information\nIf sensitive data is written to a log entry it could be exposed to an attacker who gains access to the logs.\n\nPotential attackers can obtain sensitive user data when the log output is displayed. Additionally that data may expose system information such as full path names, system information, and sometimes usernames and passwords.\n\n\n## Recommendation\nSensitive data should not be logged.\n\n\n## Example\nIn the example the entire process environment is logged using \\`print\\`. Regular users of the production deployed application should not have access to this much information about the environment configuration.\n\n\n```python\n# BAD: Logging cleartext sensitive data\nimport os\nprint(f\"[INFO] Environment: {os.environ}\")\n```\nIn the second example the data that is logged is not sensitive.\n\n\n```python\nnot_sensitive_data = {'a': 1, 'b': 2}\n# GOOD: it is fine to log data that is not sensitive\nprint(f\"[INFO] Some object contains: {not_sensitive_data}\")\n```\n\n## References\n* OWASP: [Insertion of Sensitive Information into Log File](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/).\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n* Common Weakness Enumeration: [CWE-532](https://cwe.mitre.org/data/definitions/532.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "This expression logs sensitive data (secret) as clear text.\nThis expression logs sensitive data (secret) as clear text."
+            },
+            "location": {
+                "path": "backend/open_webui/models/auths.py",
+                "start_line": 159,
+                "end_line": 159,
+                "start_column": 18,
+                "end_column": 65
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/8/instances"
+    },
+    {
+        "number": 7,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/7",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/7",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. Instead, either maintain a list of authorized URLs on the server and choose from that list based on the input provided, or perform proper validation of the input.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value.\nThe full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/ollama.py",
+                "start_line": 1306,
+                "end_line": 1306,
+                "start_column": 20,
+                "end_column": 58
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/7/instances"
+    },
+    {
+        "number": 6,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/6",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. Instead, either maintain a list of authorized URLs on the server and choose from that list based on the input provided, or perform proper validation of the input.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/auths.py",
+                "start_line": 514,
+                "end_line": 514,
+                "start_column": 32,
+                "end_column": 70
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/6/instances"
+    },
+    {
+        "number": 5,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-20",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "The string webhook.office.com may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "backend/open_webui/utils/webhook.py",
+                "start_line": 28,
+                "end_line": 28,
+                "start_column": 14,
+                "end_column": 41
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/5/instances"
+    },
+    {
+        "number": 4,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-20",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "The string https://chat.googleapis.com may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "backend/open_webui/utils/webhook.py",
+                "start_line": 18,
+                "end_line": 18,
+                "start_column": 48,
+                "end_column": 84
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/4/instances"
+    },
+    {
+        "number": 3,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-20",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "The string https://hooks.slack.com may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "backend/open_webui/utils/webhook.py",
+                "start_line": 18,
+                "end_line": 18,
+                "start_column": 12,
+                "end_column": 44
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/3/instances"
+    },
+    {
+        "number": 2,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-20",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "The string api.openai.com may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/openai.py",
+                "start_line": 447,
+                "end_line": 447,
+                "start_column": 24,
+                "end_column": 47
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/2/instances"
+    },
+    {
+        "number": 1,
+        "created_at": "2024-12-28T23:10:44Z",
+        "updated_at": "2024-12-28T23:10:45Z",
+        "url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/open-webui/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-cookie",
+            "severity": "warning",
+            "description": "Failure to use secure cookies",
+            "name": "py/insecure-cookie",
+            "tags": [
+                "external/cwe/cwe-1004",
+                "external/cwe/cwe-1275",
+                "external/cwe/cwe-614",
+                "security"
+            ],
+            "full_description": "Insecure cookies may be sent in cleartext, which makes them vulnerable to interception.",
+            "help": "# Failure to use secure cookies\nCookies without the `Secure` flag set may be transmitted using HTTP instead of HTTPS, which leaves them vulnerable to reading by a third party.\n\nCookies without the `HttpOnly` flag set are accessible to JavaScript running in the same origin. In case of a Cross-Site Scripting (XSS) vulnerability, the cookie can be stolen by a malicious script.\n\nCookies with the `SameSite` attribute set to `'None'` will be sent with cross-origin requests, which can be controlled by third-party JavaScript code and allow for Cross-Site Request Forgery (CSRF) attacks.\n\n\n## Recommendation\nAlways set `secure` to `True` or add \"; Secure;\" to the cookie's raw value.\n\nAlways set `httponly` to `True` or add \"; HttpOnly;\" to the cookie's raw value.\n\nAlways set `samesite` to `Lax` or `Strict`, or add \"; SameSite=Lax;\", or \"; Samesite=Strict;\" to the cookie's raw header value.\n\n\n## Example\nIn the following examples, the cases marked GOOD show secure cookie attributes being set; whereas in the cases marked BAD they are not set.\n\n\n```python\nfrom flask import Flask, request, make_response, Response\n\n\n@app.route(\"/good1\")\ndef good1():\n    resp = make_response()\n    resp.set_cookie(\"name\", value=\"value\", secure=True, httponly=True, samesite='Strict') # GOOD: Attributes are securely set\n    return resp\n\n\n@app.route(\"/good2\")\ndef good2():\n    resp = make_response()\n    resp.headers['Set-Cookie'] = \"name=value; Secure; HttpOnly; SameSite=Strict\" # GOOD: Attributes are securely set \n    return resp\n\n@app.route(\"/bad1\")\n    resp = make_response()\n    resp.set_cookie(\"name\", value=\"value\", samesite='None') # BAD: the SameSite attribute is set to 'None' and the 'Secure' and 'HttpOnly' attributes are set to False by default.\n    return resp\n```\n\n## References\n* Detectify: [Cookie lack Secure flag](https://support.detectify.com/support/solutions/articles/48001048982-cookie-lack-secure-flag).\n* PortSwigger: [TLS cookie without secure flag set](https://portswigger.net/kb/issues/00500200_tls-cookie-without-secure-flag-set).\n* Common Weakness Enumeration: [CWE-614](https://cwe.mitre.org/data/definitions/614.html).\n* Common Weakness Enumeration: [CWE-1004](https://cwe.mitre.org/data/definitions/1004.html).\n* Common Weakness Enumeration: [CWE-1275](https://cwe.mitre.org/data/definitions/1275.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.20.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": "dynamic/github-code-scanning/codeql:analyze",
+            "environment": "{\"build-mode\":\"none\",\"category\":\"/language:python\",\"language\":\"python\",\"runner\":\"[\\\"ubuntu-latest\\\"]\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "62d47ad0982b15325ab9cd33c9ca99453f772c0c",
+            "message": {
+                "text": "Cookie is added without the Secure attribute properly set."
+            },
+            "location": {
+                "path": "backend/open_webui/routers/auths.py",
+                "start_line": 278,
+                "end_line": 282,
+                "start_column": 17,
+                "end_column": 18
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/open-webui/code-scanning/alerts/1/instances"
+    }
+]

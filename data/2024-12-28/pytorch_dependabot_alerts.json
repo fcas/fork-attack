@@ -1,0 +1,2153 @@
+[
+    {
+        "number": 20,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": ".ci/docker/requirements-ci.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q2x7-8rv6-6q7h",
+            "cve_id": "CVE-2024-56326",
+            "summary": "Jinja has a sandbox breakout through indirect reference to format method",
+            "description": "An oversight in how the Jinja sandboxed environment detects calls to `str.format` allows an attacker that controls the content of a template to execute arbitrary Python code.\n\nTo exploit the vulnerability, an attacker needs to control the content of a template. Whether that is the case depends on the type of application using Jinja. This vulnerability impacts users of applications which execute untrusted templates.\n\nJinja's sandbox does catch calls to `str.format` and ensures they don't escape the sandbox. However, it's possible to store a reference to a malicious string's `format` method, then pass that to a filter that calls it. No such filters are built-in to Jinja, but could be present through custom filters in an application. After the fix, such indirect calls are also handled by the sandbox.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-q2x7-8rv6-6q7h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-56326",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-q2x7-8rv6-6q7h"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-56326"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q2x7-8rv6-6q7h"
+                }
+            ],
+            "published_at": "2024-12-23T17:56:08Z",
+            "updated_at": "2024-12-27T19:10:38Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 5.4
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-693",
+                    "name": "Protection Mechanism Failure"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/20",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/20",
+        "created_at": "2024-12-24T00:18:04Z",
+        "updated_at": "2024-12-24T00:18:04Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 19,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": ".github/requirements-gha-cache.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q2x7-8rv6-6q7h",
+            "cve_id": "CVE-2024-56326",
+            "summary": "Jinja has a sandbox breakout through indirect reference to format method",
+            "description": "An oversight in how the Jinja sandboxed environment detects calls to `str.format` allows an attacker that controls the content of a template to execute arbitrary Python code.\n\nTo exploit the vulnerability, an attacker needs to control the content of a template. Whether that is the case depends on the type of application using Jinja. This vulnerability impacts users of applications which execute untrusted templates.\n\nJinja's sandbox does catch calls to `str.format` and ensures they don't escape the sandbox. However, it's possible to store a reference to a malicious string's `format` method, then pass that to a filter that calls it. No such filters are built-in to Jinja, but could be present through custom filters in an application. After the fix, such indirect calls are also handled by the sandbox.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-q2x7-8rv6-6q7h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-56326",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-q2x7-8rv6-6q7h"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-56326"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q2x7-8rv6-6q7h"
+                }
+            ],
+            "published_at": "2024-12-23T17:56:08Z",
+            "updated_at": "2024-12-27T19:10:38Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 5.4
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-693",
+                    "name": "Protection Mechanism Failure"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/19",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/19",
+        "created_at": "2024-12-24T00:18:04Z",
+        "updated_at": "2024-12-24T00:18:04Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 18,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": ".ci/docker/requirements-ci.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gmj6-6f8f-6699",
+            "cve_id": "CVE-2024-56201",
+            "summary": "Jinja has a sandbox breakout through malicious filenames",
+            "description": "A bug in the Jinja compiler allows an attacker that controls both the content and filename of a template to execute arbitrary Python code, regardless of if Jinja's sandbox is used.\n\nTo exploit the vulnerability, an attacker needs to control both the filename and the contents of a template. Whether that is the case depends on the type of application using Jinja. This vulnerability impacts users of applications which execute untrusted templates where the template author can also choose the template filename.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-gmj6-6f8f-6699",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-56201",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-gmj6-6f8f-6699"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-56201"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/issues/1792"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gmj6-6f8f-6699"
+                }
+            ],
+            "published_at": "2024-12-23T17:54:12Z",
+            "updated_at": "2024-12-26T20:09:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 5.4
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-150",
+                    "name": "Improper Neutralization of Escape, Meta, or Control Sequences"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/18",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/18",
+        "created_at": "2024-12-24T00:18:00Z",
+        "updated_at": "2024-12-24T00:18:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 17,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": ".github/requirements-gha-cache.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gmj6-6f8f-6699",
+            "cve_id": "CVE-2024-56201",
+            "summary": "Jinja has a sandbox breakout through malicious filenames",
+            "description": "A bug in the Jinja compiler allows an attacker that controls both the content and filename of a template to execute arbitrary Python code, regardless of if Jinja's sandbox is used.\n\nTo exploit the vulnerability, an attacker needs to control both the filename and the contents of a template. Whether that is the case depends on the type of application using Jinja. This vulnerability impacts users of applications which execute untrusted templates where the template author can also choose the template filename.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-gmj6-6f8f-6699",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-56201",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-gmj6-6f8f-6699"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-56201"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/issues/1792"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gmj6-6f8f-6699"
+                }
+            ],
+            "published_at": "2024-12-23T17:54:12Z",
+            "updated_at": "2024-12-26T20:09:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.5"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 5.4
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-150",
+                    "name": "Improper Neutralization of Escape, Meta, or Control Sequences"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/17",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/17",
+        "created_at": "2024-12-24T00:18:00Z",
+        "updated_at": "2024-12-24T00:18:00Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 16,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2rxp-v6pw-ch6m",
+            "cve_id": "CVE-2024-49761",
+            "summary": "REXML ReDoS vulnerability",
+            "description": "### Impact\n\nThe REXML gem before 3.3.9 has a ReDoS vulnerability when it parses an XML that has many digits between `&#` and `x...;` in a hex numeric character reference (`&#x...;`).\n\nThis does not happen with Ruby 3.2 or later. Ruby 3.1 is the only affected maintained Ruby. Note that Ruby 3.1 will reach EOL on 2025-03.\n\n### Patches\n\nThe REXML gem 3.3.9 or later include the patch to fix the vulnerability.\n\n### Workarounds\n\nUse Ruby 3.2 or later instead of Ruby 3.1.\n\n### References\n\n* https://www.ruby-lang.org/en/news/2024/10/28/redos-rexml-cve-2024-49761/: An announce on www.ruby-lang.org\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-2rxp-v6pw-ch6m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-49761",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-2rxp-v6pw-ch6m"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/commit/ce59f2eb1aeb371fe1643414f06618dbe031979f"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2024/10/28/redos-rexml-cve-2024-49761"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-49761"
+                },
+                {
+                    "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/rexml/CVE-2024-49761.yml"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20241227-0004"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2rxp-v6pw-ch6m"
+                }
+            ],
+            "published_at": "2024-10-28T14:10:18Z",
+            "updated_at": "2024-12-27T18:30:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "rexml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.3.9",
+                    "first_patched_version": {
+                        "identifier": "3.3.9"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:U",
+                    "score": 6.6
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.3.9",
+            "first_patched_version": {
+                "identifier": "3.3.9"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/16",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/16",
+        "created_at": "2024-10-28T17:55:59Z",
+        "updated_at": "2024-10-28T17:55:59Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "webrick"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6f62-3596-g6w7",
+            "cve_id": "CVE-2024-47220",
+            "summary": "HTTP Request Smuggling in ruby webrick",
+            "description": "An issue was discovered in the WEBrick toolkit through 1.8.1 for Ruby. It allows HTTP request smuggling by providing both a Content-Length header and a Transfer-Encoding header, e.g., \"GET /admin HTTP/1.1\\r\\n\" inside of a \"POST /user HTTP/1.1\\r\\n\" request. NOTE: the supplier's position is \"Webrick should not be used in production.\"",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-6f62-3596-g6w7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-47220",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47220"
+                },
+                {
+                    "url": "https://github.com/ruby/webrick/issues/145"
+                },
+                {
+                    "url": "https://github.com/ruby/webrick/pull/146/commits/d88321da45dcd230ac2b4585cad4833d6d5e8841"
+                },
+                {
+                    "url": "https://github.com/ruby/webrick/commit/f5faca9222541591e1a7c3c97552ebb0c92733c7"
+                },
+                {
+                    "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/webrick/CVE-2024-47220.yml"
+                },
+                {
+                    "url": "https://github.com/ruby/webrick/issues/145#issuecomment-2369994610"
+                },
+                {
+                    "url": "https://github.com/ruby/webrick/issues/145#issuecomment-2372838285"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6f62-3596-g6w7"
+                }
+            ],
+            "published_at": "2024-09-22T03:30:30Z",
+            "updated_at": "2024-09-25T17:53:10Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "webrick"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.8.1",
+                    "first_patched_version": {
+                        "identifier": "1.8.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "webrick"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.8.1",
+            "first_patched_version": {
+                "identifier": "1.8.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/15",
+        "created_at": "2024-09-23T21:08:45Z",
+        "updated_at": "2024-09-23T21:08:45Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-vmwr-mc7x-5vc3",
+            "cve_id": "CVE-2024-43398",
+            "summary": "REXML denial of service vulnerability",
+            "description": "### Impact\n\nThe REXML gem before 3.3.6 has a DoS vulnerability when it parses an XML that has many deep elements that have same local name attributes.\n\nIf you need to parse untrusted XMLs with tree parser API like `REXML::Document.new`, you may be impacted to this vulnerability. If you use other parser APIs such as stream parser API and SAX2 parser API, this vulnerability is not affected.\n\n### Patches\n\nThe REXML gem 3.3.6 or later include the patch to fix the vulnerability.\n\n### Workarounds\n\nDon't parse untrusted XMLs with tree parser API.\n\n### References\n\n* https://www.ruby-lang.org/en/news/2024/08/22/dos-rexml-cve-2024-43398/ : An announce on www.ruby-lang.org\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-vmwr-mc7x-5vc3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-43398",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-vmwr-mc7x-5vc3"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-43398"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/commit/7cb5eaeb221c322b9912f724183294d8ce96bae3"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/releases/tag/v3.3.6"
+                },
+                {
+                    "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/rexml/CVE-2024-43398.yml"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2024/08/22/dos-rexml-cve-2024-43398"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vmwr-mc7x-5vc3"
+                }
+            ],
+            "published_at": "2024-08-22T16:40:46Z",
+            "updated_at": "2024-11-18T16:27:07Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "rexml"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.3.6",
+                    "first_patched_version": {
+                        "identifier": "3.3.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 5.9
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.2
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-776",
+                    "name": "Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.3.6",
+            "first_patched_version": {
+                "identifier": "3.3.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/14",
+        "created_at": "2024-08-22T20:11:40Z",
+        "updated_at": "2024-08-22T20:11:40Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5866-49gr-22v4",
+            "cve_id": "CVE-2024-41946",
+            "summary": "REXML DoS vulnerability",
+            "description": "### Impact\n\nThe REXML gem before 3.3.2 has a DoS vulnerability when it parses an XML that has many entity expansions with SAX2 or pull parser API.\n\nIf you need to parse untrusted XMLs with SAX2 or pull parser API, you may be impacted to this vulnerability.\n\n### Patches\n\nThe REXML gem 3.3.3 or later include the patch to fix the vulnerability.\n\n### Workarounds\n\nDon't parse untrusted XMLs with SAX2 or pull parser API.\n\n### References\n\n* https://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml/ : This is a similar vulnerability\n* https://www.ruby-lang.org/en/news/2024/08/01/dos-rexml-cve-2024-41946/: An announce on www.ruby-lang.org",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-5866-49gr-22v4",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-41946",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-5866-49gr-22v4"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-41946"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/commit/033d1909a8f259d5a7c53681bcaf14f13bcf0368"
+                },
+                {
+                    "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/rexml/CVE-2024-41946.yml"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2024/08/01/dos-rexml-cve-2024-41946"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5866-49gr-22v4"
+                }
+            ],
+            "published_at": "2024-08-02T12:33:15Z",
+            "updated_at": "2024-09-05T18:38:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "rexml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.3.3",
+                    "first_patched_version": {
+                        "identifier": "3.3.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+                    "score": 6.9
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.3.3",
+            "first_patched_version": {
+                "identifier": "3.3.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/13",
+        "created_at": "2024-08-02T16:09:45Z",
+        "updated_at": "2024-08-02T16:09:45Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-r55c-59qm-vjw6",
+            "cve_id": "CVE-2024-41123",
+            "summary": "REXML DoS vulnerability",
+            "description": "### Impact\n\nThe REXML gem before 3.3.2 has some DoS vulnerabilities when it parses an XML that has many specific characters such as whitespace character, `>]` and `]>`.\n\nIf you need to parse untrusted XMLs, you may be impacted to these vulnerabilities.\n\n### Patches\n\nThe REXML gem 3.3.3 or later include the patches to fix these vulnerabilities.\n\n### Workarounds\n\nDon't parse untrusted XMLs.\n\n### References\n\n* https://github.com/ruby/rexml/security/advisories/GHSA-vg3r-rm7w-2xgh : This is a similar vulnerability\n* https://github.com/ruby/rexml/security/advisories/GHSA-4xqq-m2hx-25v8 : This is a similar vulnerability\n* https://www.ruby-lang.org/en/news/2024/08/01/dos-rexml-cve-2024-41123/: An announce on www.ruby-lang.org",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-r55c-59qm-vjw6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-41123",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-4xqq-m2hx-25v8"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-r55c-59qm-vjw6"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-vg3r-rm7w-2xgh"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-41123"
+                },
+                {
+                    "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/rexml/CVE-2024-41123.yml"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2024/08/01/dos-rexml-cve-2024-41123"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20241227-0005"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-r55c-59qm-vjw6"
+                }
+            ],
+            "published_at": "2024-08-01T22:05:10Z",
+            "updated_at": "2024-12-27T18:31:27Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "rexml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.3.3",
+                    "first_patched_version": {
+                        "identifier": "3.3.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+                    "score": 6.9
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.3.3",
+            "first_patched_version": {
+                "identifier": "3.3.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/12",
+        "created_at": "2024-08-02T01:30:49Z",
+        "updated_at": "2024-08-02T01:30:49Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4xqq-m2hx-25v8",
+            "cve_id": "CVE-2024-39908",
+            "summary": "REXML denial of service vulnerability",
+            "description": "### Impact\n\nThe REXML gem before 3.3.1 has some DoS vulnerabilities when it parses an XML that has many specific characters such as `<`, `0` and `%>`.\n\nIf you need to parse untrusted XMLs, you may be impacted to these vulnerabilities.\n\n### Patches\n\nThe REXML gem 3.3.2 or later include the patches to fix these vulnerabilities.\n\n### Workarounds\n\nDon't parse untrusted XMLs.\n\n### References\n\n* https://github.com/ruby/rexml/security/advisories/GHSA-vg3r-rm7w-2xgh : This is a similar vulnerability\n* https://www.ruby-lang.org/en/news/2024/07/16/dos-rexml-cve-2024-39908/",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-4xqq-m2hx-25v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-39908",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-4xqq-m2hx-25v8"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-39908"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/releases/tag/v3.3.2"
+                },
+                {
+                    "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/rexml/CVE-2024-39908.yml"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2024/07/16/dos-rexml-cve-2024-39908"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4xqq-m2hx-25v8"
+                }
+            ],
+            "published_at": "2024-07-16T19:49:15Z",
+            "updated_at": "2024-08-05T05:03:46Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "rexml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.3.2",
+                    "first_patched_version": {
+                        "identifier": "3.3.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                "score": 4.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                    "score": 4.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+                    "score": 6.9
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.3.2",
+            "first_patched_version": {
+                "identifier": "3.3.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/11",
+        "created_at": "2024-07-16T23:29:33Z",
+        "updated_at": "2024-07-16T23:29:33Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "manifest_path": "tools/build/bazel/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cx63-2mw6-8hw5",
+            "cve_id": "CVE-2024-6345",
+            "summary": "setuptools vulnerable to Command Injection via package URL",
+            "description": "A vulnerability in the `package_index` module of pypa/setuptools versions up to 69.1.1 allows for remote code execution via its download functions. These functions, which are used to download packages from URLs provided by users or retrieved from package index servers, are susceptible to code injection. If these functions are exposed to user-controlled inputs, such as package URLs, they can execute arbitrary commands on the system. The issue is fixed in version 70.0.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-cx63-2mw6-8hw5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-6345",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-6345"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/commit/88807c7062788254f654ea8c03427adc859321f0"
+                },
+                {
+                    "url": "https://huntr.com/bounties/d6362117-ad57-4e83-951f-b8141c6e7ca5"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/pull/4332"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cx63-2mw6-8hw5"
+                }
+            ],
+            "published_at": "2024-07-15T03:30:57Z",
+            "updated_at": "2024-08-04T05:03:40Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "setuptools"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 70.0.0",
+                    "first_patched_version": {
+                        "identifier": "70.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 7.5
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-94",
+                    "name": "Improper Control of Generation of Code ('Code Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 70.0.0",
+            "first_patched_version": {
+                "identifier": "70.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/10",
+        "created_at": "2024-07-15T19:33:31Z",
+        "updated_at": "2024-07-15T19:33:31Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "manifest_path": ".github/requirements/conda-env-iOS.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cx63-2mw6-8hw5",
+            "cve_id": "CVE-2024-6345",
+            "summary": "setuptools vulnerable to Command Injection via package URL",
+            "description": "A vulnerability in the `package_index` module of pypa/setuptools versions up to 69.1.1 allows for remote code execution via its download functions. These functions, which are used to download packages from URLs provided by users or retrieved from package index servers, are susceptible to code injection. If these functions are exposed to user-controlled inputs, such as package URLs, they can execute arbitrary commands on the system. The issue is fixed in version 70.0.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-cx63-2mw6-8hw5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-6345",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-6345"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/commit/88807c7062788254f654ea8c03427adc859321f0"
+                },
+                {
+                    "url": "https://huntr.com/bounties/d6362117-ad57-4e83-951f-b8141c6e7ca5"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/pull/4332"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cx63-2mw6-8hw5"
+                }
+            ],
+            "published_at": "2024-07-15T03:30:57Z",
+            "updated_at": "2024-08-04T05:03:40Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "setuptools"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 70.0.0",
+                    "first_patched_version": {
+                        "identifier": "70.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 7.5
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-94",
+                    "name": "Improper Control of Generation of Code ('Code Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 70.0.0",
+            "first_patched_version": {
+                "identifier": "70.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/9",
+        "created_at": "2024-07-15T19:01:18Z",
+        "updated_at": "2024-07-15T19:01:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "manifest_path": ".github/requirements/conda-env-Linux-X64.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cx63-2mw6-8hw5",
+            "cve_id": "CVE-2024-6345",
+            "summary": "setuptools vulnerable to Command Injection via package URL",
+            "description": "A vulnerability in the `package_index` module of pypa/setuptools versions up to 69.1.1 allows for remote code execution via its download functions. These functions, which are used to download packages from URLs provided by users or retrieved from package index servers, are susceptible to code injection. If these functions are exposed to user-controlled inputs, such as package URLs, they can execute arbitrary commands on the system. The issue is fixed in version 70.0.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-cx63-2mw6-8hw5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-6345",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-6345"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/commit/88807c7062788254f654ea8c03427adc859321f0"
+                },
+                {
+                    "url": "https://huntr.com/bounties/d6362117-ad57-4e83-951f-b8141c6e7ca5"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/pull/4332"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cx63-2mw6-8hw5"
+                }
+            ],
+            "published_at": "2024-07-15T03:30:57Z",
+            "updated_at": "2024-08-04T05:03:40Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "setuptools"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 70.0.0",
+                    "first_patched_version": {
+                        "identifier": "70.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 7.5
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-94",
+                    "name": "Improper Control of Generation of Code ('Code Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 70.0.0",
+            "first_patched_version": {
+                "identifier": "70.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/8",
+        "created_at": "2024-07-15T19:01:18Z",
+        "updated_at": "2024-07-15T19:01:18Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "certifi"
+            },
+            "manifest_path": "tools/build/bazel/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-248v-346w-9cwc",
+            "cve_id": "CVE-2024-39689",
+            "summary": "Certifi removes GLOBALTRUST root certificate",
+            "description": "Certifi 2024.07.04 removes root certificates from \"GLOBALTRUST\" from the root store. These are in the process of being removed from Mozilla's trust store.\n\nGLOBALTRUST's root certificates are being removed pursuant to an investigation which identified \"long-running and unresolved compliance issues\". Conclusions of Mozilla's investigation can be found [here]( https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/XpknYMPO8dI).",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-248v-346w-9cwc",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-39689",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/certifi/python-certifi/security/advisories/GHSA-248v-346w-9cwc"
+                },
+                {
+                    "url": "https://github.com/certifi/python-certifi/commit/bd8153872e9c6fc98f4023df9c2deaffea2fa463"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-39689"
+                },
+                {
+                    "url": "https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/XpknYMPO8dI"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20241206-0001"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-248v-346w-9cwc"
+                }
+            ],
+            "published_at": "2024-07-05T20:06:40Z",
+            "updated_at": "2024-12-06T18:22:48Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "certifi"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 2021.05.30, < 2024.07.04",
+                    "first_patched_version": {
+                        "identifier": "2024.07.04"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-345",
+                    "name": "Insufficient Verification of Data Authenticity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "certifi"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 2021.05.30, < 2024.07.04",
+            "first_patched_version": {
+                "identifier": "2024.07.04"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/7",
+        "created_at": "2024-07-06T02:03:51Z",
+        "updated_at": "2024-07-06T02:03:51Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "manifest_path": "tools/build/bazel/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-34jh-p97f-mpxf",
+            "cve_id": "CVE-2024-37891",
+            "summary": "urllib3's Proxy-Authorization request header isn't stripped during cross-origin redirects",
+            "description": "When using urllib3's proxy support with `ProxyManager`, the `Proxy-Authorization` header is only sent to the configured proxy, as expected.\n\nHowever, when sending HTTP requests *without* using urllib3's proxy support, it's possible to accidentally configure the `Proxy-Authorization` header even though it won't have any effect as the request is not using a forwarding proxy or a tunneling proxy. In those cases, urllib3 doesn't treat the `Proxy-Authorization` HTTP header as one carrying authentication material and thus doesn't strip the header on cross-origin redirects.\n\nBecause this is a highly unlikely scenario, we believe the severity of this vulnerability is low for almost all users. Out of an abundance of caution urllib3 will automatically strip the `Proxy-Authorization` header during cross-origin redirects to avoid the small chance that users are doing this on accident.\n\nUsers should use urllib3's proxy support or disable automatic redirects to achieve safe processing of the `Proxy-Authorization` header, but we still decided to strip the header by default in order to further protect users who aren't using the correct approach.\n\n## Affected usages\n\nWe believe the number of usages affected by this advisory is low. It requires all of the following to be true to be exploited:\n\n* Setting the `Proxy-Authorization` header without using urllib3's built-in proxy support.\n* Not disabling HTTP redirects.\n* Either not using an HTTPS origin server or for the proxy or target origin to redirect to a malicious origin.\n\n## Remediation\n\n* Using the `Proxy-Authorization` header with urllib3's `ProxyManager`.\n* Disabling HTTP redirects using `redirects=False` when sending requests.\n* Not using the `Proxy-Authorization` header.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-34jh-p97f-mpxf",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-37891",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/urllib3/urllib3/security/advisories/GHSA-34jh-p97f-mpxf"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-37891"
+                },
+                {
+                    "url": "https://github.com/urllib3/urllib3/commit/40b6d1605814dd1db0a46e202d6e56f2e4c9a468"
+                },
+                {
+                    "url": "https://github.com/urllib3/urllib3/commit/accff72ecc2f6cf5a76d9570198a93ac7c90270e"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-34jh-p97f-mpxf"
+                }
+            ],
+            "published_at": "2024-06-17T21:37:20Z",
+            "updated_at": "2024-12-18T22:20:27Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "urllib3"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.26.19",
+                    "first_patched_version": {
+                        "identifier": "1.26.19"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "urllib3"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.2.2",
+                    "first_patched_version": {
+                        "identifier": "2.2.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:N/A:N",
+                "score": 4.4
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:N/A:N",
+                    "score": 4.4
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-669",
+                    "name": "Incorrect Resource Transfer Between Spheres"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 2.0.0, < 2.2.2",
+            "first_patched_version": {
+                "identifier": "2.2.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/6",
+        "created_at": "2024-06-17T23:09:40Z",
+        "updated_at": "2024-06-17T23:09:40Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": "tools/build/bazel/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                    "score": 5.6
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/5",
+        "created_at": "2024-05-21T08:35:42Z",
+        "updated_at": "2024-05-21T08:35:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": ".github/requirements/conda-env-iOS.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                    "score": 5.6
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/4",
+        "created_at": "2024-05-21T08:35:42Z",
+        "updated_at": "2024-05-21T08:35:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": ".github/requirements/conda-env-Linux-X64.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                    "score": 5.6
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/3",
+        "created_at": "2024-05-21T08:35:41Z",
+        "updated_at": "2024-05-21T08:35:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "manifest_path": ".github/requirements-gha-cache.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wx4-h78v-vm56",
+            "cve_id": "CVE-2024-35195",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "description": "When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests>=2.32.0`.\n* For `requests<2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests<2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wx4-h78v-vm56",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56"
+                },
+                {
+                    "url": "https://github.com/psf/requests/pull/6655"
+                },
+                {
+                    "url": "https://github.com/psf/requests/commit/a58d7f2ffb4d00b46dca2d70a3932a0b37e22fac"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35195"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IYLSNK5TL46Q6XPRVMHVWS63MVJQOK4Q"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/N7WP6EYDSUOCOJYHDK5NX43PYZ4SNHGZ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wx4-h78v-vm56"
+                }
+            ],
+            "published_at": "2024-05-20T20:15:00Z",
+            "updated_at": "2024-06-10T18:31:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "requests"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.32.0",
+                    "first_patched_version": {
+                        "identifier": "2.32.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                "score": 5.6
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N",
+                    "score": 5.6
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-670",
+                    "name": "Always-Incorrect Control Flow Implementation"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "requests"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.32.0",
+            "first_patched_version": {
+                "identifier": "2.32.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/2",
+        "created_at": "2024-05-21T08:35:41Z",
+        "updated_at": "2024-05-21T08:35:41Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "manifest_path": "ios/TestApp/Gemfile.lock",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-vg3r-rm7w-2xgh",
+            "cve_id": "CVE-2024-35176",
+            "summary": "REXML contains a denial of service vulnerability",
+            "description": "### Impact\n\nThe REXML gem before 3.2.6 has a DoS vulnerability when it parses an XML that has many `<`s in an attribute value.\n\nIf you need to parse untrusted XMLs, you may be impacted to this vulnerability.\n\n### Patches\n\nThe REXML gem 3.2.7 or later include the patch to fix this vulnerability.\n\n### Workarounds\n\nDon't parse untrusted XMLs.\n\n### References\n\n* https://www.ruby-lang.org/en/news/2024/05/16/dos-rexml-cve-2024-35176/",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-vg3r-rm7w-2xgh",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-35176",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/ruby/rexml/security/advisories/GHSA-vg3r-rm7w-2xgh"
+                },
+                {
+                    "url": "https://github.com/ruby/rexml/commit/4325835f92f3f142ebd91a3fdba4e1f1ab7f1cfb"
+                },
+                {
+                    "url": "https://www.ruby-lang.org/en/news/2024/05/16/dos-rexml-cve-2024-35176"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-35176"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vg3r-rm7w-2xgh"
+                }
+            ],
+            "published_at": "2024-05-16T17:44:04Z",
+            "updated_at": "2024-07-16T14:07:13Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "rexml"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.2.7",
+                    "first_patched_version": {
+                        "identifier": "3.2.7"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rubygems",
+                "name": "rexml"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.2.7",
+            "first_patched_version": {
+                "identifier": "3.2.7"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/pytorch/security/dependabot/1",
+        "created_at": "2024-05-16T21:05:54Z",
+        "updated_at": "2024-05-16T21:05:54Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

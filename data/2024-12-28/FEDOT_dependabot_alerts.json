@@ -1,0 +1,192 @@
+[
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "h2o"
+            },
+            "manifest_path": "other_requirements/examples.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-58m3-rcvp-f9ww",
+            "cve_id": "CVE-2024-5979",
+            "summary": "h2o vulnerable to unexpected POST request shutting down server",
+            "description": "In h2oai/h2o-3 version 3.46.0, the `run_tool` command in the `rapids` component allows the `main` function of any class under the `water.tools` namespace to be called. One such class, `MojoConvertTool`, crashes the server when invoked with an invalid argument, causing a denial of service.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-58m3-rcvp-f9ww",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-5979",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-5979"
+                },
+                {
+                    "url": "https://huntr.com/bounties/d80a2139-fc03-44b7-b739-de41e323b458"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-58m3-rcvp-f9ww"
+                }
+            ],
+            "published_at": "2024-06-27T21:32:08Z",
+            "updated_at": "2024-06-28T21:09:01Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "h2o"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 3.46.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "h2o"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 3.46.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/FEDOT/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/FEDOT/security/dependabot/2",
+        "created_at": "2024-06-28T21:09:23Z",
+        "updated_at": "2024-06-28T21:09:23Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "h2o"
+            },
+            "manifest_path": "other_requirements/examples.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gqrq-j6pm-98c2",
+            "cve_id": "CVE-2023-6569",
+            "summary": "External Control of File Name or Path in h2oai/h2o-3",
+            "description": "Remote unauthenticated attackers can overwrite arbitrary server files with attacker-controllable data. The data that the attacker can control is not entirely arbitrary. h2o writes a CSV/XLS/etc file to disk, so the attacker data is wrapped in quotations and starts with \"C1\", if they're exporting as CSV.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-gqrq-j6pm-98c2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6569",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6569"
+                },
+                {
+                    "url": "https://huntr.com/bounties/a5d003dc-c23e-4c98-8dcf-35ba9252fa3c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gqrq-j6pm-98c2"
+                }
+            ],
+            "published_at": "2023-12-14T15:30:22Z",
+            "updated_at": "2023-12-18T22:08:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "h2o"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "<= 3.44.0.2",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:L/A:H",
+                "score": 9.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:L/A:H",
+                    "score": 9.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-73",
+                    "name": "External Control of File Name or Path"
+                },
+                {
+                    "cwe_id": "CWE-610",
+                    "name": "Externally Controlled Reference to a Resource in Another Sphere"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "h2o"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "<= 3.44.0.2",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/FEDOT/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/FEDOT/security/dependabot/1",
+        "created_at": "2024-05-24T01:34:08Z",
+        "updated_at": "2024-05-24T01:34:08Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

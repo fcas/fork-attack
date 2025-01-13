@@ -1,0 +1,117 @@
+[
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "nuget",
+                "name": "libpng"
+            },
+            "manifest_path": "config/nuget/vigra.nuspec",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qwwr-qc2p-6283",
+            "cve_id": "CVE-2018-14550",
+            "summary": "Out-of-bounds write in libpng",
+            "description": "An issue has been found in third-party PNM decoding associated with libpng 1.6.35. It is a stack-based buffer overflow in the function get_token in pnm2png.c in pnm2png.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-qwwr-qc2p-6283",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2018-14550",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-14550"
+                },
+                {
+                    "url": "https://github.com/glennrp/libpng/issues/246"
+                },
+                {
+                    "url": "https://github.com/fouzhe/security/tree/master/libpng#stack-buffer-overflow-in-png2pnm-in-function-get_token"
+                },
+                {
+                    "url": "https://security.gentoo.org/glsa/201908-02"
+                },
+                {
+                    "url": "https://snyk.io/vuln/SNYK-UPSTREAM-LIBPNG-1043612"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpuApr2021.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpuoct2021.html"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20221028-0001/"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qwwr-qc2p-6283"
+                }
+            ],
+            "published_at": "2021-03-22T16:57:07Z",
+            "updated_at": "2023-01-29T05:06:36Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "libpng"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.6.35",
+                    "first_patched_version": {
+                        "identifier": "1.6.37"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "nuget",
+                "name": "libpng"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.6.35",
+            "first_patched_version": {
+                "identifier": "1.6.37"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/vigra/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/vigra/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:27Z",
+        "updated_at": "2024-05-24T01:33:27Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

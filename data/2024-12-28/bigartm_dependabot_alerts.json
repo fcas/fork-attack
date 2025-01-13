@@ -1,0 +1,574 @@
+[
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8gq9-2x98-w8hf",
+            "cve_id": "CVE-2022-1941",
+            "summary": "protobuf-cpp and protobuf-python have potential Denial of Service issue",
+            "description": "### Summary\n\nA message parsing and memory management vulnerability in ProtocolBuffer’s C++ and Python implementations can trigger an out of memory (OOM) failure when processing a specially crafted message, which could lead to a denial of service (DoS) on services using the libraries.\n\nReporter: [ClusterFuzz](https://google.github.io/clusterfuzz/)\n\nAffected versions: All versions of C++ Protobufs (including Python) prior to the versions listed below.\n\n### Severity & Impact\nAs scored by google  \n**Medium 5.7** - [CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H](https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H)  \nAsscored byt NIST  \n**High 7.5** - [CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H](https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)\n\nA small (~500 KB) malicious payload can be constructed which causes the running service to allocate more than 3GB of RAM.\n\n### Proof of Concept\n\nFor reproduction details, please refer to the unit test that identifies the specific inputs that exercise this parsing weakness.\n\n### Mitigation / Patching\n\nPlease update to the latest available versions of the following packages:\n- protobuf-cpp (3.18.3, 3.19.5, 3.20.2, 3.21.6)\n- protobuf-python (3.18.3, 3.19.5, 3.20.2, 4.21.6)",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-8gq9-2x98-w8hf",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-1941",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/security/advisories/GHSA-8gq9-2x98-w8hf"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-1941"
+                },
+                {
+                    "url": "https://cloud.google.com/support/bulletins#GCP-2022-019"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2022/09/27/1"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/04/msg00019.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/CBAUKJQL6O4TIWYBENORSY5P43TVB4M3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/MPCGUT3T5L6C3IDWUPSUO22QDCGQKTOP"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/CBAUKJQL6O4TIWYBENORSY5P43TVB4M3"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/MPCGUT3T5L6C3IDWUPSUO22QDCGQKTOP"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240705-0001"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8gq9-2x98-w8hf"
+                }
+            ],
+            "published_at": "2022-09-23T20:31:15Z",
+            "updated_at": "2024-07-05T21:23:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.18.3",
+                    "first_patched_version": {
+                        "identifier": "3.18.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.19.0, < 3.19.5",
+                    "first_patched_version": {
+                        "identifier": "3.19.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.20.0, < 3.20.2",
+                    "first_patched_version": {
+                        "identifier": "3.20.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0, < 4.21.6",
+                    "first_patched_version": {
+                        "identifier": "4.21.6"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-119",
+                    "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+                },
+                {
+                    "cwe_id": "CWE-1286",
+                    "name": "Improper Validation of Syntactic Correctness of Input"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.18.3",
+            "first_patched_version": {
+                "identifier": "3.18.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bigartm/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/bigartm/security/dependabot/3",
+        "created_at": "2024-05-20T13:21:55Z",
+        "updated_at": "2024-05-20T13:21:55Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jwvw-v7c5-m82h",
+            "cve_id": "CVE-2015-5237",
+            "summary": "protobuf susceptible to buffer overflow",
+            "description": "protobuf allows remote authenticated attackers to cause a heap-based buffer overflow.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-jwvw-v7c5-m82h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2015-5237",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2015-5237"
+                },
+                {
+                    "url": "https://github.com/google/protobuf/issues/760"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1256426"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@%3Cdev.drill.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@%3Cdev.drill.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@%3Cissues.drill.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r00097d0b5b6164ea428554007121d5dc1f88ba2af7b9e977a10572cd@%3Cdev.hbase.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r00d9ab1fc0f1daf14cd4386564dd84f7889404438d81462c86dfa836@%3Ccommon-dev.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r02e39d7beb32eebcdbb4b516e95f67d71c90d5d462b26f4078d21eeb@%3Cdev.flink.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r02e39d7beb32eebcdbb4b516e95f67d71c90d5d462b26f4078d21eeb@%3Cuser.flink.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r0ca83171c4898dc92b86fa6f484a7be1dc96206765f4d01dce0f1b28@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r1263fa5b51e4ec3cb8f09ff40e4747428c71198e9bee93349ec96a3c@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r14fa8d38d5757254f1a2e112270c996711d514de2e3b01c93d397ab4@%3Cissues.spark.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r17dc6f394429f6bffb5e4c66555d93c2e9923cbbdc5a93db9a56c1c7@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r1d274d647b3c2060df9be21eade4ce56d3a59998cf19ac72662dd994@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r2ea33ce5591a9cb9ed52750b6ab42ab658f529a7028c3166ba93c7d5@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r320dc858da88846ba00bb077bcca2cdf75b7dde0f6eb3a3d60dba6a1@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r42e47994734cd1980ef3e204a40555336e10cc80096927aca2f37d90@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r42ef6acfb0d86a2df0c2390702ecbe97d2104a331560f2790d17ca69@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r4886108206d4c535db9b20c813fe4723d4fe6a91b9278382af8b9d08@%3Cissues.spark.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r4ef574a5621b0e670a3ce641e9922543e34f22bf4c9ee9584aa67fcf@%3Cissues.hbase.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r5741f4dbdd129dbb9885f5fb170dc1b24a06b9313bedef5e67fded94@%3Cissues.spark.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r5e52caf41dc49df55b4ee80758356fe1ff2a88179ff24c685de7c28d@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r764fc66435ee4d185d359c28c0887d3e5866d7292a8d5598d9e7cbc4@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r7fed8dd9bee494094e7011cf3c2ab75bd8754ea314c6734688c42932@%3Ccommon-issues.hadoop.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/r85c9a764b573c786224688cc906c27e28343e18f5b33387f94cae90f@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/ra28fed69eef3a71e5fe5daea001d0456b05b102044237330ec5c7c82@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb40dc9d63a5331bce8e80865b7fa3af9dd31e16555affd697b6f3526@%3Cissues.spark.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rb71dac1d9dd4e8a8ae3dbc033aeae514eda9be1263c1df3b42a530a2@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rd64381fb8f92d640c1975dc50dcdf1b8512e02a2a7b20292d3565cae@%3Cissues.hbase.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/re6d04a214424a97ea59c62190d79316edf311a0a6346524dfef3b940@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "https://lists.apache.org/thread.html/rf7539287c90be979bac94af9aaba34118fbf968864944b4871af48dd@%3Ccommits.pulsar.apache.org%3E"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2015/08/27/2"
+                },
+                {
+                    "url": "https://github.com/google/protobuf/releases/tag/v3.4.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jwvw-v7c5-m82h"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/protobuf/PYSEC-2017-65.yaml"
+                }
+            ],
+            "published_at": "2022-05-13T01:06:54Z",
+            "updated_at": "2024-10-21T20:54:14Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "Google.Protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.4.0",
+                    "first_patched_version": {
+                        "identifier": "3.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-parent"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.4.0",
+                    "first_patched_version": {
+                        "identifier": "3.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "github.com/protocolbuffers/protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.4.0",
+                    "first_patched_version": {
+                        "identifier": "3.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "composer",
+                        "name": "google/protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.4.0",
+                    "first_patched_version": {
+                        "identifier": "3.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.4.0",
+                    "first_patched_version": {
+                        "identifier": "3.4.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.4.0",
+            "first_patched_version": {
+                "identifier": "3.4.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bigartm/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/bigartm/security/dependabot/2",
+        "created_at": "2024-05-20T13:21:55Z",
+        "updated_at": "2024-05-20T13:21:55Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-77rm-9x9h-xj3g",
+            "cve_id": "CVE-2021-22570",
+            "summary": "NULL Pointer Dereference in Protocol Buffers",
+            "description": "Nullptr dereference when a null char is present in a proto symbol. The symbol is parsed incorrectly, leading to an unchecked call into the proto file's name during generation of the resulting error message. Since the symbol is incorrectly parsed, the file is nullptr. We recommend upgrading to version 3.15.0 or greater.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-77rm-9x9h-xj3g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-22570",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-22570"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/releases/tag/v3.15.0"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpuapr2022.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2023/04/msg00019.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-77rm-9x9h-xj3g"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/protobuf/PYSEC-2022-48.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/3DVUZPALAQ34TQP6KFNLM4IZS6B32XSA"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5PAGL5M2KGYPN3VEQCRJJE6NA7D5YG5X"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/BTRGBRC5KGCA4SK5MUNLPYJRAGXMBIYY"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/IFX6KPNOFHYD6L4XES5PCM3QNSKZBOTQ"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KQJB6ZPRLKV6WCMX2PRRRQBFAOXFBK6B"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/MRWRAXAFR3JR7XCFWTHC2KALSZKWACCE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/NVTWVQRB5OCCTMKEQFY5MYED3DXDVSLP"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20220429-0005"
+                }
+            ],
+            "published_at": "2022-01-27T00:01:15Z",
+            "updated_at": "2024-10-21T20:58:17Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "Google.Protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "composer",
+                        "name": "google/protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "go",
+                        "name": "github.com/protocolbuffers/protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-java"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.15.0",
+            "first_patched_version": {
+                "identifier": "3.15.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bigartm/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/bigartm/security/dependabot/1",
+        "created_at": "2024-05-20T13:21:55Z",
+        "updated_at": "2024-05-20T13:21:55Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

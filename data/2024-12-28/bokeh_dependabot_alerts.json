@@ -1,0 +1,1097 @@
+[
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cookie"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-pxg6-pf52-xh8x",
+            "cve_id": "CVE-2024-47764",
+            "summary": "cookie accepts cookie name, path, and domain with out of bounds characters",
+            "description": "### Impact\n\nThe cookie name could be used to set other fields of the cookie, resulting in an unexpected cookie value. For example, `serialize(\"userName=<script>alert('XSS3')</script>; Max-Age=2592000; a\", value)` would result in `\"userName=<script>alert('XSS3')</script>; Max-Age=2592000; a=test\"`, setting `userName` cookie to `<script>` and ignoring `value`.\n\nA similar escape can be used for `path` and `domain`, which could be abused to alter other fields of the cookie.\n\n### Patches\n\nUpgrade to 0.7.0, which updates the validation for `name`, `path`, and `domain`.\n\n### Workarounds\n\nAvoid passing untrusted or arbitrary values for these fields, ensure they are set by the application instead of user input.\n\n### References\n\n* https://github.com/jshttp/cookie/pull/167",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-pxg6-pf52-xh8x",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-47764",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/jshttp/cookie/security/advisories/GHSA-pxg6-pf52-xh8x"
+                },
+                {
+                    "url": "https://github.com/jshttp/cookie/pull/167"
+                },
+                {
+                    "url": "https://github.com/jshttp/cookie/commit/e10042845354fea83bd8f34af72475eed1dadf5c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-pxg6-pf52-xh8x"
+                }
+            ],
+            "published_at": "2024-10-04T20:31:00Z",
+            "updated_at": "2024-10-04T20:31:01Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "cookie"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 0.7.0",
+                    "first_patched_version": {
+                        "identifier": "0.7.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "cookie"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 0.7.0",
+            "first_patched_version": {
+                "identifier": "0.7.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/11",
+        "created_at": "2024-10-19T12:53:55Z",
+        "updated_at": "2024-10-19T12:53:55Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "send"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-m6fv-jmcg-4jfg",
+            "cve_id": "CVE-2024-43799",
+            "summary": "send vulnerable to template injection that can lead to XSS",
+            "description": "### Impact\n\npassing untrusted user input - even after sanitizing it - to `SendStream.redirect()` may execute untrusted code\n\n### Patches\n\nthis issue is patched in send 0.19.0\n\n### Workarounds\n\nusers are encouraged to upgrade to the patched version of express, but otherwise can workaround this issue by making sure any untrusted inputs are safe, ideally by validating them against an explicit allowlist\n\n### Details\n\nsuccessful exploitation of this vector requires the following:\n\n1. The attacker MUST control the input to response.redirect()\n1. express MUST NOT redirect before the template appears\n1. the browser MUST NOT complete redirection before:\n1. the user MUST click on the link in the template\n",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-m6fv-jmcg-4jfg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-43799",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pillarjs/send/security/advisories/GHSA-m6fv-jmcg-4jfg"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-43799"
+                },
+                {
+                    "url": "https://github.com/pillarjs/send/commit/ae4f2989491b392ae2ef3b0015a019770ae65d35"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-m6fv-jmcg-4jfg"
+                }
+            ],
+            "published_at": "2024-09-10T19:42:41Z",
+            "updated_at": "2024-11-18T16:27:12Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "send"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 0.19.0",
+                    "first_patched_version": {
+                        "identifier": "0.19.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                "score": 5.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                    "score": 5.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:L",
+                    "score": 2.3
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "send"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 0.19.0",
+            "first_patched_version": {
+                "identifier": "0.19.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/10",
+        "created_at": "2024-09-25T14:24:39Z",
+        "updated_at": "2024-09-25T14:24:39Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "serve-static"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cm22-4g7w-348p",
+            "cve_id": "CVE-2024-43800",
+            "summary": "serve-static vulnerable to template injection that can lead to XSS",
+            "description": "### Impact\n\npassing untrusted user input - even after sanitizing it - to `redirect()` may execute untrusted code\n\n### Patches\n\nthis issue is patched in serve-static 1.16.0\n\n### Workarounds\n\nusers are encouraged to upgrade to the patched version of express, but otherwise can workaround this issue by making sure any untrusted inputs are safe, ideally by validating them against an explicit allowlist\n\n### Details\n\nsuccessful exploitation of this vector requires the following:\n\n1. The attacker MUST control the input to response.redirect()\n1. express MUST NOT redirect before the template appears\n1. the browser MUST NOT complete redirection before:\n1. the user MUST click on the link in the template\n",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-cm22-4g7w-348p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-43800",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/expressjs/serve-static/security/advisories/GHSA-cm22-4g7w-348p"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-43800"
+                },
+                {
+                    "url": "https://github.com/expressjs/serve-static/commit/0c11fad159898cdc69fd9ab63269b72468ecaf6b"
+                },
+                {
+                    "url": "https://github.com/expressjs/serve-static/commit/ce730896fddce1588111d9ef6fdf20896de5c6fa"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cm22-4g7w-348p"
+                }
+            ],
+            "published_at": "2024-09-10T19:42:33Z",
+            "updated_at": "2024-11-18T16:27:12Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "serve-static"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 1.16.0",
+                    "first_patched_version": {
+                        "identifier": "1.16.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "serve-static"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.1.0",
+                    "first_patched_version": {
+                        "identifier": "2.1.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                "score": 5.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                    "score": 5.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:L",
+                    "score": 2.3
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "serve-static"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 1.16.0",
+            "first_patched_version": {
+                "identifier": "1.16.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/9",
+        "created_at": "2024-09-25T13:46:20Z",
+        "updated_at": "2024-09-25T13:46:20Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "body-parser"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qwcr-r2fm-qrc7",
+            "cve_id": "CVE-2024-45590",
+            "summary": "body-parser vulnerable to denial of service when url encoding is enabled",
+            "description": "### Impact\n\nbody-parser <1.20.3 is vulnerable to denial of service when url encoding is enabled. A malicious actor using a specially crafted payload could flood the server with a large number of requests, resulting in denial of service.\n\n### Patches\n\nthis issue is patched in 1.20.3\n\n### References\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-qwcr-r2fm-qrc7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-45590",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/expressjs/body-parser/security/advisories/GHSA-qwcr-r2fm-qrc7"
+                },
+                {
+                    "url": "https://github.com/expressjs/body-parser/commit/b2695c4450f06ba3b0ccf48d872a229bb41c9bce"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-45590"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qwcr-r2fm-qrc7"
+                }
+            ],
+            "published_at": "2024-09-10T15:52:39Z",
+            "updated_at": "2024-09-10T19:01:11Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "body-parser"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 1.20.3",
+                    "first_patched_version": {
+                        "identifier": "1.20.3"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-405",
+                    "name": "Asymmetric Resource Consumption (Amplification)"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "body-parser"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 1.20.3",
+            "first_patched_version": {
+                "identifier": "1.20.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/8",
+        "created_at": "2024-09-21T12:00:55Z",
+        "updated_at": "2024-09-21T12:00:55Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "express"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qw6h-vgh9-j6wx",
+            "cve_id": "CVE-2024-43796",
+            "summary": "express vulnerable to XSS via response.redirect()",
+            "description": "### Impact\n\nIn express <4.20.0, passing untrusted user input - even after sanitizing it - to `response.redirect()` may execute untrusted code\n\n### Patches\n\nthis issue is patched in express 4.20.0\n\n### Workarounds\n\nusers are encouraged to upgrade to the patched version of express, but otherwise can workaround this issue by making sure any untrusted inputs are safe, ideally by validating them against an explicit allowlist\n\n### Details\n\nsuccessful exploitation of this vector requires the following:\n\n1. The attacker MUST control the input to response.redirect()\n1. express MUST NOT redirect before the template appears\n1. the browser MUST NOT complete redirection before:\n1. the user MUST click on the link in the template\n",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-qw6h-vgh9-j6wx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-43796",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/expressjs/express/security/advisories/GHSA-qw6h-vgh9-j6wx"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-43796"
+                },
+                {
+                    "url": "https://github.com/expressjs/express/commit/54271f69b511fea198471e6ff3400ab805d6b553"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qw6h-vgh9-j6wx"
+                }
+            ],
+            "published_at": "2024-09-10T19:41:04Z",
+            "updated_at": "2024-11-18T16:27:12Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "express"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.20.0",
+                    "first_patched_version": {
+                        "identifier": "4.20.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "express"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 5.0.0-alpha.1, < 5.0.0",
+                    "first_patched_version": {
+                        "identifier": "5.0.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                "score": 5.0
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                    "score": 5.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:L",
+                    "score": 2.3
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "express"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.20.0",
+            "first_patched_version": {
+                "identifier": "4.20.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/7",
+        "created_at": "2024-09-21T08:42:09Z",
+        "updated_at": "2024-09-21T08:42:09Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "auto_dismissed",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "path-to-regexp"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9wv6-86v2-598j",
+            "cve_id": "CVE-2024-45296",
+            "summary": "path-to-regexp outputs backtracking regular expressions",
+            "description": "### Impact\n\nA bad regular expression is generated any time you have two parameters within a single segment, separated by something that is not a period (`.`). For example, `/:a-:b`.\n\n### Patches\n\nFor users of 0.1, upgrade to `0.1.10`. All other users should upgrade to `8.0.0`.\n\nThese versions add backtrack protection when a custom regex pattern is not provided:\n\n- [0.1.10](https://github.com/pillarjs/path-to-regexp/releases/tag/v0.1.10)\n- [1.9.0](https://github.com/pillarjs/path-to-regexp/releases/tag/v1.9.0)\n- [3.3.0](https://github.com/pillarjs/path-to-regexp/releases/tag/v3.3.0)\n- [6.3.0](https://github.com/pillarjs/path-to-regexp/releases/tag/v6.3.0)\n\nThey do not protect against vulnerable user supplied capture groups. Protecting against explicit user patterns is out of scope for old versions and not considered a vulnerability.\n\nVersion [7.1.0](https://github.com/pillarjs/path-to-regexp/releases/tag/v7.1.0) can enable `strict: true` and get an error when the regular expression might be bad.\n\nVersion [8.0.0](https://github.com/pillarjs/path-to-regexp/releases/tag/v8.0.0) removes the features that can cause a ReDoS.\n\n### Workarounds\n\nAll versions can be patched by providing a custom regular expression for parameters after the first in a single segment. As long as the custom regular expression does not match the text before the parameter, you will be safe. For example, change `/:a-:b` to `/:a-:b([^-/]+)`.\n\nIf paths cannot be rewritten and versions cannot be upgraded, another alternative is to limit the URL length. For example, halving the attack string improves performance by 4x faster.\n\n### Details\n\nUsing `/:a-:b` will produce the regular expression `/^\\/([^\\/]+?)-([^\\/]+?)\\/?$/`. This can be exploited by a path such as `/a${'-a'.repeat(8_000)}/a`. [OWASP](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS) has a good example of why this occurs, but the TL;DR is the `/a` at the end ensures this route would never match but due to naive backtracking it will still attempt every combination of the `:a-:b` on the repeated 8,000 `-a`.\n\nBecause JavaScript is single threaded and regex matching runs on the main thread, poor performance will block the event loop and can lead to a DoS. In local benchmarks, exploiting the unsafe regex will result in performance that is over 1000x worse than the safe regex. In a more realistic environment using Express v4 and 10 concurrent connections, this translated to average latency of ~600ms vs 1ms.\n\n### References\n\n* [OWASP](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)\n* [Detailed blog post](https://blakeembrey.com/posts/2024-09-web-redos/)",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-9wv6-86v2-598j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-45296",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/security/advisories/GHSA-9wv6-86v2-598j"
+                },
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/commit/29b96b4a1de52824e1ca0f49a701183cc4ed476f"
+                },
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/commit/60f2121e9b66b7b622cc01080df0aabda9eedee6"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-45296"
+                },
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/commit/925ac8e3c5780b02f58cbd4e52f95da8ad2ac485"
+                },
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/commit/d31670ae8f6e69cbfd56e835742195b7d10942ef"
+                },
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/commit/f1253b47b347dcb909e3e80b0eb2649109e59894"
+                },
+                {
+                    "url": "https://github.com/pillarjs/path-to-regexp/releases/tag/v6.3.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9wv6-86v2-598j"
+                }
+            ],
+            "published_at": "2024-09-09T20:19:15Z",
+            "updated_at": "2024-09-12T17:09:43Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "path-to-regexp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.1.10",
+                    "first_patched_version": {
+                        "identifier": "0.1.10"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "path-to-regexp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0.2.0, < 1.9.0",
+                    "first_patched_version": {
+                        "identifier": "1.9.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "path-to-regexp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.0.0, < 3.3.0",
+                    "first_patched_version": {
+                        "identifier": "3.3.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "path-to-regexp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 8.0.0",
+                    "first_patched_version": {
+                        "identifier": "8.0.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "path-to-regexp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0, < 6.3.0",
+                    "first_patched_version": {
+                        "identifier": "6.3.0"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:P",
+                    "score": 7.7
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "path-to-regexp"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 4.0.0, < 6.3.0",
+            "first_patched_version": {
+                "identifier": "6.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/6",
+        "created_at": "2024-09-12T19:07:22Z",
+        "updated_at": "2024-09-12T19:07:22Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": "2024-09-12T19:07:22Z"
+    },
+    {
+        "number": 4,
+        "state": "auto_dismissed",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "micromatch"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-952p-6rrq-rcjv",
+            "cve_id": "CVE-2024-4067",
+            "summary": "Regular Expression Denial of Service (ReDoS) in micromatch",
+            "description": "The NPM package `micromatch` prior to version 4.0.8 is vulnerable to Regular Expression Denial of Service (ReDoS). The vulnerability occurs in `micromatch.braces()` in `index.js` because the pattern `.*` will greedily match anything. By passing a malicious payload, the pattern matching will keep backtracking to the input while it doesn't find the closing bracket. As the input size increases, the consumption time will also increase until it causes the application to hang or slow down. There was a merged fix but further testing shows the issue persisted prior to https://github.com/micromatch/micromatch/pull/266. This issue should be mitigated by using a safe pattern that won't start backtracking the regular expression due to greedy matching.\n",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-952p-6rrq-rcjv",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-4067",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-4067"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/issues/243"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/pull/247"
+                },
+                {
+                    "url": "https://devhub.checkmarx.com/cve-details/CVE-2024-4067"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/blob/2c56a8604b68c1099e7bc0f807ce0865a339747a/index.js#L448"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/commit/500d5d6f42f0e8dfa1cb5464c6cb420b1b6aaaa0"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/pull/266"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/commit/03aa8052171e878897eee5d7bb2ae0ae83ec2ade"
+                },
+                {
+                    "url": "https://advisory.checkmarx.net/advisory/CVE-2024-4067"
+                },
+                {
+                    "url": "https://github.com/micromatch/micromatch/releases/tag/4.0.8"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-952p-6rrq-rcjv"
+                }
+            ],
+            "published_at": "2024-05-14T18:30:54Z",
+            "updated_at": "2024-08-28T13:12:27Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "micromatch"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.0.8",
+                    "first_patched_version": {
+                        "identifier": "4.0.8"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "micromatch"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.0.8",
+            "first_patched_version": {
+                "identifier": "4.0.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/4",
+        "created_at": "2024-09-10T23:57:42Z",
+        "updated_at": "2024-09-10T23:57:42Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": "2024-09-10T23:57:42Z"
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "ws"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3h5v-q93c-6h6q",
+            "cve_id": "CVE-2024-37890",
+            "summary": "ws affected by a DoS when handling a request with many HTTP headers",
+            "description": "### Impact\n\nA request with a number of headers exceeding the[`server.maxHeadersCount`][] threshold could be used to crash a ws server.\n\n### Proof of concept\n\n```js\nconst http = require('http');\nconst WebSocket = require('ws');\n\nconst wss = new WebSocket.Server({ port: 0 }, function () {\n  const chars = \"!#$%&'*+-.0123456789abcdefghijklmnopqrstuvwxyz^_`|~\".split('');\n  const headers = {};\n  let count = 0;\n\n  for (let i = 0; i < chars.length; i++) {\n    if (count === 2000) break;\n\n    for (let j = 0; j < chars.length; j++) {\n      const key = chars[i] + chars[j];\n      headers[key] = 'x';\n\n      if (++count === 2000) break;\n    }\n  }\n\n  headers.Connection = 'Upgrade';\n  headers.Upgrade = 'websocket';\n  headers['Sec-WebSocket-Key'] = 'dGhlIHNhbXBsZSBub25jZQ==';\n  headers['Sec-WebSocket-Version'] = '13';\n\n  const request = http.request({\n    headers: headers,\n    host: '127.0.0.1',\n    port: wss.address().port\n  });\n\n  request.end();\n});\n```\n\n### Patches\n\nThe vulnerability was fixed in ws@8.17.1 (https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c) and backported to ws@7.5.10 (https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f), ws@6.2.3 (https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63), and ws@5.2.4 (https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e)\n\n### Workarounds\n\nIn vulnerable versions of ws, the issue can be mitigated in the following ways:\n\n1. Reduce the maximum allowed length of the request headers using the [`--max-http-header-size=size`][] and/or the [`maxHeaderSize`][] options so that no more headers than the `server.maxHeadersCount` limit can be sent.\n2. Set `server.maxHeadersCount` to `0` so that no limit is applied.\n\n### Credits\n\nThe vulnerability was reported by [Ryan LaPointe](https://github.com/rrlapointe) in https://github.com/websockets/ws/issues/2230.\n\n### References\n\n- https://github.com/websockets/ws/issues/2230\n- https://github.com/websockets/ws/pull/2231\n\n[`--max-http-header-size=size`]: https://nodejs.org/api/cli.html#--max-http-header-sizesize\n[`maxHeaderSize`]: https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener\n[`server.maxHeadersCount`]: https://nodejs.org/api/http.html#servermaxheaderscount\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3h5v-q93c-6h6q",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-37890",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/websockets/ws/security/advisories/GHSA-3h5v-q93c-6h6q"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/issues/2230"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/pull/2231"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3h5v-q93c-6h6q"
+                }
+            ],
+            "published_at": "2024-06-17T19:09:10Z",
+            "updated_at": "2024-08-05T05:02:34Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.1.0, < 5.2.4",
+                    "first_patched_version": {
+                        "identifier": "5.2.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 6.0.0, < 6.2.3",
+                    "first_patched_version": {
+                        "identifier": "6.2.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.5.10",
+                    "first_patched_version": {
+                        "identifier": "7.5.10"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 8.0.0, < 8.17.1",
+                    "first_patched_version": {
+                        "identifier": "8.17.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "ws"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 7.0.0, < 7.5.10",
+            "first_patched_version": {
+                "identifier": "7.5.10"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/2",
+        "created_at": "2024-06-21T07:42:45Z",
+        "updated_at": "2024-06-21T07:42:45Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "ws"
+            },
+            "manifest_path": "bokehjs/package-lock.json",
+            "scope": "development"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3h5v-q93c-6h6q",
+            "cve_id": "CVE-2024-37890",
+            "summary": "ws affected by a DoS when handling a request with many HTTP headers",
+            "description": "### Impact\n\nA request with a number of headers exceeding the[`server.maxHeadersCount`][] threshold could be used to crash a ws server.\n\n### Proof of concept\n\n```js\nconst http = require('http');\nconst WebSocket = require('ws');\n\nconst wss = new WebSocket.Server({ port: 0 }, function () {\n  const chars = \"!#$%&'*+-.0123456789abcdefghijklmnopqrstuvwxyz^_`|~\".split('');\n  const headers = {};\n  let count = 0;\n\n  for (let i = 0; i < chars.length; i++) {\n    if (count === 2000) break;\n\n    for (let j = 0; j < chars.length; j++) {\n      const key = chars[i] + chars[j];\n      headers[key] = 'x';\n\n      if (++count === 2000) break;\n    }\n  }\n\n  headers.Connection = 'Upgrade';\n  headers.Upgrade = 'websocket';\n  headers['Sec-WebSocket-Key'] = 'dGhlIHNhbXBsZSBub25jZQ==';\n  headers['Sec-WebSocket-Version'] = '13';\n\n  const request = http.request({\n    headers: headers,\n    host: '127.0.0.1',\n    port: wss.address().port\n  });\n\n  request.end();\n});\n```\n\n### Patches\n\nThe vulnerability was fixed in ws@8.17.1 (https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c) and backported to ws@7.5.10 (https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f), ws@6.2.3 (https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63), and ws@5.2.4 (https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e)\n\n### Workarounds\n\nIn vulnerable versions of ws, the issue can be mitigated in the following ways:\n\n1. Reduce the maximum allowed length of the request headers using the [`--max-http-header-size=size`][] and/or the [`maxHeaderSize`][] options so that no more headers than the `server.maxHeadersCount` limit can be sent.\n2. Set `server.maxHeadersCount` to `0` so that no limit is applied.\n\n### Credits\n\nThe vulnerability was reported by [Ryan LaPointe](https://github.com/rrlapointe) in https://github.com/websockets/ws/issues/2230.\n\n### References\n\n- https://github.com/websockets/ws/issues/2230\n- https://github.com/websockets/ws/pull/2231\n\n[`--max-http-header-size=size`]: https://nodejs.org/api/cli.html#--max-http-header-sizesize\n[`maxHeaderSize`]: https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener\n[`server.maxHeadersCount`]: https://nodejs.org/api/http.html#servermaxheaderscount\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3h5v-q93c-6h6q",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-37890",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/websockets/ws/security/advisories/GHSA-3h5v-q93c-6h6q"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/issues/2230"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/pull/2231"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c"
+                },
+                {
+                    "url": "https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3h5v-q93c-6h6q"
+                }
+            ],
+            "published_at": "2024-06-17T19:09:10Z",
+            "updated_at": "2024-08-05T05:02:34Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2.1.0, < 5.2.4",
+                    "first_patched_version": {
+                        "identifier": "5.2.4"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 6.0.0, < 6.2.3",
+                    "first_patched_version": {
+                        "identifier": "6.2.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 7.0.0, < 7.5.10",
+                    "first_patched_version": {
+                        "identifier": "7.5.10"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "ws"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 8.0.0, < 8.17.1",
+                    "first_patched_version": {
+                        "identifier": "8.17.1"
+                    }
+                }
+            ],
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ]
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "ws"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 8.0.0, < 8.17.1",
+            "first_patched_version": {
+                "identifier": "8.17.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/bokeh/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/bokeh/security/dependabot/1",
+        "created_at": "2024-06-19T02:07:39Z",
+        "updated_at": "2024-06-19T02:07:39Z",
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

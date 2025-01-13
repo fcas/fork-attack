@@ -1,0 +1,108 @@
+[
+    {
+        "number": 2,
+        "created_at": "2024-05-17T12:54:21Z",
+        "updated_at": "2024-05-17T13:07:40Z",
+        "url": "https://api.github.com/repos/fcas/feast/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/feast/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-storage-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text storage of sensitive information",
+            "name": "py/clear-text-storage-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-315",
+                "external/cwe/cwe-359",
+                "security"
+            ],
+            "full_description": "Sensitive information stored without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text storage of sensitive information\nSensitive information that is stored unencrypted is accessible to an attacker who gains access to the storage. This is particularly important for cookies, which are stored on the machine of the end-user.\n\n\n## Recommendation\nEnsure that sensitive information is always encrypted before being stored. If possible, avoid placing sensitive information in cookies altogether. Instead, prefer storing, in the cookie, a key that can be used to look up the sensitive information.\n\nIn general, decrypt sensitive information only at the point where it is necessary for it to be used in cleartext.\n\nBe aware that external processes often store the `standard out` and `standard error` streams of the application, causing logged sensitive information to be stored as well.\n\n\n## Example\nThe following example code stores user credentials (in this case, their password) in a cookie in plain text:\n\n\n```python\nfrom flask import Flask, make_response, request\n\napp = Flask(\"Leak password\")\n\n@app.route('/')\ndef index():\n    password = request.args.get(\"password\")\n    resp = make_response(render_template(...))\n    resp.set_cookie(\"password\", password)\n    return resp\n\n```\nInstead, the credentials should be encrypted, for instance by using the `cryptography` module, or not stored at all.\n\n\n## References\n* M. Dowd, J. McDonald and J. Schuhm, *The Art of Software Security Assessment*, 1st Edition, Chapter 2 - 'Common Vulnerabilities of Encryption', p. 43. Addison Wesley, 2006.\n* M. Howard and D. LeBlanc, *Writing Secure Code*, 2nd Edition, Chapter 9 - 'Protecting Secret Data', p. 299. Microsoft, 2002.\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-315](https://cwe.mitre.org/data/definitions/315.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "1bf26b6f7ff7fa57da2aacad11a96ec5629418f4",
+            "message": {
+                "text": "This expression stores sensitive data (password) as clear text.\nThis expression stores sensitive data (password) as clear text.\nThis expression stores sensitive data (password) as clear text.\nThis expression stores sensitive data (password) as clear text.\nThis expression stores sensitive data (password) as clear text.\nThis expression stores sensitive data (password) as clear text."
+            },
+            "location": {
+                "path": "sdk/python/feast/file_utils.py",
+                "start_line": 32,
+                "end_line": 32,
+                "start_column": 17,
+                "end_column": 25
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/feast/code-scanning/alerts/2/instances"
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-17T12:54:21Z",
+        "updated_at": "2024-05-17T13:07:40Z",
+        "url": "https://api.github.com/repos/fcas/feast/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/feast/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/bind-socket-all-network-interfaces",
+            "severity": "error",
+            "description": "Binding a socket to all network interfaces",
+            "name": "py/bind-socket-all-network-interfaces",
+            "tags": [
+                "external/cwe/cwe-200",
+                "security"
+            ],
+            "full_description": "Binding a socket to all interfaces opens it up to traffic from any IPv4 address and is therefore associated with security risks.",
+            "help": "# Binding a socket to all network interfaces\nSockets can be used to communicate with other machines on a network. You can use the (IP address, port) pair to define the access restrictions for the socket you create. When using the built-in Python `socket` module (for instance, when building a message sender service or an FTP server data transmitter), one has to bind the port to some interface. When you bind the port to all interfaces using `0.0.0.0` as the IP address, you essentially allow it to accept connections from any IPv4 address provided that it can get to the socket via routing. Binding to all interfaces is therefore associated with security risks.\n\n\n## Recommendation\nBind your service incoming traffic only to a dedicated interface. If you need to bind more than one interface using the built-in `socket` module, create multiple sockets (instead of binding to one socket to all interfaces).\n\n\n## Example\nIn this example, two sockets are insecure because they are bound to all interfaces; one through the `0.0.0.0` notation and another one through an empty string `''`.\n\n\n```python\nimport socket\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('0.0.0.0', 31137))\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('', 4040))\n\n# binds only to a dedicated interface, secure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('84.68.10.12', 8080))\n\n```\n\n## References\n* Python reference: [ Socket families](https://docs.python.org/3/library/socket.html#socket-families).\n* Python reference: [ Socket Programming HOWTO](https://docs.python.org/3.7/howto/sockets.html).\n* Common Vulnerabilities and Exposures: [ CVE-2018-1281 Detail](https://nvd.nist.gov/vuln/detail/CVE-2018-1281).\n* Common Weakness Enumeration: [CWE-200](https://cwe.mitre.org/data/definitions/200.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.2"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "1bf26b6f7ff7fa57da2aacad11a96ec5629418f4",
+            "message": {
+                "text": "'' binds a socket to all interfaces."
+            },
+            "location": {
+                "path": "sdk/python/tests/utils/http_server.py",
+                "start_line": 7,
+                "end_line": 7,
+                "start_column": 5,
+                "end_column": 23
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/feast/code-scanning/alerts/1/instances"
+    }
+]

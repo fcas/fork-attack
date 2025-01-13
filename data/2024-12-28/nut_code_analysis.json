@@ -1,0 +1,55 @@
+[
+    {
+        "number": 1,
+        "created_at": "2024-05-19T01:24:40Z",
+        "updated_at": "2024-05-19T01:24:41Z",
+        "url": "https://api.github.com/repos/fcas/nut/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/nut/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-temporary-file",
+            "severity": "error",
+            "description": "Insecure temporary file",
+            "name": "py/insecure-temporary-file",
+            "tags": [
+                "external/cwe/cwe-377",
+                "security"
+            ],
+            "full_description": "Creating a temporary file using this method may be insecure.",
+            "help": "# Insecure temporary file\nFunctions that create temporary file names (such as `tempfile.mktemp` and `os.tempnam`) are fundamentally insecure, as they do not ensure exclusive access to a file with the temporary name they return. The file name returned by these functions is guaranteed to be unique on creation but the file must be opened in a separate operation. There is no guarantee that the creation and open operations will happen atomically. This provides an opportunity for an attacker to interfere with the file before it is opened.\n\nNote that `mktemp` has been deprecated since Python 2.3.\n\n\n## Recommendation\nReplace the use of `mktemp` with some of the more secure functions in the `tempfile` module, such as `TemporaryFile`. If the file is intended to be accessed from other processes, consider using the `NamedTemporaryFile` function.\n\n\n## Example\nThe following piece of code opens a temporary file and writes a set of results to it. Because the file name is created using `mktemp`, another process may access this file before it is opened using `open`.\n\n\n```python\nfrom tempfile import mktemp\n\ndef write_results(results):\n    filename = mktemp()\n    with open(filename, \"w+\") as f:\n        f.write(results)\n    print(\"Results written to\", filename)\n\n```\nBy changing the code to use `NamedTemporaryFile` instead, the file is opened immediately.\n\n\n```python\nfrom tempfile import NamedTemporaryFile\n\ndef write_results(results):\n    with NamedTemporaryFile(mode=\"w+\", delete=False) as f:\n        f.write(results)\n    print(\"Results written to\", f.name)\n\n```\n\n## References\n* Python Standard Library: [tempfile.mktemp](https://docs.python.org/3/library/tempfile.html#tempfile.mktemp).\n* Common Weakness Enumeration: [CWE-377](https://cwe.mitre.org/data/definitions/377.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.18.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "7647c48bc930c5a0a12dfb06b65ee580b9ff3cfc",
+            "message": {
+                "text": "Call to deprecated function tempfile.mktemp may be insecure."
+            },
+            "location": {
+                "path": "nut/externals/joblib/test/test_hashing.py",
+                "start_line": 90,
+                "end_line": 90,
+                "start_column": 16,
+                "end_column": 33
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/nut/code-scanning/alerts/1/instances"
+    }
+]

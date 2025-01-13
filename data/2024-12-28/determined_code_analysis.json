@@ -1,0 +1,532 @@
+[
+    {
+        "number": 10,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-05-23T09:46:02Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/10",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/10",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-logging-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text logging of sensitive information",
+            "name": "py/clear-text-logging-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-359",
+                "external/cwe/cwe-532",
+                "security"
+            ],
+            "full_description": "Logging sensitive information without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text logging of sensitive information\nIf sensitive data is written to a log entry it could be exposed to an attacker who gains access to the logs.\n\nPotential attackers can obtain sensitive user data when the log output is displayed. Additionally that data may expose system information such as full path names, system information, and sometimes usernames and passwords.\n\n\n## Recommendation\nSensitive data should not be logged.\n\n\n## Example\nIn the example the entire process environment is logged using \\`print\\`. Regular users of the production deployed application should not have access to this much information about the environment configuration.\n\n\n```python\n# BAD: Logging cleartext sensitive data\nimport os\nprint(f\"[INFO] Environment: {os.environ}\")\n```\nIn the second example the data that is logged is not sensitive.\n\n\n```python\nnot_sensitive_data = {'a': 1, 'b': 2}\n# GOOD: it is fine to log data that is not sensitive\nprint(f\"[INFO] Some object contains: {not_sensitive_data}\")\n```\n\n## References\n* OWASP: [Insertion of Sensitive Information into Log File](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/).\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n* Common Weakness Enumeration: [CWE-532](https://cwe.mitre.org/data/definitions/532.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "This expression logs sensitive data (password) as clear text."
+            },
+            "location": {
+                "path": "e2e_tests/tests/cluster/test_rbac_misc.py",
+                "start_line": 126,
+                "end_line": 126,
+                "start_column": 23,
+                "end_column": 62
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/10/instances"
+    },
+    {
+        "number": 9,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-09-26T09:41:01Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/9",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/9",
+        "state": "fixed",
+        "fixed_at": "2024-09-26T09:41:00Z",
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-logging-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text logging of sensitive information",
+            "name": "py/clear-text-logging-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-359",
+                "external/cwe/cwe-532",
+                "security"
+            ],
+            "full_description": "Logging sensitive information without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text logging of sensitive information\nIf sensitive data is written to a log entry it could be exposed to an attacker who gains access to the logs.\n\nPotential attackers can obtain sensitive user data when the log output is displayed. Additionally that data may expose system information such as full path names, system information, and sometimes usernames and passwords.\n\n\n## Recommendation\nSensitive data should not be logged.\n\n\n## Example\nIn the example the entire process environment is logged using \\`print\\`. Regular users of the production deployed application should not have access to this much information about the environment configuration.\n\n\n```python\n# BAD: Logging cleartext sensitive data\nimport os\nprint(f\"[INFO] Environment: {os.environ}\")\n```\nIn the second example the data that is logged is not sensitive.\n\n\n```python\nnot_sensitive_data = {'a': 1, 'b': 2}\n# GOOD: it is fine to log data that is not sensitive\nprint(f\"[INFO] Some object contains: {not_sensitive_data}\")\n```\n\n## References\n* OWASP: [Insertion of Sensitive Information into Log File](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/).\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n* Common Weakness Enumeration: [CWE-532](https://cwe.mitre.org/data/definitions/532.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "fixed",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "This expression logs sensitive data (certificate) as clear text."
+            },
+            "location": {
+                "path": "master/static/srv/ship_logs.py",
+                "start_line": 466,
+                "end_line": 476,
+                "start_column": 17,
+                "end_column": 58
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/9/instances"
+    },
+    {
+        "number": 8,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-05-23T09:46:02Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/8",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/8",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-logging-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text logging of sensitive information",
+            "name": "py/clear-text-logging-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-359",
+                "external/cwe/cwe-532",
+                "security"
+            ],
+            "full_description": "Logging sensitive information without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text logging of sensitive information\nIf sensitive data is written to a log entry it could be exposed to an attacker who gains access to the logs.\n\nPotential attackers can obtain sensitive user data when the log output is displayed. Additionally that data may expose system information such as full path names, system information, and sometimes usernames and passwords.\n\n\n## Recommendation\nSensitive data should not be logged.\n\n\n## Example\nIn the example the entire process environment is logged using \\`print\\`. Regular users of the production deployed application should not have access to this much information about the environment configuration.\n\n\n```python\n# BAD: Logging cleartext sensitive data\nimport os\nprint(f\"[INFO] Environment: {os.environ}\")\n```\nIn the second example the data that is logged is not sensitive.\n\n\n```python\nnot_sensitive_data = {'a': 1, 'b': 2}\n# GOOD: it is fine to log data that is not sensitive\nprint(f\"[INFO] Some object contains: {not_sensitive_data}\")\n```\n\n## References\n* OWASP: [Insertion of Sensitive Information into Log File](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/).\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n* Common Weakness Enumeration: [CWE-532](https://cwe.mitre.org/data/definitions/532.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "This expression logs sensitive data (secret) as clear text."
+            },
+            "location": {
+                "path": "harness/determined/cli/oauth.py",
+                "start_line": 30,
+                "end_line": 30,
+                "start_column": 11,
+                "end_column": 50
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/8/instances"
+    },
+    {
+        "number": 7,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-09-26T09:41:01Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/7",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/7",
+        "state": "fixed",
+        "fixed_at": "2024-09-26T09:41:00Z",
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-logging-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text logging of sensitive information",
+            "name": "py/clear-text-logging-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-359",
+                "external/cwe/cwe-532",
+                "security"
+            ],
+            "full_description": "Logging sensitive information without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text logging of sensitive information\nIf sensitive data is written to a log entry it could be exposed to an attacker who gains access to the logs.\n\nPotential attackers can obtain sensitive user data when the log output is displayed. Additionally that data may expose system information such as full path names, system information, and sometimes usernames and passwords.\n\n\n## Recommendation\nSensitive data should not be logged.\n\n\n## Example\nIn the example the entire process environment is logged using \\`print\\`. Regular users of the production deployed application should not have access to this much information about the environment configuration.\n\n\n```python\n# BAD: Logging cleartext sensitive data\nimport os\nprint(f\"[INFO] Environment: {os.environ}\")\n```\nIn the second example the data that is logged is not sensitive.\n\n\n```python\nnot_sensitive_data = {'a': 1, 'b': 2}\n# GOOD: it is fine to log data that is not sensitive\nprint(f\"[INFO] Some object contains: {not_sensitive_data}\")\n```\n\n## References\n* OWASP: [Insertion of Sensitive Information into Log File](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/).\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n* Common Weakness Enumeration: [CWE-532](https://cwe.mitre.org/data/definitions/532.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "fixed",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "This expression logs sensitive data (certificate) as clear text."
+            },
+            "location": {
+                "path": "harness/determined/common/api/certs.py",
+                "start_line": 206,
+                "end_line": 206,
+                "start_column": 17,
+                "end_column": 91
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/7/instances"
+    },
+    {
+        "number": 6,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-09-26T09:41:01Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/6",
+        "state": "fixed",
+        "fixed_at": "2024-09-26T09:41:00Z",
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-storage-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text storage of sensitive information",
+            "name": "py/clear-text-storage-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-315",
+                "external/cwe/cwe-359",
+                "security"
+            ],
+            "full_description": "Sensitive information stored without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text storage of sensitive information\nSensitive information that is stored unencrypted is accessible to an attacker who gains access to the storage. This is particularly important for cookies, which are stored on the machine of the end-user.\n\n\n## Recommendation\nEnsure that sensitive information is always encrypted before being stored. If possible, avoid placing sensitive information in cookies altogether. Instead, prefer storing, in the cookie, a key that can be used to look up the sensitive information.\n\nIn general, decrypt sensitive information only at the point where it is necessary for it to be used in cleartext.\n\nBe aware that external processes often store the `standard out` and `standard error` streams of the application, causing logged sensitive information to be stored as well.\n\n\n## Example\nThe following example code stores user credentials (in this case, their password) in a cookie in plain text:\n\n\n```python\nfrom flask import Flask, make_response, request\n\napp = Flask(\"Leak password\")\n\n@app.route('/')\ndef index():\n    password = request.args.get(\"password\")\n    resp = make_response(render_template(...))\n    resp.set_cookie(\"password\", password)\n    return resp\n\n```\nInstead, the credentials should be encrypted, for instance by using the `cryptography` module, or not stored at all.\n\n\n## References\n* M. Dowd, J. McDonald and J. Schuhm, *The Art of Software Security Assessment*, 1st Edition, Chapter 2 - 'Common Vulnerabilities of Encryption', p. 43. Addison Wesley, 2006.\n* M. Howard and D. LeBlanc, *Writing Secure Code*, 2nd Edition, Chapter 9 - 'Protecting Secret Data', p. 299. Microsoft, 2002.\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-315](https://cwe.mitre.org/data/definitions/315.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "fixed",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "This expression stores sensitive data (certificate) as clear text.\nThis expression stores sensitive data (certificate) as clear text.\nThis expression stores sensitive data (certificate) as clear text.\nThis expression stores sensitive data (certificate) as clear text.\nThis expression stores sensitive data (certificate) as clear text.\nThis expression stores sensitive data (certificate) as clear text.\nThis expression stores sensitive data (certificate) as clear text.\nThis expression stores sensitive data (certificate) as clear text.\nThis expression stores sensitive data (certificate) as clear text."
+            },
+            "location": {
+                "path": "harness/determined/common/api/certs.py",
+                "start_line": 47,
+                "end_line": 47,
+                "start_column": 27,
+                "end_column": 50
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/6/instances"
+    },
+    {
+        "number": 5,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-09-26T09:41:01Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/5",
+        "state": "fixed",
+        "fixed_at": "2024-09-26T09:41:00Z",
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-storage-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text storage of sensitive information",
+            "name": "py/clear-text-storage-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-315",
+                "external/cwe/cwe-359",
+                "security"
+            ],
+            "full_description": "Sensitive information stored without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text storage of sensitive information\nSensitive information that is stored unencrypted is accessible to an attacker who gains access to the storage. This is particularly important for cookies, which are stored on the machine of the end-user.\n\n\n## Recommendation\nEnsure that sensitive information is always encrypted before being stored. If possible, avoid placing sensitive information in cookies altogether. Instead, prefer storing, in the cookie, a key that can be used to look up the sensitive information.\n\nIn general, decrypt sensitive information only at the point where it is necessary for it to be used in cleartext.\n\nBe aware that external processes often store the `standard out` and `standard error` streams of the application, causing logged sensitive information to be stored as well.\n\n\n## Example\nThe following example code stores user credentials (in this case, their password) in a cookie in plain text:\n\n\n```python\nfrom flask import Flask, make_response, request\n\napp = Flask(\"Leak password\")\n\n@app.route('/')\ndef index():\n    password = request.args.get(\"password\")\n    resp = make_response(render_template(...))\n    resp.set_cookie(\"password\", password)\n    return resp\n\n```\nInstead, the credentials should be encrypted, for instance by using the `cryptography` module, or not stored at all.\n\n\n## References\n* M. Dowd, J. McDonald and J. Schuhm, *The Art of Software Security Assessment*, 1st Edition, Chapter 2 - 'Common Vulnerabilities of Encryption', p. 43. Addison Wesley, 2006.\n* M. Howard and D. LeBlanc, *Writing Secure Code*, 2nd Edition, Chapter 9 - 'Protecting Secret Data', p. 299. Microsoft, 2002.\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-315](https://cwe.mitre.org/data/definitions/315.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "fixed",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "This expression stores sensitive data (certificate) as clear text."
+            },
+            "location": {
+                "path": "harness/determined/common/api/certs.py",
+                "start_line": 45,
+                "end_line": 45,
+                "start_column": 31,
+                "end_column": 48
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/5/instances"
+    },
+    {
+        "number": 4,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-05-23T09:46:02Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/weak-sensitive-data-hashing",
+            "severity": "warning",
+            "description": "Use of a broken or weak cryptographic hashing algorithm on sensitive data",
+            "name": "py/weak-sensitive-data-hashing",
+            "tags": [
+                "external/cwe/cwe-327",
+                "external/cwe/cwe-328",
+                "external/cwe/cwe-916",
+                "security"
+            ],
+            "full_description": "Using broken or weak cryptographic hashing algorithms can compromise security.",
+            "help": "# Use of a broken or weak cryptographic hashing algorithm on sensitive data\nUsing a broken or weak cryptographic hash function can leave data vulnerable, and should not be used in security related code.\n\nA strong cryptographic hash function should be resistant to:\n\n* pre-image attacks: if you know a hash value `h(x)`, you should not be able to easily find the input `x`.\n* collision attacks: if you know a hash value `h(x)`, you should not be able to easily find a different input `y` with the same hash value `h(x) = h(y)`.\nIn cases with a limited input space, such as for passwords, the hash function also needs to be computationally expensive to be resistant to brute-force attacks. Passwords should also have an unique salt applied before hashing, but that is not considered by this query.\n\nAs an example, both MD5 and SHA-1 are known to be vulnerable to collision attacks.\n\nSince it's OK to use a weak cryptographic hash function in a non-security context, this query only alerts when these are used to hash sensitive data (such as passwords, certificates, usernames).\n\nUse of broken or weak cryptographic algorithms that are not hashing algorithms, is handled by the `py/weak-cryptographic-algorithm` query.\n\n\n## Recommendation\nEnsure that you use a strong, modern cryptographic hash function:\n\n* such as Argon2, scrypt, bcrypt, or PBKDF2 for passwords and other data with limited input space.\n* such as SHA-2, or SHA-3 in other cases.\n\n## Example\nThe following example shows two functions for checking whether the hash of a certificate matches a known value -- to prevent tampering. The first function uses MD5 that is known to be vulnerable to collision attacks. The second function uses SHA-256 that is a strong cryptographic hashing function.\n\n\n```python\nimport hashlib\n\ndef certificate_matches_known_hash_bad(certificate, known_hash):\n    hash = hashlib.md5(certificate).hexdigest() # BAD\n    return hash == known_hash\n\ndef certificate_matches_known_hash_good(certificate, known_hash):\n    hash = hashlib.sha256(certificate).hexdigest() # GOOD\n    return hash == known_hash\n\n```\n\n## Example\nThe following example shows two functions for hashing passwords. The first function uses SHA-256 to hash passwords. Although SHA-256 is a strong cryptographic hash function, it is not suitable for password hashing since it is not computationally expensive.\n\n\n```python\nimport hashlib\n\ndef get_password_hash(password: str, salt: str):\n    return hashlib.sha256(password + salt).hexdigest() # BAD\n\n```\nThe second function uses Argon2 (through the `argon2-cffi` PyPI package), which is a strong password hashing algorithm (and includes a per-password salt by default).\n\n\n```python\nfrom argon2 import PasswordHasher\n\ndef get_initial_hash(password: str):\n    ph = PasswordHasher()\n    return ph.hash(password) # GOOD\n\ndef check_password(password: str, known_hash):\n    ph = PasswordHasher()\n    return ph.verify(known_hash, password) # GOOD\n\n```\n\n## References\n* OWASP: [Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)\n* Common Weakness Enumeration: [CWE-327](https://cwe.mitre.org/data/definitions/327.html).\n* Common Weakness Enumeration: [CWE-328](https://cwe.mitre.org/data/definitions/328.html).\n* Common Weakness Enumeration: [CWE-916](https://cwe.mitre.org/data/definitions/916.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "Sensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\nSensitive data (password) is used in a hashing algorithm (SHA512) that is insecure for password hashing, since it is not a computationally expensive hash function.\n[Sensitive data (password"
+            },
+            "location": {
+                "path": "harness/determined/common/api/authentication.py",
+                "start_line": 21,
+                "end_line": 21,
+                "start_column": 31,
+                "end_column": 66
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/4/instances"
+    },
+    {
+        "number": 3,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-05-23T09:46:02Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-default-protocol",
+            "severity": "warning",
+            "description": "Default version of SSL/TLS may be insecure",
+            "name": "py/insecure-default-protocol",
+            "tags": [
+                "external/cwe/cwe-327",
+                "security"
+            ],
+            "full_description": "Leaving the SSL/TLS version unspecified may result in an insecure default protocol being used.",
+            "help": "# Default version of SSL/TLS may be insecure\nThe `ssl.wrap_socket` function defaults to an insecure version of SSL/TLS when no specific protocol version is specified. This may leave the connection vulnerable to attack.\n\n\n## Recommendation\nEnsure that a modern, strong protocol is used. All versions of SSL, and TLS 1.0 and 1.1 are known to be vulnerable to attacks. Using TLS 1.2 or above is strongly recommended. If no explicit `ssl_version` is specified, the default `PROTOCOL_TLS` is chosen. This protocol is insecure because it allows TLS 1.0 and TLS 1.1 and so should not be used.\n\n\n## Example\nThe following code shows two different ways of setting up a connection using SSL or TLS. They are both potentially insecure because the default version is used.\n\n\n```python\nimport ssl\nimport socket\n\n# Using the deprecated ssl.wrap_socket method\nssl.wrap_socket(socket.socket())\n\n# Using SSLContext\ncontext = ssl.SSLContext()\n\n```\nBoth of the cases above should be updated to use a secure protocol instead, for instance by specifying `ssl_version=PROTOCOL_TLSv1_2` as a keyword argument.\n\nThe latter example can also be made secure by modifying the created context before it is used to create a connection. Therefore it will not be flagged by this query. However, if a connection is created before the context has been secured (for example, by setting the value of `minimum_version`), then the code should be flagged by the query `py/insecure-protocol`.\n\nNote that `ssl.wrap_socket` has been deprecated in Python 3.7. The recommended alternatives are:\n\n* `ssl.SSLContext` - supported in Python 2.7.9, 3.2, and later versions\n* `ssl.create_default_context` - a convenience function, supported in Python 3.4 and later versions.\nEven when you use these alternatives, you should ensure that a safe protocol is used. The following code illustrates how to use flags (available since Python 3.2) or the \\`minimum_version\\` field (favored since Python 3.7) to restrict the protocols accepted when creating a connection.\n\n\n```python\nimport ssl\n\n# Using flags to restrict the protocol\ncontext = ssl.SSLContext()\ncontext.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1\n\n# Declaring a minimum version to restrict the protocol\ncontext = ssl.create_default_context()\ncontext.minimum_version = ssl.TLSVersion.TLSv1_2\n\n```\n\n## References\n* Wikipedia: [ Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security).\n* Python 3 documentation: [ class ssl.SSLContext](https://docs.python.org/3/library/ssl.html#ssl.SSLContext).\n* Python 3 documentation: [ ssl.wrap_socket](https://docs.python.org/3/library/ssl.html#ssl.wrap_socket).\n* Python 3 documentation: [ notes on context creation](https://docs.python.org/3/library/ssl.html#functions-constants-and-exceptions).\n* Python 3 documentation: [ notes on security considerations](https://docs.python.org/3/library/ssl.html#ssl-security).\n* Common Weakness Enumeration: [CWE-327](https://cwe.mitre.org/data/definitions/327.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "Call to deprecated method ssl.wrap_socket does not specify a protocol, which may result in an insecure default being used."
+            },
+            "location": {
+                "path": "harness/tests/common/test_tls.py",
+                "start_line": 29,
+                "end_line": 34,
+                "start_column": 21,
+                "end_column": 6
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/3/instances"
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-05-23T09:46:02Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-default-protocol",
+            "severity": "warning",
+            "description": "Default version of SSL/TLS may be insecure",
+            "name": "py/insecure-default-protocol",
+            "tags": [
+                "external/cwe/cwe-327",
+                "security"
+            ],
+            "full_description": "Leaving the SSL/TLS version unspecified may result in an insecure default protocol being used.",
+            "help": "# Default version of SSL/TLS may be insecure\nThe `ssl.wrap_socket` function defaults to an insecure version of SSL/TLS when no specific protocol version is specified. This may leave the connection vulnerable to attack.\n\n\n## Recommendation\nEnsure that a modern, strong protocol is used. All versions of SSL, and TLS 1.0 and 1.1 are known to be vulnerable to attacks. Using TLS 1.2 or above is strongly recommended. If no explicit `ssl_version` is specified, the default `PROTOCOL_TLS` is chosen. This protocol is insecure because it allows TLS 1.0 and TLS 1.1 and so should not be used.\n\n\n## Example\nThe following code shows two different ways of setting up a connection using SSL or TLS. They are both potentially insecure because the default version is used.\n\n\n```python\nimport ssl\nimport socket\n\n# Using the deprecated ssl.wrap_socket method\nssl.wrap_socket(socket.socket())\n\n# Using SSLContext\ncontext = ssl.SSLContext()\n\n```\nBoth of the cases above should be updated to use a secure protocol instead, for instance by specifying `ssl_version=PROTOCOL_TLSv1_2` as a keyword argument.\n\nThe latter example can also be made secure by modifying the created context before it is used to create a connection. Therefore it will not be flagged by this query. However, if a connection is created before the context has been secured (for example, by setting the value of `minimum_version`), then the code should be flagged by the query `py/insecure-protocol`.\n\nNote that `ssl.wrap_socket` has been deprecated in Python 3.7. The recommended alternatives are:\n\n* `ssl.SSLContext` - supported in Python 2.7.9, 3.2, and later versions\n* `ssl.create_default_context` - a convenience function, supported in Python 3.4 and later versions.\nEven when you use these alternatives, you should ensure that a safe protocol is used. The following code illustrates how to use flags (available since Python 3.2) or the \\`minimum_version\\` field (favored since Python 3.7) to restrict the protocols accepted when creating a connection.\n\n\n```python\nimport ssl\n\n# Using flags to restrict the protocol\ncontext = ssl.SSLContext()\ncontext.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1\n\n# Declaring a minimum version to restrict the protocol\ncontext = ssl.create_default_context()\ncontext.minimum_version = ssl.TLSVersion.TLSv1_2\n\n```\n\n## References\n* Wikipedia: [ Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security).\n* Python 3 documentation: [ class ssl.SSLContext](https://docs.python.org/3/library/ssl.html#ssl.SSLContext).\n* Python 3 documentation: [ ssl.wrap_socket](https://docs.python.org/3/library/ssl.html#ssl.wrap_socket).\n* Python 3 documentation: [ notes on context creation](https://docs.python.org/3/library/ssl.html#functions-constants-and-exceptions).\n* Python 3 documentation: [ notes on security considerations](https://docs.python.org/3/library/ssl.html#ssl-security).\n* Common Weakness Enumeration: [CWE-327](https://cwe.mitre.org/data/definitions/327.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "Call to deprecated method ssl.wrap_socket does not specify a protocol, which may result in an insecure default being used."
+            },
+            "location": {
+                "path": "harness/tests/common/api_server.py",
+                "start_line": 172,
+                "end_line": 177,
+                "start_column": 30,
+                "end_column": 10
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/2/instances"
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-23T09:46:00Z",
+        "updated_at": "2024-05-23T09:46:02Z",
+        "url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/determined/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/bind-socket-all-network-interfaces",
+            "severity": "error",
+            "description": "Binding a socket to all network interfaces",
+            "name": "py/bind-socket-all-network-interfaces",
+            "tags": [
+                "external/cwe/cwe-200",
+                "security"
+            ],
+            "full_description": "Binding a socket to all interfaces opens it up to traffic from any IPv4 address and is therefore associated with security risks.",
+            "help": "# Binding a socket to all network interfaces\nSockets can be used to communicate with other machines on a network. You can use the (IP address, port) pair to define the access restrictions for the socket you create. When using the built-in Python `socket` module (for instance, when building a message sender service or an FTP server data transmitter), one has to bind the port to some interface. When you bind the port to all interfaces using `0.0.0.0` as the IP address, you essentially allow it to accept connections from any IPv4 address provided that it can get to the socket via routing. Binding to all interfaces is therefore associated with security risks.\n\n\n## Recommendation\nBind your service incoming traffic only to a dedicated interface. If you need to bind more than one interface using the built-in `socket` module, create multiple sockets (instead of binding to one socket to all interfaces).\n\n\n## Example\nIn this example, two sockets are insecure because they are bound to all interfaces; one through the `0.0.0.0` notation and another one through an empty string `''`.\n\n\n```python\nimport socket\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('0.0.0.0', 31137))\n\n# binds to all interfaces, insecure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('', 4040))\n\n# binds only to a dedicated interface, secure\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('84.68.10.12', 8080))\n\n```\n\n## References\n* Python reference: [ Socket families](https://docs.python.org/3/library/socket.html#socket-families).\n* Python reference: [ Socket Programming HOWTO](https://docs.python.org/3.7/howto/sockets.html).\n* Common Vulnerabilities and Exposures: [ CVE-2018-1281 Detail](https://nvd.nist.gov/vuln/detail/CVE-2018-1281).\n* Common Weakness Enumeration: [CWE-200](https://cwe.mitre.org/data/definitions/200.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.19.0"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "f00648e4561090d078e3ddec2dcfdc5114a75b8a",
+            "message": {
+                "text": "'' binds a socket to all interfaces."
+            },
+            "location": {
+                "path": "harness/determined/ipc.py",
+                "start_line": 314,
+                "end_line": 314,
+                "start_column": 17,
+                "end_column": 52
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/determined/code-scanning/alerts/1/instances"
+    }
+]
