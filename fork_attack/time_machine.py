@@ -40,10 +40,9 @@ cwe_definitions[["repos"]] = cwe_definitions.apply(
     lambda x: get_codeql_libraries_repos(str(x.cwe_id)), axis='columns', result_type='expand')
 cwe_definitions.to_csv(f"../data/cwe_definitions_lib.csv")
 
-df_result = cwe_definitions.drop(["cwe_id", "Unnamed: 0"], axis=1)
+df_result = cwe_definitions.drop(["cwe_id", "Unnamed: 0", "nature"], axis=1)
 df_result_agg_cwe = df_result.groupby(
     [
-        'nature',
         'type',
         'id',
         "description"
@@ -51,10 +50,9 @@ df_result_agg_cwe = df_result.groupby(
 ).sum().reset_index()
 df_result_agg_cwe.to_csv(f"../data/cwe_definitions_lib_agg.csv")
 
-df_result = cve_definitions.drop(["cwe_id", "Unnamed: 0"], axis=1)
+df_result = cve_definitions.drop(["cwe_id", "Unnamed: 0", "nature"], axis=1)
 df_result_agg_cve = df_result.groupby(
     [
-        'nature',
         'type',
         'id',
         "description"
@@ -65,7 +63,6 @@ df_result_agg_cve.to_csv(f"../data/cve_definitions_lib_agg.csv")
 df_all = pd.concat([df_result_agg_cve, df_result_agg_cwe])
 df_all_agg = df_all.groupby(
     [
-        'nature',
         'type',
         'id',
         "description"
