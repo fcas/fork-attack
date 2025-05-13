@@ -144,6 +144,11 @@ def fork(branch, clone, repo_name_str, repo_owner):
             add_ymls(path_to_clone, branch)
 
 
-attack()
-code_analysis_result.to_csv("code_analysis_result.csv")
-dependabot_result.to_csv("dependabot_result.csv")
+def main():
+    attack()
+    code_analysis_result.to_csv("code_analysis_result.csv")
+    dependabot_result.to_csv("dependabot_result.csv")
+
+
+if __name__ == '__main__':
+    main()

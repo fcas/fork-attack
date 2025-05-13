@@ -44,24 +44,38 @@ def process_row(row):
             print(f"Error: {cwe_id}")
 
 
-patterns = {
-    "cwe": "../data/code_analysis_cwe_*.csv",
-    "cve": "../data/dependabot_cve_*.csv"
-}
+def main():
+    patterns = {
+        "cwe": "../data/code_analysis_cwe_*.csv",
+        "cve": "../data/dependabot_cve_*.csv"
+    }
 
-for key, value in patterns.items():
-    csv_files = glob.glob(value)
-    filelist = []
-    df = None
-    for file in csv_files:
-        df = pd.read_csv(file)
-        filelist.append(df)
-    df = pd.concat(filelist)
-    df.apply(lambda x: process_row(x), axis=1)
-    df_result = pd.concat(result)
-    df_result.to_csv(f"../data/{key}_definitions.csv")
-    df_result = df_result.drop("cwe_id", axis=1)
-    df_result_agg = df_result.groupby(
+    for key, value in patterns.items():
+        csv_files = glob.glob(value)
+        filelist = []
+        df = None
+        for file in csv_files:
+            df = pd.read_csv(file)
+            filelist.append(df)
+        df = pd.concat(filelist)
+        df.apply(lambda x: process_row(x), axis=1)
+        df_result = pd.concat(result)
+        df_result.to_csv(f"../data/{key}_definitions.csv")
+        df_result = df_result.drop("cwe_id", axis=1)
+        df_result_agg = df_result.groupby(
+            [
+                'nature',
+                'type',
+                'id',
+                "description"
+            ]
+        ).sum().reset_index()
+        df_result_agg.to_csv(f"../data/{key}_definitions_agg.csv")
+        result_all.append(df_result_agg)
+        result = []
+
+    df_all = pd.concat(result_all)
+    df_all_agg = df_all.groupby(
         [
             'nature',
             'type',
@@ -69,17 +83,8 @@ for key, value in patterns.items():
             "description"
         ]
     ).sum().reset_index()
-    df_result_agg.to_csv(f"../data/{key}_definitions_agg.csv")
-    result_all.append(df_result_agg)
-    result = []
+    df_all_agg.to_csv("../data/all_definitions_agg.csv")
 
-df_all = pd.concat(result_all)
-df_all_agg = df_all.groupby(
-    [
-        'nature',
-        'type',
-        'id',
-        "description"
-    ]
-).sum().reset_index()
-df_all_agg.to_csv("../data/all_definitions_agg.csv")
+
+if __name__ == '__main__':
+    main()
