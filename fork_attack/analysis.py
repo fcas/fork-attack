@@ -1,6 +1,5 @@
-import ast
-
 import pandas as pd
+from utils import normalize_tag
 
 
 def process_cwe(row):
@@ -8,18 +7,6 @@ def process_cwe(row):
     for cwe in eval(row):
         cwes.append(cwe["cwe_id"])
     return str(cwes)
-
-
-def normalize_tag(x):
-    x = x.replace("external/cwe/", "")
-    x = ast.literal_eval(x)
-    if "security" in x:
-        x.remove("security")
-    if "correctness" in x:
-        x.remove("correctness")
-    if "serialization" in x:
-        x.remove("serialization")
-    return str(x)
 
 
 def main():
