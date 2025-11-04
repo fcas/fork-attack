@@ -22,7 +22,15 @@ class ForkAttackGraph(metaclass=Singleton):
         "cve_cwe",
         "ghsa_cve",
         "gh_security_advisory",
-        "repositories_dependencies"
+        "repositories_dependencies",
+        "cwe_pillars",
+        "cwe_categories",
+        "cwe_classes",
+        "cwe_variants",
+        "cwe_bases",
+        "cwe_views",
+        "cwe_composites",
+        "cwe_chains"
     ]
 
     def __init__(self):
@@ -105,4 +113,52 @@ class ForkAttackGraph(metaclass=Singleton):
                         edge_collection=edge_collection,
                         from_vertex_collections=["repositories"],
                         to_vertex_collections=["dependencies"]
+                    )
+                elif edge_collection == "cwe_pillars":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cwes"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "cwe_categories":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cwes"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "cwe_classes":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cwes"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "cwe_variants":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cwes"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "cwe_bases":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cwes"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "cwe_views":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cwes"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "cwe_composites":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cwes"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "cwe_chains":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cwes"],
+                        to_vertex_collections=["cwes"]
                     )
