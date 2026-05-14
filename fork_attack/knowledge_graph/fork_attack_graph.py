@@ -12,7 +12,8 @@ class ForkAttackGraph(metaclass=Singleton):
         "cves",
         "dependencies",
         "github_security_advisories",
-        "repositories"
+        "repositories",
+        "semgrep_rules"
     ]
 
     edge_collections = [
@@ -82,6 +83,12 @@ class ForkAttackGraph(metaclass=Singleton):
                     self.graph.create_edge_definition(
                         edge_collection=edge_collection,
                         from_vertex_collections=["codeql_rules"],
+                        to_vertex_collections=["commits"]
+                    )
+                elif edge_collection == "semgrep_rules_commits":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["semgrep_rules"],
                         to_vertex_collections=["commits"]
                     )
                 elif edge_collection == "cwe_commits":
