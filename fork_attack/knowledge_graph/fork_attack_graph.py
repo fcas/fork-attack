@@ -31,7 +31,8 @@ class ForkAttackGraph(metaclass=Singleton):
         "cwe_bases",
         "cwe_views",
         "cwe_composites",
-        "cwe_chains"
+        "cwe_chains",
+        "semgrep_rules_commits"
     ]
 
     def __init__(self):
