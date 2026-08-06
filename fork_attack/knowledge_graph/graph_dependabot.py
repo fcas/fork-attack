@@ -2,7 +2,7 @@ import logging
 
 import pandas as pd
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
-from fork_attack.utils import upsert_edge, normalize_tag, row_to_json
+from fork_attack.utils import upsert_edge, normalize_tag, row_to_json, canonical_repo_name
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ dependabot_python_data = dependabot_data.loc[dependabot_data['security_vulnerabi
 def load_dependabot_data():
     for index, row in dependabot_python_data.iterrows():
         try:
-            repo_name = row["repo_name"]
+            repo_name = canonical_repo_name(row["repo_name"])
             dependency_name = row["dependency.package.name"]
             repositories.insert({"_key": repo_name}, overwrite=True, overwrite_mode="replace")
 

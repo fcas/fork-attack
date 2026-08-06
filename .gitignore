@@ -159,3 +159,102 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# harness-managed: python
+# ==============================================================
+# .gitignore — projeto Python + diretório .claude
+# Regra geral: versionar o que é CONFIGURAÇÃO DE PROJETO
+# (compartilhável com o time) e ignorar o que é PESSOAL,
+# LOCAL ou SENSÍVEL (credenciais, sessões, histórico, build).
+# ==============================================================
+
+# --------------------------------------------------------------
+# PYTHON
+# --------------------------------------------------------------
+
+# Bytecode / cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Empacotamento / build / distribuição
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+
+# Testes e cobertura
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.hypothesis/
+
+# Type checkers / linters
+.mypy_cache/
+.dmypy.json
+.pyre/
+.ruff_cache/
+.pytype/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Variáveis de ambiente (segredos) — mantenha .env.example versionado
+.env
+.env.*
+!.env.example
+
+# IDEs e SO
+.idea/
+.vscode/
+.DS_Store
+
+# Gerenciadores (caches locais; mantenha os locks versionados)
+.pdm-python
+__pypackages__/
+
+# OBS: mantenha os lockfiles versionados
+#   poetry.lock / uv.lock / Pipfile.lock / requirements.txt
+
+# --------------------------------------------------------------
+# DIRETÓRIO .claude
+# Regra: versionar CONFIGURAÇÃO DE PROJETO (compartilhável)
+# e ignorar o que é PESSOAL, LOCAL ou SENSÍVEL.
+# --------------------------------------------------------------
+
+# PESSOAL / LOCAL — nunca compartilhar
+.claude/settings.local.json
+
+# Credenciais e segredos
+.claude/.credentials.json
+
+# Sessões, histórico e estado de execução (por máquina/usuário)
+.claude/projects/
+.claude/todos/
+.claude/history/
+.claude/shell-snapshots/
+.claude/statsig/
+.claude/ide/
+
+# COMPARTILHÁVEL — manter versionado (NÃO ignorar):
+#   .claude/CLAUDE.md, .claude/settings.json, .claude/commands/, .claude/agents/, .claude/skills/, .claude/hooks/
+!.claude/CLAUDE.md
+!.claude/settings.json
+!.claude/commands/
+!.claude/agents/
+!.claude/skills/
+!.claude/hooks/

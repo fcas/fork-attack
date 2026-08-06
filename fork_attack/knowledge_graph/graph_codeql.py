@@ -2,7 +2,7 @@ import logging
 
 import pandas as pd
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
-from fork_attack.utils import upsert_edge, normalize_tag, row_to_json
+from fork_attack.utils import upsert_edge, normalize_tag, row_to_json, canonical_repo_name
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ codeql_python_data = codeql_data.loc[codeql_data['most_recent_instance.category'
 def load_codeql_data():
     for index, row in codeql_python_data.iterrows():
         try:
-            repo_name = row["repo_name"]
+            repo_name = canonical_repo_name(row["repo_name"])
             if not repositories.has(repo_name):
                 repositories.insert({"_key": repo_name})
 

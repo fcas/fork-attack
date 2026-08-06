@@ -3,7 +3,7 @@ import json
 import urllib.parse
 
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
-from fork_attack.utils import upsert_edge
+from fork_attack.utils import upsert_edge, canonical_repo_name
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ def load_semgrep_data():
     for item in findings:
         try:
             repo_info = item.get("repository", {})
-            repo_name = repo_info.get("name").replace("fcas/", "")
+            repo_name = canonical_repo_name(repo_info.get("name", "").replace("fcas/", ""))
 
             if repo_name and not repositories.has(repo_name):
                 repositories.insert({"_key": repo_name})

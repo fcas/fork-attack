@@ -3,6 +3,11 @@ import ast
 import numpy as np
 import pandas as pd
 
+def canonical_repo_name(repo_name):
+    if not repo_name:
+        return repo_name
+    return repo_name.lower()
+
 
 def row_to_json(row, pattern, column_prefix):
     rule = row.filter(regex=pattern)
