@@ -32,7 +32,10 @@ def load_cwe_data():
         try:
             cwe_id = f"CWE-{row["cwe_id"]}"
             cwe = {"_key": cwe_id}
-            cwes.insert(cwe, overwrite=True, overwrite_mode="replace")
+            # "update" merges fields instead of replacing the whole document, so this
+            # placeholder insert cannot wipe out a type/nature/description this same
+            # CWE may have already received (or will later receive) as a related entry.
+            cwes.insert(cwe, overwrite=True, overwrite_mode="update")
 
             cwe_related_id = f"CWE-{row["id"]}"
             cwe_related_type = row["type"]
@@ -40,7 +43,13 @@ def load_cwe_data():
             cwe_related_description = row["description"]
             related_cwe = {"_key": cwe_related_id, "nature": cwe_related_nature, "type": cwe_related_type,
                            "description": cwe_related_description}
-            cwes.insert(related_cwe, overwrite=True, overwrite_mode="replace")
+            cwes.insert(related_cwe, overwrite=True, overwrite_mode="update")
+
+            # A "Self" row (see scrap.py) records cwe_id's own MITRE-stated abstraction level,
+            # used as a fallback when no other CWE lists cwe_id as a related entry; it is not
+            # an actual relation to another entry, so no edge should be created for it.
+            if cwe_related_nature == "Self" or cwe_related_id == cwe_id:
+                continue
 
             edge_collection = edges.get(cwe_related_type)
             document = {

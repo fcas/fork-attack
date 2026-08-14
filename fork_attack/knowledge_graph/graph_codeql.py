@@ -13,7 +13,7 @@ commits = fa.db.collection("commits")
 codeql_rules = fa.db.collection("codeql_rules")
 cwes = fa.db.collection("cwes")
 
-rule_commits = fa.graph.edge_collection("rule_commits")
+codeql_rules_commits = fa.graph.edge_collection("codeql_rules_commits")
 repositories_commits = fa.graph.edge_collection("repositories_commits")
 cwe_commits = fa.graph.edge_collection("cwe_commits")
 
@@ -49,7 +49,7 @@ def load_codeql_data():
             codeql_rules.insert({"_key": rule_id, **rule}, overwrite=True, overwrite_mode="replace")
 
             if commit_sha and rule_id:
-                upsert_edge(rule_commits, {
+                upsert_edge(codeql_rules_commits, {
                     "_key": f"{rule_id}_{commit_sha}",
                     "_from": f"{codeql_rules.name}/{rule_id}",
                     "_to": f"{commits.name}/{commit_sha}"

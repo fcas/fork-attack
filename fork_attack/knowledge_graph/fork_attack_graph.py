@@ -10,17 +10,29 @@ class ForkAttackGraph(metaclass=Singleton):
         "codeql_rules",
         "cwes",
         "cves",
+        "cpes",
+        "capecs",
+        "attack_techniques",
         "dependencies",
         "github_security_advisories",
+        "owasp",
         "repositories",
         "semgrep_rules"
     ]
 
     edge_collections = [
         "repositories_commits",
-        "rule_commits",
+        "codeql_rules_commits",
         "cwe_commits",
         "cve_cwe",
+        "cve_cpe",
+        "cwe_capec",
+        "capec_capec",
+        "capec_attack",
+        "semgrep_rules_cwes",
+        "semgrep_rules_cves",
+        "semgrep_rules_owasp",
+        "ghsa_cwe",
         "ghsa_cve",
         "gh_security_advisory",
         "repositories_dependencies",
@@ -80,7 +92,7 @@ class ForkAttackGraph(metaclass=Singleton):
                         from_vertex_collections=["repositories"],
                         to_vertex_collections=["commits"]
                     )
-                elif edge_collection == "rule_commits":
+                elif edge_collection == "codeql_rules_commits":
                     self.graph.create_edge_definition(
                         edge_collection=edge_collection,
                         from_vertex_collections=["codeql_rules"],
@@ -102,6 +114,54 @@ class ForkAttackGraph(metaclass=Singleton):
                     self.graph.create_edge_definition(
                         edge_collection=edge_collection,
                         from_vertex_collections=["cves"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "cve_cpe":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["cves"],
+                        to_vertex_collections=["cpes"]
+                    )
+                elif edge_collection == "cwe_capec":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["capecs"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "capec_capec":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["capecs"],
+                        to_vertex_collections=["capecs"]
+                    )
+                elif edge_collection == "capec_attack":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["capecs"],
+                        to_vertex_collections=["attack_techniques"]
+                    )
+                elif edge_collection == "semgrep_rules_cwes":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["semgrep_rules"],
+                        to_vertex_collections=["cwes"]
+                    )
+                elif edge_collection == "semgrep_rules_cves":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["semgrep_rules"],
+                        to_vertex_collections=["cves"]
+                    )
+                elif edge_collection == "semgrep_rules_owasp":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["semgrep_rules"],
+                        to_vertex_collections=["owasp"]
+                    )
+                elif edge_collection == "ghsa_cwe":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["github_security_advisories"],
                         to_vertex_collections=["cwes"]
                     )
                 elif edge_collection == "ghsa_cve":

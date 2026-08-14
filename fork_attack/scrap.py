@@ -1,4 +1,5 @@
 import glob
+import re
 
 import pandas as pd
 
@@ -8,13 +9,25 @@ result_all = []
 
 def get_definitions(cew_id):
     try:
-        df = pd.read_html(
+        raw = pd.read_html(
             f"https://cwe.mitre.org/data/definitions/{cew_id}.html", match="Relevant to the view", header=0)[0]
-        filter_rows = df["Submissions"].str.contains('ChildOf|MemberOf|CanFollow|ParentOf|PeerOf|CanPrecede', na=False)
-        df = df[filter_rows]
-        df = df.rename(
+        df = raw.rename(
             columns={'Submissions': 'nature', 'Submissions.1': 'type', 'Submissions.2': 'id',
                      'Unnamed: 3': 'description'})
+
+        # The CWE's own abstraction level is stated in its page's overview text, in the same
+        # 'nature' cell, but never as a ChildOf/ParentOf/MemberOf/etc. relation to another entry;
+        # the filter below drops that overview row along with the rest of the page's unrelated
+        # boilerplate, so a CWE that is never listed as a related entry (child/member/etc.) by
+        # any OTHER CWE would otherwise end up with no type at all. Pillar/Class/Base/Variant
+        # entries label this "Abstraction:"; Composite/Chain entries label it "Structure:" instead.
+        self_abstraction_match = df['nature'].astype(str).str.extract(
+            r'(?:Abstraction|Structure):\s*(Pillar|Class|Base|Variant|Category|View|Chain|Composite)', flags=re.IGNORECASE)
+        self_abstraction = self_abstraction_match[0].dropna()
+        self_type = self_abstraction.iloc[0].lower() if not self_abstraction.empty else None
+
+        filter_rows = df["nature"].str.contains('ChildOf|MemberOf|CanFollow|ParentOf|PeerOf|CanPrecede', na=False)
+        df = df[filter_rows]
         # if df['id'].str.contains('876').any():
         #     print(cew_id)
         df["type"] = df.type.apply(lambda x: 'category' if 'category - ' in x.lower() else x)
@@ -25,6 +38,12 @@ def get_definitions(cew_id):
         df["type"] = df.type.apply(lambda x: 'variant' if 'variant - ' in x.lower() else x)
         df["type"] = df.type.apply(lambda x: 'chain' if 'chain - ' in x.lower() else x)
         df["type"] = df.type.apply(lambda x: 'composite' if 'composite - ' in x.lower() else x)
+
+        if self_type is not None:
+            self_row = pd.DataFrame([{
+                'nature': 'Self', 'type': self_type, 'id': str(cew_id), 'description': None
+            }])
+            df = pd.concat([df, self_row], ignore_index=True)
     except Exception as e:
         print(cew_id)
         return pd.DataFrame()

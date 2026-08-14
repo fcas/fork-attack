@@ -28,7 +28,6 @@ def fetch_and_save_findings(output_file="semgrep_findings.json"):
     # Configuração Inicial (Offset Strategy)
     params = {
         "issue_type": "sca",
-        "exposures": ["reachable", "always_reachable"],
         "page": 0,        # Página inicial
         "page_size": 100  # Itens por página
     }
