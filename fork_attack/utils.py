@@ -7,7 +7,7 @@ import pandas as pd
 
 from fork_attack.settings import repositories
 
-FORKS_DIR = "/Users/felipe.dias/IdeaProjects/forks"
+FORKS_DIR = os.environ.get("FORKS_DIR")
 
 
 def extraction_date():

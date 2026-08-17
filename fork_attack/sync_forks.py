@@ -28,7 +28,7 @@ from fork_attack.settings import repositories, OWNER
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-BASE_DIR = "/Users/felipe.dias/IdeaProjects/forks"
+BASE_DIR = os.environ["FORKS_DIR"]
 
 
 def _headers():

@@ -24,7 +24,7 @@ O objetivo é **ajudar pesquisadores e desenvolvedores** a avaliar riscos em seu
 ### Pré-requisitos
 - Python 3.9+
 - `pip` (gerenciador de pacotes)
-- Variáveis de ambiente: `GITHUB_TOKEN` (token com acesso aos forks) e `GITHUB_OWNER` (usuário/organização dona dos forks analisados, nunca commitado no repositório por questões de double-blind review).
+- Variáveis de ambiente: `GITHUB_TOKEN` (token com acesso aos forks), `GITHUB_OWNER` (usuário/organização dona dos forks analisados), `FORKS_DIR` (diretório local onde os forks são clonados), e `SEMGREP_DEPLOYMENT_SLUG` (slug do deployment Semgrep) — nenhum commitado no repositório por questões de double-blind review.
 
 ### Instalação
 ```bash
@@ -63,17 +63,12 @@ Run in this order by `scan.py`'s `main()`:
 - **`graph_semgrep_sast.py`** — loads Semgrep Code (SAST) findings, filtered to `state==unresolved`, `has_lastro`, and `.py`-file-extension (the only reliable Python-ecosystem gate — Semgrep's `generic.*` rules aren't language-scoped by rule name), into `semgrep_sast_rules`, tagging CWEs' `sources` with `"semgrep sast"`. Used narrowly for hard-coded-credential detection (Section "Semgrep SAST Findings" of the paper).
 - **`graph_cpe.py`** / **`graph_cve_metadata.py`** — enrich `cves`/`cpes` from the NVD API (CVSS, EPSS, CPE bindings).
 - **`graph_capec.py`** / **`graph_attack.py`** — load MITRE CAPEC attack patterns and ATT&CK techniques, linking them to the CWEs/CAPECs already in the graph.
-- **`migrate_semgrep_edges.py`** — one-off migration script (not part of the regular pipeline).
 
-### Utilities and one-off scripts
+### Utilities
 
 - **`utils.py`** — shared helpers: `extraction_date()`/`analysis_date_range()` (date-window logic), `is_known_repo()`/`KNOWN_REPOS` (273-repo corpus allowlist), `has_lastro()` (verifies a finding's file path still exists at the repo's current HEAD), `upsert_edge()`, `add_source()` (appends a tool name to a CVE/CWE's `sources` array), `normalize_tag()`, `row_to_json()`.
-- **`settings.py`** — the corpus definition: the 273 `(github_url, ...)` tuples every other script iterates over.
+- **`settings.py`** — the corpus definition: the 273 `(github_url, ...)` tuples every other script iterates over, plus the `OWNER` GitHub account (read from the `GITHUB_OWNER` env var).
 - **`singleton.py`** — the `Singleton` metaclass `ForkAttackGraph` uses.
 - **`nvd_cpe.py`** — fetches NVD CPE data into `data/<date>/nvd_cpes.json`.
 - **`sync_forks.py`** — re-syncs a fork with its upstream (handles the `.github` overwrite/branch-rename logic described in the paper's "Upstream Synchronization" subsection).
 - **`trigger_scans.py`** / **`wait_for_scans.py`** — dispatch and poll GitHub Actions runs (CodeQL/Dependabot) across the corpus.
-- **`overnight.py`** — long-running batch driver for overnight corpus-wide operations.
-- **`locki.py`** — lockfile/concurrency helper.
-- **`deps_count.py`** / **`collection_counts.py`** — ad-hoc counting scripts (dependency counts, graph collection sizes) used for sanity-checking during analysis, not part of the regular pipeline.
-- **`scripts/`** — operational one-offs: `run_extraction.py` (kick off a fresh estige run), `fetch_codeql_runs.py`/`fetch_semgrep_runs.py`/`fetch_runs_range.py`/`check_latest_runs.py` (GitHub Actions run-status queries), `rebuild_combined_csvs.py` (re-merge per-repo JSONs into the combined CSVs), `revert_to_daily.py` (undo a synthetic-manifest/day-symlink experiment), `reforce_cron.py` (re-arm scheduled workflows), `run_nvd_cpe.py` (standalone NVD CPE fetch), `verify_lastro.py` (audit `has_lastro` failures across the corpus).

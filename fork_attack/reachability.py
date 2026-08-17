@@ -18,7 +18,7 @@ def fetch_and_save_findings(output_file=None):
     if output_file is None:
         output_file = f"data/{date.today()}/semgrep_findings.json"
 
-    base_url = "https://semgrep.dev/api/v1/deployments/felipecavazotto_usp/findings"
+    base_url = f"https://semgrep.dev/api/v1/deployments/{os.environ['SEMGREP_DEPLOYMENT_SLUG']}/findings"
 
     # SEMGREP_APP_TOKEN is the same token the semgrep.yml workflow's `semgrep
     # ci` step uses; SEMGREP_TOKEN is an alternate name this script also
@@ -96,7 +96,7 @@ def fetch_and_save_sast_findings(output_file=None):
     if output_file is None:
         output_file = f"data/{date.today()}/semgrep_sast_findings.json"
 
-    base_url = "https://semgrep.dev/api/v1/deployments/felipecavazotto_usp/findings"
+    base_url = f"https://semgrep.dev/api/v1/deployments/{os.environ['SEMGREP_DEPLOYMENT_SLUG']}/findings"
 
     token = os.getenv("SEMGREP_TOKEN") or os.getenv("SEMGREP_APP_TOKEN")
 
