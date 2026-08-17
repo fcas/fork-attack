@@ -1,0 +1,1459 @@
+[
+    {
+        "number": 26,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/26",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/26",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/tpch_deeplake_ingest.py",
+                "start_line": 257,
+                "end_line": 257,
+                "start_column": 16,
+                "end_column": 25
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/26/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 25,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/25",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/25",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/scripts/uploader.py",
+                "start_line": 21,
+                "end_line": 21,
+                "start_column": 22,
+                "end_column": 41
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/25/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 24,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/24",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/24",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/scripts/uploader.py",
+                "start_line": 35,
+                "end_line": 35,
+                "start_column": 38,
+                "end_column": 53
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/24/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 23,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/23",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/23",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/tpch_deeplake_ingest.py",
+                "start_line": 195,
+                "end_line": 195,
+                "start_column": 15,
+                "end_column": 24
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/23/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 22,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/22",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/22",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/tests/py_tests/test_tpch.py",
+                "start_line": 44,
+                "end_line": 44,
+                "start_column": 15,
+                "end_column": 24
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/22/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 21,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/21",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/21",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/tests/py_tests/test_tpch.py",
+                "start_line": 41,
+                "end_line": 41,
+                "start_column": 12,
+                "end_column": 21
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/21/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 20,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/20",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/20",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/scripts/indexer.py",
+                "start_line": 272,
+                "end_line": 272,
+                "start_column": 9,
+                "end_column": 21
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/20/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 19,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/19",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/19",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/scripts/indexer.py",
+                "start_line": 32,
+                "end_line": 32,
+                "start_column": 27,
+                "end_column": 37
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/19/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 18,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/18",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/18",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/build_pg_ext.py",
+                "start_line": 84,
+                "end_line": 84,
+                "start_column": 15,
+                "end_column": 36
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/18/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 17,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/17",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/17",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/tests/py_tests/test_stateless_multi_instance.py",
+                "start_line": 61,
+                "end_line": 61,
+                "start_column": 17,
+                "end_column": 20
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/17/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 16,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/16",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/16",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/tests/py_tests/test_create_database.py",
+                "start_line": 335,
+                "end_line": 335,
+                "start_column": 33,
+                "end_column": 36
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/16/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 15,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/15",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/15",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This command line depends on a user-provided value.\nThis command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/build_pg_ext.py",
+                "start_line": 175,
+                "end_line": 175,
+                "start_column": 25,
+                "end_column": 36
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/15/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 14,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/14",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/14",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This command line depends on a user-provided value.\nThis command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/build_pg_ext.py",
+                "start_line": 166,
+                "end_line": 166,
+                "start_column": 25,
+                "end_column": 33
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/14/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 13,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/13",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/13",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This command line depends on a user-provided value.\nThis command line depends on a user-provided value.\nThis command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/build_pg_ext.py",
+                "start_line": 159,
+                "end_line": 159,
+                "start_column": 29,
+                "end_column": 38
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/13/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 12,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/12",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/12",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/build_pg_ext.py",
+                "start_line": 107,
+                "end_line": 107,
+                "start_column": 21,
+                "end_column": 91
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/12/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 11,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/11",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/11",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/build_pg_ext.py",
+                "start_line": 92,
+                "end_line": 92,
+                "start_column": 21,
+                "end_column": 94
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/11/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 10,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/10",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/10",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/build_pg_ext.py",
+                "start_line": 88,
+                "end_line": 88,
+                "start_column": 21,
+                "end_column": 84
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/10/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 9,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/9",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/9",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/sql-injection",
+            "severity": "error",
+            "description": "SQL query built from user-controlled sources",
+            "name": "py/sql-injection",
+            "tags": [
+                "external/cwe/cwe-089",
+                "security"
+            ],
+            "full_description": "Building a SQL query from user-controlled sources is vulnerable to insertion of malicious SQL code by the user.",
+            "help": "# SQL query built from user-controlled sources\nIf a database query (such as a SQL or NoSQL query) is built from user-provided data without sufficient sanitization, a user may be able to run malicious database queries.\n\nThis also includes using the `TextClause` class in the `[SQLAlchemy](https://pypi.org/project/SQLAlchemy/)` PyPI package, which is used to represent a literal SQL fragment and is inserted directly into the final SQL when used in a query built using the ORM.\n\n\n## Recommendation\nMost database connector libraries offer a way of safely embedding untrusted data into a query by means of query parameters or prepared statements.\n\n\n## Example\nIn the following snippet, a user is fetched from the database using three different queries.\n\nIn the first case, the query string is built by directly using string formatting from a user-supplied request parameter. The parameter may include quote characters, so this code is vulnerable to a SQL injection attack.\n\nIn the second case, the user-supplied request attribute is passed to the database using query parameters. The database connector library will take care of escaping and inserting quotes as needed.\n\nIn the third case, the placeholder in the SQL string has been manually quoted. Since most databaseconnector libraries will insert their own quotes, doing so yourself will make the code vulnerable to SQL injection attacks. In this example, if `username` was `; DROP ALL TABLES -- `, the final SQL query would be `SELECT * FROM users WHERE username = ''; DROP ALL TABLES -- ''`\n\n\n```python\nfrom django.conf.urls import url\nfrom django.db import connection\n\n\ndef show_user(request, username):\n    with connection.cursor() as cursor:\n        # BAD -- Using string formatting\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\" % username)\n        user = cursor.fetchone()\n\n        # GOOD -- Using parameters\n        cursor.execute(\"SELECT * FROM users WHERE username = %s\", username)\n        user = cursor.fetchone()\n\n        # BAD -- Manually quoting placeholder (%s)\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\", username)\n        user = cursor.fetchone()\n\nurlpatterns = [url(r'^users/(?P<username>[^/]+)$', show_user)]\n\n```\n\n## References\n* Wikipedia: [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).\n* OWASP: [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html).\n* [SQLAlchemy documentation for TextClause](https://docs.sqlalchemy.org/en/14/core/sqlelement.html#sqlalchemy.sql.expression.text.params.text).\n* Common Weakness Enumeration: [CWE-89](https://cwe.mitre.org/data/definitions/89.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This SQL query depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/tpch_deeplake_ingest.py",
+                "start_line": 241,
+                "end_line": 241,
+                "start_column": 25,
+                "end_column": 56
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/9/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 8,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/8",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/8",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/sql-injection",
+            "severity": "error",
+            "description": "SQL query built from user-controlled sources",
+            "name": "py/sql-injection",
+            "tags": [
+                "external/cwe/cwe-089",
+                "security"
+            ],
+            "full_description": "Building a SQL query from user-controlled sources is vulnerable to insertion of malicious SQL code by the user.",
+            "help": "# SQL query built from user-controlled sources\nIf a database query (such as a SQL or NoSQL query) is built from user-provided data without sufficient sanitization, a user may be able to run malicious database queries.\n\nThis also includes using the `TextClause` class in the `[SQLAlchemy](https://pypi.org/project/SQLAlchemy/)` PyPI package, which is used to represent a literal SQL fragment and is inserted directly into the final SQL when used in a query built using the ORM.\n\n\n## Recommendation\nMost database connector libraries offer a way of safely embedding untrusted data into a query by means of query parameters or prepared statements.\n\n\n## Example\nIn the following snippet, a user is fetched from the database using three different queries.\n\nIn the first case, the query string is built by directly using string formatting from a user-supplied request parameter. The parameter may include quote characters, so this code is vulnerable to a SQL injection attack.\n\nIn the second case, the user-supplied request attribute is passed to the database using query parameters. The database connector library will take care of escaping and inserting quotes as needed.\n\nIn the third case, the placeholder in the SQL string has been manually quoted. Since most databaseconnector libraries will insert their own quotes, doing so yourself will make the code vulnerable to SQL injection attacks. In this example, if `username` was `; DROP ALL TABLES -- `, the final SQL query would be `SELECT * FROM users WHERE username = ''; DROP ALL TABLES -- ''`\n\n\n```python\nfrom django.conf.urls import url\nfrom django.db import connection\n\n\ndef show_user(request, username):\n    with connection.cursor() as cursor:\n        # BAD -- Using string formatting\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\" % username)\n        user = cursor.fetchone()\n\n        # GOOD -- Using parameters\n        cursor.execute(\"SELECT * FROM users WHERE username = %s\", username)\n        user = cursor.fetchone()\n\n        # BAD -- Manually quoting placeholder (%s)\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\", username)\n        user = cursor.fetchone()\n\nurlpatterns = [url(r'^users/(?P<username>[^/]+)$', show_user)]\n\n```\n\n## References\n* Wikipedia: [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).\n* OWASP: [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html).\n* [SQLAlchemy documentation for TextClause](https://docs.sqlalchemy.org/en/14/core/sqlelement.html#sqlalchemy.sql.expression.text.params.text).\n* Common Weakness Enumeration: [CWE-89](https://cwe.mitre.org/data/definitions/89.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This SQL query depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/tpch_deeplake_ingest.py",
+                "start_line": 232,
+                "end_line": 232,
+                "start_column": 21,
+                "end_column": 58
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/8/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 7,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/7",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/7",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/sql-injection",
+            "severity": "error",
+            "description": "SQL query built from user-controlled sources",
+            "name": "py/sql-injection",
+            "tags": [
+                "external/cwe/cwe-089",
+                "security"
+            ],
+            "full_description": "Building a SQL query from user-controlled sources is vulnerable to insertion of malicious SQL code by the user.",
+            "help": "# SQL query built from user-controlled sources\nIf a database query (such as a SQL or NoSQL query) is built from user-provided data without sufficient sanitization, a user may be able to run malicious database queries.\n\nThis also includes using the `TextClause` class in the `[SQLAlchemy](https://pypi.org/project/SQLAlchemy/)` PyPI package, which is used to represent a literal SQL fragment and is inserted directly into the final SQL when used in a query built using the ORM.\n\n\n## Recommendation\nMost database connector libraries offer a way of safely embedding untrusted data into a query by means of query parameters or prepared statements.\n\n\n## Example\nIn the following snippet, a user is fetched from the database using three different queries.\n\nIn the first case, the query string is built by directly using string formatting from a user-supplied request parameter. The parameter may include quote characters, so this code is vulnerable to a SQL injection attack.\n\nIn the second case, the user-supplied request attribute is passed to the database using query parameters. The database connector library will take care of escaping and inserting quotes as needed.\n\nIn the third case, the placeholder in the SQL string has been manually quoted. Since most databaseconnector libraries will insert their own quotes, doing so yourself will make the code vulnerable to SQL injection attacks. In this example, if `username` was `; DROP ALL TABLES -- `, the final SQL query would be `SELECT * FROM users WHERE username = ''; DROP ALL TABLES -- ''`\n\n\n```python\nfrom django.conf.urls import url\nfrom django.db import connection\n\n\ndef show_user(request, username):\n    with connection.cursor() as cursor:\n        # BAD -- Using string formatting\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\" % username)\n        user = cursor.fetchone()\n\n        # GOOD -- Using parameters\n        cursor.execute(\"SELECT * FROM users WHERE username = %s\", username)\n        user = cursor.fetchone()\n\n        # BAD -- Manually quoting placeholder (%s)\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\", username)\n        user = cursor.fetchone()\n\nurlpatterns = [url(r'^users/(?P<username>[^/]+)$', show_user)]\n\n```\n\n## References\n* Wikipedia: [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).\n* OWASP: [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html).\n* [SQLAlchemy documentation for TextClause](https://docs.sqlalchemy.org/en/14/core/sqlelement.html#sqlalchemy.sql.expression.text.params.text).\n* Common Weakness Enumeration: [CWE-89](https://cwe.mitre.org/data/definitions/89.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This SQL query depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/tpch_deeplake_ingest.py",
+                "start_line": 166,
+                "end_line": 166,
+                "start_column": 21,
+                "end_column": 24
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/7/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 6,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/6",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/sql-injection",
+            "severity": "error",
+            "description": "SQL query built from user-controlled sources",
+            "name": "py/sql-injection",
+            "tags": [
+                "external/cwe/cwe-089",
+                "security"
+            ],
+            "full_description": "Building a SQL query from user-controlled sources is vulnerable to insertion of malicious SQL code by the user.",
+            "help": "# SQL query built from user-controlled sources\nIf a database query (such as a SQL or NoSQL query) is built from user-provided data without sufficient sanitization, a user may be able to run malicious database queries.\n\nThis also includes using the `TextClause` class in the `[SQLAlchemy](https://pypi.org/project/SQLAlchemy/)` PyPI package, which is used to represent a literal SQL fragment and is inserted directly into the final SQL when used in a query built using the ORM.\n\n\n## Recommendation\nMost database connector libraries offer a way of safely embedding untrusted data into a query by means of query parameters or prepared statements.\n\n\n## Example\nIn the following snippet, a user is fetched from the database using three different queries.\n\nIn the first case, the query string is built by directly using string formatting from a user-supplied request parameter. The parameter may include quote characters, so this code is vulnerable to a SQL injection attack.\n\nIn the second case, the user-supplied request attribute is passed to the database using query parameters. The database connector library will take care of escaping and inserting quotes as needed.\n\nIn the third case, the placeholder in the SQL string has been manually quoted. Since most databaseconnector libraries will insert their own quotes, doing so yourself will make the code vulnerable to SQL injection attacks. In this example, if `username` was `; DROP ALL TABLES -- `, the final SQL query would be `SELECT * FROM users WHERE username = ''; DROP ALL TABLES -- ''`\n\n\n```python\nfrom django.conf.urls import url\nfrom django.db import connection\n\n\ndef show_user(request, username):\n    with connection.cursor() as cursor:\n        # BAD -- Using string formatting\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\" % username)\n        user = cursor.fetchone()\n\n        # GOOD -- Using parameters\n        cursor.execute(\"SELECT * FROM users WHERE username = %s\", username)\n        user = cursor.fetchone()\n\n        # BAD -- Manually quoting placeholder (%s)\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\", username)\n        user = cursor.fetchone()\n\nurlpatterns = [url(r'^users/(?P<username>[^/]+)$', show_user)]\n\n```\n\n## References\n* Wikipedia: [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).\n* OWASP: [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html).\n* [SQLAlchemy documentation for TextClause](https://docs.sqlalchemy.org/en/14/core/sqlelement.html#sqlalchemy.sql.expression.text.params.text).\n* Common Weakness Enumeration: [CWE-89](https://cwe.mitre.org/data/definitions/89.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This SQL query depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/tpch_deeplake_ingest.py",
+                "start_line": 157,
+                "end_line": 157,
+                "start_column": 21,
+                "end_column": 66
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/6/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 5,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/sql-injection",
+            "severity": "error",
+            "description": "SQL query built from user-controlled sources",
+            "name": "py/sql-injection",
+            "tags": [
+                "external/cwe/cwe-089",
+                "security"
+            ],
+            "full_description": "Building a SQL query from user-controlled sources is vulnerable to insertion of malicious SQL code by the user.",
+            "help": "# SQL query built from user-controlled sources\nIf a database query (such as a SQL or NoSQL query) is built from user-provided data without sufficient sanitization, a user may be able to run malicious database queries.\n\nThis also includes using the `TextClause` class in the `[SQLAlchemy](https://pypi.org/project/SQLAlchemy/)` PyPI package, which is used to represent a literal SQL fragment and is inserted directly into the final SQL when used in a query built using the ORM.\n\n\n## Recommendation\nMost database connector libraries offer a way of safely embedding untrusted data into a query by means of query parameters or prepared statements.\n\n\n## Example\nIn the following snippet, a user is fetched from the database using three different queries.\n\nIn the first case, the query string is built by directly using string formatting from a user-supplied request parameter. The parameter may include quote characters, so this code is vulnerable to a SQL injection attack.\n\nIn the second case, the user-supplied request attribute is passed to the database using query parameters. The database connector library will take care of escaping and inserting quotes as needed.\n\nIn the third case, the placeholder in the SQL string has been manually quoted. Since most databaseconnector libraries will insert their own quotes, doing so yourself will make the code vulnerable to SQL injection attacks. In this example, if `username` was `; DROP ALL TABLES -- `, the final SQL query would be `SELECT * FROM users WHERE username = ''; DROP ALL TABLES -- ''`\n\n\n```python\nfrom django.conf.urls import url\nfrom django.db import connection\n\n\ndef show_user(request, username):\n    with connection.cursor() as cursor:\n        # BAD -- Using string formatting\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\" % username)\n        user = cursor.fetchone()\n\n        # GOOD -- Using parameters\n        cursor.execute(\"SELECT * FROM users WHERE username = %s\", username)\n        user = cursor.fetchone()\n\n        # BAD -- Manually quoting placeholder (%s)\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\", username)\n        user = cursor.fetchone()\n\nurlpatterns = [url(r'^users/(?P<username>[^/]+)$', show_user)]\n\n```\n\n## References\n* Wikipedia: [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).\n* OWASP: [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html).\n* [SQLAlchemy documentation for TextClause](https://docs.sqlalchemy.org/en/14/core/sqlelement.html#sqlalchemy.sql.expression.text.params.text).\n* Common Weakness Enumeration: [CWE-89](https://cwe.mitre.org/data/definitions/89.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This SQL query depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/tests/py_tests/test_tpch.py",
+                "start_line": 277,
+                "end_line": 277,
+                "start_column": 39,
+                "end_column": 48
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/5/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 4,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/sql-injection",
+            "severity": "error",
+            "description": "SQL query built from user-controlled sources",
+            "name": "py/sql-injection",
+            "tags": [
+                "external/cwe/cwe-089",
+                "security"
+            ],
+            "full_description": "Building a SQL query from user-controlled sources is vulnerable to insertion of malicious SQL code by the user.",
+            "help": "# SQL query built from user-controlled sources\nIf a database query (such as a SQL or NoSQL query) is built from user-provided data without sufficient sanitization, a user may be able to run malicious database queries.\n\nThis also includes using the `TextClause` class in the `[SQLAlchemy](https://pypi.org/project/SQLAlchemy/)` PyPI package, which is used to represent a literal SQL fragment and is inserted directly into the final SQL when used in a query built using the ORM.\n\n\n## Recommendation\nMost database connector libraries offer a way of safely embedding untrusted data into a query by means of query parameters or prepared statements.\n\n\n## Example\nIn the following snippet, a user is fetched from the database using three different queries.\n\nIn the first case, the query string is built by directly using string formatting from a user-supplied request parameter. The parameter may include quote characters, so this code is vulnerable to a SQL injection attack.\n\nIn the second case, the user-supplied request attribute is passed to the database using query parameters. The database connector library will take care of escaping and inserting quotes as needed.\n\nIn the third case, the placeholder in the SQL string has been manually quoted. Since most databaseconnector libraries will insert their own quotes, doing so yourself will make the code vulnerable to SQL injection attacks. In this example, if `username` was `; DROP ALL TABLES -- `, the final SQL query would be `SELECT * FROM users WHERE username = ''; DROP ALL TABLES -- ''`\n\n\n```python\nfrom django.conf.urls import url\nfrom django.db import connection\n\n\ndef show_user(request, username):\n    with connection.cursor() as cursor:\n        # BAD -- Using string formatting\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\" % username)\n        user = cursor.fetchone()\n\n        # GOOD -- Using parameters\n        cursor.execute(\"SELECT * FROM users WHERE username = %s\", username)\n        user = cursor.fetchone()\n\n        # BAD -- Manually quoting placeholder (%s)\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\", username)\n        user = cursor.fetchone()\n\nurlpatterns = [url(r'^users/(?P<username>[^/]+)$', show_user)]\n\n```\n\n## References\n* Wikipedia: [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).\n* OWASP: [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html).\n* [SQLAlchemy documentation for TextClause](https://docs.sqlalchemy.org/en/14/core/sqlelement.html#sqlalchemy.sql.expression.text.params.text).\n* Common Weakness Enumeration: [CWE-89](https://cwe.mitre.org/data/definitions/89.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This SQL query depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/tests/py_tests/test_tpch.py",
+                "start_line": 123,
+                "end_line": 123,
+                "start_column": 36,
+                "end_column": 40
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/4/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 3,
+        "created_at": "2026-08-15T01:01:29Z",
+        "updated_at": "2026-08-15T01:01:29Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/sql-injection",
+            "severity": "error",
+            "description": "SQL query built from user-controlled sources",
+            "name": "py/sql-injection",
+            "tags": [
+                "external/cwe/cwe-089",
+                "security"
+            ],
+            "full_description": "Building a SQL query from user-controlled sources is vulnerable to insertion of malicious SQL code by the user.",
+            "help": "# SQL query built from user-controlled sources\nIf a database query (such as a SQL or NoSQL query) is built from user-provided data without sufficient sanitization, a user may be able to run malicious database queries.\n\nThis also includes using the `TextClause` class in the `[SQLAlchemy](https://pypi.org/project/SQLAlchemy/)` PyPI package, which is used to represent a literal SQL fragment and is inserted directly into the final SQL when used in a query built using the ORM.\n\n\n## Recommendation\nMost database connector libraries offer a way of safely embedding untrusted data into a query by means of query parameters or prepared statements.\n\n\n## Example\nIn the following snippet, a user is fetched from the database using three different queries.\n\nIn the first case, the query string is built by directly using string formatting from a user-supplied request parameter. The parameter may include quote characters, so this code is vulnerable to a SQL injection attack.\n\nIn the second case, the user-supplied request attribute is passed to the database using query parameters. The database connector library will take care of escaping and inserting quotes as needed.\n\nIn the third case, the placeholder in the SQL string has been manually quoted. Since most databaseconnector libraries will insert their own quotes, doing so yourself will make the code vulnerable to SQL injection attacks. In this example, if `username` was `; DROP ALL TABLES -- `, the final SQL query would be `SELECT * FROM users WHERE username = ''; DROP ALL TABLES -- ''`\n\n\n```python\nfrom django.conf.urls import url\nfrom django.db import connection\n\n\ndef show_user(request, username):\n    with connection.cursor() as cursor:\n        # BAD -- Using string formatting\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\" % username)\n        user = cursor.fetchone()\n\n        # GOOD -- Using parameters\n        cursor.execute(\"SELECT * FROM users WHERE username = %s\", username)\n        user = cursor.fetchone()\n\n        # BAD -- Manually quoting placeholder (%s)\n        cursor.execute(\"SELECT * FROM users WHERE username = '%s'\", username)\n        user = cursor.fetchone()\n\nurlpatterns = [url(r'^users/(?P<username>[^/]+)$', show_user)]\n\n```\n\n## References\n* Wikipedia: [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).\n* OWASP: [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html).\n* [SQLAlchemy documentation for TextClause](https://docs.sqlalchemy.org/en/14/core/sqlelement.html#sqlalchemy.sql.expression.text.params.text).\n* Common Weakness Enumeration: [CWE-89](https://cwe.mitre.org/data/definitions/89.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "994b521082dc742be3b03cfd647eb7255577290e",
+            "message": {
+                "text": "This SQL query depends on a user-provided value."
+            },
+            "location": {
+                "path": "postgres/tests/py_tests/conftest.py",
+                "start_line": 262,
+                "end_line": 262,
+                "start_column": 40,
+                "end_column": 52
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/3/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-23T09:41:46Z",
+        "updated_at": "2026-08-14T17:44:27Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/2",
+        "state": "fixed",
+        "fixed_at": "2026-08-14T17:44:26Z",
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "fixed",
+            "commit_sha": "d4b53dd888fd8a5bd8ce2c34f5efb567599bac03",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings with many repetitions of '0'."
+            },
+            "location": {
+                "path": "deeplake/visualizer/visualizer.py",
+                "start_line": 202,
+                "end_line": 202,
+                "start_column": 47,
+                "end_column": 59
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/2/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-23T09:41:46Z",
+        "updated_at": "2026-08-14T17:44:27Z",
+        "url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/deeplake/security/code-scanning/1",
+        "state": "fixed",
+        "fixed_at": "2026-08-14T17:44:26Z",
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "fixed",
+            "commit_sha": "d4b53dd888fd8a5bd8ce2c34f5efb567599bac03",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings with many repetitions of '0'."
+            },
+            "location": {
+                "path": "deeplake/visualizer/video_streaming.py",
+                "start_line": 191,
+                "end_line": 191,
+                "start_column": 43,
+                "end_column": 55
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/deeplake/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

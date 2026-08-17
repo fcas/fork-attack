@@ -1,0 +1,741 @@
+[
+    {
+        "number": 7,
+        "state": "auto_dismissed",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nanoid"
+            },
+            "manifest_path": "docs-vitepress/package-lock.json",
+            "scope": "development",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2v37-7h3g-55p8",
+            "cve_id": "CVE-2026-67213",
+            "summary": "nanoid: custom generators can loop indefinitely when size is zero",
+            "description": "nanoid (Nano ID) before 5.1.6 contains an infinite loop in the customAlphabet and customRandom functions. When these functions are configured with a size of 0, the internal generation loop never satisfies its exit condition and spins indefinitely, hanging the calling thread. An application that passes an unvalidated, attacker-controlled size of 0 to these functions is exposed to a denial-of-service condition.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-2v37-7h3g-55p8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-67213",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67213"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/commit/cb3626d0f3342fdf179cd425fd9c4fbb92c7d0e7"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/releases/tag/5.1.6"
+                },
+                {
+                    "url": "https://www.vulncheck.com/advisories/nanoid-before-infinite-loop-via-zero-size-in-customalphabet-and-customrandom"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/commit/f9d13f150847d117877adee3460a46eceb0cf49b"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/releases/tag/3.3.17"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/commit/e10f8d40ce9d1ab47f66d65a16b48086432730d0"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/releases/tag/3.3.18"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2v37-7h3g-55p8"
+                }
+            ],
+            "published_at": "2026-07-29T15:31:12Z",
+            "updated_at": "2026-08-13T15:43:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "nanoid"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0, < 5.1.6",
+                    "first_patched_version": {
+                        "identifier": "5.1.6"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "nanoid"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.3.18",
+                    "first_patched_version": {
+                        "identifier": "3.3.18"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 5.9
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.2
+                }
+            },
+            "epss": {
+                "percentage": 0.00319,
+                "percentile": 0.24516
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-835",
+                    "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nanoid"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.3.18",
+            "first_patched_version": {
+                "identifier": "3.3.18"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Sklearn-genetic-opt/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/Sklearn-genetic-opt/security/dependabot/7",
+        "created_at": "2026-08-14T16:01:35Z",
+        "updated_at": "2026-08-14T16:01:35Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": "2026-08-14T16:01:35Z"
+    },
+    {
+        "number": 6,
+        "state": "auto_dismissed",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nanoid"
+            },
+            "manifest_path": "docs-vitepress/package-lock.json",
+            "scope": "development",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-28wg-ghj8-5hjv",
+            "cve_id": "CVE-2026-67214",
+            "summary": "nanoid: non-secure generators can loop indefinitely with negative size",
+            "description": "nanoid (Nano ID) before 5.1.16 contains an infinite loop in the customAlphabet and nanoid functions of its non-secure module (nanoid/non-secure). When these functions are given a negative size, the loop counter is decremented from a negative value and never reaches its termination condition, spinning indefinitely and hanging the calling thread. An application that passes an unvalidated, attacker-controlled negative size to these functions is exposed to a denial-of-service condition.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-28wg-ghj8-5hjv",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-67214",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67214"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/commit/6ccc67bbaba71d3d77a21d9b636f4171a268ce49"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/releases/tag/5.1.16"
+                },
+                {
+                    "url": "https://www.vulncheck.com/advisories/nanoid-before-infinite-loop-via-negative-size-in-non-secure-module"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/pull/600"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/pull/601"
+                },
+                {
+                    "url": "https://github.com/ai/nanoid/commit/e835c9b71eab832bc6106944bdd26ea96cf2c66d"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-28wg-ghj8-5hjv"
+                }
+            ],
+            "published_at": "2026-07-29T15:31:12Z",
+            "updated_at": "2026-08-07T20:53:01Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "nanoid"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.3.16",
+                    "first_patched_version": {
+                        "identifier": "3.3.16"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "nanoid"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0, < 5.1.16",
+                    "first_patched_version": {
+                        "identifier": "5.1.16"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 5.9
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.2
+                }
+            },
+            "epss": {
+                "percentage": 0.00319,
+                "percentile": 0.24516
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-835",
+                    "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "nanoid"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.3.16",
+            "first_patched_version": {
+                "identifier": "3.3.16"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Sklearn-genetic-opt/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/Sklearn-genetic-opt/security/dependabot/6",
+        "created_at": "2026-08-14T16:01:35Z",
+        "updated_at": "2026-08-14T16:01:35Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": "2026-08-14T16:01:35Z"
+    },
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "manifest_path": "docs-vitepress/package-lock.json",
+            "scope": "development",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fxqj-rqcc-2cmp",
+            "cve_id": "CVE-2026-69153",
+            "summary": "PostCSS: incomplete fix of GHSA-6g55-p6wh-862q — attacker-controlled sourceMappingURL reads arbitrary .map files when `from` is unset",
+            "description": "## Summary\n\nThe fix for GHSA-6g55-p6wh-862q added a guard in `lib/previous-map.js` `PreviousMap.loadFile()` that restricts an attacker-controlled `sourceMappingURL` (from a CSS comment) to a `.map` extension and, for untrusted maps, rejects `..` traversal and absolute paths. The traversal/absolute rejection is nested inside `if (cssFile) { ... }`. When PostCSS is invoked without the `from` option, `cssFile` is falsy and that branch is skipped, leaving only the `.map` extension check.\n\n`PreviousMap` is constructed by `lib/input.js` whenever `pathAvailable && sourceMapAvailable` (under Node with source-map available), independent of `opts.from`/`opts.map` (the constructor returns early only for `opts.map === false`). So `postcss([]).process(css)` on attacker CSS reaches `loadFile` with `cssFile` undefined, and an attacker `/*# sourceMappingURL=/abs/path/x.map */` (or `../`-traversing path) is read via `readFileSync`. When the file is valid JSON, its `sources` (filesystem paths) and `sourcesContent` (source contents) are disclosed in the generated source map.\n\n## Affected code (v8.5.22 — the release carrying the GHSA-6g55 fix)\n\n```js\n// lib/previous-map.js\nloadFile(path, cssFile, trusted) {\n  if (!trusted && !this.unsafeMap) {\n    if (!/\\.map$/i.test(path)) {\n      return undefined\n    }\n    if (cssFile) {                       // guard runs ONLY when `from` is set\n      let relativePath = relative(dirname(cssFile), path)\n      if (relativePath === '..' ||\n          relativePath.startsWith('..' + sep) ||\n          isAbsolute(relativePath)) {\n        return undefined\n      }\n    }\n  }\n  this.root = dirname(path)\n  if (existsSync(path)) {\n    this.mapFile = path\n    return readFileSync(path, 'utf-8').toString().trim()   // sink\n  }\n}\n\n// loadMap(): untrusted annotation path, trusted=false; file === opts.from\n} else if (this.annotation) {\n  let map = this.annotation\n  if (file) map = join(dirname(file), map)   // no `from` -> map stays the raw URL\n  let unknown = this.loadFile(map, file, false)  // file undefined -> cssFile falsy\n```\n\n## Proof of concept (verified on postcss 8.5.22)\n\n```js\nconst postcss = require('postcss')\nconst fs = require('fs')\n\n// a 'secret' sourcemap OUTSIDE any expected tree (stand-in for another project's .map)\nconst secret = '/tmp/pcpoc/secret_out_of_tree.map'\nfs.writeFileSync(secret, JSON.stringify({\n  version: 3, sources: ['/etc/REAL_PATH_LEAK'], mappings: '', names: [],\n  sourcesContent: ['TOP_SECRET_abcdef']\n}))\n\nconst css = 'a{color:red}\\n/*# sourceMappingURL=' + secret + ' */'\nconst leaks = m => m && JSON.stringify(m.toJSON ? m.toJSON() : m).includes('TOP_SECRET_abcdef')\n\n;(async () => {\n  // A) NO `from`  -> guard skipped -> arbitrary absolute .map read + disclosed\n  const a = await postcss([]).process(css, { map: true })\n  console.log('no from   -> leaked:', !!leaks(a.map))   // true\n\n  // B) WITH `from` -> guard active -> blocked\n  const b = await postcss([]).process(css, { from: '/tmp/pcpoc/in.css', map: true })\n  console.log('with from -> leaked:', !!leaks(b.map))    // false\n})()\n```\n\nObserved output on postcss 8.5.22:\n\n```\nno from   -> leaked: true      # sourcesContent 'TOP_SECRET_abcdef' AND sources '/etc/REAL_PATH_LEAK' appear in result.map\nwith from -> leaked: false     # guard rejects the absolute path\n```\n\n`../` traversal (no `from`) also succeeds; non-`.map` targets (`.txt`, `?x=.map`, `#.map`) are blocked by the `.map` check. The tested build contains the GHSA-6g55 fix (`this.json = JSON.parse(...)` in `loadMap`, `consumer()` uses `this.json || this.text`), so this is a residual of that fix.\n\n## Impact\n\nArbitrary `.map`-file read (absolute path or `../` traversal) and disclosure of the target map's `sources` (local filesystem paths) and `sourcesContent` (source) into the generated source map, for any consumer that runs PostCSS on attacker-influenced CSS without a `from` option and exposes `result.map` (online CSS playgrounds, minify/lint services, string-input build steps). Bounded to files ending in `.map` that parse as JSON.\n\n## Suggested fix\n\nApply the traversal/absolute-path rejection to the untrusted map path regardless of whether `cssFile` is present (resolve against `process.cwd()` when there is no `cssFile`, and reject absolute paths and `..` escape in all untrusted cases), or refuse to load an untrusted external map when no base file is known.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fxqj-rqcc-2cmp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-69153",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/postcss/postcss/security/advisories/GHSA-fxqj-rqcc-2cmp"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/commit/7beca139e70f9075c6b19700fcb00dd8033e5da8"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/releases/tag/8.5.19"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fxqj-rqcc-2cmp"
+                }
+            ],
+            "published_at": "2026-08-03T17:11:39Z",
+            "updated_at": "2026-08-03T17:11:40Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "postcss"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 8.5.22",
+                    "first_patched_version": {
+                        "identifier": "8.5.23"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N",
+                    "score": 6.3
+                }
+            },
+            "epss": {
+                "percentage": 0.00313,
+                "percentile": 0.23659
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                },
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 8.5.22",
+            "first_patched_version": {
+                "identifier": "8.5.23"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Sklearn-genetic-opt/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/Sklearn-genetic-opt/security/dependabot/5",
+        "created_at": "2026-08-14T16:01:35Z",
+        "updated_at": "2026-08-14T16:01:35Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "manifest_path": "docs-vitepress/package-lock.json",
+            "scope": "development",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-r28c-9q8g-f849",
+            "cve_id": "CVE-2026-73646",
+            "summary": "PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure",
+            "description": "## Vulnerability Details\n\n**File**: `lib/previous-map.js`\n**Line**: 87-98 (`loadFile`), 129-144 (`loadMap`)\n\n\n### Root Cause\nPostCSS auto-detects a `/*# sourceMappingURL=... */` comment inside the CSS text it is asked to parse and, unless the caller explicitly passes `map: false`, attempts to load that path from disk as a \"previous source map.\" This happens on every `postcss.parse()` / `postcss().process()` call by default (opt-out, not opt-in).\n\n`loadMap()` builds the candidate path via `join(dirname(opts.from), annotation)`, where `annotation` is the raw, attacker-controlled string from the CSS comment. `path.join()` normalizes but does not sandbox `..` segments, so a `../../../` prefix walks the resolved path outside the intended directory. If `opts.from` is not set at all, the annotation is used completely unmodified — an absolute path in the CSS comment is read verbatim.\n\n8.5.12 already fixed a strictly worse variant of this (any file, any extension, could be read) by requiring the resolved path to end in `.map` (`loadFile()`). That fix did not address the traversal itself, only the target extension. Since the `join(dirname(file), map)` logic has existed unchanged since PostCSS 8.0.0 (Feb 2020), any file ending in `.map` remains readable through this path in the current release (8.5.16).\n\nOnce loaded, `MapGenerator.isMap()` treats the mere presence of a loaded \"previous map\" as an implicit request to generate `result.map`, even when the caller never set the `map` option. If the loaded map has a `sourcesContent` field (common for maps emitted by bundlers/transpilers), that content is merged into `result.map` and returned to the caller — disclosing the traversed-to file's content to whoever supplied the CSS.\n\n### Attack Scenario\n1. A service accepts user-submitted CSS and runs it through PostCSS to lint/format/transform it, e.g. `postcss().process(userCss, { from: '/app/uploads/user123/input.css', to: '/app/uploads/user123/output.css' })` — idiomatic usage; `map` option untouched.\n2. Attacker submits CSS containing `/*# sourceMappingURL=../../../../some/other/app/dist/bundle.js.map */` (or an absolute path if `from` is unset).\n3. PostCSS reads that `.map` file and folds its `sourcesContent` into `result.map`.\n4. The service does what most build pipelines do with a truthy `result.map` — writes it next to the CSS output or returns it via API (source maps are meant to be consumed by browser devtools, so this is commonly public/served).\n5. Attacker retrieves the emitted map and reads out the traversed file's content.\n\n### Impact\nDisclosure of the contents of arbitrary `.map` files reachable via path traversal (or absolute path when `from` is unset) from the process's filesystem. Affects any application processing CSS it does not fully trust without explicitly passing `map: false`. No authentication or user interaction beyond submitting CSS text is required.\n\n### Vulnerable Code\n```js\nloadFile(path, cssFile, trusted) {\n  if (!trusted && !this.unsafeMap) {\n    if (!/\\.map$/i.test(path)) {\n      return undefined\n    }\n  }\n  this.root = dirname(path)\n  if (existsSync(path)) {\n    this.mapFile = path\n    return readFileSync(path, 'utf-8').toString().trim()\n  }\n}\n\nloadMap(file, prev) {\n  ...\n  } else if (this.annotation) {\n    let map = this.annotation\n    if (file) map = join(dirname(file), map)\n    let unknown = this.loadFile(map, file, false)\n    ...\n  }\n}\n```\n\n### Recommended Fix\nConstrain the resolved path to remain inside the CSS file's own directory instead of relying solely on a filename-extension check:\n```js\nloadFile(path, cssFile, trusted) {\n  if (!trusted && !this.unsafeMap) {\n    if (!/\\.map$/i.test(path)) {\n      return undefined\n    }\n    if (!cssFile) return undefined\n    let root = resolve(dirname(cssFile))\n    let resolvedPath = resolve(root, path)\n    if (resolvedPath !== root && !resolvedPath.startsWith(root + sep)) {\n      return undefined\n    }\n  }\n  this.root = dirname(path)\n  if (existsSync(path)) {\n    this.mapFile = path\n    return readFileSync(path, 'utf-8').toString().trim()\n  }\n}\n```\nI've implemented, tested (full existing test suite — 660/660 passing, plus new PoC-based regression checks for both the traversal and legitimate same-directory cases), and can share this fix on request or via a private fork if invited.\n\n### Verification\nDynamically confirmed on v8.5.16 (current npm release / repo HEAD) via a standalone Node.js harness against `lib/postcss.js`: a \"secret\" `.map` file placed two directories outside a simulated project directory was read via a crafted `sourceMappingURL` comment in otherwise-innocuous CSS, with its `sourcesContent` appearing verbatim in `result.map.toString()` — with no `map` option set by the caller. A second harness confirmed the simpler no-`from` case reads an absolute path directly. A third harness confirmed `map: false` is the only current workaround. The attached fix branch closes both vectors while keeping all 660 existing unit tests green.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-r28c-9q8g-f849",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-73646",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/postcss/postcss/security/advisories/GHSA-r28c-9q8g-f849"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/commit/95663d3eb7ba26f4854dd19d3b4f4425760cf56c"
+                },
+                {
+                    "url": "https://github.com/postcss/postcss/releases/tag/8.5.18"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-r28c-9q8g-f849"
+                }
+            ],
+            "published_at": "2026-07-24T16:24:55Z",
+            "updated_at": "2026-08-13T17:55:56Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "npm",
+                        "name": "postcss"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 8.5.17",
+                    "first_patched_version": {
+                        "identifier": "8.5.18"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "npm",
+                "name": "postcss"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 8.5.17",
+            "first_patched_version": {
+                "identifier": "8.5.18"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Sklearn-genetic-opt/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/Sklearn-genetic-opt/security/dependabot/4",
+        "created_at": "2026-08-14T16:01:34Z",
+        "updated_at": "2026-08-14T16:01:34Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "manifest_path": "dev-requirements.txt",
+            "scope": "development",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3936-cmfr-pm3m",
+            "cve_id": "CVE-2026-32274",
+            "summary": "Black: Arbitrary file writes from unsanitized user input in cache file name",
+            "description": "### Impact\n\nBlack writes a cache file, the name of which is computed from various formatting options. The value of the `--python-cell-magics` option was placed in the filename without sanitization, which allowed an attacker who controls the value of this argument to write cache files to arbitrary file system locations. \n\n### Patches\n\nFixed in Black 26.3.1.\n\n### Workarounds\n\nDo not allow untrusted user input into the value of the `--python-cell-magics` option.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3936-cmfr-pm3m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-32274",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/psf/black/security/advisories/GHSA-3936-cmfr-pm3m"
+                },
+                {
+                    "url": "https://github.com/psf/black/pull/5038"
+                },
+                {
+                    "url": "https://github.com/psf/black/commit/4937fe6cf241139ddbfc16b0bdbb5b422798909d"
+                },
+                {
+                    "url": "https://github.com/psf/black/releases/tag/26.3.1"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-32274"
+                },
+                {
+                    "url": "https://github.com/psf/black/pull/4176"
+                },
+                {
+                    "url": "https://github.com/psf/black/commit/ed770ba4dd50c419148a0fca2b43937a7447e1f9"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:10184"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:13545"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:13553"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-32274"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2447111"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/black/PYSEC-2026-2121.yaml"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-32274.json"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3936-cmfr-pm3m"
+                }
+            ],
+            "published_at": "2026-03-12T18:33:10Z",
+            "updated_at": "2026-08-03T20:35:17Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "black"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 24.3.0, < 26.3.1",
+                    "first_patched_version": {
+                        "identifier": "26.3.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "epss": {
+                "percentage": 0.00621,
+                "percentile": 0.46527
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 24.3.0, < 26.3.1",
+            "first_patched_version": {
+                "identifier": "26.3.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Sklearn-genetic-opt/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/Sklearn-genetic-opt/security/dependabot/3",
+        "created_at": "2026-08-04T05:25:46Z",
+        "updated_at": "2026-08-14T16:01:34Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:01:34Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pytest"
+            },
+            "manifest_path": "dev-requirements.txt",
+            "scope": "development",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6w46-j5rx-g56g",
+            "cve_id": "CVE-2025-71176",
+            "summary": "pytest has vulnerable tmpdir handling",
+            "description": "pytest through 9.0.2 on UNIX relies on directories with the `/tmp/pytest-of-{user}` name pattern, which allows local users to cause a denial of service or possibly gain privileges.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-6w46-j5rx-g56g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-71176",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71176"
+                },
+                {
+                    "url": "https://github.com/pytest-dev/pytest/issues/13669"
+                },
+                {
+                    "url": "https://www.openwall.com/lists/oss-security/2026/01/21/5"
+                },
+                {
+                    "url": "https://github.com/pytest-dev/pytest/pull/14343"
+                },
+                {
+                    "url": "https://github.com/pytest-dev/pytest/commit/95d8423bd24992deea5b9df32555fa1741679e2c"
+                },
+                {
+                    "url": "https://github.com/pytest-dev/pytest/releases/tag/9.0.3"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6w46-j5rx-g56g"
+                }
+            ],
+            "published_at": "2026-01-22T06:30:29Z",
+            "updated_at": "2026-04-13T16:38:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pytest"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 9.0.3",
+                    "first_patched_version": {
+                        "identifier": "9.0.3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+                    "score": 6.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.0014,
+                "percentile": 0.03703
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+                "score": 6.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-379",
+                    "name": "Creation of Temporary File in Directory with Insecure Permissions"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pytest"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 9.0.3",
+            "first_patched_version": {
+                "identifier": "9.0.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/Sklearn-genetic-opt/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/Sklearn-genetic-opt/security/dependabot/2",
+        "created_at": "2026-04-13T20:42:19Z",
+        "updated_at": "2026-08-14T16:01:34Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:01:34Z",
+        "auto_dismissed_at": null
+    }
+]

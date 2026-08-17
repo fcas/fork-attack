@@ -23,4 +23,6 @@ jobs:
       image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - run: semgrep ci

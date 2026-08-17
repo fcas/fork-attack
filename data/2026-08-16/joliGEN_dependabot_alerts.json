@@ -1,0 +1,2039 @@
+[
+    {
+        "number": 25,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rrmf-rvhw-rf47",
+            "cve_id": "CVE-2025-3000",
+            "summary": "PyTorch is vulnerable to memory corruption through its torch.jit.script function",
+            "description": "A vulnerability classified as critical has been found in PyTorch 2.6.0. This affects the function torch.jit.script. The manipulation leads to memory corruption. It is possible to launch the attack on the local host. The exploit has been disclosed to the public and may be used.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-rrmf-rvhw-rf47",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-3000",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3000"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149623"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149623#issue-2935703015"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.302049"
+                },
+                {
+                    "url": "https://vuldb.com/?id.302049"
+                },
+                {
+                    "url": "https://vuldb.com/?submit.524197"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-194.yaml"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/b90c94991cdf8b87c8f7439f79518e0ef2c4ca4f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rrmf-rvhw-rf47"
+                }
+            ],
+            "published_at": "2025-03-31T15:30:48Z",
+            "updated_at": "2026-07-17T17:05:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "<= 2.12.1",
+                    "first_patched_version": {
+                        "identifier": "2.13.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P",
+                    "score": 1.9
+                }
+            },
+            "epss": {
+                "percentage": 0.0019,
+                "percentile": 0.08873
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-119",
+                    "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "<= 2.12.1",
+            "first_patched_version": {
+                "identifier": "2.13.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/25",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/25",
+        "created_at": "2026-07-17T20:49:18Z",
+        "updated_at": "2026-07-17T20:49:18Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 23,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qfhq-4f3w-5fph",
+            "cve_id": "CVE-2025-3001",
+            "summary": "PyTorch is vulnerable to memory corruption through its torch.lstm_cell function",
+            "description": "A vulnerability classified as critical was found in PyTorch 2.6.0. This vulnerability affects the function torch.lstm_cell. The manipulation leads to memory corruption. The attack needs to be approached locally. The exploit has been disclosed to the public and may be used.\n\nA patch is available through commit [999d94b](https://github.com/pytorch/pytorch/commit/999d94b5ede5f4ec111ba7dd144129e2c2725b03).",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-qfhq-4f3w-5fph",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-3001",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3001"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149626"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149626#issue-2935860995"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.302050"
+                },
+                {
+                    "url": "https://vuldb.com/?id.302050"
+                },
+                {
+                    "url": "https://vuldb.com/?submit.524212"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/999d94b5ede5f4ec111ba7dd144129e2c2725b03"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-195.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qfhq-4f3w-5fph"
+                }
+            ],
+            "published_at": "2025-03-31T18:31:08Z",
+            "updated_at": "2026-06-10T18:02:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 2.10.0",
+                    "first_patched_version": {
+                        "identifier": "2.10.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P",
+                    "score": 1.9
+                }
+            },
+            "epss": {
+                "percentage": 0.00189,
+                "percentile": 0.08783
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-119",
+                    "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 2.10.0",
+            "first_patched_version": {
+                "identifier": "2.10.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/23",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/23",
+        "created_at": "2026-06-10T22:27:24Z",
+        "updated_at": "2026-06-10T22:27:24Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 22,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-vgrw-7cvw-pwgx",
+            "cve_id": "CVE-2025-2999",
+            "summary": "PyTorch is vulnerable to memory corruption through its unpack_sequence function",
+            "description": "A vulnerability was found in PyTorch 2.6.0. It has been rated as critical. Affected by this issue is the function torch.nn.utils.rnn.unpack_sequence. The manipulation leads to memory corruption. Attacking locally is a requirement. The exploit has been disclosed to the public and may be used.\n\nA patch is available through commit [4945180](https://github.com/pytorch/pytorch/commit/494518046816d29099b7d056a74ffa5c244fdcdd).",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-vgrw-7cvw-pwgx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-2999",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2999"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149622"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149622#issue-2935495265"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.302048"
+                },
+                {
+                    "url": "https://vuldb.com/?id.302048"
+                },
+                {
+                    "url": "https://vuldb.com/?submit.524198"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/494518046816d29099b7d056a74ffa5c244fdcdd"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-193.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vgrw-7cvw-pwgx"
+                }
+            ],
+            "published_at": "2025-03-31T15:30:48Z",
+            "updated_at": "2026-06-10T17:25:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.9.1",
+                    "first_patched_version": {
+                        "identifier": "2.9.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N",
+                    "score": 4.8
+                }
+            },
+            "epss": {
+                "percentage": 0.00189,
+                "percentile": 0.08783
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-119",
+                    "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.9.1",
+            "first_patched_version": {
+                "identifier": "2.9.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/22",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/22",
+        "created_at": "2026-06-10T21:48:21Z",
+        "updated_at": "2026-06-10T21:48:21Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 21,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-x3gm-94wq-g975",
+            "cve_id": "CVE-2025-2149",
+            "summary": "PyTorch: Manipulation of the argument scale/zero_point leads to improper initialization via Quantized Sigmoid Module",
+            "description": "A vulnerability was found in PyTorch 2.6.0+cu124. It has been rated as problematic. Affected by this issue is the function nnq_Sigmoid of the component Quantized Sigmoid Module. The manipulation of the argument scale/zero_point leads to improper initialization. The attack needs to be approached locally. The complexity of an attack is rather high. The exploitation is known to be difficult. The exploit has been disclosed to the public and may be used.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-x3gm-94wq-g975",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-2149",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2149"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/147818"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/147818#issue-2877301660"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.299060"
+                },
+                {
+                    "url": "https://vuldb.com/?id.299060"
+                },
+                {
+                    "url": "https://vuldb.com/?submit.506563"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-190.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-x3gm-94wq-g975"
+                }
+            ],
+            "published_at": "2025-03-10T15:30:47Z",
+            "updated_at": "2026-06-09T21:57:48Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "<= 2.6.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:N",
+                    "score": 2.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N",
+                    "score": 2.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00252,
+                "percentile": 0.16552
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:N",
+                "score": 2.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-665",
+                    "name": "Improper Initialization"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "<= 2.6.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/21",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/21",
+        "created_at": "2026-06-10T00:45:58Z",
+        "updated_at": "2026-06-10T00:45:58Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 20,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-f4hp-rmr7-r7v8",
+            "cve_id": "CVE-2025-2998",
+            "summary": "PyTorch is Vulnerable to Memory Consumption through pad_packed_sequence Function",
+            "description": "A vulnerability was found in PyTorch 2.6.0. It has been declared as critical. Affected by this vulnerability is the function torch.nn.utils.rnn.pad_packed_sequence. The manipulation leads to memory corruption. Local access is required to approach this attack. The exploit has been disclosed to the public and may be used.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-f4hp-rmr7-r7v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-2998",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2998"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149622"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149622#issue-2935495265"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.302047"
+                },
+                {
+                    "url": "https://vuldb.com/?id.302047"
+                },
+                {
+                    "url": "https://vuldb.com/?submit.524151"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/494518046816d29099b7d056a74ffa5c244fdcdd"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-192.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-f4hp-rmr7-r7v8"
+                }
+            ],
+            "published_at": "2025-03-31T15:30:48Z",
+            "updated_at": "2026-06-09T21:56:31Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 2.6.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N",
+                    "score": 4.8
+                }
+            },
+            "epss": {
+                "percentage": 0.00189,
+                "percentile": 0.08782
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-119",
+                    "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 2.6.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/20",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/20",
+        "created_at": "2026-06-10T00:44:05Z",
+        "updated_at": "2026-06-10T00:44:05Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 19,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-c678-jfcj-6jmf",
+            "cve_id": "CVE-2025-2148",
+            "summary": "PyTorch Tuple Handler is Vulnerable to Memory Corruption through Manipulation of None Argument",
+            "description": "A vulnerability was found in PyTorch 2.6.0+cu124. It has been declared as critical. Affected by this vulnerability is the function torch.ops.profiler._call_end_callbacks_on_jit_fut of the component Tuple Handler. The manipulation of the argument None leads to memory corruption. The attack can be launched remotely. The complexity of an attack is rather high. The exploitation appears to be difficult.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-c678-jfcj-6jmf",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-2148",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2148"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/147722"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.299059"
+                },
+                {
+                    "url": "https://vuldb.com/?id.299059"
+                },
+                {
+                    "url": "https://vuldb.com/?submit.505959"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-189.yaml"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/blob/b0a67c7495bb11ecb23e556058db059ba48354af/torch/autograd/profiler.py#L990"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-c678-jfcj-6jmf"
+                }
+            ],
+            "published_at": "2025-03-10T12:30:55Z",
+            "updated_at": "2026-06-09T21:06:55Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "<= 2.6.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                    "score": 5.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N",
+                    "score": 2.3
+                }
+            },
+            "epss": {
+                "percentage": 0.00428,
+                "percentile": 0.35511
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                "score": 5.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-119",
+                    "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "<= 2.6.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/19",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/19",
+        "created_at": "2026-06-09T23:58:56Z",
+        "updated_at": "2026-06-09T23:58:56Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 18,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "diffusers"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7wx4-6vff-v64p",
+            "cve_id": "CVE-2026-45804",
+            "summary": "Diffusers: TOCTOU Trust Remote Code Bypass",
+            "description": "## Background\n\nThis vulnerability is found in the `diffusers` package - the `transformers`-equivalent library for diffusion models.\n\nIt is found in the `DiffusionPipeline.from_pretrained` flow, which is used to load a pipeline from the HuggingFace Hub.\n\nThis function has a `trust_remote_code` guard: if the repository’s `model_index.json` references a custom pipeline class defined in a `.py` file in the repo, the load is blocked unless `trust_remote_code=True` is explicitly passed:\n\n```\nValueError: The repository for attacker/repo contains custom code in pipeline.py\nwhich must be executed to correctly load the model. You can inspect the repository\ncontent at https://hf.co/attacker/repo/blob/main/pipeline.py.\nPlease pass the argument `trust_remote_code=True` to allow custom code to be run.\n```\n\nThe vulnerability allows arbitrary code execution through the custom pipeline flow from a Hub repo, with no `custom_pipeline` or `trust_remote_code` kwargs passed. The `from_pretrained` call succeeds and returns a functional pipeline.\n\n---\n\n## Naive Flow\n\n`DiffusionPipeline.from_pretrained` begins by popping all relevant arguments from `kwargs` into local variables, then calls `DiffusionPipeline.download()` to fetch the repo files:\n\n```python\n# pipeline_utils.py:853\ncached_folder = cls.download(\n    pretrained_model_name_or_path,\n    ...\n    custom_pipeline=custom_pipeline,\n    trust_remote_code=trust_remote_code,\n    ...\n)\n```\n\nInside `download()`, `model_index.json` is fetched first as a standalone file via `hf_hub_download`:\n\n```python\n# pipeline_utils.py:1636\nconfig_file = hf_hub_download(\n    pretrained_model_name,\n    cls.config_name,\n    ...\n)\nconfig_dict = cls._dict_from_json_file(config_file)\n```\n\nThis config is used to detect custom pipeline code and enforce the trust check:\n\n```python\n# pipeline_utils.py:1672\nif custom_pipeline is None and isinstance(config_dict[\"_class_name\"], (list, tuple)):\n    custom_pipeline = config_dict[\"_class_name\"][0]\n\nload_pipe_from_hub = custom_pipeline is not None and f\"{custom_pipeline}.py\" in filenames\n\nif load_pipe_from_hub and not trust_remote_code:\n    raise ValueError(...)\n```\n\nAfter the check passes, `snapshot_download` then fetches all files and saves them to disk:\n\n```python\n# pipeline_utils.py:1778\ncached_folder = snapshot_download(\n    pretrained_model_name,\n    ...\n    revision=revision,\n    allow_patterns=allow_patterns,\n    ...\n)\n```\n\nBack in `from_pretrained`, the config is read a second time from the downloaded snapshot, and`_resolve_custom_pipeline_and_cls` reads the config to re-check if custom code needs to be loaded:\n\n```python\n# pipeline_loading_utils.py:974\ndef _resolve_custom_pipeline_and_cls(folder, config, custom_pipeline):\n    custom_class_name = None\n    if os.path.isfile(os.path.join(folder, f\"{custom_pipeline}.py\")):\n        custom_pipeline = os.path.join(folder, f\"{custom_pipeline}.py\")\n    elif isinstance(config[\"_class_name\"], (list, tuple)) and os.path.isfile(\n        os.path.join(folder, f\"{config['_class_name'][0]}.py\")\n    ):\n        custom_pipeline = os.path.join(folder, f\"{config['_class_name'][0]}.py\")\n        custom_class_name = config[\"_class_name\"][1]\n\n    return custom_pipeline, custom_class_name\n```\n\nIf the config points to a `.py` file, it is imported.\n\n---\n\n## The Vulnerability\n\n`hf_hub_download` and `snapshot_download` are two independent HTTP calls to the Hub, both resolving the repository’s default branch (if `revision=None`) to its current HEAD at call time. There is no atomicity guarantee between them - if the repository is updated between the two calls, they will resolve to different commits and download different content, with no warning displayed to the user.\n\nThe trust check in `download()` operates on the content fetched by `hf_hub_download` (commit A). The `snapshot_download` call that immediately follows can silently fetch a newer commit (commit B). The config in the newer commit will be the one parsed by `_resolve_custom_pipeline_and_cls`.\n\n**Therefore, it’s possible to introduce remote code into the repo between the two calls, bypassing the trust check.**\n\nThe race window is everything between the two Hub calls inside `download()`:\n\n```python\n# pipeline_utils.py:1636\nconfig_file = hf_hub_download(...)   # ← sees commit A, trust check passes\n\n# ... filenames processing, pattern building, pipeline_is_cached check ...\n# ~~~ ATTACKER PUSHES COMMIT B HERE ~~~\n\n# pipeline_utils.py:1778\ncached_folder = snapshot_download(...)  # ← sees commit B, downloads pipeline.py\n```\n\nFor the exploit, commit A carries a clean config with `_class_name` as a plain string, which causes `load_pipe_from_hub` to be `False` and the trust check to pass. Commit B changes `_class_name` to a list and adds `pipeline.py`:\n\n**Commit A - `model_index.json`:**\n\n```json\n{\n  \"_class_name\": \"FluxPipeline\",\n  \"_diffusers_version\": \"0.31.0\"\n}\n```\n\n**Commit B - `model_index.json`:**\n\n```json\n{\n  \"_class_name\": [\"pipeline\", \"FluxPipeline\"],\n  \"_diffusers_version\": \"0.31.0\"\n}\n```\n\nWhen `from_pretrained` reads the snapshot after `download()` returns, `config[\"_class_name\"]` is now a list, `pipeline.py` exists on disk (fetched by `snapshot_download`), and `_resolve_custom_pipeline_and_cls` resolves `custom_pipeline` to the local path of that file. `_get_pipeline_class` then imports it - with no trust check at this point in the code.\n\n---\n\n## PoC\n\n1. Create a Hub repo with commit A’s `model_index.json` (plain string `_class_name`).\n2. Run `DiffusionPipeline.from_pretrained(\"attacker/repo\")` with a breakpoint set at `pipeline_utils.py:1778` (the `snapshot_download` call). This is for the window to be large enough to manually respond to it.\n3. When execution pauses at the breakpoint, push commit B: update `model_index.json` to use a list `_class_name` and add `pipeline.py`.\n4. Resume execution.\n5. `snapshot_download` fetches commit B; `/tmp/pwned` is written during the subsequent `_get_pipeline_class` call.\n\n---\n\n## Constraints\n\n- Does not apply when `revision` is pinned to a specific commit hash - both Hub calls resolve to the same content.\n- Does not apply when loading from a local directory.\n- If all expected files are already present in the local HF cache, `download()` returns early before reaching `snapshot_download` (line 1767 early-return), closing the race window. The exploit therefore requires a first (or forced) download.\n\n---\n\n## Exploitability\n\nThe window between the two calls is very short. Local testing resulted in a window of approximately ~0.5 seconds for the attacker to push the change. This is, of course, unfeasible to accomplish for each and every new download. However, given a popular repo with many downloads per day, one may achieve **statistical success** by changing the repo’s state every once in a while or every few seconds, with some percentage of downloaders falling on the exact window. \n\n---\n\n## Impact\n\nThe vulnerability is a silent RCE - it allows arbitrary code to be loaded through the custom pipeline flow from a Hub repo, with no `custom_pipeline` or `trust_remote_code` kwargs. The `from_pretrained` call succeeds and returns a fully functional pipeline.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-7wx4-6vff-v64p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-45804",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/huggingface/diffusers/security/advisories/GHSA-7wx4-6vff-v64p"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-45804"
+                },
+                {
+                    "url": "https://github.com/huggingface/diffusers/issues/13446"
+                },
+                {
+                    "url": "https://github.com/huggingface/diffusers/pull/13448"
+                },
+                {
+                    "url": "https://github.com/huggingface/diffusers/commit/a37f6f8394ac2a7ee8360c3abea811efe54512b1"
+                },
+                {
+                    "url": "https://github.com/huggingface/diffusers/releases/tag/v0.38.0"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/diffusers/PYSEC-2026-2446.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7wx4-6vff-v64p"
+                }
+            ],
+            "published_at": "2026-05-20T15:31:33Z",
+            "updated_at": "2026-07-20T19:07:18Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "diffusers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.38.0",
+                    "first_patched_version": {
+                        "identifier": "0.38.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00376,
+                "percentile": 0.30619
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-367",
+                    "name": "Time-of-check Time-of-use (TOCTOU) Race Condition"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "diffusers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.38.0",
+            "first_patched_version": {
+                "identifier": "0.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/18",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/18",
+        "created_at": "2026-05-20T15:35:21Z",
+        "updated_at": "2026-05-20T15:35:21Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 17,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "diffusers"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-98h9-4798-4q5v",
+            "cve_id": "CVE-2026-44513",
+            "summary": "Diffusers has a `trust_remote_code` bypass via `custom_pipeline` and local custom components",
+            "description": "### Impact\n\nA `trust_remote_code` bypass in `DiffusionPipeline.from_pretrained` allows arbitrary remote code execution despite the user passing `trust_remote_code=False` (or omitting it, which is the default). The vulnerability has three variants, all sharing the same root cause — the `trust_remote_code` gate was implemented inside `DiffusionPipeline.download()` rather than at the actual dynamic-module load site, so any code path that bypassed or short-circuited `download()` also bypassed the security check:\n\n1. **Cross-repo `custom_pipeline`.** `DiffusionPipeline.from_pretrained('repoA', custom_pipeline='attacker/repoB', trust_remote_code=False)` — the gate evaluated against `repoA`'s file list rather than `repoB`'s, so `repoB`'s `pipeline.py` was loaded and executed.\n2. **Local snapshot + Hub `custom_pipeline`.** `DiffusionPipeline.from_pretrained('/local/snapshot', custom_pipeline='attacker/repoB', trust_remote_code=False)` — the local-path branch never invoked `download()`, so the gate was never reached and remote code from `repoB` executed.\n3. **Local snapshot with custom components.** `DiffusionPipeline.from_pretrained('/local/snapshot', trust_remote_code=False)` where the snapshot contains custom component files (e.g. `unet/my_unet_model.py`) referenced from `model_index.json` — same root cause; the local path skipped `download()` and custom component code executed.\n\nSilent remote code execution on the victim's machine. Anyone calling `DiffusionPipeline.from_pretrained` with custom pipelines is impacted.\n\n### Patches\n\nYes. Fixed in **diffusers 0.38.0** via [PR #13448](https://github.com/huggingface/diffusers/pull/13448). All users on versions `< 0.38.0` should upgrade:\n\n```bash\npip install --upgrade \"diffusers>=0.38.0\"\n```\n\nThe fix moves the `trust_remote_code` gate out of `DiffusionPipeline.download()` and into `get_cached_module_file` in `src/diffusers/utils/dynamic_modules_utils.py`, which is the actual chokepoint for every dynamic module load (local, Hub, or community mirror). All three variants now raise `ValueError` instead of executing untrusted code.\n\n### Workarounds\n\nIf upgrading immediately is not possible:\n\n- Only call `from_pretrained` with `pretrained_model_name_or_path`, `custom_pipeline`, and local snapshot directories from fully trusted sources that have been audited.\n- Do not pass `custom_pipeline=` pointing at a Hub repository different from the primary `pretrained_model_name_or_path` before reading its `pipeline.py`.\n- Before calling `from_pretrained` on a local snapshot, inspect the snapshot for unexpected `*.py` files, especially under component subdirectories (`unet/`, `scheduler/`, etc.) and at the snapshot root.\n\nThese are mitigations, not fixes — the only complete remediation is upgrading to 0.38.0.\n\n### Resources\n\n- **Fix:** https://github.com/huggingface/diffusers/pull/13448\n- **Original issue:** https://github.com/huggingface/diffusers/issues/13446\n- **Release notes:** https://github.com/huggingface/diffusers/releases/tag/v0.38.0\n- **CWE-94:** https://cwe.mitre.org/data/definitions/94.html",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-98h9-4798-4q5v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-44513",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/huggingface/diffusers/security/advisories/GHSA-98h9-4798-4q5v"
+                },
+                {
+                    "url": "https://github.com/huggingface/diffusers/issues/13446"
+                },
+                {
+                    "url": "https://github.com/huggingface/diffusers/pull/13448"
+                },
+                {
+                    "url": "https://github.com/huggingface/diffusers/commit/a37f6f8394ac2a7ee8360c3abea811efe54512b1"
+                },
+                {
+                    "url": "https://github.com/huggingface/diffusers/releases/tag/v0.38.0"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44513"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/diffusers/PYSEC-2026-40.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-98h9-4798-4q5v"
+                }
+            ],
+            "published_at": "2026-05-07T05:31:17Z",
+            "updated_at": "2026-06-05T17:53:11Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "diffusers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.38.0",
+                    "first_patched_version": {
+                        "identifier": "0.38.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00848,
+                "percentile": 0.54506
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-94",
+                    "name": "Improper Control of Generation of Code ('Code Injection')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "diffusers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.38.0",
+            "first_patched_version": {
+                "identifier": "0.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/17",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/17",
+        "created_at": "2026-05-08T14:16:35Z",
+        "updated_at": "2026-05-08T14:16:35Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-53q9-r3pm-6pq6",
+            "cve_id": "CVE-2025-32434",
+            "summary": "PyTorch: `torch.load` with `weights_only=True` leads to remote code execution",
+            "description": "# Description\nI found a Remote Command Execution (RCE) vulnerability in PyTorch. When loading model using torch.load with weights_only=True, it can still achieve RCE.  \n\n# Background knowledge\nhttps://github.com/pytorch/pytorch/security \n As you can see, the PyTorch official documentation considers using `torch.load()` with `weights_only=True` to be safe.\n![image](https://github.com/user-attachments/assets/fdaa8520-d66a-473a-ab1f-163d793de298)\nSince everyone knows that weights_only=False is unsafe, so they will use the  weights_only=True to mitigate the seucirty issue.\nBut now, I just proved that even if you use weights_only=True, it can still achieve RCE.\n\n# Credit\nThis vulnerability was found by Ji'an Zhou.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-53q9-r3pm-6pq6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-32434",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pytorch/pytorch/security/advisories/GHSA-53q9-r3pm-6pq6"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/8d4b8a920a2172523deb95bf20e8e52d50649c04"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-32434"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-41.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-53q9-r3pm-6pq6"
+                }
+            ],
+            "published_at": "2025-04-18T15:19:28Z",
+            "updated_at": "2025-08-29T19:45:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 2.6.0",
+                    "first_patched_version": {
+                        "identifier": "2.6.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 9.3
+                }
+            },
+            "epss": {
+                "percentage": 0.0194,
+                "percentile": 0.77896
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 2.6.0",
+            "first_patched_version": {
+                "identifier": "2.6.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/15",
+        "created_at": "2025-08-29T22:04:21Z",
+        "updated_at": "2025-08-29T22:04:21Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-887c-mr87-cxwp",
+            "cve_id": "CVE-2025-3730",
+            "summary": "PyTorch Improper Resource Shutdown or Release vulnerability",
+            "description": "A vulnerability, which was classified as problematic, was found in PyTorch 2.6.0. Affected is the function torch.nn.functional.ctc_loss of the file aten/src/ATen/native/LossCTC.cpp. The manipulation leads to denial of service. An attack has to be approached locally. The exploit has been disclosed to the public and may be used. The name of the patch is 46fc5d8e360127361211cb237d5f9eef0223e567. It is recommended to apply a patch to fix this issue.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-887c-mr87-cxwp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-3730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3730"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/150835"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/pull/150981"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.305076"
+                },
+                {
+                    "url": "https://vuldb.com/?id.305076"
+                },
+                {
+                    "url": "https://vuldb.com/?submit.553645"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/commit/01f226bfb8f2c343f5c614a6bbf685d91160f3af"
+                },
+                {
+                    "url": "https://github.com/timocafe/tewart-pytorch/commit/46fc5d8e360127361211cb237d5f9eef0223e567"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-887c-mr87-cxwp"
+                }
+            ],
+            "published_at": "2025-04-16T21:30:59Z",
+            "updated_at": "2025-09-02T15:23:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 2.7.1",
+                    "first_patched_version": {
+                        "identifier": "2.8.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 3.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+                    "score": 4.8
+                }
+            },
+            "epss": {
+                "percentage": 0.00307,
+                "percentile": 0.23006
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+                "score": 3.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-404",
+                    "name": "Improper Resource Shutdown or Release"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 2.7.1",
+            "first_patched_version": {
+                "identifier": "2.8.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/14",
+        "created_at": "2025-06-18T01:16:05Z",
+        "updated_at": "2025-06-18T01:16:05Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3749-ghw9-m3mg",
+            "cve_id": "CVE-2025-2953",
+            "summary": "PyTorch susceptible to local Denial of Service",
+            "description": "A vulnerability, which was classified as problematic, has been found in PyTorch 2.6.0+cu124. Affected by this issue is the function torch.mkldnn_max_pool2d. The manipulation leads to denial of service. An attack has to be approached locally. The exploit has been disclosed to the public and may be used.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-3749-ghw9-m3mg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-2953",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2953"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149274"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/issues/149274#issue-2923122269"
+                },
+                {
+                    "url": "https://vuldb.com/?ctiid.302006"
+                },
+                {
+                    "url": "https://vuldb.com/?id.302006"
+                },
+                {
+                    "url": "https://vuldb.com/?submit.521279"
+                },
+                {
+                    "url": "https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/torch/PYSEC-2025-191.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3749-ghw9-m3mg"
+                }
+            ],
+            "published_at": "2025-03-30T18:30:24Z",
+            "updated_at": "2026-06-08T19:50:13Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "torch"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 2.7.1-rc1",
+                    "first_patched_version": {
+                        "identifier": "2.7.1-rc1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 3.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P",
+                    "score": 1.9
+                }
+            },
+            "epss": {
+                "percentage": 0.00243,
+                "percentile": 0.15504
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+                "score": 3.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-404",
+                    "name": "Improper Resource Shutdown or Release"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "torch"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 2.7.1-rc1",
+            "first_patched_version": {
+                "identifier": "2.7.1-rc1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/12",
+        "created_at": "2025-05-30T19:57:09Z",
+        "updated_at": "2025-05-30T19:57:09Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cpwx-vrp4-4pq7",
+            "cve_id": "CVE-2025-27516",
+            "summary": "Jinja2 vulnerable to sandbox breakout through attr filter selecting format method",
+            "description": "An oversight in how the Jinja sandboxed environment interacts with the `|attr` filter allows an attacker that controls the content of a template to execute arbitrary Python code.\n\nTo exploit the vulnerability, an attacker needs to control the content of a template. Whether that is the case depends on the type of application using Jinja. This vulnerability impacts users of applications which execute untrusted templates.\n\nJinja's sandbox does catch calls to `str.format` and ensures they don't escape the sandbox. However, it's possible to use the `|attr` filter to get a reference to a string's plain format method, bypassing the sandbox. After the fix, the `|attr` filter no longer bypasses the environment's attribute lookup.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cpwx-vrp4-4pq7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-27516",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-cpwx-vrp4-4pq7"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/90457bbf33b8662926ae65cdde4c4c32e756e403"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-27516"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/04/msg00045.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/04/msg00022.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cpwx-vrp4-4pq7"
+                }
+            ],
+            "published_at": "2025-03-05T20:40:14Z",
+            "updated_at": "2025-11-03T22:54:42Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.1.5",
+                    "first_patched_version": {
+                        "identifier": "3.1.6"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 5.4
+                }
+            },
+            "epss": {
+                "percentage": 0.00497,
+                "percentile": 0.39897
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1336",
+                    "name": "Improper Neutralization of Special Elements Used in a Template Engine"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.1.5",
+            "first_patched_version": {
+                "identifier": "3.1.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/7",
+        "created_at": "2025-03-05T20:42:15Z",
+        "updated_at": "2026-08-14T15:56:38Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T15:56:38Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q2x7-8rv6-6q7h",
+            "cve_id": "CVE-2024-56326",
+            "summary": "Jinja has a sandbox breakout through indirect reference to format method",
+            "description": "An oversight in how the Jinja sandboxed environment detects calls to `str.format` allows an attacker that controls the content of a template to execute arbitrary Python code.\n\nTo exploit the vulnerability, an attacker needs to control the content of a template. Whether that is the case depends on the type of application using Jinja. This vulnerability impacts users of applications which execute untrusted templates.\n\nJinja's sandbox does catch calls to `str.format` and ensures they don't escape the sandbox. However, it's possible to store a reference to a malicious string's `format` method, then pass that to a filter that calls it. No such filters are built-in to Jinja, but could be present through custom filters in an application. After the fix, such indirect calls are also handled by the sandbox.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-q2x7-8rv6-6q7h",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-56326",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-q2x7-8rv6-6q7h"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.5"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-56326"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/04/msg00022.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q2x7-8rv6-6q7h"
+                }
+            ],
+            "published_at": "2024-12-23T17:56:08Z",
+            "updated_at": "2025-11-03T22:50:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.5"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 5.4
+                }
+            },
+            "epss": {
+                "percentage": 0.00521,
+                "percentile": 0.41584
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-693",
+                    "name": "Protection Mechanism Failure"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/6",
+        "created_at": "2024-12-23T17:57:40Z",
+        "updated_at": "2026-08-14T15:56:38Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T15:56:38Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pydantic"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mr82-8j83-vxmv",
+            "cve_id": "CVE-2024-3772",
+            "summary": "Pydantic regular expression denial of service",
+            "description": "Regular expression denial of service in Pydantic < 2.4.0, < 1.10.13 allows remote attackers to cause denial of service via a crafted email string.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-mr82-8j83-vxmv",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3772",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3772"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/pull/7360"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/commit/59d8f38fd6220e3917c53785dbc70317d6f8e631"
+                },
+                {
+                    "url": "https://github.com/pydantic/pydantic/commit/e4393ae6145c4dadff739990bb0116c6dec3441b"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6JBZLMSH4GAZOVBMT2JUO2LXHY7M2ALI"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mr82-8j83-vxmv"
+                }
+            ],
+            "published_at": "2024-04-15T03:31:00Z",
+            "updated_at": "2025-02-13T19:01:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pydantic"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.0.0, < 2.4.0",
+                    "first_patched_version": {
+                        "identifier": "2.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pydantic"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.10.13",
+                    "first_patched_version": {
+                        "identifier": "1.10.13"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 5.9
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00957,
+                "percentile": 0.58018
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 5.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pydantic"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.10.13",
+            "first_patched_version": {
+                "identifier": "1.10.13"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/4",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fj7x-q9j7-g6q6",
+            "cve_id": "CVE-2024-21503",
+            "summary": "Black vulnerable to Regular Expression Denial of Service (ReDoS)",
+            "description": "Versions of the package black before 24.3.0 are vulnerable to Regular Expression Denial of Service (ReDoS) via the lines_with_leading_tabs_expanded function in the strings.py file. An attacker could exploit this vulnerability by crafting a malicious input that causes a denial of service.\n\nExploiting this vulnerability is possible when running Black on untrusted input, or if you habitually put thousands of leading tab characters in your docstrings.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fj7x-q9j7-g6q6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-21503",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21503"
+                },
+                {
+                    "url": "https://github.com/psf/black/commit/f00093672628d212b8965a8993cee8bedf5fe9b8"
+                },
+                {
+                    "url": "https://github.com/psf/black/releases/tag/24.3.0"
+                },
+                {
+                    "url": "https://security.snyk.io/vuln/SNYK-PYTHON-BLACK-6256273"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/black/PYSEC-2024-48.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fj7x-q9j7-g6q6"
+                }
+            ],
+            "published_at": "2024-03-19T06:30:52Z",
+            "updated_at": "2024-07-03T21:24:52Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "black"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 0, < 24.3.0",
+                    "first_patched_version": {
+                        "identifier": "24.3.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00979,
+                "percentile": 0.58774
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-75",
+                    "name": "Failure to Sanitize Special Elements into a Different Plane (Special Element Injection)"
+                },
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "black"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 0, < 24.3.0",
+            "first_patched_version": {
+                "identifier": "24.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/3",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2024-05-24T01:33:30Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h75v-3vvj-5mfj",
+            "cve_id": "CVE-2024-34064",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing non-attribute characters. XML/HTML attributes cannot contain spaces, `/`, `>`, or `=`, as each would then be interpreted as starting a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. The fix for the previous GHSA-h5c8-rqwp-cp95 CVE-2024-22195 only addressed spaces but not other characters.\n\nAccepting keys as user input is now explicitly considered an unintended use case of the `xmlattr` filter, and code that does so without otherwise validating the input should be flagged as insecure, regardless of Jinja version. Accepting _values_ as user input continues to be safe.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h75v-3vvj-5mfj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34064",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h75v-3vvj-5mfj"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/0668239dc6b44ef38e7a6c9f91f312fd4ca581cb"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34064"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/567XIGSZMABG6TSMYWD7MIYNJSUQQRUC"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/GCLF44KY43BSVMTE6S53B4V5WP3FRRSE"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/SSCBHIL6BYKR5NRCBXP4XMP2CEEKGFVS"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ZALNWE3TXPPHVPSI3AZ5CTMSTAVN5UMS"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/12/msg00009.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h75v-3vvj-5mfj"
+                }
+            ],
+            "published_at": "2024-05-06T14:20:59Z",
+            "updated_at": "2025-11-04T16:50:25Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.4",
+                    "first_patched_version": {
+                        "identifier": "3.1.4"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                    "score": 5.4
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00979,
+                "percentile": 0.58506
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.4",
+            "first_patched_version": {
+                "identifier": "3.1.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2026-08-14T15:56:38Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T15:56:38Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h5c8-rqwp-cp95",
+            "cve_id": "CVE-2024-22195",
+            "summary": "Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter",
+            "description": "The `xmlattr` filter in affected versions of Jinja accepts keys containing spaces. XML/HTML attributes cannot contain spaces, as each would then be interpreted as a separate attribute. If an application accepts keys (as opposed to only values) as user input, and renders these in pages that other users see as well, an attacker could use this to inject other attributes and perform XSS. Note that accepting keys as user input is not common or a particularly intended use case of the `xmlattr` filter, and an application doing so should already be verifying what keys are provided regardless of this fix.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h5c8-rqwp-cp95",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-22195",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pallets/jinja/security/advisories/GHSA-h5c8-rqwp-cp95"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-22195"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/commit/716795349a41d4983a9a4771f7d883c96ea17be7"
+                },
+                {
+                    "url": "https://github.com/pallets/jinja/releases/tag/3.1.3"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/01/msg00010.html"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5XCWZD464AJJJUBOO7CMPXQ4ROBC6JX2"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/DELCVUUYX75I5K4Q5WMJG4MUZJA6VAIP"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/O7YWRBX6JQCWC2XXCTZ55C7DPMGICCN3"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/12/msg00009.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h5c8-rqwp-cp95"
+                }
+            ],
+            "published_at": "2024-01-11T15:20:48Z",
+            "updated_at": "2025-11-04T16:48:34Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "jinja2"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.1.3",
+                    "first_patched_version": {
+                        "identifier": "3.1.3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                    "score": 5.4
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00892,
+                "percentile": 0.55654
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+                "score": 5.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "jinja2"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.1.3",
+            "first_patched_version": {
+                "identifier": "3.1.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/joliGEN/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/joliGEN/security/dependabot/1",
+        "created_at": "2024-05-24T01:33:30Z",
+        "updated_at": "2026-08-14T15:56:38Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T15:56:38Z",
+        "auto_dismissed_at": null
+    }
+]

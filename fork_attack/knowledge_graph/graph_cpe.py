@@ -3,7 +3,7 @@ import json
 import re
 
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
-from fork_attack.utils import upsert_edge
+from fork_attack.utils import upsert_edge, extraction_date
 
 logger = logging.getLogger(__name__)
 
@@ -29,11 +29,12 @@ def sanitize_key(criteria):
 
 
 def load_cpe_data():
+    input_file = f"data/{extraction_date()}/nvd_cpes.json"
     try:
-        with open("data/nvd_cpes.json", 'r', encoding='utf-8') as f:
+        with open(input_file, 'r', encoding='utf-8') as f:
             entries = json.load(f)
     except FileNotFoundError:
-        logger.error("Arquivo data/nvd_cpes.json não encontrado.")
+        logger.error(f"Arquivo {input_file} não encontrado.")
         return
 
     logger.info(f"Processando CPEs de {len(entries)} CVEs...")

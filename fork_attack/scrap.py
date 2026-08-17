@@ -1,10 +1,15 @@
 import glob
 import re
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import pandas as pd
+from fork_attack.utils import extraction_date
 
 result = []
 result_all = []
+result_lock = threading.Lock()
+MAX_WORKERS = 16
 
 
 def get_definitions(cew_id):
@@ -50,23 +55,31 @@ def get_definitions(cew_id):
     return df
 
 
-def process_row(row):
-    cwes = dict(row).get("rule.tags", dict(row).get("security_advisory.cwes"))
-    for cwe_id in eval(cwes):
-        cwe_id = int(cwe_id.split("-")[1])
-        definitions = get_definitions(cwe_id)
-        definitions["cwe_counts"] = row["counts"]
-        if not definitions.empty:
-            definitions["cwe_id"] = cwe_id
+def process_cwe(cwe_id, counts):
+    definitions = get_definitions(cwe_id)
+    if not definitions.empty:
+        definitions["cwe_counts"] = counts
+        definitions["cwe_id"] = cwe_id
+        with result_lock:
             result.append(definitions)
-        else:
-            print(f"Error: {cwe_id}")
+    else:
+        print(f"Error: {cwe_id}")
+
+
+def process_row(row, executor):
+    cwes = dict(row).get("rule.tags", dict(row).get("security_advisory.cwes"))
+    jobs = [(int(cwe_id.split("-")[1]), row["counts"]) for cwe_id in eval(cwes)]
+    return [executor.submit(process_cwe, cwe_id, counts) for cwe_id, counts in jobs]
 
 
 def main():
+    global result, result_all
+    # Raw extraction date of the Dependabot/CodeQL corpus these files derive from;
+    # consolidated outputs are persisted alongside it, not loose in data/.
+    extraction_date_str = extraction_date()
     patterns = {
-        "cwe": "../data/code_analysis_cwe_*.csv",
-        "cve": "../data/dependabot_cve_*.csv"
+        "cwe": f"../data/{extraction_date_str}/code_analysis_cwe_*.csv",
+        "cve": f"../data/{extraction_date_str}/dependabot_cve_*.csv"
     }
 
     for key, value in patterns.items():
@@ -77,9 +90,12 @@ def main():
             df = pd.read_csv(file)
             filelist.append(df)
         df = pd.concat(filelist)
-        df.apply(lambda x: process_row(x), axis=1)
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            futures = [fut for _, row in df.iterrows() for fut in process_row(row, executor)]
+            for fut in as_completed(futures):
+                fut.result()
         df_result = pd.concat(result)
-        df_result.to_csv(f"../data/{key}_definitions.csv")
+        df_result.to_csv(f"../data/{extraction_date_str}/{key}_definitions.csv")
         df_result = df_result.drop("cwe_id", axis=1)
         df_result_agg = df_result.groupby(
             [
@@ -89,7 +105,7 @@ def main():
                 "description"
             ]
         ).sum().reset_index()
-        df_result_agg.to_csv(f"../data/{key}_definitions_agg.csv")
+        df_result_agg.to_csv(f"../data/{extraction_date_str}/{key}_definitions_agg.csv")
         result_all.append(df_result_agg)
         result = []
 
@@ -102,7 +118,7 @@ def main():
             "description"
         ]
     ).sum().reset_index()
-    df_all_agg.to_csv("../data/all_definitions_agg.csv")
+    df_all_agg.to_csv(f"../data/{extraction_date_str}/all_definitions_agg.csv")
 
 
 if __name__ == '__main__':

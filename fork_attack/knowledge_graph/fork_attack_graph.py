@@ -17,7 +17,8 @@ class ForkAttackGraph(metaclass=Singleton):
         "github_security_advisories",
         "owasp",
         "repositories",
-        "semgrep_rules"
+        "semgrep_rules",
+        "semgrep_sast_rules"
     ]
 
     edge_collections = [
@@ -44,7 +45,9 @@ class ForkAttackGraph(metaclass=Singleton):
         "cwe_views",
         "cwe_composites",
         "cwe_chains",
-        "semgrep_rules_commits"
+        "semgrep_rules_commits",
+        "semgrep_sast_rules_commits",
+        "semgrep_sast_rules_cwes"
     ]
 
     def __init__(self):
@@ -55,7 +58,7 @@ class ForkAttackGraph(metaclass=Singleton):
             "_system", username=os.getenv("ARANGO_USERNAME"),
             password=os.getenv("ARANGO_PASSWORD")
         )
-        self.db_name = "fork-attack"
+        self.db_name = "fork-attack-2026"
         self.graph_name = "cwe_cve_cpe"
 
         self.create_db()
@@ -157,6 +160,18 @@ class ForkAttackGraph(metaclass=Singleton):
                         edge_collection=edge_collection,
                         from_vertex_collections=["semgrep_rules"],
                         to_vertex_collections=["owasp"]
+                    )
+                elif edge_collection == "semgrep_sast_rules_commits":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["semgrep_sast_rules"],
+                        to_vertex_collections=["commits"]
+                    )
+                elif edge_collection == "semgrep_sast_rules_cwes":
+                    self.graph.create_edge_definition(
+                        edge_collection=edge_collection,
+                        from_vertex_collections=["semgrep_sast_rules"],
+                        to_vertex_collections=["cwes"]
                     )
                 elif edge_collection == "ghsa_cwe":
                     self.graph.create_edge_definition(

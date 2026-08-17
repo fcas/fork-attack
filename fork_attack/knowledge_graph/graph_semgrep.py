@@ -4,7 +4,7 @@ import json
 import urllib.parse
 
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
-from fork_attack.utils import upsert_edge, canonical_repo_name
+from fork_attack.utils import upsert_edge, canonical_repo_name, is_known_repo, extraction_date, has_provenance, add_source
 
 logger = logging.getLogger(__name__)
 
@@ -54,17 +54,32 @@ def extract_commit_sha(url):
     return None
 
 def load_semgrep_data():
+    findings_path = f"data/{extraction_date()}/semgrep_findings.json"
     try:
-        with open("data/semgrep_findings.json", 'r', encoding='utf-8') as f:
+        with open(findings_path, 'r', encoding='utf-8') as f:
             findings = json.load(f)
     except FileNotFoundError:
-        logger.error("Arquivo data/semgrep_findings.json não encontrado.")
+        logger.error(f"Arquivo {findings_path} não encontrado.")
         return
 
     logger.info(f"Processando {len(findings)} findings do Semgrep...")
 
+    # Semgrep only bumps state_updated_at on a genuine state transition (e.g.
+    # open -> fixed/removed, or a manual triage decision) -- a rescan that
+    # reconfirms the same still-vulnerable dependency leaves it untouched, so
+    # it is NOT a proxy for "seen by a scan in this study's accepted window".
+    # This study independently verified (semgrep_status_report.csv) that
+    # every in-scope repo already has a confirmed successful Semgrep run in
+    # that window, so the only filter needed here is the finding's own
+    # current status: "open" means still present as of now; "fixed" or
+    # "provisionally_ignored" (triaged as not relevant/false positive) don't
+    # belong in this graph.
+    ALLOWED_STATUS = "open"
+
     skipped_non_python = 0
-    skipped_unknown_vuln = 0
+    skipped_unknown_repo = 0
+    skipped_not_open = 0
+    skipped_no_provenance = 0
     for item in findings:
         try:
             ecosystem = item.get("found_dependency", {}).get("ecosystem")
@@ -72,24 +87,48 @@ def load_semgrep_data():
                 skipped_non_python += 1
                 continue
 
-            # Semgrep SSC's role in this study is reachability triage of
-            # vulnerabilities already identified by CodeQL/Dependabot, not an
-            # independent source of new CVEs/GHSAs: a finding is only ingested
-            # if its vulnerability identifier already exists in the graph
-            # (i.e., Dependabot already flagged that dependency/advisory).
-            # Findings for vulnerabilities Semgrep alone surfaced are dropped
-            # entirely, before any repository/commit/rule node is created.
+            if item.get("status") != ALLOWED_STATUS:
+                skipped_not_open += 1
+                continue
+
+            # Semgrep's org-wide findings endpoint can surface repos outside
+            # this study's 273-repo corpus (e.g. a stale fork left over from
+            # an earlier iteration, still visible under the fcas org) --
+            # reject those before anything gets inserted.
+            repo_info = item.get("repository", {})
+            repo_name_raw = repo_info.get("name", "").replace("fcas/", "")
+            if not is_known_repo(repo_name_raw):
+                skipped_unknown_repo += 1
+                continue
+
+            # Semgrep freezes a finding's code location at first detection and
+            # doesn't necessarily re-validate it on every later scan that
+            # reconfirms the same dependency -- a location can point at a
+            # file long since removed/renamed upstream. Only findings with
+            # real backing in the repo's current tree belong in this graph.
+            loc_path = item.get("location", {}).get("file_path")
+            if not has_provenance(canonical_repo_name(repo_name_raw), loc_path):
+                skipped_no_provenance += 1
+                continue
+
+            # Semgrep SSC is a first-class detection source: a finding whose
+            # CVE/GHSA is not yet in the graph gets that node created here.
+            # The CVE/CWE/GHSA expansion pipeline runs before this script and
+            # fetches full metadata (CVSS, published date, hierarchy, etc.)
+            # for anything Semgrep surfaces on its own, so the bare insert
+            # below is a safety net, not the primary creation path.
             vuln_id = item.get("vulnerability_identifier")
             vuln_key = vuln_id.strip().replace(" ", "-") if vuln_id else None
             is_ghsa = bool(vuln_key and vuln_key.upper().startswith("GHSA"))
             is_cve = bool(vuln_key and vuln_key.upper().startswith("CVE"))
-            already_known = (is_cve and cves.has(vuln_key)) or (is_ghsa and github_security_advisories.has(vuln_key))
-            if not already_known:
-                skipped_unknown_vuln += 1
-                continue
+            if is_cve and not cves.has(vuln_key):
+                cves.insert({"_key": vuln_key}, overwrite=True, overwrite_mode="update")
+            if is_cve:
+                add_source(fa.db, "cves", vuln_key, "semgrep ssc")
+            if is_ghsa and not github_security_advisories.has(vuln_key):
+                github_security_advisories.insert({"_key": vuln_key}, overwrite=True, overwrite_mode="update")
 
-            repo_info = item.get("repository", {})
-            repo_name = canonical_repo_name(repo_info.get("name", "").replace("fcas/", ""))
+            repo_name = canonical_repo_name(repo_name_raw)
 
             if repo_name and not repositories.has(repo_name):
                 repositories.insert({"_key": repo_name})
@@ -197,14 +236,14 @@ def load_semgrep_data():
                 for cwe_str in cwe_names:
                     cwe_id = cwe_str.split(":")[0].strip().upper()
 
-                    # Semgrep's role in this study is reachability triage of vulnerabilities
-                    # already identified by CodeQL/Dependabot, not an independent source of
-                    # new CWEs: a CWE tag Semgrep references is only linked if it already
-                    # exists in the graph (i.e., CodeQL/Dependabot already surfaced it via
-                    # their own MITRE relationship expansion). A CWE Semgrep alone tags is
-                    # dropped entirely, the same "already_known" gate applied to CVE/GHSA above.
+                    # New CWEs Semgrep alone tags are expected to already exist by this
+                    # point (resolved, with full MITRE hierarchy expansion, by the
+                    # CVE/CWE/GHSA expansion pipeline run before this script); this
+                    # bare insert is a safety net so a finding is never dropped solely
+                    # because that offline expansion step missed a CWE.
                     if not cwes.has(cwe_id):
-                        continue
+                        cwes.insert({"_key": cwe_id}, overwrite=True, overwrite_mode="update")
+                    add_source(fa.db, "cwes", cwe_id, "semgrep ssc")
 
                     cwe_ids.append(cwe_id)
 
@@ -283,7 +322,9 @@ def load_semgrep_data():
             pass
 
     logger.info(f"{skipped_non_python} findings fora do ecossistema '{ALLOWED_ECOSYSTEM}' foram ignorados.")
-    logger.info(f"{skipped_unknown_vuln} findings sem CVE/GHSA já conhecido (Dependabot/CodeQL) foram ignorados.")
+    logger.info(f"{skipped_unknown_repo} findings de repos fora do corpus de 273 foram ignorados.")
+    logger.info(f"{skipped_not_open} findings com status != 'open' (fixed/provisionally_ignored) foram ignorados.")
+    logger.info(f"{skipped_no_provenance} findings sem provenance (arquivo não existe no HEAD atual) foram ignorados.")
 
 if __name__ == '__main__':
     # Opcional: configurar log se for rodar standalone

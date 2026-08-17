@@ -1,0 +1,119 @@
+[
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pytest"
+            },
+            "manifest_path": "test_requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6w46-j5rx-g56g",
+            "cve_id": "CVE-2025-71176",
+            "summary": "pytest has vulnerable tmpdir handling",
+            "description": "pytest through 9.0.2 on UNIX relies on directories with the `/tmp/pytest-of-{user}` name pattern, which allows local users to cause a denial of service or possibly gain privileges.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-6w46-j5rx-g56g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-71176",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71176"
+                },
+                {
+                    "url": "https://github.com/pytest-dev/pytest/issues/13669"
+                },
+                {
+                    "url": "https://www.openwall.com/lists/oss-security/2026/01/21/5"
+                },
+                {
+                    "url": "https://github.com/pytest-dev/pytest/pull/14343"
+                },
+                {
+                    "url": "https://github.com/pytest-dev/pytest/commit/95d8423bd24992deea5b9df32555fa1741679e2c"
+                },
+                {
+                    "url": "https://github.com/pytest-dev/pytest/releases/tag/9.0.3"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6w46-j5rx-g56g"
+                }
+            ],
+            "published_at": "2026-01-22T06:30:29Z",
+            "updated_at": "2026-04-13T16:38:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pytest"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 9.0.3",
+                    "first_patched_version": {
+                        "identifier": "9.0.3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+                    "score": 6.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.0014,
+                "percentile": 0.03703
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+                "score": 6.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-379",
+                    "name": "Creation of Temporary File in Directory with Insecure Permissions"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pytest"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 9.0.3",
+            "first_patched_version": {
+                "identifier": "9.0.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/gym/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/gym/security/dependabot/1",
+        "created_at": "2026-04-13T18:45:56Z",
+        "updated_at": "2026-04-13T18:45:56Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

@@ -2,7 +2,7 @@ import logging
 import json
 
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
-from fork_attack.utils import upsert_edge
+from fork_attack.utils import upsert_edge, extraction_date
 
 logger = logging.getLogger(__name__)
 
@@ -15,11 +15,12 @@ capec_capec = fa.graph.edge_collection("capec_capec")
 
 
 def load_capec_data():
+    capec_path = f"data/{extraction_date()}/capec.json"
     try:
-        with open("data/capec.json", "r", encoding="utf-8") as f:
+        with open(capec_path, "r", encoding="utf-8") as f:
             entries = json.load(f)
     except FileNotFoundError:
-        logger.error("Arquivo data/capec.json não encontrado.")
+        logger.error(f"Arquivo {capec_path} não encontrado.")
         return
 
     logger.info(f"Processando {len(entries)} attack patterns CAPEC...")

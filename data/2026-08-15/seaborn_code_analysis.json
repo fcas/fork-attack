@@ -1,0 +1,768 @@
+[
+    {
+        "number": 13,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/13",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/13",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value.\nThis path depends on a user-provided value.\nThis path depends on a user-provided value."
+            },
+            "location": {
+                "path": "seaborn/utils.py",
+                "start_line": 571,
+                "end_line": 571,
+                "start_column": 31,
+                "end_column": 41
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/13/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 12,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/12",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/12",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value.\nThis path depends on a user-provided value."
+            },
+            "location": {
+                "path": "seaborn/utils.py",
+                "start_line": 520,
+                "end_line": 520,
+                "start_column": 21,
+                "end_column": 30
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/12/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 11,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/11",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/11",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value.\nThis path depends on a user-provided value."
+            },
+            "location": {
+                "path": "seaborn/utils.py",
+                "start_line": 519,
+                "end_line": 519,
+                "start_column": 27,
+                "end_column": 36
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/11/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 10,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/10",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/10",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/sphinxext/tutorial_builder.py",
+                "start_line": 74,
+                "end_line": 74,
+                "start_column": 20,
+                "end_column": 28
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/10/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 9,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/9",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/9",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/sphinxext/tutorial_builder.py",
+                "start_line": 73,
+                "end_line": 73,
+                "start_column": 22,
+                "end_column": 62
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/9/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 8,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/8",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/8",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/tools/nb_to_doc.py",
+                "start_line": 179,
+                "end_line": 179,
+                "start_column": 23,
+                "end_column": 29
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/8/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 7,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/7",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/7",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/tools/nb_to_doc.py",
+                "start_line": 174,
+                "end_line": 174,
+                "start_column": 18,
+                "end_column": 23
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/7/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 6,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/6",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/tools/nb_to_doc.py",
+                "start_line": 173,
+                "end_line": 173,
+                "start_column": 27,
+                "end_column": 32
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/6/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 5,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/tools/nb_to_doc.py",
+                "start_line": 168,
+                "end_line": 168,
+                "start_column": 15,
+                "end_column": 23
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/5/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 4,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/tools/nb_to_doc.py",
+                "start_line": 163,
+                "end_line": 163,
+                "start_column": 15,
+                "end_column": 20
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/4/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 3,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/tools/nb_to_doc.py",
+                "start_line": 114,
+                "end_line": 114,
+                "start_column": 15,
+                "end_column": 20
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/3/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 2,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/code-injection",
+            "severity": "error",
+            "description": "Code injection",
+            "name": "py/code-injection",
+            "tags": [
+                "external/cwe/cwe-094",
+                "external/cwe/cwe-095",
+                "external/cwe/cwe-116",
+                "security"
+            ],
+            "full_description": "Interpreting unsanitized user input as code allows a malicious user to perform arbitrary code execution.",
+            "help": "# Code injection\nDirectly evaluating user input (for example, an HTTP request parameter) as code without properly sanitizing the input first allows an attacker arbitrary code execution. This can occur when user input is passed to code that interprets it as an expression to be evaluated, such as `eval` or `exec`.\n\n\n## Recommendation\nAvoid including user input in any expression that may be dynamically evaluated. If user input must be included, use context-specific escaping before including it. It is important that the correct escaping is used for the type of evaluation that will occur.\n\n\n## Example\nThe following example shows two functions setting a name from a request. The first function uses `exec` to execute the `setname` function. This is dangerous as it can allow a malicious user to execute arbitrary code on the server. For example, the user could supply the value `\"' + subprocess.call('rm -rf') + '\"` to destroy the server's file system. The second function calls the `setname` function directly and is thus safe.\n\n\n```python\n\nurlpatterns = [\n    # Route to code_execution\n    url(r'^code-ex1$', code_execution_bad, name='code-execution-bad'),\n    url(r'^code-ex2$', code_execution_good, name='code-execution-good')\n]\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #BAD -- Allow user to define code to be run.\n        exec(\"setname('%s')\" % first_name)\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #GOOD --Call code directly\n        setname(first_name)\n\n```\n\n## References\n* OWASP: [Code Injection](https://www.owasp.org/index.php/Code_Injection).\n* Wikipedia: [Code Injection](https://en.wikipedia.org/wiki/Code_injection).\n* Common Weakness Enumeration: [CWE-94](https://cwe.mitre.org/data/definitions/94.html).\n* Common Weakness Enumeration: [CWE-95](https://cwe.mitre.org/data/definitions/95.html).\n* Common Weakness Enumeration: [CWE-116](https://cwe.mitre.org/data/definitions/116.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This code execution depends on a user-provided value."
+            },
+            "location": {
+                "path": "doc/sphinxext/gallery_generator.py",
+                "start_line": 24,
+                "end_line": 24,
+                "start_column": 14,
+                "end_column": 50
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/2/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 1,
+        "created_at": "2026-08-15T10:55:20Z",
+        "updated_at": "2026-08-15T10:55:20Z",
+        "url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/seaborn/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/code-injection",
+            "severity": "error",
+            "description": "Code injection",
+            "name": "py/code-injection",
+            "tags": [
+                "external/cwe/cwe-094",
+                "external/cwe/cwe-095",
+                "external/cwe/cwe-116",
+                "security"
+            ],
+            "full_description": "Interpreting unsanitized user input as code allows a malicious user to perform arbitrary code execution.",
+            "help": "# Code injection\nDirectly evaluating user input (for example, an HTTP request parameter) as code without properly sanitizing the input first allows an attacker arbitrary code execution. This can occur when user input is passed to code that interprets it as an expression to be evaluated, such as `eval` or `exec`.\n\n\n## Recommendation\nAvoid including user input in any expression that may be dynamically evaluated. If user input must be included, use context-specific escaping before including it. It is important that the correct escaping is used for the type of evaluation that will occur.\n\n\n## Example\nThe following example shows two functions setting a name from a request. The first function uses `exec` to execute the `setname` function. This is dangerous as it can allow a malicious user to execute arbitrary code on the server. For example, the user could supply the value `\"' + subprocess.call('rm -rf') + '\"` to destroy the server's file system. The second function calls the `setname` function directly and is thus safe.\n\n\n```python\n\nurlpatterns = [\n    # Route to code_execution\n    url(r'^code-ex1$', code_execution_bad, name='code-execution-bad'),\n    url(r'^code-ex2$', code_execution_good, name='code-execution-good')\n]\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #BAD -- Allow user to define code to be run.\n        exec(\"setname('%s')\" % first_name)\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #GOOD --Call code directly\n        setname(first_name)\n\n```\n\n## References\n* OWASP: [Code Injection](https://www.owasp.org/index.php/Code_Injection).\n* Wikipedia: [Code Injection](https://en.wikipedia.org/wiki/Code_injection).\n* Common Weakness Enumeration: [CWE-94](https://cwe.mitre.org/data/definitions/94.html).\n* Common Weakness Enumeration: [CWE-95](https://cwe.mitre.org/data/definitions/95.html).\n* Common Weakness Enumeration: [CWE-116](https://cwe.mitre.org/data/definitions/116.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "3b8b02fb3d7e80a06143497feaa13e27be989cdd",
+            "message": {
+                "text": "This code execution depends on a user-provided value."
+            },
+            "location": {
+                "path": "ci/check_gallery.py",
+                "start_line": 13,
+                "end_line": 13,
+                "start_column": 18,
+                "end_column": 28
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/seaborn/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

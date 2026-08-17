@@ -1,0 +1,379 @@
+[
+    {
+        "number": 7,
+        "created_at": "2026-08-15T00:10:35Z",
+        "updated_at": "2026-08-15T00:10:35Z",
+        "url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/7",
+        "html_url": "https://github.com/fcas/tflearn/security/code-scanning/7",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. On the application level, maintain a list of authorized URLs on the server and choose from that list based on the input provided. If that is not possible, one should verify the IP address for all user-controlled requests to ensure they are not private. This requires saving the verified IP address of each domain, then utilizing a custom HTTP adapter to ensure that future requests to that domain use the verified IP address. On the network level, you can segment the vulnerable application into its own LAN or block access to specific devices.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "dbd983999d5304a797fbfd128bf83c31b3392e86",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value.\nThe full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "tflearn/data_utils.py",
+                "start_line": 567,
+                "end_line": 567,
+                "start_column": 30,
+                "end_column": 55
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/7/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 6,
+        "created_at": "2026-08-15T00:10:35Z",
+        "updated_at": "2026-08-15T00:10:35Z",
+        "url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/tflearn/security/code-scanning/6",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "dbd983999d5304a797fbfd128bf83c31b3392e86",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "examples/nlp/lstm_generator_shakespeare.py",
+                "start_line": 21,
+                "end_line": 21,
+                "start_column": 26,
+                "end_column": 51
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/6/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 5,
+        "created_at": "2026-08-15T00:10:35Z",
+        "updated_at": "2026-08-15T00:10:35Z",
+        "url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/tflearn/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "dbd983999d5304a797fbfd128bf83c31b3392e86",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "tflearn/data_utils.py",
+                "start_line": 632,
+                "end_line": 632,
+                "start_column": 28,
+                "end_column": 52
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/5/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 4,
+        "created_at": "2026-08-15T00:10:35Z",
+        "updated_at": "2026-08-15T00:10:35Z",
+        "url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/tflearn/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "dbd983999d5304a797fbfd128bf83c31b3392e86",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "tflearn/datasets/cifar10.py",
+                "start_line": 62,
+                "end_line": 62,
+                "start_column": 29,
+                "end_column": 30
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/4/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 3,
+        "created_at": "2026-08-15T00:10:35Z",
+        "updated_at": "2026-08-15T00:10:35Z",
+        "url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/tflearn/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "dbd983999d5304a797fbfd128bf83c31b3392e86",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "tflearn/datasets/cifar10.py",
+                "start_line": 59,
+                "end_line": 59,
+                "start_column": 29,
+                "end_column": 30
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/3/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 2,
+        "created_at": "2026-08-15T00:10:35Z",
+        "updated_at": "2026-08-15T00:10:35Z",
+        "url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/tflearn/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "dbd983999d5304a797fbfd128bf83c31b3392e86",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "tflearn/datasets/cifar100.py",
+                "start_line": 60,
+                "end_line": 60,
+                "start_column": 29,
+                "end_column": 30
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/2/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 1,
+        "created_at": "2026-08-15T00:10:35Z",
+        "updated_at": "2026-08-15T00:10:35Z",
+        "url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/tflearn/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "dbd983999d5304a797fbfd128bf83c31b3392e86",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "tflearn/datasets/cifar100.py",
+                "start_line": 57,
+                "end_line": 57,
+                "start_column": 29,
+                "end_column": 30
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/tflearn/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

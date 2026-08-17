@@ -1,0 +1,496 @@
+[
+    {
+        "number": 5,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "manifest_path": "Cargo.lock",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-chgr-c6px-7xpp",
+            "cve_id": null,
+            "summary": "PyO3 has a missing `Sync` bound on `PyCFunction::new_closure` closures",
+            "description": "`PyCFunction::new_closure` (and the temporary `new_closure_bound` complement in the 0.21–0.22 series) required the supplied closure to be `Send + 'static` but not `Sync`. The resulting `PyCFunction` is a Python callable that can be invoked from any Python thread, which means the closure may be called concurrently from multiple threads, and needs a `Sync` bound to prevent possible data races.\n\nThe problem exists under all Python versions but is particularly vulnerable under the newer free-threaded Python variant, which do not have serial execution imposed by the Global Interpreter Lock. Under releases protected by the GIL, the ability to \"detach\" from the Python interpreter temporarily inside the closure (e.g. by `Python::detach`) makes it possible for interleaved and/or concurrent execution of various portions of the closure.\n\nPyO3 0.29.0 added a `Sync` bound to close this thread-safety bug.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-chgr-c6px-7xpp",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/PyO3/pyo3/pull/6096"
+                },
+                {
+                    "url": "https://github.com/PyO3/pyo3/releases/tag/v0.29.0"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2026-0177.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-chgr-c6px-7xpp"
+                }
+            ],
+            "published_at": "2026-06-12T20:09:05Z",
+            "updated_at": "2026-06-12T20:09:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "pyo3"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.29.0",
+                    "first_patched_version": {
+                        "identifier": "0.29.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N",
+                    "score": 6.3
+                }
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-362",
+                    "name": "Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.29.0",
+            "first_patched_version": {
+                "identifier": "0.29.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/jellyfish/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/jellyfish/security/dependabot/5",
+        "created_at": "2026-08-15T13:37:47Z",
+        "updated_at": "2026-08-15T13:37:47Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "manifest_path": "Cargo.lock",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-36hh-v3qg-5jq4",
+            "cve_id": null,
+            "summary": "PyO3 has an Out-of-bounds Read in `nth` / `nth_back` for `PyList` and `PyTuple` iterators",
+            "description": "PyO3 0.24.0 added optimized implementations of `Iterator::nth` and `DoubleEndedIterator::nth_back` for the `BoundListIterator` and `BoundTupleIterator` types. These implementations computed the target index using unchecked `usize` addition (`index + n`) before bounds-checking against the sequence length, then read the element via `get_item_unchecked`.\n\nIn `nth` methods, a sufficiently large `n` (combined with a non-zero internal index) could cause the addition to overflow and wrap around, producing a small \"target index\" that passed the bounds check and enabling reads at the front of the `list` or `tuple` of elements previously yielded by the iterator.\n\nIn `nth_back` methods, a sufficiently large `n` could cause underflow in a similar fashion, however would instead allow reads of arbitrary memory past the end of the `list` or `tuple` storage.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-36hh-v3qg-5jq4",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/PyO3/pyo3/pull/6086"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2026-0176.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-36hh-v3qg-5jq4"
+                }
+            ],
+            "published_at": "2026-06-12T19:32:47Z",
+            "updated_at": "2026-06-12T19:32:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "pyo3"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.29.0",
+                    "first_patched_version": {
+                        "identifier": "0.29.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.29.0",
+            "first_patched_version": {
+                "identifier": "0.29.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/jellyfish/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/jellyfish/security/dependabot/4",
+        "created_at": "2026-08-15T13:37:47Z",
+        "updated_at": "2026-08-15T13:37:47Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "manifest_path": "Cargo.toml",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-chgr-c6px-7xpp",
+            "cve_id": null,
+            "summary": "PyO3 has a missing `Sync` bound on `PyCFunction::new_closure` closures",
+            "description": "`PyCFunction::new_closure` (and the temporary `new_closure_bound` complement in the 0.21–0.22 series) required the supplied closure to be `Send + 'static` but not `Sync`. The resulting `PyCFunction` is a Python callable that can be invoked from any Python thread, which means the closure may be called concurrently from multiple threads, and needs a `Sync` bound to prevent possible data races.\n\nThe problem exists under all Python versions but is particularly vulnerable under the newer free-threaded Python variant, which do not have serial execution imposed by the Global Interpreter Lock. Under releases protected by the GIL, the ability to \"detach\" from the Python interpreter temporarily inside the closure (e.g. by `Python::detach`) makes it possible for interleaved and/or concurrent execution of various portions of the closure.\n\nPyO3 0.29.0 added a `Sync` bound to close this thread-safety bug.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-chgr-c6px-7xpp",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/PyO3/pyo3/pull/6096"
+                },
+                {
+                    "url": "https://github.com/PyO3/pyo3/releases/tag/v0.29.0"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2026-0177.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-chgr-c6px-7xpp"
+                }
+            ],
+            "published_at": "2026-06-12T20:09:05Z",
+            "updated_at": "2026-06-12T20:09:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "pyo3"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 0.29.0",
+                    "first_patched_version": {
+                        "identifier": "0.29.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N",
+                    "score": 6.3
+                }
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-362",
+                    "name": "Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 0.29.0",
+            "first_patched_version": {
+                "identifier": "0.29.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/jellyfish/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/jellyfish/security/dependabot/3",
+        "created_at": "2026-06-12T20:18:37Z",
+        "updated_at": "2026-08-15T13:37:47Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-15T13:37:47Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "manifest_path": "Cargo.toml",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-36hh-v3qg-5jq4",
+            "cve_id": null,
+            "summary": "PyO3 has an Out-of-bounds Read in `nth` / `nth_back` for `PyList` and `PyTuple` iterators",
+            "description": "PyO3 0.24.0 added optimized implementations of `Iterator::nth` and `DoubleEndedIterator::nth_back` for the `BoundListIterator` and `BoundTupleIterator` types. These implementations computed the target index using unchecked `usize` addition (`index + n`) before bounds-checking against the sequence length, then read the element via `get_item_unchecked`.\n\nIn `nth` methods, a sufficiently large `n` (combined with a non-zero internal index) could cause the addition to overflow and wrap around, producing a small \"target index\" that passed the bounds check and enabling reads at the front of the `list` or `tuple` of elements previously yielded by the iterator.\n\nIn `nth_back` methods, a sufficiently large `n` could cause underflow in a similar fashion, however would instead allow reads of arbitrary memory past the end of the `list` or `tuple` storage.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-36hh-v3qg-5jq4",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/PyO3/pyo3/pull/6086"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2026-0176.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-36hh-v3qg-5jq4"
+                }
+            ],
+            "published_at": "2026-06-12T19:32:47Z",
+            "updated_at": "2026-06-12T19:32:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "pyo3"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.29.0",
+                    "first_patched_version": {
+                        "identifier": "0.29.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.29.0",
+            "first_patched_version": {
+                "identifier": "0.29.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/jellyfish/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/jellyfish/security/dependabot/2",
+        "created_at": "2026-06-12T19:42:35Z",
+        "updated_at": "2026-08-15T13:37:47Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-15T13:37:47Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "manifest_path": "Cargo.toml",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-pph8-gcv7-4qj5",
+            "cve_id": null,
+            "summary": "PyO3 Risk of buffer overflow in `PyString::from_object`",
+            "description": "`PyString::from_object` took `&str` arguments and forwarded them directly to the Python C API without checking for terminating nul bytes. This could lead the Python interpreter to read beyond the end of the `&str` data and potentially leak contents of the out-of-bounds read (by raising a Python exception containing a copy of the data including the overflow).\n\nIn PyO3 0.24.1 this function will now allocate a `CString` to guarantee a terminating nul bytes. PyO3 0.25 will likely offer an alternative API which takes `&CStr` arguments.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-pph8-gcv7-4qj5",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/PyO3/pyo3/issues/5005"
+                },
+                {
+                    "url": "https://github.com/PyO3/pyo3/pull/5008"
+                },
+                {
+                    "url": "https://rustsec.org/advisories/RUSTSEC-2025-0020.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-pph8-gcv7-4qj5"
+                }
+            ],
+            "published_at": "2025-04-02T13:19:19Z",
+            "updated_at": "2025-04-02T13:19:20Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "rust",
+                        "name": "pyo3"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 0.1.0, < 0.24.1",
+                    "first_patched_version": {
+                        "identifier": "0.24.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P",
+                    "score": 2.9
+                }
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "rust",
+                "name": "pyo3"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 0.1.0, < 0.24.1",
+            "first_patched_version": {
+                "identifier": "0.24.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/jellyfish/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/jellyfish/security/dependabot/1",
+        "created_at": "2025-04-02T13:27:52Z",
+        "updated_at": "2026-08-14T15:49:03Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T15:49:03Z",
+        "auto_dismissed_at": null
+    }
+]

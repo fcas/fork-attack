@@ -1,0 +1,59 @@
+[
+    {
+        "number": 1,
+        "created_at": "2026-08-15T00:03:46Z",
+        "updated_at": "2026-08-15T00:03:46Z",
+        "url": "https://api.github.com/repos/fcas/breze/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/breze/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/code-injection",
+            "severity": "error",
+            "description": "Code injection",
+            "name": "py/code-injection",
+            "tags": [
+                "external/cwe/cwe-094",
+                "external/cwe/cwe-095",
+                "external/cwe/cwe-116",
+                "security"
+            ],
+            "full_description": "Interpreting unsanitized user input as code allows a malicious user to perform arbitrary code execution.",
+            "help": "# Code injection\nDirectly evaluating user input (for example, an HTTP request parameter) as code without properly sanitizing the input first allows an attacker arbitrary code execution. This can occur when user input is passed to code that interprets it as an expression to be evaluated, such as `eval` or `exec`.\n\n\n## Recommendation\nAvoid including user input in any expression that may be dynamically evaluated. If user input must be included, use context-specific escaping before including it. It is important that the correct escaping is used for the type of evaluation that will occur.\n\n\n## Example\nThe following example shows two functions setting a name from a request. The first function uses `exec` to execute the `setname` function. This is dangerous as it can allow a malicious user to execute arbitrary code on the server. For example, the user could supply the value `\"' + subprocess.call('rm -rf') + '\"` to destroy the server's file system. The second function calls the `setname` function directly and is thus safe.\n\n\n```python\n\nurlpatterns = [\n    # Route to code_execution\n    url(r'^code-ex1$', code_execution_bad, name='code-execution-bad'),\n    url(r'^code-ex2$', code_execution_good, name='code-execution-good')\n]\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #BAD -- Allow user to define code to be run.\n        exec(\"setname('%s')\" % first_name)\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #GOOD --Call code directly\n        setname(first_name)\n\n```\n\n## References\n* OWASP: [Code Injection](https://www.owasp.org/index.php/Code_Injection).\n* Wikipedia: [Code Injection](https://en.wikipedia.org/wiki/Code_injection).\n* Common Weakness Enumeration: [CWE-94](https://cwe.mitre.org/data/definitions/94.html).\n* Common Weakness Enumeration: [CWE-95](https://cwe.mitre.org/data/definitions/95.html).\n* Common Weakness Enumeration: [CWE-116](https://cwe.mitre.org/data/definitions/116.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "7795b5f5f51b3a55db7c77fc47034cb8988ab9e0",
+            "message": {
+                "text": "This code execution depends on a user-provided value.\nThis code execution depends on a user-provided value."
+            },
+            "location": {
+                "path": "docs/source/sphinxext/numpydoc/plot_directive.py",
+                "start_line": 460,
+                "end_line": 460,
+                "start_column": 18,
+                "end_column": 22
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/breze/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

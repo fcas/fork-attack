@@ -1,0 +1,1325 @@
+[
+    {
+        "number": 24,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/24",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/24",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "tests/cli/test_cli_train.py",
+                "start_line": 55,
+                "end_line": 55,
+                "start_column": 31,
+                "end_column": 46
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/24/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 23,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/23",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/23",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/utils/io.py",
+                "start_line": 316,
+                "end_line": 316,
+                "start_column": 15,
+                "end_column": 19
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/23/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 22,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/22",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/22",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "This path depends on a user-provided value."
+            },
+            "location": {
+                "path": "examples/create_example_nbs.py",
+                "start_line": 27,
+                "end_line": 27,
+                "start_column": 25,
+                "end_column": 36
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/22/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 21,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/21",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/21",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "This path depends on a user-provided value.\nThis path depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/data/_helpers.py",
+                "start_line": 119,
+                "end_line": 119,
+                "start_column": 27,
+                "end_column": 31
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/21/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 20,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/20",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/20",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "This path depends on a user-provided value.\nThis path depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/data/_helpers.py",
+                "start_line": 89,
+                "end_line": 89,
+                "start_column": 21,
+                "end_column": 25
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/20/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 19,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/19",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/19",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "This path depends on a user-provided value.\nThis path depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/data/_helpers.py",
+                "start_line": 62,
+                "end_line": 62,
+                "start_column": 33,
+                "end_column": 37
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/19/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 18,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/18",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/18",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/path-injection",
+            "severity": "error",
+            "description": "Uncontrolled data used in path expression",
+            "name": "py/path-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-022",
+                "external/cwe/cwe-023",
+                "external/cwe/cwe-036",
+                "external/cwe/cwe-073",
+                "external/cwe/cwe-099",
+                "security"
+            ],
+            "full_description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+            "help": "# Uncontrolled data used in path expression\nAccessing files using paths constructed from user-controlled data can allow an attacker to access unexpected resources. This can result in sensitive information being revealed or deleted, or an attacker being able to influence behavior by modifying unexpected files.\n\n\n## Recommendation\nValidate paths constructed from untrusted user input before using them to access files.\n\nThe choice of validation depends on the use case.\n\nIf you want to allow paths spanning multiple folders, a common strategy is to make sure that the constructed file path is contained within a safe root folder. First, normalize the path using `os.path.normpath` or `os.path.realpath` (make sure to use the latter if symlinks are a consideration) to remove any internal \"..\" segments and/or follow links. Then check that the normalized path starts with the root folder. Note that the normalization step is important, since otherwise even a path that starts with the root folder could be used to access files outside the root folder.\n\nMore restrictive options include using a library function like `werkzeug.utils.secure_filename` to eliminate any special characters from the file path, or restricting the path to a known list of safe paths. These options are safe, but can only be used in particular circumstances.\n\n\n## Example\nIn the first example, a file name is read from an HTTP request and then used to access a file. However, a malicious user could enter a file name that is an absolute path, such as `\"/etc/passwd\"`.\n\nIn the second example, it appears that the user is restricted to opening a file within the `\"user\"` home directory. However, a malicious user could enter a file name containing special characters. For example, the string `\"../../../etc/passwd\"` will result in the code reading the file located at `\"/server/static/images/../../../etc/passwd\"`, which is the system's password file. This file would then be sent back to the user, giving them access to all the system's passwords. Note that a user could also use an absolute path here, since the result of `os.path.join(\"/server/static/images/\", \"/etc/passwd\")` is `\"/etc/passwd\"`.\n\nIn the third example, the path used to access the file system is normalized *before* being checked against a known prefix. This ensures that regardless of the user input, the resulting path is safe.\n\n\n```python\nimport os.path\nfrom flask import Flask, request, abort\n\napp = Flask(__name__)\n\n@app.route(\"/user_picture1\")\ndef user_picture1():\n    filename = request.args.get('p')\n    # BAD: This could read any file on the file system\n    data = open(filename, 'rb').read()\n    return data\n\n@app.route(\"/user_picture2\")\ndef user_picture2():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    # BAD: This could still read any file on the file system\n    data = open(os.path.join(base_path, filename), 'rb').read()\n    return data\n\n@app.route(\"/user_picture3\")\ndef user_picture3():\n    base_path = '/server/static/images'\n    filename = request.args.get('p')\n    #GOOD -- Verify with normalised version of path\n    fullpath = os.path.normpath(os.path.join(base_path, filename))\n    if not fullpath.startswith(base_path):\n        raise Exception(\"not allowed\")\n    data = open(fullpath, 'rb').read()\n    return data\n\n```\n\n## References\n* OWASP: [Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).\n* npm: [werkzeug.utils.secure_filename](http://werkzeug.pocoo.org/docs/utils/#werkzeug.utils.secure_filename).\n* Common Weakness Enumeration: [CWE-22](https://cwe.mitre.org/data/definitions/22.html).\n* Common Weakness Enumeration: [CWE-23](https://cwe.mitre.org/data/definitions/23.html).\n* Common Weakness Enumeration: [CWE-36](https://cwe.mitre.org/data/definitions/36.html).\n* Common Weakness Enumeration: [CWE-73](https://cwe.mitre.org/data/definitions/73.html).\n* Common Weakness Enumeration: [CWE-99](https://cwe.mitre.org/data/definitions/99.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "This path depends on a user-provided value.\nThis path depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/data/_helpers.py",
+                "start_line": 48,
+                "end_line": 48,
+                "start_column": 21,
+                "end_column": 25
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/18/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 17,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/17",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/17",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. On the application level, maintain a list of authorized URLs on the server and choose from that list based on the input provided. If that is not possible, one should verify the IP address for all user-controlled requests to ensure they are not private. This requires saving the verified IP address of each domain, then utilizing a custom HTTP adapter to ensure that future requests to that domain use the verified IP address. On the network level, you can segment the vulnerable application into its own LAN or block access to specific devices.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value.\nThe full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/openapi_generated/swagger_client/rest.py",
+                "start_line": 206,
+                "end_line": 210,
+                "start_column": 21,
+                "end_column": 63
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/17/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 16,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/16",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/16",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. On the application level, maintain a list of authorized URLs on the server and choose from that list based on the input provided. If that is not possible, one should verify the IP address for all user-controlled requests to ensure they are not private. This requires saving the verified IP address of each domain, then utilizing a custom HTTP adapter to ensure that future requests to that domain use the verified IP address. On the network level, you can segment the vulnerable application into its own LAN or block access to specific devices.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value.\nThe full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/openapi_generated/swagger_client/rest.py",
+                "start_line": 192,
+                "end_line": 197,
+                "start_column": 25,
+                "end_column": 41
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/16/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 15,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/15",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/15",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. On the application level, maintain a list of authorized URLs on the server and choose from that list based on the input provided. If that is not possible, one should verify the IP address for all user-controlled requests to ensure they are not private. This requires saving the verified IP address of each domain, then utilizing a custom HTTP adapter to ensure that future requests to that domain use the verified IP address. On the network level, you can segment the vulnerable application into its own LAN or block access to specific devices.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value.\nThe full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/openapi_generated/swagger_client/rest.py",
+                "start_line": 180,
+                "end_line": 186,
+                "start_column": 25,
+                "end_column": 41
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/15/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 14,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/14",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/14",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. On the application level, maintain a list of authorized URLs on the server and choose from that list based on the input provided. If that is not possible, one should verify the IP address for all user-controlled requests to ensure they are not private. This requires saving the verified IP address of each domain, then utilizing a custom HTTP adapter to ensure that future requests to that domain use the verified IP address. On the network level, you can segment the vulnerable application into its own LAN or block access to specific devices.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value.\nThe full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/openapi_generated/swagger_client/rest.py",
+                "start_line": 168,
+                "end_line": 174,
+                "start_column": 25,
+                "end_column": 41
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/14/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 13,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/13",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/13",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. On the application level, maintain a list of authorized URLs on the server and choose from that list based on the input provided. If that is not possible, one should verify the IP address for all user-controlled requests to ensure they are not private. This requires saving the verified IP address of each domain, then utilizing a custom HTTP adapter to ensure that future requests to that domain use the verified IP address. On the network level, you can segment the vulnerable application into its own LAN or block access to specific devices.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value.\nThe full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/openapi_generated/swagger_client/rest.py",
+                "start_line": 161,
+                "end_line": 166,
+                "start_column": 25,
+                "end_column": 41
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/13/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 12,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/12",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/12",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/cli/train_cli.py",
+                "start_line": 90,
+                "end_line": 90,
+                "start_column": 37,
+                "end_column": 47
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/12/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 11,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/11",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/11",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/cli/crop_cli.py",
+                "start_line": 41,
+                "end_line": 41,
+                "start_column": 52,
+                "end_column": 56
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/11/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 10,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/10",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/10",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/core.py",
+                "start_line": 51,
+                "end_line": 51,
+                "start_column": 25,
+                "end_column": 36
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/10/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 9,
+        "created_at": "2026-08-15T00:27:54Z",
+        "updated_at": "2026-08-15T00:27:54Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/9",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/9",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "lightly/cli/_helpers.py",
+                "start_line": 213,
+                "end_line": 213,
+                "start_column": 33,
+                "end_column": 43
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/9/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 8,
+        "created_at": "2026-08-14T16:00:24Z",
+        "updated_at": "2026-08-14T16:00:24Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/8",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/8",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-default-protocol",
+            "severity": "warning",
+            "description": "Default version of SSL/TLS may be insecure",
+            "name": "py/insecure-default-protocol",
+            "tags": [
+                "external/cwe/cwe-327",
+                "security"
+            ],
+            "full_description": "Leaving the SSL/TLS version unspecified may result in an insecure default protocol being used.",
+            "help": "# Default version of SSL/TLS may be insecure\nThe `ssl.wrap_socket` function defaults to an insecure version of SSL/TLS when no specific protocol version is specified. This may leave the connection vulnerable to attack.\n\n\n## Recommendation\nEnsure that a modern, strong protocol is used. All versions of SSL, and TLS 1.0 and 1.1 are known to be vulnerable to attacks. Using TLS 1.2 or above is strongly recommended. If no explicit `ssl_version` is specified, the default `PROTOCOL_TLS` is chosen. This protocol is insecure because it allows TLS 1.0 and TLS 1.1 and so should not be used.\n\n\n## Example\nThe following code shows two different ways of setting up a connection using SSL or TLS. They are both potentially insecure because the default version is used.\n\n\n```python\nimport ssl\nimport socket\n\n# Using the deprecated ssl.wrap_socket method\nssl.wrap_socket(socket.socket())\n\n# Using SSLContext\ncontext = ssl.SSLContext()\n\n```\nBoth of the cases above should be updated to use a secure protocol instead, for instance by specifying `ssl_version=PROTOCOL_TLSv1_2` as a keyword argument.\n\nThe latter example can also be made secure by modifying the created context before it is used to create a connection. Therefore it will not be flagged by this query. However, if a connection is created before the context has been secured (for example, by setting the value of `minimum_version`), then the code should be flagged by the query `py/insecure-protocol`.\n\nNote that `ssl.wrap_socket` has been deprecated in Python 3.7. The recommended alternatives are:\n\n* `ssl.SSLContext` - supported in Python 2.7.9, 3.2, and later versions\n* `ssl.create_default_context` - a convenience function, supported in Python 3.4 and later versions.\nEven when you use these alternatives, you should ensure that a safe protocol is used. The following code illustrates how to use flags (available since Python 3.2) or the \\`minimum_version\\` field (favored since Python 3.7) to restrict the protocols accepted when creating a connection.\n\n\n```python\nimport ssl\n\n# Using flags to restrict the protocol\ncontext = ssl.SSLContext()\ncontext.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1\n\n# Declaring a minimum version to restrict the protocol\ncontext = ssl.create_default_context()\ncontext.minimum_version = ssl.TLSVersion.TLSv1_2\n\n```\n\n## References\n* Wikipedia: [ Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security).\n* Python 3 documentation: [ class ssl.SSLContext](https://docs.python.org/3/library/ssl.html#ssl.SSLContext).\n* Python 3 documentation: [ ssl.wrap_socket](https://docs.python.org/3/library/ssl.html#ssl.wrap_socket).\n* Python 3 documentation: [ notes on context creation](https://docs.python.org/3/library/ssl.html#functions-constants-and-exceptions).\n* Python 3 documentation: [ notes on security considerations](https://docs.python.org/3/library/ssl.html#ssl-security).\n* Common Weakness Enumeration: [CWE-327](https://cwe.mitre.org/data/definitions/327.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "Call to deprecated method ssl.wrap_socket does not specify a protocol, which may result in an insecure default being used."
+            },
+            "location": {
+                "path": "lightly/cli/serve_cli.py",
+                "start_line": 64,
+                "end_line": 69,
+                "start_column": 24,
+                "end_column": 10
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/8/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 7,
+        "created_at": "2024-05-19T00:31:56Z",
+        "updated_at": "2024-05-19T00:31:57Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/7",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/7",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-temporary-file",
+            "severity": "error",
+            "description": "Insecure temporary file",
+            "name": "py/insecure-temporary-file",
+            "tags": [
+                "external/cwe/cwe-377",
+                "security"
+            ],
+            "full_description": "Creating a temporary file using this method may be insecure.",
+            "help": "# Insecure temporary file\nFunctions that create temporary file names (such as `tempfile.mktemp` and `os.tempnam`) are fundamentally insecure, as they do not ensure exclusive access to a file with the temporary name they return. The file name returned by these functions is guaranteed to be unique on creation but the file must be opened in a separate operation. There is no guarantee that the creation and open operations will happen atomically. This provides an opportunity for an attacker to interfere with the file before it is opened.\n\nNote that `mktemp` has been deprecated since Python 2.3.\n\n\n## Recommendation\nReplace the use of `mktemp` with some of the more secure functions in the `tempfile` module, such as `TemporaryFile`. If the file is intended to be accessed from other processes, consider using the `NamedTemporaryFile` function.\n\n\n## Example\nThe following piece of code opens a temporary file and writes a set of results to it. Because the file name is created using `mktemp`, another process may access this file before it is opened using `open`.\n\n\n```python\nfrom tempfile import mktemp\n\ndef write_results(results):\n    filename = mktemp()\n    with open(filename, \"w+\") as f:\n        f.write(results)\n    print(\"Results written to\", filename)\n\n```\nBy changing the code to use `NamedTemporaryFile` instead, the file is opened immediately.\n\n\n```python\nfrom tempfile import NamedTemporaryFile\n\ndef write_results(results):\n    with NamedTemporaryFile(mode=\"w+\", delete=False) as f:\n        f.write(results)\n    print(\"Results written to\", f.name)\n\n```\n\n## References\n* Python Standard Library: [tempfile.mktemp](https://docs.python.org/3/library/tempfile.html#tempfile.mktemp).\n* Common Weakness Enumeration: [CWE-377](https://cwe.mitre.org/data/definitions/377.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "Call to deprecated function tempfile.mktemp may be insecure."
+            },
+            "location": {
+                "path": "tests/utils/test_io.py",
+                "start_line": 24,
+                "end_line": 24,
+                "start_column": 32,
+                "end_column": 69
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/7/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 6,
+        "created_at": "2024-05-19T00:31:56Z",
+        "updated_at": "2024-05-19T00:31:57Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/6",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-temporary-file",
+            "severity": "error",
+            "description": "Insecure temporary file",
+            "name": "py/insecure-temporary-file",
+            "tags": [
+                "external/cwe/cwe-377",
+                "security"
+            ],
+            "full_description": "Creating a temporary file using this method may be insecure.",
+            "help": "# Insecure temporary file\nFunctions that create temporary file names (such as `tempfile.mktemp` and `os.tempnam`) are fundamentally insecure, as they do not ensure exclusive access to a file with the temporary name they return. The file name returned by these functions is guaranteed to be unique on creation but the file must be opened in a separate operation. There is no guarantee that the creation and open operations will happen atomically. This provides an opportunity for an attacker to interfere with the file before it is opened.\n\nNote that `mktemp` has been deprecated since Python 2.3.\n\n\n## Recommendation\nReplace the use of `mktemp` with some of the more secure functions in the `tempfile` module, such as `TemporaryFile`. If the file is intended to be accessed from other processes, consider using the `NamedTemporaryFile` function.\n\n\n## Example\nThe following piece of code opens a temporary file and writes a set of results to it. Because the file name is created using `mktemp`, another process may access this file before it is opened using `open`.\n\n\n```python\nfrom tempfile import mktemp\n\ndef write_results(results):\n    filename = mktemp()\n    with open(filename, \"w+\") as f:\n        f.write(results)\n    print(\"Results written to\", filename)\n\n```\nBy changing the code to use `NamedTemporaryFile` instead, the file is opened immediately.\n\n\n```python\nfrom tempfile import NamedTemporaryFile\n\ndef write_results(results):\n    with NamedTemporaryFile(mode=\"w+\", delete=False) as f:\n        f.write(results)\n    print(\"Results written to\", f.name)\n\n```\n\n## References\n* Python Standard Library: [tempfile.mktemp](https://docs.python.org/3/library/tempfile.html#tempfile.mktemp).\n* Common Weakness Enumeration: [CWE-377](https://cwe.mitre.org/data/definitions/377.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "Call to deprecated function tempfile.mktemp may be insecure."
+            },
+            "location": {
+                "path": "tests/utils/test_io.py",
+                "start_line": 16,
+                "end_line": 16,
+                "start_column": 29,
+                "end_column": 65
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/6/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 5,
+        "created_at": "2024-05-19T00:31:56Z",
+        "updated_at": "2024-05-19T00:31:57Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/insecure-temporary-file",
+            "severity": "error",
+            "description": "Insecure temporary file",
+            "name": "py/insecure-temporary-file",
+            "tags": [
+                "external/cwe/cwe-377",
+                "security"
+            ],
+            "full_description": "Creating a temporary file using this method may be insecure.",
+            "help": "# Insecure temporary file\nFunctions that create temporary file names (such as `tempfile.mktemp` and `os.tempnam`) are fundamentally insecure, as they do not ensure exclusive access to a file with the temporary name they return. The file name returned by these functions is guaranteed to be unique on creation but the file must be opened in a separate operation. There is no guarantee that the creation and open operations will happen atomically. This provides an opportunity for an attacker to interfere with the file before it is opened.\n\nNote that `mktemp` has been deprecated since Python 2.3.\n\n\n## Recommendation\nReplace the use of `mktemp` with some of the more secure functions in the `tempfile` module, such as `TemporaryFile`. If the file is intended to be accessed from other processes, consider using the `NamedTemporaryFile` function.\n\n\n## Example\nThe following piece of code opens a temporary file and writes a set of results to it. Because the file name is created using `mktemp`, another process may access this file before it is opened using `open`.\n\n\n```python\nfrom tempfile import mktemp\n\ndef write_results(results):\n    filename = mktemp()\n    with open(filename, \"w+\") as f:\n        f.write(results)\n    print(\"Results written to\", filename)\n\n```\nBy changing the code to use `NamedTemporaryFile` instead, the file is opened immediately.\n\n\n```python\nfrom tempfile import NamedTemporaryFile\n\ndef write_results(results):\n    with NamedTemporaryFile(mode=\"w+\", delete=False) as f:\n        f.write(results)\n    print(\"Results written to\", f.name)\n\n```\n\n## References\n* Python Standard Library: [tempfile.mktemp](https://docs.python.org/3/library/tempfile.html#tempfile.mktemp).\n* Common Weakness Enumeration: [CWE-377](https://cwe.mitre.org/data/definitions/377.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "Call to deprecated function tempfile.mktemp may be insecure."
+            },
+            "location": {
+                "path": "tests/cli/test_cli_crop.py",
+                "start_line": 82,
+                "end_line": 84,
+                "start_column": 33,
+                "end_column": 10
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/5/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 4,
+        "created_at": "2024-05-19T00:31:56Z",
+        "updated_at": "2024-05-19T00:31:57Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The string .windows.net/ may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "lightly/api/utils.py",
+                "start_line": 165,
+                "end_line": 165,
+                "start_column": 8,
+                "end_column": 37
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/4/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 3,
+        "created_at": "2024-05-19T00:31:56Z",
+        "updated_at": "2024-05-19T00:31:57Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The string .amazonaws.com/ may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "lightly/api/utils.py",
+                "start_line": 163,
+                "end_line": 163,
+                "start_column": 8,
+                "end_column": 39
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/3/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-19T00:31:56Z",
+        "updated_at": "2024-05-19T00:31:57Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The string storage.googleapis.com/ may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "lightly/api/utils.py",
+                "start_line": 161,
+                "end_line": 161,
+                "start_column": 8,
+                "end_column": 47
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/2/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-19T00:31:56Z",
+        "updated_at": "2024-05-19T00:31:57Z",
+        "url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/lightly/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "9dedddf66e4f8c318b9c641c83376f3331b086c6",
+            "message": {
+                "text": "The string https://storage.googleapis.com may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "lightly/cli/_helpers.py",
+                "start_line": 57,
+                "end_line": 57,
+                "start_column": 14,
+                "end_column": 60
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/lightly/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

@@ -1,6 +1,8 @@
 import json
 import logging
 import os
+import shutil
+import subprocess
 from datetime import date
 from distutils.dir_util import copy_tree
 from pathlib import Path
@@ -125,8 +127,15 @@ def attack():
 
 
 def fork(branch, clone, repo_name_str, repo_owner):
-    path_to_clone = os.path.join(path, repo_name_str)
-    if not os.path.isdir(path_to_clone) and clone:
+    # Every fork lives under its own forks/ directory, isolated from
+    # unrelated projects that also sit alongside this repo.
+    forks_dir = os.path.join(path, "forks")
+    os.makedirs(forks_dir, exist_ok=True)
+    path_to_clone = os.path.join(forks_dir, repo_name_str)
+    if os.path.isdir(path_to_clone):
+        logger.info(f"{repo_name_str}: fork already exists at {path_to_clone}, skipping fork/clone.")
+        return
+    if clone:
         repo_to_clone = f"https://github.com/{user.login}/{repo_name_str}.git"
         remote = f"https://github.com/{repo_owner}/{repo_name_str}.git"
         try:
@@ -138,17 +147,23 @@ def fork(branch, clone, repo_name_str, repo_owner):
             local_repo = git.Repo.clone_from(repo_to_clone, path_to_clone, branch=branch)
             git.Repo.create_remote(local_repo, "upstream", remote)
             add_ymls(path_to_clone, branch)
+            ensure_manifest_at_root(path_to_clone, branch)
         except GitCommandError:
             branch = "main"
             local_repo = git.Repo.clone_from(repo_to_clone, path_to_clone, branch=branch)
             git.Repo.create_remote(local_repo, "upstream", remote)
             add_ymls(path_to_clone, branch)
+            ensure_manifest_at_root(path_to_clone, branch)
 
 
 def main():
     attack()
-    code_analysis_result.to_csv("code_analysis_result.csv")
-    dependabot_result.to_csv("dependabot_result.csv")
+    # Same convention as dump_data(): consolidated outputs are persisted inside
+    # the dated directory holding the raw per-repo extraction they summarize.
+    extraction_date = date.today()
+    os.makedirs(str(extraction_date), exist_ok=True)
+    code_analysis_result.to_csv(f"{extraction_date}/code_analysis_result.csv")
+    dependabot_result.to_csv(f"{extraction_date}/dependabot_result.csv")
 
 
 if __name__ == '__main__':

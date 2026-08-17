@@ -1,0 +1,428 @@
+[
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.commons:commons-lang3"
+            },
+            "manifest_path": "pom.xml",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-j288-q9x7-2f5v",
+            "cve_id": "CVE-2025-48924",
+            "summary": "Apache Commons Lang is vulnerable to Uncontrolled Recursion when processing long inputs",
+            "description": "Uncontrolled Recursion vulnerability in Apache Commons Lang.\n\nThis issue affects Apache Commons Lang: Starting with commons-lang:commons-lang 2.0 to 2.6, and, from org.apache.commons:commons-lang3 3.0 before 3.18.0.\n\nThe methods ClassUtils.getClass(...) can throw StackOverflowError on very long inputs. Because an Error is usually not handled by applications and libraries, a StackOverflowError could cause an application to stop.\n\nUsers are recommended to upgrade to version 3.18.0, which fixes the issue.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-j288-q9x7-2f5v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-48924",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-48924"
+                },
+                {
+                    "url": "https://lists.apache.org/thread/bgv0lpswokgol11tloxnjfzdl7yrc1g1"
+                },
+                {
+                    "url": "https://github.com/apache/commons-lang/commit/b424803abdb2bec818e4fbcb251ce031c22aca53"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/08/msg00000.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/08/msg00026.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/09/msg00032.html"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/09/msg00036.html"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2025/07/11/1"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-j288-q9x7-2f5v"
+                }
+            ],
+            "published_at": "2025-07-11T15:31:37Z",
+            "updated_at": "2025-11-05T20:30:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "org.apache.commons:commons-lang3"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 3.0, < 3.18.0",
+                    "first_patched_version": {
+                        "identifier": "3.18.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "commons-lang:commons-lang"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2.0, <= 2.6",
+                    "first_patched_version": null
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                    "score": 6.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.02164,
+                "percentile": 0.80507
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-674",
+                    "name": "Uncontrolled Recursion"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "org.apache.commons:commons-lang3"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 3.0, < 3.18.0",
+            "first_patched_version": {
+                "identifier": "3.18.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/CoreNLP/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/CoreNLP/security/dependabot/2",
+        "created_at": "2025-07-12T01:36:30Z",
+        "updated_at": "2025-07-12T01:36:30Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "com.google.protobuf:protobuf-java"
+            },
+            "manifest_path": "pom.xml",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-735f-pc8j-v9w8",
+            "cve_id": "CVE-2024-7254",
+            "summary": "protobuf-java has potential Denial of Service issue",
+            "description": "### Summary\nWhen parsing unknown fields in the Protobuf Java Lite and Full library, a maliciously crafted message can cause a StackOverflow error and lead to a program crash.\n\nReporter: Alexis Challande, Trail of Bits Ecosystem Security Team <ecosystem@trailofbits.com>\n\nAffected versions: This issue affects all versions of both the Java full and lite Protobuf runtimes, as well as Protobuf for Kotlin and JRuby, which themselves use the Java Protobuf runtime.\n\n### Severity\n[CVE-2024-7254](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-7254) **High** CVSS4.0 Score 8.7 (NOTE: there may be a delay in publication)\nThis is a potential Denial of Service. Parsing nested groups as unknown fields with DiscardUnknownFieldsParser or Java Protobuf Lite parser, or against Protobuf map fields, creates unbounded recursions that can be abused by an attacker.\n\n### Proof of Concept\nFor reproduction details, please refer to the unit tests (Protobuf Java [LiteTest](https://github.com/protocolbuffers/protobuf/blob/a037f28ff81ee45ebe008c64ab632bf5372242ce/java/lite/src/test/java/com/google/protobuf/LiteTest.java) and [CodedInputStreamTest](https://github.com/protocolbuffers/protobuf/blob/a037f28ff81ee45ebe008c64ab632bf5372242ce/java/core/src/test/java/com/google/protobuf/CodedInputStreamTest.java)) that identify the specific inputs that exercise this parsing weakness.\n\n### Remediation and Mitigation\nWe have been working diligently to address this issue and have released a mitigation that is available now. Please update to the latest available versions of the following packages:\n* protobuf-java (3.25.5, 4.27.5, 4.28.2)\n* protobuf-javalite (3.25.5, 4.27.5, 4.28.2)\n* protobuf-kotlin (3.25.5, 4.27.5, 4.28.2)\n* protobuf-kotlin-lite (3.25.5, 4.27.5, 4.28.2)\n* com-protobuf [JRuby gem only] (3.25.5, 4.27.5, 4.28.2)",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-735f-pc8j-v9w8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-7254",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/security/advisories/GHSA-735f-pc8j-v9w8"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-7254"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/4728531c162f2f9e8c2ca1add713cfee2db6be3b"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/850fcce9176e2c9070614dab53537760498c926b"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/9a5f5fe752a20cbac2e722b06949ac985abdd534"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/ac9fb5b4c71b0dd80985b27684e265d1f03abf46"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/cc8b3483a5584b3301e3d43d17eb59704857ffaa"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/d6c82fc55a76481c676f541a255571e8950bb8c3"
+                },
+                {
+                    "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/google-protobuf/CVE-2024-7254.yml"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20241213-0010"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20250418-0006"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-735f-pc8j-v9w8"
+                }
+            ],
+            "published_at": "2024-09-19T16:06:03Z",
+            "updated_at": "2025-09-10T20:53:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-java"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.25.5",
+                    "first_patched_version": {
+                        "identifier": "3.25.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-javalite"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.25.5",
+                    "first_patched_version": {
+                        "identifier": "3.25.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-kotlin"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.25.5",
+                    "first_patched_version": {
+                        "identifier": "3.25.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-kotlin-lite"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.25.5",
+                    "first_patched_version": {
+                        "identifier": "3.25.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "google-protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 3.25.5",
+                    "first_patched_version": {
+                        "identifier": "3.25.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "google-protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0.rc.1, < 4.27.5",
+                    "first_patched_version": {
+                        "identifier": "4.27.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "rubygems",
+                        "name": "google-protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.28.0.rc.1, < 4.28.2",
+                    "first_patched_version": {
+                        "identifier": "4.28.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-kotlin-lite"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0-RC1, < 4.27.5",
+                    "first_patched_version": {
+                        "identifier": "4.27.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-kotlin-lite"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.28.0-RC1, < 4.28.2",
+                    "first_patched_version": {
+                        "identifier": "4.28.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-kotlin"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0-RC1, < 4.27.5",
+                    "first_patched_version": {
+                        "identifier": "4.27.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-kotlin"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.28.0-RC1, < 4.28.2",
+                    "first_patched_version": {
+                        "identifier": "4.28.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-javalite"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0-RC1, < 4.27.5",
+                    "first_patched_version": {
+                        "identifier": "4.27.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-javalite"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.28.0-RC1, < 4.28.2",
+                    "first_patched_version": {
+                        "identifier": "4.28.2"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-java"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.0.0-RC1, < 4.27.5",
+                    "first_patched_version": {
+                        "identifier": "4.27.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.google.protobuf:protobuf-java"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 4.28.0-RC1, < 4.28.2",
+                    "first_patched_version": {
+                        "identifier": "4.28.2"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "epss": {
+                "percentage": 0.02772,
+                "percentile": 0.84502
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-787",
+                    "name": "Out-of-bounds Write"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "maven",
+                "name": "com.google.protobuf:protobuf-java"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 3.25.5",
+            "first_patched_version": {
+                "identifier": "3.25.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/CoreNLP/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/CoreNLP/security/dependabot/1",
+        "created_at": "2024-09-19T16:14:45Z",
+        "updated_at": "2026-08-14T15:52:02Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-14T15:52:02Z",
+        "auto_dismissed_at": null
+    }
+]

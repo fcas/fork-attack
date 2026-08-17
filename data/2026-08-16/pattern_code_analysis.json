@@ -1,0 +1,276 @@
+[
+    {
+        "number": 5,
+        "created_at": "2026-08-15T10:44:41Z",
+        "updated_at": "2026-08-15T10:44:42Z",
+        "url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/pattern/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "bd5471bf46d0f438e86f42fce2afcbbf4bf2222b",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings with many repetitions of '!'."
+            },
+            "location": {
+                "path": "pattern/text/__init__.py",
+                "start_line": 1408,
+                "end_line": 1408,
+                "start_column": 28,
+                "end_column": 40
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/5/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 4,
+        "created_at": "2026-08-15T10:44:41Z",
+        "updated_at": "2026-08-15T10:44:42Z",
+        "url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/pattern/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/regex-injection",
+            "severity": "error",
+            "description": "Regular expression injection",
+            "name": "py/regex-injection",
+            "tags": [
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "User input should not be used in regular expressions without first being escaped, otherwise a malicious user may be able to inject an expression that could require exponential time on certain inputs.",
+            "help": "# Regular expression injection\nConstructing a regular expression with unsanitized user input is dangerous as a malicious user may be able to modify the meaning of the expression. In particular, such a user may be able to provide a regular expression fragment that takes exponential time in the worst case, and use that to perform a Denial of Service attack.\n\n\n## Recommendation\nBefore embedding user input into a regular expression, use a sanitization function such as `re.escape` to escape meta-characters that have a special meaning regarding regular expressions' syntax.\n\n\n## Example\nThe following examples are based on a simple Flask web server environment.\n\nThe following example shows a HTTP request parameter that is used to construct a regular expression without sanitizing it first:\n\n\n```python\nfrom flask import request, Flask\nimport re\n\n\n@app.route(\"/direct\")\ndef direct():\n    unsafe_pattern = request.args[\"pattern\"]\n    re.search(unsafe_pattern, \"\")\n\n\n@app.route(\"/compile\")\ndef compile():\n    unsafe_pattern = request.args[\"pattern\"]\n    compiled_pattern = re.compile(unsafe_pattern)\n    compiled_pattern.search(\"\")\n\n```\nInstead, the request parameter should be sanitized first, for example using the function `re.escape`. This ensures that the user cannot insert characters which have a special meaning in regular expressions.\n\n\n```python\nfrom flask import request, Flask\nimport re\n\n\n@app.route(\"/direct\")\ndef direct():\n    unsafe_pattern = request.args['pattern']\n    safe_pattern = re.escape(unsafe_pattern)\n    re.search(safe_pattern, \"\")\n\n\n@app.route(\"/compile\")\ndef compile():\n    unsafe_pattern = request.args['pattern']\n    safe_pattern = re.escape(unsafe_pattern)\n    compiled_pattern = re.compile(safe_pattern)\n    compiled_pattern.search(\"\")\n\n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Python docs: [re](https://docs.python.org/3/library/re.html).\n* SonarSource: [RSPEC-2631](https://rules.sonarsource.com/python/type/Vulnerability/RSPEC-2631).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "bd5471bf46d0f438e86f42fce2afcbbf4bf2222b",
+            "message": {
+                "text": "This regular expression depends on a user-provided value and is executed by re.search."
+            },
+            "location": {
+                "path": "pattern/web/__init__.py",
+                "start_line": 2480,
+                "end_line": 2480,
+                "start_column": 32,
+                "end_column": 33
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/4/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 3,
+        "created_at": "2026-08-14T15:23:57Z",
+        "updated_at": "2026-08-14T15:23:57Z",
+        "url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/pattern/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/clear-text-logging-sensitive-data",
+            "severity": "error",
+            "description": "Clear-text logging of sensitive information",
+            "name": "py/clear-text-logging-sensitive-data",
+            "tags": [
+                "external/cwe/cwe-312",
+                "external/cwe/cwe-359",
+                "external/cwe/cwe-532",
+                "security"
+            ],
+            "full_description": "Logging sensitive information without encryption or hashing can expose it to an attacker.",
+            "help": "# Clear-text logging of sensitive information\nIf sensitive data is written to a log entry it could be exposed to an attacker who gains access to the logs.\n\nPotential attackers can obtain sensitive user data when the log output is displayed. Additionally that data may expose system information such as full path names, system information, and sometimes usernames and passwords.\n\n\n## Recommendation\nSensitive data should not be logged.\n\n\n## Example\nIn the example the entire process environment is logged using \\`print\\`. Regular users of the production deployed application should not have access to this much information about the environment configuration.\n\n\n```python\n# BAD: Logging cleartext sensitive data\nimport os\nprint(f\"[INFO] Environment: {os.environ}\")\n```\nIn the second example the data that is logged is not sensitive.\n\n\n```python\nnot_sensitive_data = {'a': 1, 'b': 2}\n# GOOD: it is fine to log data that is not sensitive\nprint(f\"[INFO] Some object contains: {not_sensitive_data}\")\n```\n\n## References\n* OWASP: [Insertion of Sensitive Information into Log File](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/).\n* Common Weakness Enumeration: [CWE-312](https://cwe.mitre.org/data/definitions/312.html).\n* Common Weakness Enumeration: [CWE-359](https://cwe.mitre.org/data/definitions/359.html).\n* Common Weakness Enumeration: [CWE-532](https://cwe.mitre.org/data/definitions/532.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "bd5471bf46d0f438e86f42fce2afcbbf4bf2222b",
+            "message": {
+                "text": "This expression logs sensitive data (private) as clear text."
+            },
+            "location": {
+                "path": "examples/01-web/08-wiktionary.py",
+                "start_line": 32,
+                "end_line": 32,
+                "start_column": 19,
+                "end_column": 25
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/3/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 2,
+        "created_at": "2024-05-19T01:18:34Z",
+        "updated_at": "2024-05-19T01:18:36Z",
+        "url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/pattern/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/overly-large-range",
+            "severity": "warning",
+            "description": "Overly permissive regular expression range",
+            "name": "py/overly-large-range",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+            "help": "# Overly permissive regular expression range\nIt's easy to write a regular expression range that matches a wider range of characters than you intended. For example, `/[a-zA-z]/` matches all lowercase and all uppercase letters, as you would expect, but it also matches the characters: `` [ \\ ] ^ _ ` ``.\n\nAnother common problem is failing to escape the dash character in a regular expression. An unescaped dash is interpreted as part of a range. For example, in the character class `[a-zA-Z0-9%=.,-_]` the last character range matches the 55 characters between `,` and `_` (both included), which overlaps with the range `[0-9]` and is clearly not intended by the writer.\n\n\n## Recommendation\nAvoid any confusion about which characters are included in the range by writing unambiguous regular expressions. Always check that character ranges match only the expected characters.\n\n\n## Example\nThe following example code is intended to check whether a string is a valid 6 digit hex color.\n\n```python\n\nimport re\ndef is_valid_hex_color(color):\n    return re.match(r'^#[0-9a-fA-f]{6}$', color) is not None\n\n```\nHowever, the `A-f` range is overly large and matches every uppercase character. It would parse a \"color\" like `#XXYYZZ` as valid.\n\nThe fix is to use an uppercase `A-F` range instead.\n\n```python\n\nimport re\ndef is_valid_hex_color(color):\n    return re.match(r'^#[0-9a-fA-F]{6}$', color) is not None\n\n```\n\n## References\n* GitHub Advisory Database: [CVE-2021-42740: Improper Neutralization of Special Elements used in a Command in Shell-quote](https://github.com/advisories/GHSA-g4rg-993r-mgx7)\n* wh0.github.io: [Exploiting CVE-2021-42740](https://wh0.github.io/2021/10/28/shell-quote-rce-exploiting.html)\n* Yosuke Ota: [no-obscure-range](https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html)\n* Paul Boyd: [The regex \\[,-.\\]](https://pboyd.io/posts/comma-dash-dot/)\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "medium"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "bd5471bf46d0f438e86f42fce2afcbbf4bf2222b",
+            "message": {
+                "text": "Suspicious character range that overlaps with a-z in the same character class, and is equivalent to \\[A-Z\\\\[\\\\\\\\]^_`a-z\\]."
+            },
+            "location": {
+                "path": "pattern/text/__init__.py",
+                "start_line": 1375,
+                "end_line": 1375,
+                "start_column": 37,
+                "end_column": 40
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/2/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 1,
+        "created_at": "2024-05-19T01:18:34Z",
+        "updated_at": "2024-05-19T01:18:36Z",
+        "url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/pattern/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "bd5471bf46d0f438e86f42fce2afcbbf4bf2222b",
+            "message": {
+                "text": "The string nodebox.net may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "test/test_web.py",
+                "start_line": 1087,
+                "end_line": 1087,
+                "start_column": 29,
+                "end_column": 49
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pattern/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

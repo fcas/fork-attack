@@ -1,0 +1,817 @@
+[
+    {
+        "number": 7,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qccp-gfcp-xxvc",
+            "cve_id": "CVE-2026-44431",
+            "summary": "urllib3: Sensitive headers forwarded across origins in proxied low-level redirects",
+            "description": "### Impact\n\nWhen following cross-origin redirects for requests made using urllib3’s high-level APIs, such as `urllib3.request()`, `PoolManager.request()`, and `ProxyManager.request()`, sensitive headers — `Authorization`, `Cookie`, and `Proxy-Authorization` (defined in `Retry.DEFAULT_REMOVE_HEADERS_ON_REDIRECT`) — are stripped by default, as expected.\n\nHowever, cross-origin redirects followed from the low-level API via `ProxyManager.connection_from_url().urlopen(..., assert_same_host=False)` still forward these sensitive headers.\n\n### Affected usage\n\nApplications and libraries using urllib3 versions earlier than 2.7.0 may be affected if they allow cross-origin redirects while making requests through `HTTPConnection.urlopen()` instances created via `ProxyManager.connection_from_url()`.\n\n### Remediation\n\nUpgrade to urllib3 version 2.7.0 or later, in which sensitive headers are stripped from redirects followed by `HTTPConnection`.\n\nIf upgrading is not immediately possible, avoid using this low-level redirect flow for cross-origin redirects. If appropriate for your use case, switch to `ProxyManager.request()`.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-qccp-gfcp-xxvc",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-44431",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/urllib3/urllib3/security/advisories/GHSA-qccp-gfcp-xxvc"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44431"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qccp-gfcp-xxvc"
+                }
+            ],
+            "published_at": "2026-05-11T14:51:20Z",
+            "updated_at": "2026-05-14T20:35:54Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "urllib3"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.23, < 2.7.0",
+                    "first_patched_version": {
+                        "identifier": "2.7.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+                    "score": 8.2
+                }
+            },
+            "epss": {
+                "percentage": 0.00331,
+                "percentile": 0.2559
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-200",
+                    "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 1.23, < 2.7.0",
+            "first_patched_version": {
+                "identifier": "2.7.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/sentiment-analyzer/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/sentiment-analyzer/security/dependabot/7",
+        "created_at": "2026-08-15T15:11:53Z",
+        "updated_at": "2026-08-16T01:12:17Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:12:17Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-38jv-5279-wg99",
+            "cve_id": "CVE-2026-21441",
+            "summary": "Decompression-bomb safeguards bypassed when following HTTP redirects (streaming API)",
+            "description": "### Impact\n\nurllib3's [streaming API](https://urllib3.readthedocs.io/en/2.6.2/advanced-usage.html#streaming-and-i-o) is designed for the efficient handling of large HTTP responses by reading the content in chunks, rather than loading the entire response body into memory at once.\n\nurllib3 can perform decoding or decompression based on the HTTP `Content-Encoding` header (e.g., `gzip`, `deflate`, `br`, or `zstd`). When using the streaming API, the library decompresses only the necessary bytes, enabling partial content consumption.\n\nHowever, for HTTP redirect responses, the library would read the entire response body to drain the connection and decompress the content unnecessarily. This decompression occurred even before any read methods were called, and configured read limits did not restrict the amount of decompressed data. As a result, there was no safeguard against decompression bombs. A malicious server could exploit this to trigger excessive resource consumption on the client (high CPU usage and large memory allocations for decompressed data; CWE-409).\n\n### Affected usages\n\nApplications and libraries using urllib3 version 2.6.2 and earlier to stream content from untrusted sources by setting `preload_content=False` when they do not disable redirects.\n\n\n### Remediation\n\nUpgrade to at least urllib3 v2.6.3 in which the library does not decode content of redirect responses when `preload_content=False`.\n\nIf upgrading is not immediately possible, disable [redirects](https://urllib3.readthedocs.io/en/2.6.2/user-guide.html#retrying-requests) by setting `redirect=False` for requests to untrusted source.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-38jv-5279-wg99",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-21441",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/urllib3/urllib3/security/advisories/GHSA-38jv-5279-wg99"
+                },
+                {
+                    "url": "https://github.com/urllib3/urllib3/commit/8864ac407bba8607950025e0979c4c69bc7abc7b"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-21441"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2026/01/msg00017.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-38jv-5279-wg99"
+                }
+            ],
+            "published_at": "2026-01-07T19:18:14Z",
+            "updated_at": "2026-01-23T16:05:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "urllib3"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.22, < 2.6.3",
+                    "first_patched_version": {
+                        "identifier": "2.6.3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H",
+                    "score": 8.9
+                }
+            },
+            "epss": {
+                "percentage": 0.02714,
+                "percentile": 0.84572
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-409",
+                    "name": "Improper Handling of Highly Compressed Data (Data Amplification)"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 1.22, < 2.6.3",
+            "first_patched_version": {
+                "identifier": "2.6.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/sentiment-analyzer/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/sentiment-analyzer/security/dependabot/6",
+        "created_at": "2026-08-15T15:11:53Z",
+        "updated_at": "2026-08-16T01:12:17Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:12:17Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-2xpw-w6gg-jr37",
+            "cve_id": "CVE-2025-66471",
+            "summary": "urllib3 streaming API improperly handles highly compressed data",
+            "description": "### Impact\n\nurllib3's [streaming API](https://urllib3.readthedocs.io/en/2.5.0/advanced-usage.html#streaming-and-i-o) is designed for the efficient handling of large HTTP responses by reading the content in chunks, rather than loading the entire response body into memory at once.\n\nWhen streaming a compressed response, urllib3 can perform decoding or decompression based on the HTTP `Content-Encoding` header (e.g., `gzip`, `deflate`, `br`, or `zstd`). The library must read compressed data from the network and decompress it until the requested chunk size is met. Any resulting decompressed data that exceeds the requested amount is held in an internal buffer for the next read operation.\n\nThe decompression logic could cause urllib3 to fully decode a small amount of highly compressed data in a single operation. This can result in excessive resource consumption (high CPU usage and massive memory allocation for the decompressed data; CWE-409) on the client side, even if the application only requested a small chunk of data.\n\n\n### Affected usages\n\nApplications and libraries using urllib3 version 2.5.0 and earlier to stream large compressed responses or content from untrusted sources.\n\n`stream()`, `read(amt=256)`, `read1(amt=256)`, `read_chunked(amt=256)`, `readinto(b)` are examples of `urllib3.HTTPResponse` method calls using the affected logic unless decoding is disabled explicitly.\n\n\n### Remediation\n\nUpgrade to at least urllib3 v2.6.0 in which the library avoids decompressing data that exceeds the requested amount.\n\nIf your environment contains a package facilitating the Brotli encoding, upgrade to at least Brotli 1.2.0 or brotlicffi 1.2.0.0 too. These versions are enforced by the `urllib3[brotli]` extra in the patched versions of urllib3.\n\n\n### Credits\n\nThe issue was reported by @Cycloctane.\nSupplemental information was provided by @stamparm during a security audit performed by [7ASecurity](https://7asecurity.com/) and facilitated by [OSTIF](https://ostif.org/).",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-2xpw-w6gg-jr37",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-66471",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/urllib3/urllib3/security/advisories/GHSA-2xpw-w6gg-jr37"
+                },
+                {
+                    "url": "https://github.com/urllib3/urllib3/commit/c19571de34c47de3a766541b041637ba5f716ed7"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-66471"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-2xpw-w6gg-jr37"
+                }
+            ],
+            "published_at": "2025-12-05T18:15:54Z",
+            "updated_at": "2025-12-05T18:33:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "urllib3"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.0, < 2.6.0",
+                    "first_patched_version": {
+                        "identifier": "2.6.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H",
+                    "score": 8.9
+                }
+            },
+            "epss": {
+                "percentage": 0.00692,
+                "percentile": 0.49525
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-409",
+                    "name": "Improper Handling of Highly Compressed Data (Data Amplification)"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 1.0, < 2.6.0",
+            "first_patched_version": {
+                "identifier": "2.6.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/sentiment-analyzer/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/sentiment-analyzer/security/dependabot/5",
+        "created_at": "2026-08-15T15:11:52Z",
+        "updated_at": "2026-08-16T01:12:16Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:12:16Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gm62-xv2j-4w53",
+            "cve_id": "CVE-2025-66418",
+            "summary": "urllib3 allows an unbounded number of links in the decompression chain",
+            "description": "## Impact\n\nurllib3 supports chained HTTP encoding algorithms for response content according to RFC 9110 (e.g., `Content-Encoding: gzip, zstd`).\n\nHowever, the number of links in the decompression chain was unbounded allowing a malicious server to insert a virtually unlimited number of compression steps leading to high CPU usage and massive memory allocation for the decompressed data.\n\n\n## Affected usages\n\nApplications and libraries using urllib3 version 2.5.0 and earlier for HTTP requests to untrusted sources unless they disable content decoding explicitly.\n\n\n## Remediation\n\nUpgrade to at least urllib3 v2.6.0 in which the library limits the number of links to 5.\n\nIf upgrading is not immediately possible, use [`preload_content=False`](https://urllib3.readthedocs.io/en/2.5.0/advanced-usage.html#streaming-and-i-o) and ensure that `resp.headers[\"content-encoding\"]` contains a safe number of encodings before reading the response content.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-gm62-xv2j-4w53",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-66418",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/urllib3/urllib3/security/advisories/GHSA-gm62-xv2j-4w53"
+                },
+                {
+                    "url": "https://github.com/urllib3/urllib3/commit/24d7b67eac89f94e11003424bcf0d8f7b72222a8"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-66418"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gm62-xv2j-4w53"
+                }
+            ],
+            "published_at": "2025-12-05T18:15:19Z",
+            "updated_at": "2025-12-05T18:33:00Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "urllib3"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 1.24, < 2.6.0",
+                    "first_patched_version": {
+                        "identifier": "2.6.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H",
+                    "score": 8.9
+                }
+            },
+            "epss": {
+                "percentage": 0.00692,
+                "percentile": 0.49525
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-770",
+                    "name": "Allocation of Resources Without Limits or Throttling"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 1.24, < 2.6.0",
+            "first_patched_version": {
+                "identifier": "2.6.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/sentiment-analyzer/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/sentiment-analyzer/security/dependabot/4",
+        "created_at": "2026-08-15T15:11:52Z",
+        "updated_at": "2026-08-16T01:12:16Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:12:16Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-pq67-6m6q-mj2v",
+            "cve_id": "CVE-2025-50181",
+            "summary": "urllib3 redirects are not disabled when retries are disabled on PoolManager instantiation",
+            "description": "urllib3 handles redirects and retries using the same mechanism, which is controlled by the `Retry` object. The most common way to disable redirects is at the request level, as follows:\n\n```python\nresp = urllib3.request(\"GET\", \"https://httpbin.org/redirect/1\", redirect=False)\nprint(resp.status)\n# 302\n```\n\nHowever, it is also possible to disable redirects, for all requests, by instantiating a `PoolManager` and specifying `retries` in a way that disable redirects:\n\n```python\nimport urllib3\n\nhttp = urllib3.PoolManager(retries=0)  # should raise MaxRetryError on redirect\nhttp = urllib3.PoolManager(retries=urllib3.Retry(redirect=0))  # equivalent to the above\nhttp = urllib3.PoolManager(retries=False)  # should return the first response\n\nresp = http.request(\"GET\", \"https://httpbin.org/redirect/1\")\n```\n\nHowever, the `retries` parameter is currently ignored, which means all the above examples don't disable redirects.\n\n## Affected usages\n\nPassing `retries` on `PoolManager` instantiation to disable redirects or restrict their number.\n\nBy default, requests and botocore users are not affected.\n\n## Impact\n\nRedirects are often used to exploit SSRF vulnerabilities. An application attempting to mitigate SSRF or open redirect vulnerabilities by disabling redirects at the PoolManager level will remain vulnerable.\n\n## Remediation\n\nYou can remediate this vulnerability with the following steps:\n\n * Upgrade to a patched version of urllib3. If your organization would benefit from the continued support of urllib3 1.x, please contact [sethmichaellarson@gmail.com](mailto:sethmichaellarson@gmail.com) to discuss sponsorship or contribution opportunities.\n * Disable redirects at the `request()` level instead of the `PoolManager()` level.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-pq67-6m6q-mj2v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-50181",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/urllib3/urllib3/security/advisories/GHSA-pq67-6m6q-mj2v"
+                },
+                {
+                    "url": "https://github.com/urllib3/urllib3/commit/f05b1329126d5be6de501f9d1e3e36738bc08857"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-50181"
+                },
+                {
+                    "url": "https://github.com/urllib3/urllib3/releases/tag/2.5.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-pq67-6m6q-mj2v"
+                }
+            ],
+            "published_at": "2025-06-18T17:50:00Z",
+            "updated_at": "2025-12-22T21:33:24Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "urllib3"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 2.5.0",
+                    "first_patched_version": {
+                        "identifier": "2.5.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00408,
+                "percentile": 0.33591
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-601",
+                    "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "urllib3"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 2.5.0",
+            "first_patched_version": {
+                "identifier": "2.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/sentiment-analyzer/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/sentiment-analyzer/security/dependabot/3",
+        "created_at": "2026-08-15T15:11:52Z",
+        "updated_at": "2026-08-16T01:12:16Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:12:16Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "azure-storage-blob"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-64x4-9hc6-r2h6",
+            "cve_id": "CVE-2022-30187",
+            "summary": "Microsoft: CBC Padding Oracle in Azure Blob Storage Encryption Library",
+            "description": "### Summary\n\nThe Azure Storage Encryption library in Java and other languages is vulnerable to a CBC Padding Oracle attack, similar to CVE-2020-8911. The library is not vulnerable to the equivalent of CVE-2020-8912, but only because it currently only supports AES-CBC as encryption mode. \n\n### Severity\n\nModerate - The vulnerability poses insider risks/privilege escalation risks, circumventing controls for stored data.\n\n### Further Analysis\nThe Java Azure Blob Storage Encryption SDK is impacted by an issue that can result in loss of confidentiality and message forgery. The attack requires write access to the container in question, and that the attacker has access to an endpoint that reveals decryption failures (without revealing the plaintext) and that when encrypting the CBC option was chosen as content cipher.\n\nThis advisory describes the plaintext revealing vulnerabilities in the Java Azure Blob Storage Encryption SDK, with a similar issue in the other blob storage SDKs being present as well.\n\nIn the current version of the Azure Blob Storage crypto SDK, the only algorithm option that allows users to encrypt files is to AES-CBC, without computing a MAC on the data.\n\nThis exposes a padding oracle vulnerability: If the attacker has write access to the blob container bucket and can observe whether or not an endpoint with access to the key can decrypt a file (without observing the file contents that the endpoint learns in the process), they can reconstruct the plaintext with (on average) 128*length(plaintext) queries to the endpoint, by exploiting CBC's ability to manipulate the bytes of the next block and PKCS5 padding errors.\n\n### Timeline\n**Date reported**: March 29 2022\n**Date preview**: June 16 2022\n**Date GA**: July 11 2022\n**Date disclosed**: July 17 2022",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-64x4-9hc6-r2h6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-30187",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-30187"
+                },
+                {
+                    "url": "https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2022-30187"
+                },
+                {
+                    "url": "https://github.com/google/security-research/security/advisories/GHSA-6m8q-r22q-vfxh"
+                },
+                {
+                    "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-30187"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-64x4-9hc6-r2h6"
+                }
+            ],
+            "published_at": "2022-07-13T00:00:39Z",
+            "updated_at": "2024-05-23T17:12:44Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "Azure.Storage.Queues"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 12.11.0",
+                    "first_patched_version": {
+                        "identifier": "12.11.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "nuget",
+                        "name": "Azure.Storage.Blobs"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 12.13.0",
+                    "first_patched_version": {
+                        "identifier": "12.13.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "maven",
+                        "name": "com.azure:azure-storage-blob"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 12.18.0",
+                    "first_patched_version": {
+                        "identifier": "12.18.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "azure-storage-queue"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 12.4.0",
+                    "first_patched_version": {
+                        "identifier": "12.4.0"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "azure-storage-blob"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 12.13.0",
+                    "first_patched_version": {
+                        "identifier": "12.13.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                    "score": 4.7
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00526,
+                "percentile": 0.41903
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                "score": 4.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-668",
+                    "name": "Exposure of Resource to Wrong Sphere"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "azure-storage-blob"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 12.13.0",
+            "first_patched_version": {
+                "identifier": "12.13.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/sentiment-analyzer/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/sentiment-analyzer/security/dependabot/2",
+        "created_at": "2026-08-15T15:11:52Z",
+        "updated_at": "2026-08-16T01:12:16Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:12:16Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tqdm"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "transitive"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-g7vv-2v7x-gj9p",
+            "cve_id": "CVE-2024-34062",
+            "summary": "tqdm CLI arguments injection attack",
+            "description": "### Impact\nAny optional non-boolean CLI arguments (e.g. `--delim`, `--buf-size`, `--manpath`) are passed through python's `eval`, allowing arbitrary code execution. Example:\n\n```sh\npython -m tqdm --manpath=\"\\\" + str(exec(\\\"import os\\nos.system('echo hi && killall python3')\\\")) + \\\"\"\n```\n\n### Patches\nhttps://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316 released in `tqdm>=4.66.3`\n\n### Workarounds\nNone\n\n### References\n- https://github.com/tqdm/tqdm/releases/tag/v4.66.3",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-g7vv-2v7x-gj9p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-34062",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/tqdm/tqdm/security/advisories/GHSA-g7vv-2v7x-gj9p"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-34062"
+                },
+                {
+                    "url": "https://github.com/tqdm/tqdm/commit/4e613f84ed2ae029559f539464df83fa91feb316"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/PA3GIGHPWAHCTT4UF57LTPZGWHAX3GW6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/QRECVQCCESHBS3UJOWNXQUIX725TKNY6"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/VA337CYUS4SLRFV2P6MX6MZ2LKFURKJC"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-g7vv-2v7x-gj9p"
+                }
+            ],
+            "published_at": "2024-05-03T19:33:28Z",
+            "updated_at": "2024-06-10T18:30:58Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "tqdm"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 4.4.0, < 4.66.3",
+                    "first_patched_version": {
+                        "identifier": "4.66.3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+                    "score": 3.9
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00432,
+                "percentile": 0.35517
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+                "score": 3.9
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-74",
+                    "name": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "tqdm"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 4.4.0, < 4.66.3",
+            "first_patched_version": {
+                "identifier": "4.66.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/sentiment-analyzer/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/sentiment-analyzer/security/dependabot/1",
+        "created_at": "2026-08-15T15:11:52Z",
+        "updated_at": "2026-08-16T01:12:16Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:12:16Z",
+        "auto_dismissed_at": null
+    }
+]

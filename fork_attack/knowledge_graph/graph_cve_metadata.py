@@ -2,6 +2,7 @@ import logging
 import json
 
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
+from fork_attack.utils import extraction_date
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +11,9 @@ fa = ForkAttackGraph()
 cves = fa.db.collection("cves")
 
 
-def load_cve_metadata(input_file="data/nvd_cpes.json"):
+def load_cve_metadata(input_file=None):
+    if input_file is None:
+        input_file = f"data/{extraction_date()}/nvd_cpes.json"
     try:
         with open(input_file, "r", encoding="utf-8") as f:
             entries = json.load(f)

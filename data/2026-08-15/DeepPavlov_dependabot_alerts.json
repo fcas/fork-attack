@@ -1,0 +1,2362 @@
+[
+    {
+        "number": 43,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fgcw-684q-jj6r",
+            "cve_id": "CVE-2026-5241",
+            "summary": "huggingface/transformers: Arbitrary Code Execution During Model Initialization in the LightGlue Model Loading Path",
+            "description": "A vulnerability in the LightGlue model loading path of huggingface/transformers version 5.2.0 allows an attacker-controlled model repository to execute arbitrary code during model initialization. The issue arises because the `trust_remote_code` parameter, intended to prevent remote code execution, is overridden by untrusted serialized configuration data in a nested code path. Specifically, when loading a LightGlue model using `AutoModel.from_pretrained()` with `trust_remote_code=False`, the `LightGlueConfig` reads the `trust_remote_code` value from the untrusted `config.json` file and propagates it into nested `AutoConfig.from_pretrained()` calls. This results in the execution of attacker-provided Python modules, even when the victim explicitly disables remote code execution. The vulnerability poses a high risk for environments such as API inference servers, research notebooks, CI/CD pipelines, and model evaluation workers, potentially leading to credential theft, lateral movement, or persistence/backdoor deployment.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-fgcw-684q-jj6r",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-5241",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-5241"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/676559d5022b74aaa0cee1cee0842b7f27c5320e"
+                },
+                {
+                    "url": "https://huntr.com/bounties/ceb3ce1a-4c45-497a-b25e-cb9a7685e619"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-5241"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2484384"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-5241.json"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34456"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:37275"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2026-2290.yaml"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:42644"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fgcw-684q-jj6r"
+                }
+            ],
+            "published_at": "2026-06-03T15:30:43Z",
+            "updated_at": "2026-07-21T12:33:27Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.5.0",
+                    "first_patched_version": {
+                        "identifier": "5.5.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                    "score": 8.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00547,
+                "percentile": 0.42526
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                "score": 8.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-829",
+                    "name": "Inclusion of Functionality from Untrusted Control Sphere"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.5.0",
+            "first_patched_version": {
+                "identifier": "5.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/43",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/43",
+        "created_at": "2026-07-13T17:58:22Z",
+        "updated_at": "2026-07-13T17:58:22Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 42,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-29pf-2h5f-8g72",
+            "cve_id": "CVE-2026-4372",
+            "summary": "HuggingFace transformers vulnerable to remote code execution",
+            "description": "A critical remote code execution vulnerability exists in all versions of the HuggingFace transformers library prior to version 5.3.0. The vulnerability allows an attacker to craft a malicious `config.json` file containing the `_attn_implementation_internal` field set to an attacker-controlled HuggingFace Hub repository ID. When a victim loads this model using the standard `AutoModelForCausalLM.from_pretrained()` API, the library downloads and executes arbitrary Python code from the attacker's repository with the victim's full OS privileges. This issue arises due to unfiltered deserialization of configuration attributes, insufficient sanitization of internal fields, and unsandboxed execution of downloaded kernels. The vulnerability bypasses the `trust_remote_code` security mechanism, is invisible to the victim, and exploits the standard documented usage pattern, making it particularly severe. Users are advised to upgrade to version 5.3.0 or later to mitigate this issue.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-29pf-2h5f-8g72",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-4372",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-4372"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/a7f8e7ff37d87d1a1a0c8cf607971c607741452f"
+                },
+                {
+                    "url": "https://huntr.com/bounties/1f693a6e-6836-4b8b-a0bd-ca036fba8884"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-29pf-2h5f-8g72"
+                }
+            ],
+            "published_at": "2026-05-26T13:30:33Z",
+            "updated_at": "2026-07-01T18:00:11Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.3.0",
+                    "first_patched_version": {
+                        "identifier": "5.3.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00479,
+                "percentile": 0.3852
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                },
+                {
+                    "cwe_id": "CWE-1066",
+                    "name": "Missing Serialization Control Element"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.3.0",
+            "first_patched_version": {
+                "identifier": "5.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/42",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/42",
+        "created_at": "2026-07-02T04:29:30Z",
+        "updated_at": "2026-07-02T04:29:30Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 34,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-69w3-r845-3855",
+            "cve_id": "CVE-2026-1839",
+            "summary": "HuggingFace Transformers allows for arbitrary code execution in the `Trainer` class",
+            "description": "A vulnerability in the HuggingFace Transformers library, specifically in the `Trainer` class, allows for arbitrary code execution. The `_load_rng_state()` method in `src/transformers/trainer.py` at line 3059 calls `torch.load()` without the `weights_only=True` parameter. This issue affects all versions of the library supporting `torch>=2.2` when used with PyTorch versions below 2.6, as the `safe_globals()` context manager provides no protection in these versions. An attacker can exploit this vulnerability by supplying a malicious checkpoint file, such as `rng_state.pth`, which can execute arbitrary code when loaded. The issue is resolved in version v5.0.0rc3.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-69w3-r845-3855",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-1839",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-1839"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/03c8082ba4594c9b8d6fe190ca9bed0e5f8ca396"
+                },
+                {
+                    "url": "https://huntr.com/bounties/3c77bb97-e493-493d-9a88-c57f5c536485"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/releases/tag/v5.0.0rc3"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-69w3-r845-3855"
+                }
+            ],
+            "published_at": "2026-04-07T06:30:28Z",
+            "updated_at": "2026-04-08T00:17:59Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 5.0.0rc3",
+                    "first_patched_version": {
+                        "identifier": "5.0.0rc3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:H",
+                    "score": 6.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00349,
+                "percentile": 0.27503
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 5.0.0rc3",
+            "first_patched_version": {
+                "identifier": "5.0.0rc3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/34",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/34",
+        "created_at": "2026-04-08T02:44:52Z",
+        "updated_at": "2026-04-08T02:44:52Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 31,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4w7r-h757-3r74",
+            "cve_id": "CVE-2025-6921",
+            "summary": "Hugging Face Transformers vulnerable to Regular Expression Denial of Service (ReDoS) in the AdamWeightDecay optimizer",
+            "description": "The huggingface/transformers library, versions prior to 4.53.0, is vulnerable to Regular Expression Denial of Service (ReDoS) in the AdamWeightDecay optimizer. The vulnerability arises from the _do_use_weight_decay method, which processes user-controlled regular expressions in the include_in_weight_decay and exclude_from_weight_decay lists. Malicious regular expressions can cause catastrophic backtracking during the re.search call, leading to 100% CPU utilization and a denial of service. This issue can be exploited by attackers who can control the patterns in these lists, potentially causing the machine learning task to hang and rendering services unresponsive.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-4w7r-h757-3r74",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-6921",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-6921"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/47c34fba5c303576560cb29767efb452ff12b8be"
+                },
+                {
+                    "url": "https://huntr.com/bounties/287d15a7-6e7c-45d2-8c05-11e305776f1f"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/d37f7517972f67e3f2194c000ed0f87f064e5099"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4w7r-h757-3r74"
+                }
+            ],
+            "published_at": "2025-09-23T15:31:09Z",
+            "updated_at": "2025-09-23T17:37:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.53.0",
+                    "first_patched_version": {
+                        "identifier": "4.53.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00467,
+                "percentile": 0.37549
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.53.0",
+            "first_patched_version": {
+                "identifier": "4.53.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/31",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/31",
+        "created_at": "2025-09-23T17:59:12Z",
+        "updated_at": "2025-09-23T17:59:12Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 30,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-rcv9-qm8p-9p6j",
+            "cve_id": "CVE-2025-6051",
+            "summary": "Hugging Face Transformers library has Regular Expression Denial of Service",
+            "description": "A Regular Expression Denial of Service (ReDoS) vulnerability was discovered in the Hugging Face Transformers library, specifically within the `normalize_numbers()` method of the `EnglishNormalizer` class. This vulnerability affects versions up to 4.52.4 and is fixed in version 4.53.0. The issue arises from the method's handling of numeric strings, which can be exploited using crafted input strings containing long sequences of digits, leading to excessive CPU consumption. This vulnerability impacts text-to-speech and number normalization tasks, potentially causing service disruption, resource exhaustion, and API vulnerabilities.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-rcv9-qm8p-9p6j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-6051",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-6051"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/ba8eaba9865618253f997784aa565b96206426f0"
+                },
+                {
+                    "url": "https://huntr.com/bounties/af929523-7b59-418a-bf55-301830b2ac9d"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/38844"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/54a02160eb030da9be18231c77791f2eb3a52216"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-rcv9-qm8p-9p6j"
+                }
+            ],
+            "published_at": "2025-09-14T18:30:26Z",
+            "updated_at": "2025-09-15T20:31:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.53.0",
+                    "first_patched_version": {
+                        "identifier": "4.53.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00379,
+                "percentile": 0.31014
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.53.0",
+            "first_patched_version": {
+                "identifier": "4.53.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/30",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/30",
+        "created_at": "2025-09-15T20:56:10Z",
+        "updated_at": "2025-09-15T20:56:10Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 29,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-59p9-h35m-wg4g",
+            "cve_id": "CVE-2025-6638",
+            "summary": "Hugging Face Transformers is vulnerable to ReDoS through its MarianTokenizer",
+            "description": "A Regular Expression Denial of Service (ReDoS) vulnerability was discovered in the Hugging Face Transformers library, specifically affecting the MarianTokenizer's `remove_language_code()` method. This vulnerability is present in version 4.52.4 and has been fixed in version 4.53.0. The issue arises from inefficient regex processing, which can be exploited by crafted input strings containing malformed language code patterns, leading to excessive CPU consumption and potential denial of service.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-59p9-h35m-wg4g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-6638",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-6638"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/47c34fba5c303576560cb29767efb452ff12b8be"
+                },
+                {
+                    "url": "https://huntr.com/bounties/6a6c933f-9ce8-4ded-8b3b-2c1444c61f36"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/d37f7517972f67e3f2194c000ed0f87f064e5099"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-59p9-h35m-wg4g"
+                }
+            ],
+            "published_at": "2025-09-12T12:30:23Z",
+            "updated_at": "2025-09-15T13:59:14Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.53.0",
+                    "first_patched_version": {
+                        "identifier": "4.53.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00524,
+                "percentile": 0.41849
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.53.0",
+            "first_patched_version": {
+                "identifier": "4.53.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/29",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/29",
+        "created_at": "2025-09-15T14:26:08Z",
+        "updated_at": "2025-09-15T14:26:08Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 27,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-9356-575x-2w9m",
+            "cve_id": "CVE-2025-5197",
+            "summary": "Hugging Face Transformers Regular Expression Denial of Service (ReDoS) vulnerability",
+            "description": "A Regular Expression Denial of Service (ReDoS) vulnerability exists in the Hugging Face Transformers library, specifically in the `convert_tf_weight_name_to_pt_weight_name()` function. This function, responsible for converting TensorFlow weight names to PyTorch format, uses a regex pattern `/[^/]*___([^/]*)/` that can be exploited to cause excessive CPU consumption through crafted input strings due to catastrophic backtracking. The vulnerability affects versions up to 4.51.3 and is fixed in version 4.53.0. This issue can lead to service disruption, resource exhaustion, and potential API service vulnerabilities, impacting model conversion processes between TensorFlow and PyTorch formats.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-9356-575x-2w9m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-5197",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-5197"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/944b56000be5e9b61af8301aa340838770ad8a0b"
+                },
+                {
+                    "url": "https://huntr.com/bounties/3f8b3fd0-166b-46e7-b60f-60dd9d2678bf"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/701caef704e356dc2f9331cc3fd5df0eccb4720a"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-9356-575x-2w9m"
+                }
+            ],
+            "published_at": "2025-08-06T12:31:20Z",
+            "updated_at": "2025-08-06T18:15:20Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.53.0",
+                    "first_patched_version": {
+                        "identifier": "4.53.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00391,
+                "percentile": 0.31504
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.53.0",
+            "first_patched_version": {
+                "identifier": "4.53.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/27",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/27",
+        "created_at": "2025-08-06T18:46:30Z",
+        "updated_at": "2025-08-06T18:46:30Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 26,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37mw-44qp-f5jm",
+            "cve_id": "CVE-2025-3933",
+            "summary": "Transformers is vulnerable to ReDoS attack through its DonutProcessor class",
+            "description": "A Regular Expression Denial of Service (ReDoS) vulnerability was discovered in the Hugging Face Transformers library, specifically within the DonutProcessor class's `token2json()` method. This vulnerability affects versions 4.51.3 and earlier, and is fixed in version 4.52.1. The issue arises from the regex pattern `<s_(.*?)>` which can be exploited to cause excessive CPU consumption through crafted input strings due to catastrophic backtracking. This vulnerability can lead to service disruption, resource exhaustion, and potential API service vulnerabilities, impacting document processing tasks using the Donut model.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-37mw-44qp-f5jm",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-3933",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3933"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/ebbe9b12dd75b69f92100d684c47f923ee262a93"
+                },
+                {
+                    "url": "https://huntr.com/bounties/25282953-5827-4384-bb6f-5790d275721b"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/37788"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37mw-44qp-f5jm"
+                }
+            ],
+            "published_at": "2025-07-11T12:30:32Z",
+            "updated_at": "2025-08-07T14:55:34Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 4.51.3",
+                    "first_patched_version": {
+                        "identifier": "4.52.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00431,
+                "percentile": 0.35514
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 4.51.3",
+            "first_patched_version": {
+                "identifier": "4.52.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/26",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/26",
+        "created_at": "2025-07-11T20:21:18Z",
+        "updated_at": "2025-07-11T20:21:18Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 25,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-phhr-52qp-3mj4",
+            "cve_id": "CVE-2025-3777",
+            "summary": "Transformers's Improper Input Validation vulnerability can be exploited through username injection",
+            "description": "Hugging Face Transformers versions up to 4.49.0 are affected by an improper input validation vulnerability in the `image_utils.py` file. The vulnerability arises from insecure URL validation using the `startswith()` method, which can be bypassed through URL username injection. This allows attackers to craft URLs that appear to be from YouTube but resolve to malicious domains, potentially leading to phishing attacks, malware distribution, or data exfiltration. The issue is fixed in version 4.52.1.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-phhr-52qp-3mj4",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-3777",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3777"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/4dda5f71b35fb70cf602187eef84bb17a50b9082"
+                },
+                {
+                    "url": "https://huntr.com/bounties/ccba0730-9248-4853-b7ff-5c20e6364f09"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/blame/a7d2bbaaa8aac64f7c1ee8c1421cfe84b38359a4/src/transformers/image_utils.py"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-phhr-52qp-3mj4"
+                }
+            ],
+            "published_at": "2025-07-07T12:30:22Z",
+            "updated_at": "2025-07-08T16:46:55Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.52.1",
+                    "first_patched_version": {
+                        "identifier": "4.52.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N",
+                    "score": 3.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00337,
+                "percentile": 0.26512
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N",
+                "score": 3.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.52.1",
+            "first_patched_version": {
+                "identifier": "4.52.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/25",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/25",
+        "created_at": "2025-07-08T17:13:39Z",
+        "updated_at": "2025-07-08T17:13:39Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 24,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jjph-296x-mrcr",
+            "cve_id": "CVE-2025-3264",
+            "summary": "Transformers vulnerable to ReDoS attack through its get_imports() function",
+            "description": "A Regular Expression Denial of Service (ReDoS) vulnerability was discovered in the Hugging Face Transformers library, specifically in the `get_imports()` function within `dynamic_module_utils.py`. This vulnerability affects versions 4.49.0 and is fixed in version 4.51.0. The issue arises from a regular expression pattern `\\s*try\\s*:.*?except.*?:` used to filter out try/except blocks from Python code, which can be exploited to cause excessive CPU consumption through crafted input strings due to catastrophic backtracking. This vulnerability can lead to remote code loading disruption, resource exhaustion in model serving, supply chain attack vectors, and development pipeline disruption.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jjph-296x-mrcr",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-3264",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3264"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/0720e206c6ba28887e4d60ef60a6a089f6c1cc76"
+                },
+                {
+                    "url": "https://huntr.com/bounties/3c6f7822-9992-476d-8cf0-b0b1623427df"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/126abe3461762e5fc180e7e614391d1b4ab051ca"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jjph-296x-mrcr"
+                }
+            ],
+            "published_at": "2025-07-07T12:30:22Z",
+            "updated_at": "2025-07-08T16:38:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.51.0",
+                    "first_patched_version": {
+                        "identifier": "4.51.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00431,
+                "percentile": 0.35515
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.51.0",
+            "first_patched_version": {
+                "identifier": "4.51.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/24",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/24",
+        "created_at": "2025-07-08T17:04:48Z",
+        "updated_at": "2025-07-08T17:04:48Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 23,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q2wp-rjmx-x6x9",
+            "cve_id": "CVE-2025-3263",
+            "summary": "Transformers's ReDoS vulnerability in get_configuration_file can lead to catastrophic backtracking",
+            "description": "A Regular Expression Denial of Service (ReDoS) vulnerability was discovered in the Hugging Face Transformers library, specifically in the `get_configuration_file()` function within the `transformers.configuration_utils` module. The affected version is 4.49.0, and the issue is resolved in version 4.51.0. The vulnerability arises from the use of a regular expression pattern `config\\.(.*)\\.json` that can be exploited to cause excessive CPU consumption through crafted input strings, leading to catastrophic backtracking. This can result in model serving disruption, resource exhaustion, and increased latency in applications using the library.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-q2wp-rjmx-x6x9",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-3263",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3263"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/0720e206c6ba28887e4d60ef60a6a089f6c1cc76"
+                },
+                {
+                    "url": "https://huntr.com/bounties/c7a69150-54f8-4e81-8094-791e7a2a0f29"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/126abe3461762e5fc180e7e614391d1b4ab051ca"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q2wp-rjmx-x6x9"
+                }
+            ],
+            "published_at": "2025-07-07T12:30:22Z",
+            "updated_at": "2025-07-08T16:33:28Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.51.0",
+                    "first_patched_version": {
+                        "identifier": "4.51.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00431,
+                "percentile": 0.35515
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.51.0",
+            "first_patched_version": {
+                "identifier": "4.51.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/23",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/23",
+        "created_at": "2025-07-08T16:59:29Z",
+        "updated_at": "2025-07-08T16:59:29Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 19,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qq3j-4f4f-9583",
+            "cve_id": "CVE-2025-2099",
+            "summary": "Hugging Face Transformers Regular Expression Denial of Service",
+            "description": "A Regular Expression Denial of Service (ReDoS) exists in the `preprocess_string()` function of the `transformers.testing_utils` module. In versions **before 4.50.0**, the regex used to process code blocks in docstrings contains nested quantifiers that can trigger catastrophic backtracking when given inputs with many newline characters. An attacker who can supply such input to `preprocess_string()` (or code paths that call it) can force excessive CPU usage and degrade availability.\n\n**Fix:** released in **4.50.0**, which rewrites the regex to avoid the inefficient pattern. ([GitHub][1])\n\n*   **Affected:** `< 4.50.0`\n*   **Patched:** `4.50.0`",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-qq3j-4f4f-9583",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-2099",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2099"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/8cb522b4190bd556ce51be04942720650b1a3e57"
+                },
+                {
+                    "url": "https://huntr.com/bounties/97b780f3-ffca-424f-ad5d-0e1c57a5bde4"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/36648"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2025-40.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qq3j-4f4f-9583"
+                }
+            ],
+            "published_at": "2025-05-19T12:30:33Z",
+            "updated_at": "2025-09-25T21:06:40Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.50.0",
+                    "first_patched_version": {
+                        "identifier": "4.50.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00542,
+                "percentile": 0.42584
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.50.0",
+            "first_patched_version": {
+                "identifier": "4.50.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/19",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/19",
+        "created_at": "2025-05-19T22:21:45Z",
+        "updated_at": "2025-05-19T22:21:45Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 18,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fpwr-67px-3qhx",
+            "cve_id": "CVE-2025-1194",
+            "summary": "Transformers Regular Expression Denial of Service (ReDoS) vulnerability",
+            "description": "A Regular Expression Denial of Service (ReDoS) vulnerability was identified in the huggingface/transformers library, specifically in the file `tokenization_gpt_neox_japanese.py` of the GPT-NeoX-Japanese model. The vulnerability occurs in the SubWordJapaneseTokenizer class, where regular expressions process specially crafted inputs. The issue stems from a regex exhibiting exponential complexity under certain conditions, leading to excessive backtracking. This can result in high CPU usage and potential application downtime, effectively creating a Denial of Service (DoS) scenario. The affected version is v4.48.1 (latest).",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-fpwr-67px-3qhx",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-1194",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-1194"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/92c5ca9dd70de3ade2af2eb835c96215cc50e815"
+                },
+                {
+                    "url": "https://huntr.com/bounties/86f58dcd-683f-4adc-a735-849f51e9abb2"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fpwr-67px-3qhx"
+                }
+            ],
+            "published_at": "2025-04-29T12:30:21Z",
+            "updated_at": "2025-08-04T15:27:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.50.0",
+                    "first_patched_version": {
+                        "identifier": "4.50.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                    "score": 4.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00438,
+                "percentile": 0.36054
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                "score": 4.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.50.0",
+            "first_patched_version": {
+                "identifier": "4.50.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/18",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/18",
+        "created_at": "2025-04-29T15:47:25Z",
+        "updated_at": "2025-04-29T15:47:25Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6rvg-6v2m-4j46",
+            "cve_id": "CVE-2024-12720",
+            "summary": "Transformers Regular Expression Denial of Service (ReDoS) vulnerability",
+            "description": "A Regular Expression Denial of Service (ReDoS) vulnerability was identified in the huggingface/transformers library, specifically in the file tokenization_nougat_fast.py. The vulnerability occurs in the post_process_single() function, where a regular expression processes specially crafted input. The issue stems from the regex exhibiting exponential time complexity under certain conditions, leading to excessive backtracking. This can result in significantly high CPU usage and potential application downtime, effectively creating a Denial of Service (DoS) scenario. The affected version is v4.46.3.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-6rvg-6v2m-4j46",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-12720",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-12720"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/deac971c469bcbb182c2e52da0b82fb3bf54cccf"
+                },
+                {
+                    "url": "https://huntr.com/bounties/4bed1214-7835-4252-a853-22bbad891f98"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6rvg-6v2m-4j46"
+                }
+            ],
+            "published_at": "2025-03-20T12:32:43Z",
+            "updated_at": "2025-03-21T17:43:04Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 4.48.0",
+                    "first_patched_version": {
+                        "identifier": "4.48.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.0069,
+                "percentile": 0.49553
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 4.48.0",
+            "first_patched_version": {
+                "identifier": "4.48.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/13",
+        "created_at": "2025-03-21T18:12:52Z",
+        "updated_at": "2025-03-21T18:12:52Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hxxf-235m-72v3",
+            "cve_id": "CVE-2024-11394",
+            "summary": "Deserialization of Untrusted Data in Hugging Face Transformers",
+            "description": "Hugging Face Transformers Trax Model Deserialization of Untrusted Data Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Hugging Face Transformers. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the handling of model files. The issue results from the lack of proper validation of user-supplied data, which can result in deserialization of untrusted data. An attacker can leverage this vulnerability to execute code in the context of the current user. Was ZDI-CAN-25012.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-hxxf-235m-72v3",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-11394",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-11394"
+                },
+                {
+                    "url": "https://www.zerodayinitiative.com/advisories/ZDI-24-1515"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2024-229.yaml"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/issues/34840"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/35296"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hxxf-235m-72v3"
+                }
+            ],
+            "published_at": "2024-11-23T03:31:58Z",
+            "updated_at": "2025-02-13T22:13:52Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0, < 4.48.0",
+                    "first_patched_version": {
+                        "identifier": "4.48.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.02435,
+                "percentile": 0.82683
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 0, < 4.48.0",
+            "first_patched_version": {
+                "identifier": "4.48.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/12",
+        "created_at": "2025-02-11T15:42:44Z",
+        "updated_at": "2025-02-11T15:42:44Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-wrfc-pvp9-mr9g",
+            "cve_id": "CVE-2024-11393",
+            "summary": "Deserialization of Untrusted Data in Hugging Face Transformers",
+            "description": "Hugging Face Transformers MaskFormer Model Deserialization of Untrusted Data Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Hugging Face Transformers. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the parsing of model files. The issue results from the lack of proper validation of user-supplied data, which can result in deserialization of untrusted data. An attacker can leverage this vulnerability to execute code in the context of the current user. Was ZDI-CAN-25191.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-wrfc-pvp9-mr9g",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-11393",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-11393"
+                },
+                {
+                    "url": "https://www.zerodayinitiative.com/advisories/ZDI-24-1514"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2024-228.yaml"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/issues/34840"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/35296"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-wrfc-pvp9-mr9g"
+                }
+            ],
+            "published_at": "2024-11-23T03:31:58Z",
+            "updated_at": "2025-02-13T22:16:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0, < 4.48.0",
+                    "first_patched_version": {
+                        "identifier": "4.48.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.02918,
+                "percentile": 0.85677
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 0, < 4.48.0",
+            "first_patched_version": {
+                "identifier": "4.48.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/11",
+        "created_at": "2025-02-11T15:42:21Z",
+        "updated_at": "2025-02-11T15:42:21Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qxrp-vhvm-j765",
+            "cve_id": "CVE-2024-11392",
+            "summary": "Deserialization of Untrusted Data in Hugging Face Transformers",
+            "description": "Hugging Face Transformers MobileViTV2 Deserialization of Untrusted Data Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Hugging Face Transformers. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the handling of configuration files. The issue results from the lack of proper validation of user-supplied data, which can result in deserialization of untrusted data. An attacker can leverage this vulnerability to execute code in the context of the current user. Was ZDI-CAN-24322.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-qxrp-vhvm-j765",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-11392",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-11392"
+                },
+                {
+                    "url": "https://www.zerodayinitiative.com/advisories/ZDI-24-1513"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2024-227.yaml"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/issues/34840"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/pull/35296"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qxrp-vhvm-j765"
+                }
+            ],
+            "published_at": "2024-11-23T03:31:58Z",
+            "updated_at": "2025-02-13T22:15:59Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 0, < 4.48.0",
+                    "first_patched_version": {
+                        "identifier": "4.48.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.0714,
+                "percentile": 0.93636
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 0, < 4.48.0",
+            "first_patched_version": {
+                "identifier": "4.48.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/10",
+        "created_at": "2025-02-11T15:39:28Z",
+        "updated_at": "2025-02-11T15:39:28Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "manifest_path": "requirements.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jw8x-6495-233v",
+            "cve_id": "CVE-2024-5206",
+            "summary": "scikit-learn sensitive data leakage vulnerability",
+            "description": "A sensitive data leakage vulnerability was identified in scikit-learn's TfidfVectorizer, specifically in versions up to and including 1.4.1.post1, which was fixed in version 1.5.0. The vulnerability arises from the unexpected storage of all tokens present in the training data within the `stop_words_` attribute, rather than only storing the subset of tokens required for the TF-IDF technique to function. This behavior leads to the potential leakage of sensitive information, as the `stop_words_` attribute could contain tokens that were meant to be discarded and not stored, such as passwords or keys. The impact of this vulnerability varies based on the nature of the data being processed by the vectorizer.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jw8x-6495-233v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-5206",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-5206"
+                },
+                {
+                    "url": "https://github.com/scikit-learn/scikit-learn/commit/70ca21f106b603b611da73012c9ade7cd8e438b8"
+                },
+                {
+                    "url": "https://huntr.com/bounties/14bc0917-a85b-4106-a170-d09d5191517c"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/scikit-learn/PYSEC-2024-110.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jw8x-6495-233v"
+                }
+            ],
+            "published_at": "2024-06-06T21:30:37Z",
+            "updated_at": "2024-10-25T16:47:33Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "scikit-learn"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.5.0",
+                    "first_patched_version": {
+                        "identifier": "1.5.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                    "score": 5.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00189,
+                "percentile": 0.08683
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                "score": 5.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-921",
+                    "name": "Storage of Sensitive Data in a Mechanism without Access Control"
+                },
+                {
+                    "cwe_id": "CWE-922",
+                    "name": "Insecure Storage of Sensitive Information"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "scikit-learn"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.5.0",
+            "first_patched_version": {
+                "identifier": "1.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/7",
+        "created_at": "2024-06-18T01:04:58Z",
+        "updated_at": "2024-06-18T01:04:58Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-37q5-v5qm-c9v8",
+            "cve_id": "CVE-2024-3568",
+            "summary": "Transformers Deserialization of Untrusted Data vulnerability",
+            "description": "The huggingface/transformers library is vulnerable to arbitrary code execution through deserialization of untrusted data within the `load_repo_checkpoint()` function of the `TFPreTrainedModel()` class. Attackers can execute arbitrary code and commands by crafting a malicious serialized payload, exploiting the use of `pickle.load()` on data from potentially untrusted sources. This vulnerability allows for remote code execution (RCE) by deceiving victims into loading a seemingly harmless checkpoint during a normal training process, thereby enabling attackers to execute arbitrary code on the targeted machine.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-37q5-v5qm-c9v8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-3568",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3568"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/693667b8ac8138b83f8adb6522ddaf42fa07c125"
+                },
+                {
+                    "url": "https://huntr.com/bounties/b3c36992-5264-4d7f-9906-a996efafba8f"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-37q5-v5qm-c9v8"
+                }
+            ],
+            "published_at": "2024-04-10T18:30:48Z",
+            "updated_at": "2024-04-10T22:20:57Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 4.38.0",
+                    "first_patched_version": {
+                        "identifier": "4.38.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                    "score": 3.4
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.02067,
+                "percentile": 0.79505
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:N/A:L",
+                "score": 3.4
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 4.38.0",
+            "first_patched_version": {
+                "identifier": "4.38.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/4",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3863-2447-669p",
+            "cve_id": "CVE-2023-6730",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.",
+            "severity": "critical",
+            "identifiers": [
+                {
+                    "value": "GHSA-3863-2447-669p",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-6730",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-6730"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/423611ee-7a2a-442a-babb-3ed2f8385c16"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2023-300.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3863-2447-669p"
+                }
+            ],
+            "published_at": "2023-12-19T15:30:30Z",
+            "updated_at": "2024-11-22T20:44:49Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "critical",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                    "score": 9.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00928,
+                "percentile": 0.5755
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "score": 9.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "critical",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/3",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "deeppavlov/requirements/transformers.txt",
+            "scope": "runtime",
+            "relationship": "unknown"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-v68g-wm8c-6x7j",
+            "cve_id": "CVE-2023-7018",
+            "summary": "transformers has a Deserialization of Untrusted Data vulnerability",
+            "description": "Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-v68g-wm8c-6x7j",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-7018",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-7018"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/1d63b0ec361e7a38f1339385e8a5a855085532ce"
+                },
+                {
+                    "url": "https://huntr.com/bounties/e1a3e548-e53a-48df-b708-9ee62140963c"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2023-301.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-v68g-wm8c-6x7j"
+                }
+            ],
+            "published_at": "2023-12-20T18:30:32Z",
+            "updated_at": "2024-11-22T20:45:14Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.36.0",
+                    "first_patched_version": {
+                        "identifier": "4.36.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00734,
+                "percentile": 0.50887
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.36.0",
+            "first_patched_version": {
+                "identifier": "4.36.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/DeepPavlov/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/DeepPavlov/security/dependabot/2",
+        "created_at": "2024-05-24T01:33:42Z",
+        "updated_at": "2024-05-24T01:33:42Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

@@ -3,6 +3,7 @@ import requests
 import json
 import logging
 import time
+from datetime import date
 
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
 
@@ -58,7 +59,7 @@ def _extract_references(cve_data):
     return [ref.get("url") for ref in cve_data.get("references", []) if ref.get("url")]
 
 
-def fetch_and_save_cpes(output_file="data/nvd_cpes.json"):
+def fetch_and_save_cpes(output_file=None):
     """
     Consulta a API 2.0 do NVD (https://nvd.nist.gov/developers/vulnerabilities)
     para cada CVE já coletado, extraindo as entradas CPE (Common Platform
@@ -66,10 +67,20 @@ def fetch_and_save_cpes(output_file="data/nvd_cpes.json"):
     como métricas CVSS, referências, status e datas já presentes na mesma
     resposta, sem custo de requisição adicional.
     """
+    # Persisted under today's date, the raw extraction date, following the same
+    # convention as the per-repo Dependabot/CodeQL dumps in data/<date>/.
+    if output_file is None:
+        output_file = f"data/{date.today()}/nvd_cpes.json"
+
     base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
 
     api_key = os.getenv("NVD_API_KEY", "")
-    headers = {"apiKey": api_key} if api_key else {}
+    # A default python-requests User-Agent gets flagged by NVD's Cloudflare
+    # bot protection (returns a JS-challenge HTML page, not JSON); a
+    # browser-like one passes through the same way curl does.
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+    if api_key:
+        headers["apiKey"] = api_key
 
     # Sem API key: 5 requisições / 30s. Com API key: 50 requisições / 30s.
     # https://nvd.nist.gov/developers/start-here

@@ -1,0 +1,113 @@
+[
+    {
+        "number": 2,
+        "created_at": "2026-08-15T10:47:13Z",
+        "updated_at": "2026-08-15T10:47:13Z",
+        "url": "https://api.github.com/repos/fcas/pyod/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/pyod/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/unsafe-deserialization",
+            "severity": "error",
+            "description": "Deserialization of user-controlled data",
+            "name": "py/unsafe-deserialization",
+            "tags": [
+                "external/cwe/cwe-502",
+                "security",
+                "serialization"
+            ],
+            "full_description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+            "help": "# Deserialization of user-controlled data\nDeserializing untrusted data using any deserialization framework that allows the construction of arbitrary serializable objects is easily exploitable and in many cases allows an attacker to execute arbitrary code. Even before a deserialized object is returned to the caller of a deserialization method a lot of code may have been executed, including static initializers, constructors, and finalizers. Automatic deserialization of fields means that an attacker may craft a nested combination of objects on which the executed initialization code may have unforeseen effects, such as the execution of arbitrary code.\n\nThere are many different serialization frameworks. This query currently supports Pickle, Marshal and Yaml.\n\nNote that a deserialization method is only dangerous if it can instantiate arbitrary classes. Serialization frameworks that use a schema to instantiate only expected, predefined types are generally not tracked by this query. Such frameworks are generally safe with respect to arbitrary-class-instantiation and gadget-chain attacks when the schema is trusted and does not permit user-controlled type resolution. However, care must be taken to ensure the schema strictly limits the allowed types. Permitting common standard library classes can still leave the application vulnerable to gadget-chain attacks.\n\n\n## Recommendation\nAvoid deserialization of untrusted data if at all possible. If the architecture permits it then use other formats instead of serialized objects, for example JSON.\n\nIf you need to use YAML, use the `yaml.safe_load` function.\n\n\n## Example\nThe following example calls `pickle.loads` directly on a value provided by an incoming HTTP request. Pickle then creates a new value from untrusted data, and is therefore inherently unsafe.\n\n\n```python\n\nfrom django.conf.urls import url\nimport pickle\n\ndef unsafe(pickled):\n    return pickle.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', unsafe)\n]\n```\nChanging the code to use `json.loads` instead of `pickle.loads` removes the vulnerability.\n\n\n```python\n\nfrom django.conf.urls import url\nimport json\n\ndef safe(pickled):\n    return json.loads(pickled)\n\nurlpatterns = [\n    url(r'^(?P<object>.*)$', safe)\n]\n\n```\n\n## References\n* OWASP vulnerability description: [Deserialization of untrusted data](https://www.owasp.org/index.php/Deserialization_of_untrusted_data).\n* OWASP guidance on deserializing objects: [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).\n* Talks by Chris Frohoff &amp; Gabriel Lawrence: [ AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/)\n* Common Weakness Enumeration: [CWE-502](https://cwe.mitre.org/data/definitions/502.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "455f636e8a07652ae6033e4f81369bf04c8ca314",
+            "message": {
+                "text": "Unsafe deserialization depends on a user-provided value."
+            },
+            "location": {
+                "path": "pyod/models/base_dl.py",
+                "start_line": 347,
+                "end_line": 347,
+                "start_column": 36,
+                "end_column": 40
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pyod/code-scanning/alerts/2/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 1,
+        "created_at": "2026-08-15T10:47:13Z",
+        "updated_at": "2026-08-15T10:47:13Z",
+        "url": "https://api.github.com/repos/fcas/pyod/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/pyod/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/code-injection",
+            "severity": "error",
+            "description": "Code injection",
+            "name": "py/code-injection",
+            "tags": [
+                "external/cwe/cwe-094",
+                "external/cwe/cwe-095",
+                "external/cwe/cwe-116",
+                "security"
+            ],
+            "full_description": "Interpreting unsanitized user input as code allows a malicious user to perform arbitrary code execution.",
+            "help": "# Code injection\nDirectly evaluating user input (for example, an HTTP request parameter) as code without properly sanitizing the input first allows an attacker arbitrary code execution. This can occur when user input is passed to code that interprets it as an expression to be evaluated, such as `eval` or `exec`.\n\n\n## Recommendation\nAvoid including user input in any expression that may be dynamically evaluated. If user input must be included, use context-specific escaping before including it. It is important that the correct escaping is used for the type of evaluation that will occur.\n\n\n## Example\nThe following example shows two functions setting a name from a request. The first function uses `exec` to execute the `setname` function. This is dangerous as it can allow a malicious user to execute arbitrary code on the server. For example, the user could supply the value `\"' + subprocess.call('rm -rf') + '\"` to destroy the server's file system. The second function calls the `setname` function directly and is thus safe.\n\n\n```python\n\nurlpatterns = [\n    # Route to code_execution\n    url(r'^code-ex1$', code_execution_bad, name='code-execution-bad'),\n    url(r'^code-ex2$', code_execution_good, name='code-execution-good')\n]\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #BAD -- Allow user to define code to be run.\n        exec(\"setname('%s')\" % first_name)\n\ndef code_execution(request):\n    if request.method == 'POST':\n        first_name = base64.decodestring(request.POST.get('first_name', ''))\n        #GOOD --Call code directly\n        setname(first_name)\n\n```\n\n## References\n* OWASP: [Code Injection](https://www.owasp.org/index.php/Code_Injection).\n* Wikipedia: [Code Injection](https://en.wikipedia.org/wiki/Code_injection).\n* Common Weakness Enumeration: [CWE-94](https://cwe.mitre.org/data/definitions/94.html).\n* Common Weakness Enumeration: [CWE-95](https://cwe.mitre.org/data/definitions/95.html).\n* Common Weakness Enumeration: [CWE-116](https://cwe.mitre.org/data/definitions/116.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/master",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "455f636e8a07652ae6033e4f81369bf04c8ca314",
+            "message": {
+                "text": "This code execution depends on a user-provided value."
+            },
+            "location": {
+                "path": "docs/conf.py",
+                "start_line": 24,
+                "end_line": 24,
+                "start_column": 6,
+                "end_column": 31
+            },
+            "classifications": [
+                "documentation"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pyod/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

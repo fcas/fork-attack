@@ -1,0 +1,334 @@
+[
+    {
+        "number": 6,
+        "created_at": "2026-08-15T11:06:06Z",
+        "updated_at": "2026-08-15T11:06:06Z",
+        "url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/6",
+        "html_url": "https://github.com/fcas/pydantic/security/code-scanning/6",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/command-line-injection",
+            "severity": "error",
+            "description": "Uncontrolled command line",
+            "name": "py/command-line-injection",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-078",
+                "external/cwe/cwe-088",
+                "security"
+            ],
+            "full_description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+            "help": "# Uncontrolled command line\nCode that passes user input directly to `exec`, `eval`, or some other library routine that executes a command, allows the user to execute malicious code.\n\n\n## Recommendation\nIf possible, use hard-coded string literals to specify the command to run or the library to load. Instead of passing the user input directly to the process or library function, examine the user input and then choose among hard-coded string literals.\n\nIf the applicable libraries or commands cannot be determined at compile time, then add code to verify that the user input string is safe before using it.\n\n\n## Example\nThe following example shows two functions. The first is unsafe as it takes a shell script that can be changed by a user, and passes it straight to `subprocess.call()` without examining it first. The second is safe as it selects the command from a predefined allowlist.\n\n\n```python\n\nurlpatterns = [\n    # Route to command_execution\n    url(r'^command-ex1$', command_execution_unsafe, name='command-execution-unsafe'),\n    url(r'^command-ex2$', command_execution_safe, name='command-execution-safe')\n]\n\nCOMMANDS = {\n    \"list\" :\"ls\",\n    \"stat\" : \"stat\"\n}\n\ndef command_execution_unsafe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #BAD -- No sanitizing of input\n        subprocess.call([\"application\", action])\n\ndef command_execution_safe(request):\n    if request.method == 'POST':\n        action = request.POST.get('action', '')\n        #GOOD -- Use an allowlist\n        subprocess.call([\"application\", COMMANDS[action]])\n\n```\n\n## References\n* OWASP: [Command Injection](https://www.owasp.org/index.php/Command_Injection).\n* Common Weakness Enumeration: [CWE-78](https://cwe.mitre.org/data/definitions/78.html).\n* Common Weakness Enumeration: [CWE-88](https://cwe.mitre.org/data/definitions/88.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "b31b0a16f7e957e25a8d4f21ff5aa8109490aead",
+            "message": {
+                "text": "This command line depends on a user-provided value."
+            },
+            "location": {
+                "path": "release/shared.py",
+                "start_line": 8,
+                "end_line": 8,
+                "start_column": 24,
+                "end_column": 28
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/6/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 5,
+        "created_at": "2026-08-15T11:06:06Z",
+        "updated_at": "2026-08-15T11:06:06Z",
+        "url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/5",
+        "html_url": "https://github.com/fcas/pydantic/security/code-scanning/5",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "b31b0a16f7e957e25a8d4f21ff5aa8109490aead",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings starting with '## v0.0.0' and with many repetitions of '0'."
+            },
+            "location": {
+                "path": "release/push.py",
+                "start_line": 42,
+                "end_line": 42,
+                "start_column": 53,
+                "end_column": 57
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/5/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 4,
+        "created_at": "2026-08-15T11:06:06Z",
+        "updated_at": "2026-08-15T11:06:06Z",
+        "url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/4",
+        "html_url": "https://github.com/fcas/pydantic/security/code-scanning/4",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "b31b0a16f7e957e25a8d4f21ff5aa8109490aead",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings starting with '## v0.0.0' and with many repetitions of '0'."
+            },
+            "location": {
+                "path": "release/push.py",
+                "start_line": 34,
+                "end_line": 34,
+                "start_column": 58,
+                "end_column": 62
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/4/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 3,
+        "created_at": "2026-08-15T11:06:06Z",
+        "updated_at": "2026-08-15T11:06:06Z",
+        "url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/3",
+        "html_url": "https://github.com/fcas/pydantic/security/code-scanning/3",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/polynomial-redos",
+            "severity": "warning",
+            "description": "Polynomial regular expression used on uncontrolled data",
+            "name": "py/polynomial-redos",
+            "tags": [
+                "external/cwe/cwe-1333",
+                "external/cwe/cwe-400",
+                "external/cwe/cwe-730",
+                "security"
+            ],
+            "full_description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+            "help": "# Polynomial regular expression used on uncontrolled data\nSome regular expressions take a long time to match certain input strings to the point where the time it takes to match a string of length *n* is proportional to *n<sup>k</sup>* or even *2<sup>n</sup>*. Such regular expressions can negatively affect performance, or even allow a malicious user to perform a Denial of Service (\"DoS\") attack by crafting an expensive input string for the regular expression to match.\n\nThe regular expression engine provided by Python uses a backtracking non-deterministic finite automata to implement regular expression matching. While this approach is space-efficient and allows supporting advanced features like capture groups, it is not time-efficient in general. The worst-case time complexity of such an automaton can be polynomial or even exponential, meaning that for strings of a certain shape, increasing the input length by ten characters may make the automaton about 1000 times slower.\n\nTypically, a regular expression is affected by this problem if it contains a repetition of the form `r*` or `r+` where the sub-expression `r` is ambiguous in the sense that it can match some string in multiple ways. More information about the precise circumstances can be found in the references.\n\n\n## Recommendation\nModify the regular expression to remove the ambiguity, or ensure that the strings matched with the regular expression are short enough that the time-complexity does not matter.\n\n\n## Example\nConsider this use of a regular expression, which removes all leading and trailing whitespace in a string:\n\n```python\n\nre.sub(r\"^\\s+|\\s+$\", \"\", text) # BAD\n```\nThe sub-expression `\"\\s+$\"` will match the whitespace characters in `text` from left to right, but it can start matching anywhere within a whitespace sequence. This is problematic for strings that do **not** end with a whitespace character. Such a string will force the regular expression engine to process each whitespace sequence once per whitespace character in the sequence.\n\nThis ultimately means that the time cost of trimming a string is quadratic in the length of the string. So a string like `\"a b\"` will take milliseconds to process, but a similar string with a million spaces instead of just one will take several minutes.\n\nAvoid this problem by rewriting the regular expression to not contain the ambiguity about when to start matching whitespace sequences. For instance, by using a negative look-behind (`^\\s+|(?<!\\s)\\s+$`), or just by using the built-in strip method (`text.strip()`).\n\nNote that the sub-expression `\"^\\s+\"` is **not** problematic as the `^` anchor restricts when that sub-expression can start matching, and as the regular expression engine matches from left to right.\n\n\n## Example\nAs a similar, but slightly subtler problem, consider the regular expression that matches lines with numbers, possibly written using scientific notation:\n\n```python\n\n^0\\.\\d+E?\\d+$ # BAD\n```\nThe problem with this regular expression is in the sub-expression `\\d+E?\\d+` because the second `\\d+` can start matching digits anywhere after the first match of the first `\\d+` if there is no `E` in the input string.\n\nThis is problematic for strings that do **not** end with a digit. Such a string will force the regular expression engine to process each digit sequence once per digit in the sequence, again leading to a quadratic time complexity.\n\nTo make the processing faster, the regular expression should be rewritten such that the two `\\d+` sub-expressions do not have overlapping matches: `^0\\.\\d+(E\\d+)?$`.\n\n\n## Example\nSometimes it is unclear how a regular expression can be rewritten to avoid the problem. In such cases, it often suffices to limit the length of the input string. For instance, the following regular expression is used to match numbers, and on some non-number inputs it can have quadratic time complexity:\n\n```python\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\nIt is not immediately obvious how to rewrite this regular expression to avoid the problem. However, you can mitigate performance issues by limiting the length to 1000 characters, which will always finish in a reasonable amount of time.\n\n```python\n\nif len(str) > 1000:\n    raise ValueError(\"Input too long\")\n\nmatch = re.search(r'^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$', str) \n```\n\n## References\n* OWASP: [Regular expression Denial of Service - ReDoS](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).\n* Wikipedia: [ReDoS](https://en.wikipedia.org/wiki/ReDoS).\n* Wikipedia: [Time complexity](https://en.wikipedia.org/wiki/Time_complexity).\n* James Kirrage, Asiri Rathnayake, Hayo Thielecke: [Static Analysis for Regular Expression Denial-of-Service Attack](https://arxiv.org/abs/1301.0849).\n* Common Weakness Enumeration: [CWE-1333](https://cwe.mitre.org/data/definitions/1333.html).\n* Common Weakness Enumeration: [CWE-730](https://cwe.mitre.org/data/definitions/730.html).\n* Common Weakness Enumeration: [CWE-400](https://cwe.mitre.org/data/definitions/400.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "b31b0a16f7e957e25a8d4f21ff5aa8109490aead",
+            "message": {
+                "text": "This regular expression that depends on a user-provided value may run slow on strings starting with '## v0.0.0' and with many repetitions of '0'."
+            },
+            "location": {
+                "path": "release/push.py",
+                "start_line": 24,
+                "end_line": 24,
+                "start_column": 58,
+                "end_column": 62
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/3/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 2,
+        "created_at": "2026-08-14T19:03:02Z",
+        "updated_at": "2026-08-14T19:03:02Z",
+        "url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/2",
+        "html_url": "https://github.com/fcas/pydantic/security/code-scanning/2",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "b31b0a16f7e957e25a8d4f21ff5aa8109490aead",
+            "message": {
+                "text": "The string https://errors.pydantic.dev may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "pydantic-core/tests/test_errors.py",
+                "start_line": 1195,
+                "end_line": 1195,
+                "start_column": 13,
+                "end_column": 59
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/2/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    },
+    {
+        "number": 1,
+        "created_at": "2026-08-14T19:03:02Z",
+        "updated_at": "2026-08-14T19:03:02Z",
+        "url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/pydantic/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/incomplete-url-substring-sanitization",
+            "severity": "warning",
+            "description": "Incomplete URL substring sanitization",
+            "name": "py/incomplete-url-substring-sanitization",
+            "tags": [
+                "correctness",
+                "external/cwe/cwe-020",
+                "security"
+            ],
+            "full_description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+            "help": "# Incomplete URL substring sanitization\nSanitizing untrusted URLs is a common technique for preventing attacks such as request forgeries and malicious redirections. Usually, this is done by checking that the host of a URL is in a set of allowed hosts.\n\nHowever, treating the URL as a string and checking if one of the allowed hosts is a substring of the URL is very prone to errors. Malicious URLs can bypass such security checks by embedding one of the allowed hosts in an unexpected location.\n\nEven if the substring check is not used in a security-critical context, the incomplete check may still cause undesirable behaviors when the check succeeds accidentally.\n\n\n## Recommendation\nParse a URL before performing a check on its host value, and ensure that the check handles arbitrary subdomain sequences correctly.\n\n\n## Example\nThe following example code checks that a URL redirection will reach the `example.com` domain.\n\n\n```python\nfrom flask import Flask, request, redirect\nfrom urllib.parse import urlparse\n\napp = Flask(__name__)\n\n# Not safe, as \"evil-example.net/example.com\" would be accepted\n\n@app.route('/some/path/bad1')\ndef unsafe1(request):\n    target = request.args.get('target', '')\n    if \"example.com\" in target:\n        return redirect(target)\n\n# Not safe, as \"benign-looking-prefix-example.com\" would be accepted\n\n@app.route('/some/path/bad2')\ndef unsafe2(request):\n    target = request.args.get('target', '')\n    if target.endswith(\"example.com\"):\n        return redirect(target)\n\n\n\n#Simplest and safest approach is to use an allowlist\n\n@app.route('/some/path/good1')\ndef safe1(request):\n    allowlist = [\n        \"example.com/home\",\n        \"example.com/login\",\n    ]\n    target = request.args.get('target', '')\n    if target in allowlist:\n        return redirect(target)\n\n#More complex example allowing sub-domains.\n\n@app.route('/some/path/good2')\ndef safe2(request):\n    target = request.args.get('target', '')\n    host = urlparse(target).hostname\n    #Note the '.' preceding example.com\n    if host and host.endswith(\".example.com\"):\n        return redirect(target)\n\n\n```\nThe first two examples show unsafe checks that are easily bypassed. In `unsafe1` the attacker can simply add `example.com` anywhere in the url. For example, `http://evil-example.net/example.com`.\n\nIn `unsafe2` the attacker must use a hostname ending in `example.com`, but that is easy to do. For example, `http://benign-looking-prefix-example.com`.\n\nThe second two examples show safe checks. In `safe1`, an allowlist is used. Although fairly inflexible, this is easy to get right and is most likely to be safe.\n\nIn `safe2`, `urlparse` is used to parse the URL, then the hostname is checked to make sure it ends with `.example.com`.\n\n\n## References\n* OWASP: [SSRF](https://www.owasp.org/index.php/Server_Side_Request_Forgery)\n* OWASP: [XSS Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html).\n* Common Weakness Enumeration: [CWE-20](https://cwe.mitre.org/data/definitions/20.html).\n",
+            "security_severity_level": "high"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "b31b0a16f7e957e25a8d4f21ff5aa8109490aead",
+            "message": {
+                "text": "The string https://errors.pydantic.dev may be at an arbitrary position in the sanitized URL."
+            },
+            "location": {
+                "path": "pydantic-core/tests/test_errors.py",
+                "start_line": 1154,
+                "end_line": 1154,
+                "start_column": 12,
+                "end_column": 65
+            },
+            "classifications": [
+                "test"
+            ]
+        },
+        "instances_url": "https://api.github.com/repos/fcas/pydantic/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

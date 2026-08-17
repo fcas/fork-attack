@@ -1,0 +1,55 @@
+[
+    {
+        "number": 1,
+        "created_at": "2026-08-15T10:37:40Z",
+        "updated_at": "2026-08-15T10:37:40Z",
+        "url": "https://api.github.com/repos/fcas/upgini/code-scanning/alerts/1",
+        "html_url": "https://github.com/fcas/upgini/security/code-scanning/1",
+        "state": "open",
+        "fixed_at": null,
+        "dismissed_by": null,
+        "dismissed_at": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "rule": {
+            "id": "py/full-ssrf",
+            "severity": "error",
+            "description": "Full server-side request forgery",
+            "name": "py/full-ssrf",
+            "tags": [
+                "external/cwe/cwe-918",
+                "security"
+            ],
+            "full_description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+            "help": "# Full server-side request forgery\nDirectly incorporating user input into an HTTP request without validating the input can facilitate server-side request forgery (SSRF) attacks. In these attacks, the request may be changed, directed at a different server, or via a different protocol. This can allow the attacker to obtain sensitive information or perform actions with escalated privilege.\n\nWe make a distinctions between how much of the URL an attacker can control:\n\n* **Full SSRF**: where the full URL can be controlled.\n* **Partial SSRF**: where only part of the URL can be controlled, such as the path component of a URL to a hardcoded domain.\n\n\nPartial control of a URL is often much harder to exploit. Therefore we have created a separate query for each of these.\n\nThis query covers full SSRF, to find partial SSRF use the `py/partial-ssrf` query.\n\n\n## Recommendation\nTo guard against SSRF attacks you should avoid putting user-provided input directly into a request URL. On the application level, maintain a list of authorized URLs on the server and choose from that list based on the input provided. If that is not possible, one should verify the IP address for all user-controlled requests to ensure they are not private. This requires saving the verified IP address of each domain, then utilizing a custom HTTP adapter to ensure that future requests to that domain use the verified IP address. On the network level, you can segment the vulnerable application into its own LAN or block access to specific devices.\n\n\n## Example\nThe following example shows code vulnerable to a full SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `evil.com#` as the `target` value, the requested URL will be `https://evil.com#.example.com/data/`. It also shows how to remedy the problem by using the user input select a known fixed string.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/full_ssrf\")\ndef full_ssrf():\n    target = request.args[\"target\"]\n\n    # BAD: user has full control of URL\n    resp = requests.get(\"https://\" + target + \".example.com/data/\")\n\n    # GOOD: `subdomain` is controlled by the server.\n    subdomain = \"europe\" if target == \"EU\" else \"world\"\n    resp = requests.get(\"https://\" + subdomain + \".example.com/data/\")\n\n```\n\n## Example\nThe following example shows code vulnerable to a partial SSRF attack, because it uses untrusted input (HTTP request parameter) directly to construct a URL. By using `../transfer-funds-to/123?amount=456` as the `user_id` value, the requested URL will be `https://api.example.com/transfer-funds-to/123?amount=456`. It also shows how to remedy the problem by validating the input.\n\n\n```python\nimport requests\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/partial_ssrf\")\ndef partial_ssrf():\n    user_id = request.args[\"user_id\"]\n\n    # BAD: user can fully control the path component of the URL\n    resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n    if user_id.isalnum():\n        # GOOD: user_id is restricted to be alpha-numeric, and cannot alter path component of URL\n        resp = requests.get(\"https://api.example.com/user_info/\" + user_id)\n\n```\n\n## References\n* [OWASP SSRF article](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)\n* [PortSwigger SSRF article](https://portswigger.net/web-security/ssrf)\n* Common Weakness Enumeration: [CWE-918](https://cwe.mitre.org/data/definitions/918.html).\n",
+            "security_severity_level": "critical"
+        },
+        "tool": {
+            "name": "CodeQL",
+            "guid": null,
+            "version": "2.26.3"
+        },
+        "most_recent_instance": {
+            "ref": "refs/heads/main",
+            "analysis_key": ".github/workflows/codeql.yml:analyze",
+            "environment": "{\"build-mode\":\"none\",\"language\":\"python\"}",
+            "category": "/language:python",
+            "state": "open",
+            "commit_sha": "176632027e570b2a4ac3dba667f255ef5353310b",
+            "message": {
+                "text": "The full URL of this request depends on a user-provided value."
+            },
+            "location": {
+                "path": "src/upgini/http.py",
+                "start_line": 326,
+                "end_line": 329,
+                "start_column": 24,
+                "end_column": 14
+            },
+            "classifications": []
+        },
+        "instances_url": "https://api.github.com/repos/fcas/upgini/code-scanning/alerts/1/instances",
+        "dismissal_approved_by": null,
+        "assignees": []
+    }
+]

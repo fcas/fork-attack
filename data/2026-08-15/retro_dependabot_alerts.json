@@ -1,0 +1,1905 @@
+[
+    {
+        "number": 18,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-h35f-9h28-mq5c",
+            "cve_id": "CVE-2026-59890",
+            "summary": "setuptools: MANIFEST.in exclusion bypass in sdist via Unicode normalization collision (NFC/NFD) on macOS APFS/HFS+",
+            "description": "## Summary\n\nWhen building a source distribution (`python -m build --sdist` / `setup.py sdist`), setuptools' `FileList` applies `MANIFEST.in` directives (`exclude`, `global-exclude`, `recursive-exclude`, `prune`) by matching a compiled glob against on-disk file names **byte-for-byte, with no Unicode normalization**. On normalization-preserving filesystems (notably macOS APFS and HFS+), a file written in NFD and a `MANIFEST.in` rule written in NFC refer to the same file but are byte-distinct, so the exclusion silently fails to match. A file the maintainer intended to exclude is then packed into the `.tar.gz` and, if published, uploaded to the public, immutable PyPI index.\n\n## Details\n\nFile names in `FileList.files` come from `os.walk` (`setuptools/_distutils/filelist.py`, `_find_all_simple`), so on APFS a file written NFD is offered to the matcher in NFD, while the `MANIFEST.in` pattern carries the author's editor form (typically NFC). The matching path performs no canonicalization:\n\n```python\n# setuptools/command/egg_info.py  (FileList.global_exclude)\ndef global_exclude(self, pattern):\n    match = translate_pattern(os.path.join('**', pattern))   # fnmatch.translate -> regex, no NFC/NFD\n    return self._remove_files(match.match)                   # byte-level regex over raw os.walk names\n```\n\nA rule written NFC (`café` = `63 61 66 c3 a9`) does not match an on-disk name written NFD (`café` = `63 61 66 65 cc 81`), even though the filesystem treats the two as one file.\n\nA `unicodedata.normalize('NFD', ...)` helper exists in `setuptools/unicode_utils.py` (`decompose()`), but it is **never called in the manifest matching path**, so neither the pattern nor the walked path is normalized before matching. The only normalization in this area, `EggInfoCommand._manifest_normalize`, uses `filesys_decode` (bytes→str decode only, no NFC/NFD) and runs when writing `SOURCES.txt`, after matching has already occurred.\n\n## Impact\n\n`MANIFEST.in` exclusions are the documented mechanism maintainers use to keep secrets, local configs, and private fixtures out of the published sdist. A non-ASCII excluded file may be published to the public, immutable PyPI index despite the rule — an irreversible disclosure with no visual cue (NFC and NFD forms render identically). Exposure is filesystem-dependent and most relevant on macOS APFS/HFS+, where many maintainers build and publish. Pure-ASCII rules are unaffected.\n\n## Proof of concept\n\nWith a project containing `MANIFEST.in`:\n\n```\nglobal-include *.txt *.json\nglobal-exclude secret_café.txt    # rule saved NFC\n```\n\nand an on-disk file `secret_café.txt` written in NFD, `python -m build --sdist` packs the secret file into the resulting `.tar.gz`, while an ASCII control file excluded by the same directive is correctly dropped — isolating the bypass to the NFC-pattern vs. NFD-name mismatch. Reproduced on macOS APFS with setuptools 82.0.1.\n\n## Remediation\n\nNormalize both the walked path and each `MANIFEST.in` pattern to a single canonical form before matching, in both `setuptools/command/egg_info.py` (`FileList`) and the vendored `setuptools/_distutils/filelist.py`. For an exclusion list, err toward excluding more, and document that `MANIFEST.in` matching is normalization-insensitive on macOS.\n\n## Credit\n\nReported by Tomas Illuminati. Coordinated via CERT/CC VINCE VU#604762.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-h35f-9h28-mq5c",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-59890",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pypa/setuptools/security/advisories/GHSA-h35f-9h28-mq5c"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59890"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/commit/dd9f436a36486b4cb8a4c70a2321548b0be09b8f"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/setuptools/PYSEC-2026-3447.yaml"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/releases/tag/v83.0.0"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-h35f-9h28-mq5c"
+                }
+            ],
+            "published_at": "2026-07-21T19:09:21Z",
+            "updated_at": "2026-07-21T19:09:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "setuptools"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 83.0.0",
+                    "first_patched_version": {
+                        "identifier": "83.0.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+                    "score": 6.1
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00405,
+                "percentile": 0.3352
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+                "score": 6.1
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-176",
+                    "name": "Improper Handling of Unicode Encoding"
+                },
+                {
+                    "cwe_id": "CWE-697",
+                    "name": "Incorrect Comparison"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 83.0.0",
+            "first_patched_version": {
+                "identifier": "83.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/18",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/18",
+        "created_at": "2026-07-23T20:27:09Z",
+        "updated_at": "2026-07-23T20:27:09Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 17,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-wf93-45jw-7689",
+            "cve_id": "CVE-2026-8643",
+            "summary": " pip: Path traversal in console_scripts/gui_scripts entry point names allows installing scripts outside of target directory",
+            "description": "pip would treat console_scripts and gui_scripts as paths instead of file names without sanitizing the resolved absolute path to the installation directory, leading to entry points being installed outside the installation directory.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-wf93-45jw-7689",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-8643",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-8643"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/pull/14000"
+                },
+                {
+                    "url": "https://mail.python.org/archives/list/security-announce@python.org/thread/YV63UET5D3OOJY7O4M5XCVYO2YM4NBYJ"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2026/06/01/5"
+                },
+                {
+                    "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-8643.json"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pip/PYSEC-2026-196.yaml"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2460927"
+                },
+                {
+                    "url": "https://access.redhat.com/security/cve/CVE-2026-8643"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:36315"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:36193"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34891"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34780"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34778"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34777"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34776"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34775"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34774"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34773"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34772"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34765"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34760"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34758"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34756"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34752"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34750"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34749"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34748"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34741"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34740"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34739"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34456"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:34374"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:33313"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:37275"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2026:37283"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-wf93-45jw-7689"
+                }
+            ],
+            "published_at": "2026-06-01T18:31:53Z",
+            "updated_at": "2026-07-10T12:31:50Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 26.1.2",
+                    "first_patched_version": {
+                        "identifier": "26.1.2"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:A/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 4.1
+                }
+            },
+            "epss": {
+                "percentage": 0.0032,
+                "percentile": 0.2451
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 26.1.2",
+            "first_patched_version": {
+                "identifier": "26.1.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/17",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/17",
+        "created_at": "2026-07-10T19:56:52Z",
+        "updated_at": "2026-07-10T19:56:52Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 16,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-jp4c-xjxw-mgf9",
+            "cve_id": "CVE-2026-6357",
+            "summary": "pip Vulnerable to Inclusion of Functionality from Untrusted Control Sphere",
+            "description": "pip prior to version 26.1 would run self-update check functionality after installing wheel files which required importing well-known Python modules names. These module imports were intentionally deferred to increase startup time of the pip CLI. The patch changes self-update functionality to run before wheels are installed to prevent newly-installed modules from being imported shortly after the installation of a wheel package. Users should still review package contents prior to installation.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-jp4c-xjxw-mgf9",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-6357",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6357"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/pull/13923"
+                },
+                {
+                    "url": "https://ichard26.github.io/blog/2026/04/whats-new-in-pip-26.1/#security-fixes"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2026/04/27/7"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/commit/b369bfc96cc524e00c267e1693290e6599c36bad"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-jp4c-xjxw-mgf9"
+                }
+            ],
+            "published_at": "2026-04-27T15:30:52Z",
+            "updated_at": "2026-05-05T22:05:47Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 26.1",
+                    "first_patched_version": {
+                        "identifier": "26.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 5.3
+                }
+            },
+            "epss": {
+                "percentage": 0.00138,
+                "percentile": 0.03527
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-829",
+                    "name": "Inclusion of Functionality from Untrusted Control Sphere"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 26.1",
+            "first_patched_version": {
+                "identifier": "26.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/16",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/16",
+        "created_at": "2026-05-06T17:49:16Z",
+        "updated_at": "2026-05-06T17:49:16Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 15,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-58qw-9mgm-455v",
+            "cve_id": "CVE-2026-3219",
+            "summary": "pip has an interpretation conflict due to handling both concatenated tar and ZIP files as ZIP files",
+            "description": "pip handles concatenated tar and ZIP files as ZIP files regardless of filename or whether a file is both a tar and ZIP file. This behavior could result in confusing installation behavior, such as installing \"incorrect\" files according to the filename of the archive. New behavior only proceeds with installation if the file identifies uniquely as a ZIP or tar archive, not as both.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-58qw-9mgm-455v",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-3219",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-3219"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/pull/13870"
+                },
+                {
+                    "url": "https://mail.python.org/archives/list/security-announce@python.org/thread/QAJ5JIVWWCAJ4EZL2FP5MOOW35JS7LRJ"
+                },
+                {
+                    "url": "http://www.openwall.com/lists/oss-security/2026/04/20/8"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/issues/13867"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-58qw-9mgm-455v"
+                }
+            ],
+            "published_at": "2026-04-20T18:31:48Z",
+            "updated_at": "2026-05-20T20:54:26Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 26.0.1",
+                    "first_patched_version": {
+                        "identifier": "26.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N",
+                    "score": 4.6
+                }
+            },
+            "epss": {
+                "percentage": 0.00144,
+                "percentile": 0.04004
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-434",
+                    "name": "Unrestricted Upload of File with Dangerous Type"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 26.0.1",
+            "first_patched_version": {
+                "identifier": "26.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/15",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/15",
+        "created_at": "2026-04-24T15:50:35Z",
+        "updated_at": "2026-04-24T15:50:35Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 14,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-6vgw-5pg2-w6jp",
+            "cve_id": "CVE-2026-1703",
+            "summary": "pip Path Traversal vulnerability",
+            "description": "When pip is installing and extracting a maliciously crafted wheel archive, files may be extracted outside the installation directory. The path traversal is limited to prefixes of the installation directory, thus isn't able to inject or overwrite executable files in typical situations.",
+            "severity": "low",
+            "identifiers": [
+                {
+                    "value": "GHSA-6vgw-5pg2-w6jp",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2026-1703",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-1703"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/pull/13777"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/commit/8e227a9be4faa9594e05d02ca05a413a2a4e7735"
+                },
+                {
+                    "url": "https://mail.python.org/archives/list/security-announce@python.org/thread/WIEA34D4TABF2UNQJAOMXKCICSPBE2DJ"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-6vgw-5pg2-w6jp"
+                }
+            ],
+            "published_at": "2026-02-02T15:30:34Z",
+            "updated_at": "2026-02-02T22:08:55Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "low",
+                    "vulnerable_version_range": "< 26.0",
+                    "first_patched_version": {
+                        "identifier": "26.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:A/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N",
+                    "score": 2.0
+                }
+            },
+            "epss": {
+                "percentage": 0.0039,
+                "percentile": 0.3155
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "low",
+            "vulnerable_version_range": "< 26.0",
+            "first_patched_version": {
+                "identifier": "26.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/14",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/14",
+        "created_at": "2026-02-02T22:10:21Z",
+        "updated_at": "2026-02-02T22:10:21Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 12,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-4xh5-x5gv-qwph",
+            "cve_id": "CVE-2025-8869",
+            "summary": "pip's fallback tar extraction doesn't check symbolic links point to extraction directory",
+            "description": "When extracting a tar archive pip may not check symbolic links point into the extraction directory if the tarfile module doesn't implement PEP 706. Note that upgrading pip to a \"fixed\" version for this vulnerability doesn't fix all known vulnerabilities that are remediated by using a Python version that implements PEP 706. Note that this is a vulnerability in pip's fallback implementation of tar extraction for Python versions that don't implement PEP 706 and therefore are not secure to all vulnerabilities in the Python 'tarfile' module. If you're using a Python version that implements PEP 706 then pip doesn't use the \"vulnerable\" fallback code. Mitigations include upgrading to a version of pip that includes the fix, upgrading to a Python version that implements PEP 706 (Python >=3.9.17, >=3.10.12, >=3.11.4, or >=3.12), applying the linked patch, or inspecting source distributions (sdists) before installation as is already a best-practice.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-4xh5-x5gv-qwph",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-8869",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-8869"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/pull/13550"
+                },
+                {
+                    "url": "https://mail.python.org/archives/list/security-announce@python.org/thread/IF5A3GCJY3VH7BVHJKOWOJFKTW7VFQEN"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/commit/f2b92314da012b9fffa36b3f3e67748a37ef464a"
+                },
+                {
+                    "url": "https://pip.pypa.io/en/stable/news/#v25-2"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/10/msg00028.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-4xh5-x5gv-qwph"
+                }
+            ],
+            "published_at": "2025-09-24T15:31:14Z",
+            "updated_at": "2025-12-19T16:46:02Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "<= 25.2",
+                    "first_patched_version": {
+                        "identifier": "25.3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 5.9
+                }
+            },
+            "epss": {
+                "percentage": 0.00438,
+                "percentile": 0.355
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-59",
+                    "name": "Improper Link Resolution Before File Access ('Link Following')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "<= 25.2",
+            "first_patched_version": {
+                "identifier": "25.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/12",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/12",
+        "created_at": "2025-09-30T16:53:57Z",
+        "updated_at": "2025-09-30T16:53:57Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 10,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5rjg-fvgr-3xxf",
+            "cve_id": "CVE-2025-47273",
+            "summary": "setuptools has a path traversal vulnerability in PackageIndex.download that leads to Arbitrary File Write",
+            "description": "### Summary \nA path traversal vulnerability in `PackageIndex` was fixed in setuptools version 78.1.1\n\n### Details\n```\n    def _download_url(self, url, tmpdir):\n        # Determine download filename\n        #\n        name, _fragment = egg_info_for_url(url)\n        if name:\n            while '..' in name:\n                name = name.replace('..', '.').replace('\\\\', '_')\n        else:\n            name = \"__downloaded__\"  # default if URL has no path contents\n\n        if name.endswith('.[egg.zip](http://egg.zip/)'):\n            name = name[:-4]  # strip the extra .zip before download\n\n -->       filename = os.path.join(tmpdir, name)\n```\n\nHere: https://github.com/pypa/setuptools/blob/6ead555c5fb29bc57fe6105b1bffc163f56fd558/setuptools/package_index.py#L810C1-L825C88\n\n`os.path.join()` discards the first argument `tmpdir` if the second begins with a slash or drive letter.\n`name` is derived from a URL without sufficient sanitization. While there is some attempt to sanitize by replacing instances of '..' with '.', it is insufficient.\n\n### Risk Assessment\nAs easy_install and package_index are deprecated, the exploitation surface is reduced.\nHowever, it seems this could be exploited in a similar fashion like https://github.com/advisories/GHSA-r9hx-vwmv-q579, and as described by POC 4 in https://github.com/advisories/GHSA-cx63-2mw6-8hw5 report: via malicious URLs present on the pages of a package index.\n\n### Impact\nAn attacker would be allowed to write files to arbitrary locations on the filesystem with the permissions of the process running the Python code, which could escalate to RCE depending on the context.\n\n### References\nhttps://huntr.com/bounties/d6362117-ad57-4e83-951f-b8141c6e7ca5\nhttps://github.com/pypa/setuptools/issues/4946",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5rjg-fvgr-3xxf",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2025-47273",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/pypa/setuptools/security/advisories/GHSA-5rjg-fvgr-3xxf"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-47273"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/issues/4946"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/commit/250a6d17978f9f6ac3ac887091f2d32886fbbb0b"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/blob/6ead555c5fb29bc57fe6105b1bffc163f56fd558/setuptools/package_index.py#L810C1-L825C88"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/05/msg00035.html"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/setuptools/PYSEC-2025-49.yaml"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5rjg-fvgr-3xxf"
+                }
+            ],
+            "published_at": "2025-05-19T16:52:43Z",
+            "updated_at": "2025-06-13T04:13:22Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "setuptools"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 78.1.1",
+                    "first_patched_version": {
+                        "identifier": "78.1.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": null,
+                    "score": 0.0
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:P",
+                    "score": 7.7
+                }
+            },
+            "epss": {
+                "percentage": 0.01485,
+                "percentile": 0.71542
+            },
+            "cvss": {
+                "vector_string": null,
+                "score": 0.0
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 78.1.1",
+            "first_patched_version": {
+                "identifier": "78.1.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/10",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/10",
+        "created_at": "2025-05-19T16:57:58Z",
+        "updated_at": "2025-05-19T16:57:58Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 9,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "wheel"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-qwmp-2cf2-g9g6",
+            "cve_id": "CVE-2022-40898",
+            "summary": "pypa/wheel vulnerable to Regular Expression denial of service (ReDoS)",
+            "description": "Python Packaging Authority (PyPA) Wheel is a reference implementation of the Python wheel packaging standard. Wheel 0.37.1 and earlier are vulnerable to a Regular Expression denial of service via attacker controlled input to the wheel cli. The vulnerable regex is used to verify the validity of Wheel file names. This has been patched in version 0.38.1.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-qwmp-2cf2-g9g6",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-40898",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-40898"
+                },
+                {
+                    "url": "https://github.com/pypa/wheel/blob/main/src/wheel/wheelfile.py#L18"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/wheel/PYSEC-2022-43017.yaml"
+                },
+                {
+                    "url": "https://pypi.org/project/wheel"
+                },
+                {
+                    "url": "https://pyup.io/posts/pyup-discovers-redos-vulnerabilities-in-top-python-packages"
+                },
+                {
+                    "url": "https://pyup.io/vulnerabilities/CVE-2022-40898/51499"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-qwmp-2cf2-g9g6"
+                }
+            ],
+            "published_at": "2022-12-23T00:30:23Z",
+            "updated_at": "2024-11-19T19:04:08Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "wheel"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 0.38.1",
+                    "first_patched_version": {
+                        "identifier": "0.38.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.02659,
+                "percentile": 0.83717
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "wheel"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 0.38.1",
+            "first_patched_version": {
+                "identifier": "0.38.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/9",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/9",
+        "created_at": "2024-11-19T19:11:56Z",
+        "updated_at": "2024-11-19T19:11:56Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 8,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-cx63-2mw6-8hw5",
+            "cve_id": "CVE-2024-6345",
+            "summary": "setuptools vulnerable to Command Injection via package URL",
+            "description": "A vulnerability in the `package_index` module of pypa/setuptools versions up to 69.1.1 allows for remote code execution via its download functions. These functions, which are used to download packages from URLs provided by users or retrieved from package index servers, are susceptible to code injection. If these functions are exposed to user-controlled inputs, such as package URLs, they can execute arbitrary commands on the system. The issue is fixed in version 70.0.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-cx63-2mw6-8hw5",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2024-6345",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-6345"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/commit/88807c7062788254f654ea8c03427adc859321f0"
+                },
+                {
+                    "url": "https://huntr.com/bounties/d6362117-ad57-4e83-951f-b8141c6e7ca5"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/pull/4332"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/09/msg00018.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-cx63-2mw6-8hw5"
+                }
+            ],
+            "published_at": "2024-07-15T03:30:57Z",
+            "updated_at": "2025-11-04T19:47:21Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "setuptools"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 70.0.0",
+                    "first_patched_version": {
+                        "identifier": "70.0.0"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                    "score": 8.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+                    "score": 7.5
+                }
+            },
+            "epss": {
+                "percentage": 0.01939,
+                "percentile": 0.77515
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "score": 8.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-94",
+                    "name": "Improper Control of Generation of Code ('Code Injection')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 70.0.0",
+            "first_patched_version": {
+                "identifier": "70.0.0"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/8",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/8",
+        "created_at": "2024-07-15T16:30:05Z",
+        "updated_at": "2024-07-15T16:30:05Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 7,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-mq26-g339-26xf",
+            "cve_id": "CVE-2023-5752",
+            "summary": "Command Injection in pip when used with Mercurial",
+            "description": "When installing a package from a Mercurial VCS URL, e.g. `pip install hg+...`, with pip prior to v23.3, the specified Mercurial revision could be used to inject arbitrary configuration options to the `hg clone` call (e.g. `--config`). Controlling the Mercurial configuration can modify how and which repository is installed. This vulnerability does not affect users who aren't installing from Mercurial.",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-mq26-g339-26xf",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-5752",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-5752"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/pull/12306"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/commit/389cb799d0da9a840749fcd14878928467ed49b4"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pip/PYSEC-2023-228.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/YBSB3SUPQ3VIFYUMHPO3MEQI4BJAXKCZ"
+                },
+                {
+                    "url": "https://mail.python.org/archives/list/security-announce@python.org/thread/F4PL35U6X4VVHZ5ILJU3PWUWN7H7LZXL"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KFC2SPFG5FLCZBYY2K3T5MFW2D22NG6E"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/622OZXWG72ISQPLM5Y57YCVIMWHD4C3U"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/65UKKF5LBHEFDCUSPBHUN4IHYX7SRMHH"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/FXUVMJM25PUAZRQZBF54OFVKTY3MINPW"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2025/10/msg00028.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-mq26-g339-26xf"
+                }
+            ],
+            "published_at": "2023-10-25T18:32:26Z",
+            "updated_at": "2025-11-03T21:51:37Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": "< 23.3",
+                    "first_patched_version": {
+                        "identifier": "23.3"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+                    "score": 5.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 6.8
+                }
+            },
+            "epss": {
+                "percentage": 0.00476,
+                "percentile": 0.38514
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+                "score": 5.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-77",
+                    "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": "< 23.3",
+            "first_patched_version": {
+                "identifier": "23.3"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/7",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/7",
+        "created_at": "2024-05-24T01:34:44Z",
+        "updated_at": "2024-05-24T01:34:44Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 6,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-r9hx-vwmv-q579",
+            "cve_id": "CVE-2022-40897",
+            "summary": "pypa/setuptools vulnerable to Regular Expression Denial of Service (ReDoS)",
+            "description": "Python Packaging Authority (PyPA)'s setuptools is a library designed to facilitate packaging Python projects. Setuptools version 65.5.0 and earlier could allow remote attackers to cause a denial of service by fetching malicious HTML from a PyPI package or custom PackageIndex page due to a vulnerable Regular Expression in `package_index`. This has been patched in version 65.5.1.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-r9hx-vwmv-q579",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-40897",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-40897"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/blob/fe8a98e696241487ba6ac9f91faa38ade939ec5d/setuptools/package_index.py#L200"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/issues/3659"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/commit/43a9c9bfa6aa626ec2a22540bea28d2ca77964be"
+                },
+                {
+                    "url": "https://github.com/pypa/setuptools/compare/v65.5.0...v65.5.1"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ADES3NLOE5QJKBLGNZNI2RGVOSQXA37R"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/YNA2BAH2ACBZ4TVJZKFLCR7L23BG5C3H"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ADES3NLOE5QJKBLGNZNI2RGVOSQXA37R"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/YNA2BAH2ACBZ4TVJZKFLCR7L23BG5C3H"
+                },
+                {
+                    "url": "https://pyup.io/posts/pyup-discovers-redos-vulnerabilities-in-top-python-packages"
+                },
+                {
+                    "url": "https://pyup.io/vulnerabilities/CVE-2022-40897/52495"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230214-0001"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240621-0006"
+                },
+                {
+                    "url": "https://setuptools.pypa.io/en/latest"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/setuptools/PYSEC-2022-43012.yaml"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2024/09/msg00018.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-r9hx-vwmv-q579"
+                }
+            ],
+            "published_at": "2022-12-23T00:30:23Z",
+            "updated_at": "2025-11-04T19:37:01Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "setuptools"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 65.5.1",
+                    "first_patched_version": {
+                        "identifier": "65.5.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:L/SI:L/SA:N",
+                    "score": 8.7
+                }
+            },
+            "epss": {
+                "percentage": 0.02617,
+                "percentile": 0.83508
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-1333",
+                    "name": "Inefficient Regular Expression Complexity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "setuptools"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 65.5.1",
+            "first_patched_version": {
+                "identifier": "65.5.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/6",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/6",
+        "created_at": "2024-05-24T01:34:44Z",
+        "updated_at": "2024-05-24T01:34:44Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 4,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-5xp3-jfq3-5q8x",
+            "cve_id": "CVE-2021-3572",
+            "summary": "Improper Input Validation in pip",
+            "description": "A flaw was found in python-pip in the way it handled Unicode separators in git references. A remote attacker could possibly use this issue to install a different revision on a repository. The highest threat from this vulnerability is to data integrity. This is fixed in python-pip version 21.1.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-5xp3-jfq3-5q8x",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2021-3572",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-3572"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/pull/9827"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/commit/e46bdda9711392fec0c45c1175bae6db847cb30b"
+                },
+                {
+                    "url": "https://access.redhat.com/errata/RHSA-2021:3254"
+                },
+                {
+                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1962856"
+                },
+                {
+                    "url": "https://packetstormsecurity.com/files/162712/USN-4961-1.txt"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpuapr2022.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240621-0006"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-5xp3-jfq3-5q8x"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pip/PYSEC-2021-437.yaml"
+                }
+            ],
+            "published_at": "2021-11-15T17:45:01Z",
+            "updated_at": "2024-10-11T21:24:45Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 21.1",
+                    "first_patched_version": {
+                        "identifier": "21.1"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:H/A:N",
+                    "score": 5.7
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 7.1
+                }
+            },
+            "epss": {
+                "percentage": 0.01687,
+                "percentile": 0.74516
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:H/A:N",
+                "score": 5.7
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-20",
+                    "name": "Improper Input Validation"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 21.1",
+            "first_patched_version": {
+                "identifier": "21.1"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/4",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/4",
+        "created_at": "2024-05-24T01:34:43Z",
+        "updated_at": "2024-05-24T01:34:43Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 3,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "manifest_path": "docker/linux/build_scripts/requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-gpvv-69j7-gwj8",
+            "cve_id": "CVE-2019-20916",
+            "summary": "Path Traversal in pip",
+            "description": "The pip package before 19.2 for Python allows Directory Traversal when a URL is given in an install command, because a Content-Disposition header can have ../ in a filename, as demonstrated by overwriting the /root/.ssh/authorized_keys file. This occurs in _download_http_url in _internal/download.py. A fix was committed 6704f2ace.",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-gpvv-69j7-gwj8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2019-20916",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-20916"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/issues/6413"
+                },
+                {
+                    "url": "https://github.com/gzpan123/pip/commit/a4c735b14a62f9cb864533808ac63936704f2ace"
+                },
+                {
+                    "url": "https://github.com/pypa/pip/compare/19.1.1...19.2"
+                },
+                {
+                    "url": "https://lists.debian.org/debian-lts-announce/2020/09/msg00010.html"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2020-10/msg00005.html"
+                },
+                {
+                    "url": "http://lists.opensuse.org/opensuse-security-announce/2020-10/msg00010.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpuapr2022.html"
+                },
+                {
+                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-gpvv-69j7-gwj8"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/pip/PYSEC-2020-173.yaml"
+                }
+            ],
+            "published_at": "2021-06-09T17:35:04Z",
+            "updated_at": "2024-10-11T21:08:14Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "pip"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": "< 19.2",
+                    "first_patched_version": {
+                        "identifier": "19.2"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 8.7
+                }
+            },
+            "epss": {
+                "percentage": 0.03028,
+                "percentile": 0.85808
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-22",
+                    "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "pip"
+            },
+            "severity": "high",
+            "vulnerable_version_range": "< 19.2",
+            "first_patched_version": {
+                "identifier": "19.2"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/3",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/3",
+        "created_at": "2024-05-24T01:34:43Z",
+        "updated_at": "2024-05-24T01:34:43Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 2,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "certifi"
+            },
+            "manifest_path": "docker/linux/build_scripts/py36-requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-xqr8-7jwr-rhp7",
+            "cve_id": "CVE-2023-37920",
+            "summary": "Removal of e-Tugra root certificate",
+            "description": "Certifi 2023.07.22 removes root certificates from \"e-Tugra\" from the root store. These are in the process of being removed from Mozilla's trust store.\n\n e-Tugra's root certificates are being removed pursuant to an investigation prompted by reporting of security issues in their systems. Conclusions of Mozilla's investigation can be found [here](https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/C-HrP1SEq1A).",
+            "severity": "high",
+            "identifiers": [
+                {
+                    "value": "GHSA-xqr8-7jwr-rhp7",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2023-37920",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/certifi/python-certifi/security/advisories/GHSA-xqr8-7jwr-rhp7"
+                },
+                {
+                    "url": "https://github.com/certifi/python-certifi/commit/8fb96ed81f71e7097ed11bc4d9b19afd7ea5c909"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-37920"
+                },
+                {
+                    "url": "https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/C-HrP1SEq1A"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/certifi/PYSEC-2023-135.yaml"
+                },
+                {
+                    "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/5EX6NG7WUFNUKGFHLM35KHHU3GAKXRTG"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20240912-0002"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-xqr8-7jwr-rhp7"
+                }
+            ],
+            "published_at": "2023-07-25T14:43:53Z",
+            "updated_at": "2025-02-12T21:33:44Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "certifi"
+                    },
+                    "severity": "high",
+                    "vulnerable_version_range": ">= 2015.4.28, < 2023.7.22",
+                    "first_patched_version": {
+                        "identifier": "2023.7.22"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                    "score": 7.5
+                },
+                "cvss_v4": {
+                    "vector_string": null,
+                    "score": 0.0
+                }
+            },
+            "epss": {
+                "percentage": 0.00563,
+                "percentile": 0.43513
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+                "score": 7.5
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-345",
+                    "name": "Insufficient Verification of Data Authenticity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "certifi"
+            },
+            "severity": "high",
+            "vulnerable_version_range": ">= 2015.4.28, < 2023.7.22",
+            "first_patched_version": {
+                "identifier": "2023.7.22"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/2",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/2",
+        "created_at": "2024-05-24T01:34:43Z",
+        "updated_at": "2024-05-24T01:34:43Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    },
+    {
+        "number": 1,
+        "state": "open",
+        "dependency": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "certifi"
+            },
+            "manifest_path": "docker/linux/build_scripts/py36-requirements.txt",
+            "scope": "runtime",
+            "relationship": "direct"
+        },
+        "security_advisory": {
+            "ghsa_id": "GHSA-43fp-rhv2-5gv8",
+            "cve_id": "CVE-2022-23491",
+            "summary": "Certifi removing TrustCor root certificate",
+            "description": "Certifi 2022.12.07 removes root certificates from \"TrustCor\" from the root store. These are in the process of being removed from Mozilla's trust store.\n\nTrustCor's root certificates are being removed pursuant to an investigation prompted by media reporting that TrustCor's ownership also operated a business that produced spyware. Conclusions of Mozilla's investigation can be found [here](https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/oxX69KFvsm4/m/yLohoVqtCgAJ).",
+            "severity": "medium",
+            "identifiers": [
+                {
+                    "value": "GHSA-43fp-rhv2-5gv8",
+                    "type": "GHSA"
+                },
+                {
+                    "value": "CVE-2022-23491",
+                    "type": "CVE"
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://github.com/certifi/python-certifi/security/advisories/GHSA-43fp-rhv2-5gv8"
+                },
+                {
+                    "url": "https://github.com/certifi/python-certifi/commit/9e9e840925d7b8e76c76fdac1fab7e6e88c1c3b8"
+                },
+                {
+                    "url": "https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/oxX69KFvsm4/m/yLohoVqtCgAJ"
+                },
+                {
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-23491"
+                },
+                {
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/certifi/PYSEC-2022-42986.yaml"
+                },
+                {
+                    "url": "https://security.netapp.com/advisory/ntap-20230223-0010"
+                },
+                {
+                    "url": "https://github.com/advisories/GHSA-43fp-rhv2-5gv8"
+                }
+            ],
+            "published_at": "2022-12-07T23:05:18Z",
+            "updated_at": "2025-02-12T18:33:28Z",
+            "withdrawn_at": null,
+            "vulnerabilities": [
+                {
+                    "package": {
+                        "ecosystem": "pip",
+                        "name": "certifi"
+                    },
+                    "severity": "medium",
+                    "vulnerable_version_range": ">= 2017.11.05, < 2022.12.07",
+                    "first_patched_version": {
+                        "identifier": "2022.12.07"
+                    }
+                }
+            ],
+            "cvss_severities": {
+                "cvss_v3": {
+                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:N",
+                    "score": 6.8
+                },
+                "cvss_v4": {
+                    "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N",
+                    "score": 5.9
+                }
+            },
+            "epss": {
+                "percentage": 0.00535,
+                "percentile": 0.42629
+            },
+            "cvss": {
+                "vector_string": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:N",
+                "score": 6.8
+            },
+            "cwes": [
+                {
+                    "cwe_id": "CWE-345",
+                    "name": "Insufficient Verification of Data Authenticity"
+                }
+            ],
+            "classification": "general"
+        },
+        "security_vulnerability": {
+            "package": {
+                "ecosystem": "pip",
+                "name": "certifi"
+            },
+            "severity": "medium",
+            "vulnerable_version_range": ">= 2017.11.05, < 2022.12.07",
+            "first_patched_version": {
+                "identifier": "2022.12.07"
+            }
+        },
+        "url": "https://api.github.com/repos/fcas/retro/dependabot/alerts/1",
+        "html_url": "https://github.com/fcas/retro/security/dependabot/1",
+        "created_at": "2024-05-24T01:34:43Z",
+        "updated_at": "2024-05-24T01:34:43Z",
+        "dismissal_request": null,
+        "assignees": [],
+        "dismissed_at": null,
+        "dismissed_by": null,
+        "dismissed_reason": null,
+        "dismissed_comment": null,
+        "fixed_at": null,
+        "auto_dismissed_at": null
+    }
+]

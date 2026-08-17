@@ -1,7 +1,9 @@
 import json
 import logging
+import os
 import re
 import xml.etree.ElementTree as ET
+from datetime import date
 
 import requests
 
@@ -89,7 +91,12 @@ def parse_capec_xml(xml_bytes):
     return entries
 
 
-def fetch_and_save_capec(output_file="data/capec.json"):
+def fetch_and_save_capec(output_file=None):
+    # Persisted under today's date, the raw extraction date, following the same
+    # convention as the per-repo Dependabot/CodeQL dumps in data/<date>/.
+    if output_file is None:
+        output_file = f"data/{date.today()}/capec.json"
+
     logger.info(f"Downloading CAPEC catalog from {CAPEC_XML_URL}...")
     xml_bytes = download_capec_xml()
 
@@ -100,6 +107,7 @@ def fetch_and_save_capec(output_file="data/capec.json"):
     total_attack_links = sum(len(e["related_attack_techniques"]) for e in entries)
     logger.info(f"Parsed {len(entries)} attack patterns, {total_cwe_links} CAPEC-CWE links, {total_attack_links} CAPEC-ATT&CK links.")
 
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(entries, f, ensure_ascii=False, indent=4)
 
