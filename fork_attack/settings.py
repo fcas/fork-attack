@@ -1,3 +1,14 @@
+import os
+
+# GitHub account that owns every fork this study analyzes. Never hardcode the
+# real value in committed code, comments, or data -- set it in your own local
+# shell env (e.g. `export GITHUB_OWNER=...`), anonymized in the public repo
+# for double-blind review. None here (rather than a hard failure at import
+# time) so scripts that only need `repositories` still import cleanly without
+# the var set; anything that actually builds an API URL from OWNER will fail
+# loudly and obviously once it's interpolated into that URL.
+OWNER = os.environ.get("GITHUB_OWNER")
+
 repositories = [
     ('https://github.com/AutoViML/Auto_ViML', 'master', False),
     ('https://github.com/pyg-team/pytorch-frame', 'master', False),

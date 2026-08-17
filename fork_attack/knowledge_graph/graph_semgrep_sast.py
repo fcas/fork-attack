@@ -4,6 +4,7 @@ import re
 import urllib.parse
 
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
+from fork_attack.settings import OWNER
 from fork_attack.utils import upsert_edge, canonical_repo_name, is_known_repo, extraction_date, has_provenance, add_source
 
 logger = logging.getLogger(__name__)
@@ -84,7 +85,7 @@ def filter_findings(findings):
             continue
 
         repo_info = item.get("repository", {})
-        repo_name_raw = repo_info.get("name", "").replace("fcas/", "")
+        repo_name_raw = repo_info.get("name", "").replace(f"{OWNER}/", "")
         if not is_known_repo(repo_name_raw):
             skipped["unknown_repo"] += 1
             continue
@@ -122,7 +123,7 @@ def dry_run_counts():
     new_repo_commit_edges, new_rule_commit_edges, new_cwe_commit_edges, new_rule_cwe_edges = set(), set(), set(), set()
 
     for item in kept:
-        repo_name_raw = item.get("repository", {}).get("name", "").replace("fcas/", "")
+        repo_name_raw = item.get("repository", {}).get("name", "").replace(f"{OWNER}/", "")
         repo_name = canonical_repo_name(repo_name_raw)
         commit_sha = extract_commit_sha(item.get("line_of_code_url"))
 
@@ -192,7 +193,7 @@ def load_semgrep_sast_data():
     for item in kept:
         try:
             repo_info = item.get("repository", {})
-            repo_name_raw = repo_info.get("name", "").replace("fcas/", "")
+            repo_name_raw = repo_info.get("name", "").replace(f"{OWNER}/", "")
             loc = item.get("location", {})
             loc_path = loc.get("file_path")
             repo_name = canonical_repo_name(repo_name_raw)

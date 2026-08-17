@@ -37,12 +37,11 @@ from pathlib import Path
 
 import requests
 
-from fork_attack.settings import repositories
+from fork_attack.settings import repositories, OWNER
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-OWNER = "fcas"
 TEMPLATE_DIR = Path(__file__).resolve().parent.parent / ".github"
 
 

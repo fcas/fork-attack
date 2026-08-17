@@ -13,7 +13,7 @@ import requests
 from git import GitCommandError
 from github import Github, UnknownObjectException
 
-from settings import repositories
+from settings import repositories, OWNER
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -39,8 +39,8 @@ check_archive = False
 
 def vulnerability_analysis(repo_name):
     os.chdir(f"{current_path.parent}/data")
-    code_analysis_alerts_url = f"https://api.github.com/repos/fcas/{repo_name}/code-scanning/alerts"
-    dependabot_alerts_url = f"https://api.github.com/repos/fcas/{repo_name}/dependabot/alerts"
+    code_analysis_alerts_url = f"https://api.github.com/repos/{OWNER}/{repo_name}/code-scanning/alerts"
+    dependabot_alerts_url = f"https://api.github.com/repos/{OWNER}/{repo_name}/dependabot/alerts"
 
     code_analysis_data = extract_data(code_analysis_alerts_url, {}, repo_name)
     dependabot_data = extract_data(dependabot_alerts_url, {}, repo_name)

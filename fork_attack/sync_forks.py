@@ -1,6 +1,6 @@
 """
 Syncs each local clone under BASE_DIR with its upstream repository, then
-pushes the result to the fork on GitHub (fcas/<repo>).
+pushes the result to the fork on GitHub ($GITHUB_OWNER/<repo>).
 
 Each fork's `.github/workflows` and `.github/dependabot.yml` hold our own CI
 config (see estige.py's add_ymls), separate from whatever CI config the
@@ -23,12 +23,11 @@ from datetime import date
 
 import requests
 
-from fork_attack.settings import repositories
+from fork_attack.settings import repositories, OWNER
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-OWNER = "fcas"
 BASE_DIR = "/Users/felipe.dias/IdeaProjects/forks"
 
 

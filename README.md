@@ -24,6 +24,7 @@ O objetivo é **ajudar pesquisadores e desenvolvedores** a avaliar riscos em seu
 ### Pré-requisitos
 - Python 3.9+
 - `pip` (gerenciador de pacotes)
+- Variáveis de ambiente: `GITHUB_TOKEN` (token com acesso aos forks) e `GITHUB_OWNER` (usuário/organização dona dos forks analisados, nunca commitado no repositório por questões de double-blind review).
 
 ### Instalação
 ```bash

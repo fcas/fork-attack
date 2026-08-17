@@ -4,6 +4,7 @@ import json
 import urllib.parse
 
 from fork_attack.knowledge_graph.fork_attack_graph import ForkAttackGraph
+from fork_attack.settings import OWNER
 from fork_attack.utils import upsert_edge, canonical_repo_name, is_known_repo, extraction_date, has_provenance, add_source
 
 logger = logging.getLogger(__name__)
@@ -93,10 +94,10 @@ def load_semgrep_data():
 
             # Semgrep's org-wide findings endpoint can surface repos outside
             # this study's 273-repo corpus (e.g. a stale fork left over from
-            # an earlier iteration, still visible under the fcas org) --
+            # an earlier iteration, still visible under this study's own GitHub account) --
             # reject those before anything gets inserted.
             repo_info = item.get("repository", {})
-            repo_name_raw = repo_info.get("name", "").replace("fcas/", "")
+            repo_name_raw = repo_info.get("name", "").replace(f"{OWNER}/", "")
             if not is_known_repo(repo_name_raw):
                 skipped_unknown_repo += 1
                 continue
